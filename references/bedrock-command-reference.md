@@ -398,6 +398,28 @@ titleraw @a title {"rawtext":[{"text":"§lChapter I"}]}
 - `times` 单位是 tick：10/70/20 是默认值。
 - `actionbar` 可当 bossbar 用（只有一行）。
 - 清屏用 `title @a clear`。
+- 纯文本 `title` 的文本参数超过约 **512 字节**会静默失败；大面板用 `titleraw`，或拆成多条。
+
+### `hud`
+
+```mcfunction
+hud <target> <hide|reset> [element]
+```
+
+元素：`health` `hunger` `armor` `status_effects` `item_text` `hotbar` `crosshair` `paperdoll` `air_bubbles` `horse_health` `progress_bar` `tooltips` `touch_controls` `all`。
+
+```mcfunction
+hud @a hide health
+hud @a hide hunger
+hud @a hide armor
+hud @a hide status_effects
+hud @a hide item_text
+hud @s reset health
+```
+
+- 用于数据化 RPG 隐藏原版血条/饥饿/护甲，避免和自定义 T显/血条打架。
+- 需要 cheats/游戏主管权限；隐藏后必须在重生/退出/关闭界面时 `reset`，否则玩家看不到原版 HUD。
+- **网易 1.21.130 边界**：Bedrock 1.21 稳定版有文档，但网易官方命令列表未列；样本 `数据化四` 用了它。先在网易 `/help hud` 验证，不支持就不要隐藏原版血条。
 
 ### `playsound`
 

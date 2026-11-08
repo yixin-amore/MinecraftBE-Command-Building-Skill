@@ -1,6 +1,6 @@
 ---
 name: mcbe-command-blocks
-description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、FMBE/MBE 显示实体（playanimation + Molang），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
 whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、行为包函数或地图小游戏机制时。"
 ---
 
@@ -221,6 +221,19 @@ scoreboard players operation #state obj %= #two obj
 - 显示是客户端视觉，不能当方块检测；一个方块一个实体，先算性能预算。
 - 完整前置、8 条命令、变量表、MBE 尺寸/旋转、例子拆解见 `references/fmbe-mbe.md`。
 
+### 4.6 数据化 RPG 属性系统
+
+“数据化”是用 dummy 计分板把生命/攻击/防御/暴击/等级/经验/装备加成变成可计算、可显示的数值：
+
+- 分层：**基础属性 + 装备加成 + Buff = 最终属性**；装备层每 tick 先清零再重建，不要把最终值写回基础值。
+- 伤害事务：先给目标 `tag=被攻击`，再算 `攻击 - 防御`，最低 1；暴击/浮动/吸血按固定顺序；结束清 tag，一击只结算一次。
+- 生命：clamp 到 `0..最大生命`；死亡先设 0 再 `kill`，经验只给 uid 匹配的击杀者。
+- T显：`titleraw actionbar` + score 组件；限频（5~10 Hz）、按需显示（低头/手持面板）；普通 `title` 纯文本约 512 字节会静默失败。
+- 隐藏原版 HUD 用 `hud`；网易官方列表未列，先 `/help hud` 验证。
+- UID 用 `@r[scores={uid=0}]` 分配；击杀归属不要用玩家名。
+- 装备/词条：物品只是外观，数值在计分板；`hasitem` 读槽位，注意胸甲是 `slot.armor.chest`。
+- 完整属性层、伤害链、T显/血条、等级/经验、装备/怪物、性能与旧语法升级见 `references/dataization-rpg.md`。
+
 ## 5. 交付物与工具
 
 被要求设计命令方块链时，**不要只丢一堆命令**。交付：
@@ -285,6 +298,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/scoreboard-memory.md` | 用 dummy 计分板存状态、做数学、编码 |
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
+| `references/dataization-rpg.md` | 数据化 RPG：属性分层、伤害事务、T显/血条、等级/经验、装备/怪物、性能与旧语法升级 |
 | `references/functions-and-packs.md` | 行为包、`.mcfunction`、`tick.json`、manifest、schedule |
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |

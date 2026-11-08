@@ -50,6 +50,7 @@ schedule on_area_loaded add tickingarea <name> <function>
 | `damage` | 2 | 可用（1.19.80+ 的 Bedrock 命令，样本已用） |
 | `execute`（旧语法） | 677 | **不应用于 1.21.130 新图**；见第 5 节 |
 | `execute`（新语法） | 11,019 | 可用 |
+| `hud` | 数据化合集少量使用 | Bedrock 1.21 稳定版有文档，但网易官方列表未列；先 `/help hud` 验证，见 `dataization-rpg.md` |
 
 ## 4. 不要在网易 1.21.130 中使用的命令
 
