@@ -36,7 +36,8 @@ mcbe-command-blocks/
     ├── arena-countdown/         # 倒计时：秒时钟 + 状态机 + 脉冲标记
     ├── vending-machine/         # 售货机：条件流水线 + 库存 + 清理
     ├── toggle-lamp/             # 开关灯：取模翻转 + 并行分支 + 坐标
-    └── snowball-menu/           # 雪球三级菜单：256 方块、紧凑布局、BDX + UI 预览
+    ├── snowball-menu/           # 雪球三级菜单：256 方块、紧凑布局、BDX + UI 预览
+    └── fmbe-player/             # FMBE 1:1 玩家：6 部件、86 方块、预览 + BDX
 ```
 
 ## 安装
