@@ -241,6 +241,7 @@ playanimation @e[name=a] animation.player.attack.positions none 0 "v.n=4;v.xzsca
   - 身体：`scale=0.5, yscale=1.5` 或 `extend_scale=1.224744871, extend_xrot=90`
   - 四肢：`scale=0.25, yscale=3` 或 `extend_scale=1.732050808, extend_xrot=90`
 - **头部/身体接触**：脚底 y=2；腿中心 2.375、身体中心 3.125、头中心 3.75；每段 0.75/0.75/0.5，正好 2.0 格。
+- **不要用 `player_head` 当部件**：它的物品枢轴和普通方块不同，实测会头贴到身体前面；用 0.5 格皮肤块 + 头发/眼睛/嘴（v3 共 10 个部件），全部同一类方块。
 - **渲染 1 Hz** + **每 tick 分部件锚定**；20 Hz 跑 48 条 Molang 会拖垮服务器。
 - AIEX 的结构导出也是“1 命令方块 → 1 狐狸”，狐狸就是站在方块位置；这是比“单基点 + 偏移”更稳的工程方式。
 
