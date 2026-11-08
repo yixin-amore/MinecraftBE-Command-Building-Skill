@@ -1,0 +1,118 @@
+{
+  "name": "vending-machine",
+  "description": "A one-press vending machine: nearest player in range with an emerald pays one emerald, receives bread, stock decrements, and the shop resets. Sold-out state is visible in the action bar.",
+  "target_version": "1.21.0",
+  "setup": [
+    "scoreboard objectives add shop dummy",
+    "scoreboard players set #stock shop 10"
+  ],
+  "blocks": [
+    {
+      "id": "buy_btn",
+      "type": "impulse",
+      "condition": "unconditional",
+      "redstone": "needs_redstone",
+      "delay": 0,
+      "command": "execute as @a[r=4,hasitem={item=emerald,quantity=1..},c=1] run scoreboard players set @s shop 1",
+      "next": "stock_gate",
+      "note": "c=1 keeps it to one buyer per press"
+    },
+    {
+      "id": "stock_gate",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #stock shop matches 1..",
+      "next": "take",
+      "note": "pure condition gate: checks stock before payment"
+    },
+    {
+      "id": "take",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={shop=1},c=1] run clear @s emerald 0 1",
+      "next": "give",
+      "note": "fails if the player no longer has the emerald"
+    },
+    {
+      "id": "give",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={shop=1},c=1] run give @s bread 1",
+      "next": "stock"
+    },
+    {
+      "id": "stock",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players remove #stock shop 1",
+      "next": "fx"
+    },
+    {
+      "id": "fx",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={shop=1},c=1] run playsound random.orb @s",
+      "next": "cleanup"
+    },
+    {
+      "id": "cleanup",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set @a shop 0",
+      "next": "sold_out",
+      "note": "unconditional: clears stale flags even when payment failed"
+    },
+    {
+      "id": "sold_out",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #stock shop matches 0 run title @a actionbar §cSold out",
+      "next": null
+    },
+    {
+      "id": "restock_btn",
+      "type": "impulse",
+      "condition": "unconditional",
+      "redstone": "needs_redstone",
+      "delay": 0,
+      "command": "scoreboard players set #stock shop 10",
+      "next": "restock_msg"
+    },
+    {
+      "id": "restock_msg",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "title @a actionbar §aRestocked",
+      "next": null
+    }
+  ],
+  "tests": [
+    "Buy with 1 emerald: emerald leaves inventory, 1 bread arrives, stock 10 -> 9.",
+    "Buy with 0 emeralds: nothing happens, stock unchanged, no error message.",
+    "Buy at stock 0: no payment, 'Sold out' appears.",
+    "Two players next to the machine: only the nearest one is charged per press.",
+    "Press restock: stock returns to 10 and the action bar confirms.",
+    "Drop an emerald after pressing: the clear step must fail and the bread must not be given."
+  ],
+  "notes": [
+    "The conditional pipeline is the all-or-nothing guarantee: stock gate -> clear -> give -> stock decrement.",
+    "cleanup and sold_out are unconditional so they run even when a conditional step failed.",
+    "c=1 is intentional; remove it only if you want every nearby player to buy at once, and then fix stock accounting."
+  ]
+}

@@ -1,0 +1,2339 @@
+{
+  "name": "snowball-menu",
+  "description": "Three-level snowball menu with a compact boxed actionbar UI, selection highlight, look-up confirm, look-down back, hub teleport, effects, stats, daily reward and sound toggle.",
+  "target_version": "netease-1.21.130",
+  "setup": [
+    "scoreboard objectives add sbm dummy",
+    "scoreboard objectives add sbsel dummy",
+    "scoreboard objectives add sbpage dummy",
+    "scoreboard objectives add sblook dummy",
+    "scoreboard objectives add sbdown dummy",
+    "scoreboard objectives add sbopen dummy",
+    "scoreboard objectives add sbpoints dummy",
+    "scoreboard objectives add sbsnd dummy",
+    "scoreboard objectives add sbg dummy",
+    "scoreboard players set #four sbm 4",
+    "scoreboard players set #three sbm 3",
+    "scoreboard players set #two sbm 2",
+    "scoreboard players set #one sbm 1"
+  ],
+  "tests": [
+    "Throw a snowball: main menu actionbar opens; there is no big title/subtitle.",
+    "Throw again: highlight moves 1 -\u003e 2 -\u003e 3 -\u003e 4 -\u003e 1.",
+    "Look up on item 1: transfer submenu opens.",
+    "Look down: returns to main; look down again: closes.",
+    "Open item 2 -\u003e item 1: personal stats show name, opens, points, sound state.",
+    "Open item 2 -\u003e item 2: daily reward gives 1 point + 4 apples and shows success.",
+    "Open item 2 -\u003e item 3: toggles sound and returns to the personal submenu.",
+    "Open item 3 -\u003e item 1/2/3: info pages; look down returns, look up closes.",
+    "Throw a snowball while in an action page: menu closes.",
+    "Two players: each keeps their own selection and page."
+  ],
+  "notes": [
+    "All command blocks are always active; the 15x6x9 structure fits one chunk column at 64 200 0 and needs no tickingarea when the spawn chunk is loaded.",
+    "UI is plain title/actionbar text with § colors; no camera/inputpermission/fog.",
+    "State: sbm 0=closed 1=main 2=sub 3=action; sbsel 0..3; sbpage 1..10; sbg 0=idle / group id.",
+    "Look-up/down is edge-detected with sblook/sbdown.",
+    "The setup row is idempotent and runs once per second."
+  ],
+  "blocks": [
+    {
+      "id": "r00b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 20,
+      "command": "scoreboard objectives add sbm dummy",
+      "next": "r00b01"
+    },
+    {
+      "id": "r00b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbsel dummy",
+      "next": "r00b02"
+    },
+    {
+      "id": "r00b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbpage dummy",
+      "next": "r00b03"
+    },
+    {
+      "id": "r00b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sblook dummy",
+      "next": "r00b04"
+    },
+    {
+      "id": "r00b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbdown dummy",
+      "next": "r00b05"
+    },
+    {
+      "id": "r00b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbopen dummy",
+      "next": "r00b06"
+    },
+    {
+      "id": "r00b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbpoints dummy",
+      "next": "r00b07"
+    },
+    {
+      "id": "r00b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbsnd dummy",
+      "next": "r00b08"
+    },
+    {
+      "id": "r00b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard objectives add sbg dummy",
+      "next": "r00b09"
+    },
+    {
+      "id": "r00b09",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #four sbm 4",
+      "next": "r00b10"
+    },
+    {
+      "id": "r00b10",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #three sbm 3",
+      "next": "r00b11"
+    },
+    {
+      "id": "r00b11",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #two sbm 2",
+      "next": "r00b12"
+    },
+    {
+      "id": "r00b12",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #one sbm 1"
+    },
+    {
+      "id": "r01b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 20,
+      "command": "execute as @a run scoreboard players add @s sbm 0",
+      "next": "r01b01"
+    },
+    {
+      "id": "r01b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbsel 0",
+      "next": "r01b02"
+    },
+    {
+      "id": "r01b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbpage 0",
+      "next": "r01b03"
+    },
+    {
+      "id": "r01b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sblook 0",
+      "next": "r01b04"
+    },
+    {
+      "id": "r01b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbdown 0",
+      "next": "r01b05"
+    },
+    {
+      "id": "r01b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbopen 0",
+      "next": "r01b06"
+    },
+    {
+      "id": "r01b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbpoints 0",
+      "next": "r01b07"
+    },
+    {
+      "id": "r01b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a unless score @s sbsnd matches 0..1 run scoreboard players set @s sbsnd 1",
+      "next": "r01b08"
+    },
+    {
+      "id": "r01b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a run scoreboard players add @s sbg 0"
+    },
+    {
+      "id": "r02b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players add @p[r=3] sbm 0",
+      "next": "r02b01"
+    },
+    {
+      "id": "r02b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players add @p[r=3,scores={sbm=0}] sbopen 1",
+      "next": "r02b02"
+    },
+    {
+      "id": "r02b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players add @p[r=3,scores={sbm=1..2}] sbsel 1",
+      "next": "r02b03"
+    },
+    {
+      "id": "r02b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players operation @p[r=3,scores={sbm=1..2}] sbsel %= #four sbm",
+      "next": "r02b04"
+    },
+    {
+      "id": "r02b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbm 1",
+      "next": "r02b05"
+    },
+    {
+      "id": "r02b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbsel 0",
+      "next": "r02b06"
+    },
+    {
+      "id": "r02b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbpage 0",
+      "next": "r02b07"
+    },
+    {
+      "id": "r02b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sblook 1",
+      "next": "r02b08"
+    },
+    {
+      "id": "r02b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbdown 0",
+      "next": "r02b09"
+    },
+    {
+      "id": "r02b09",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run playsound note.pling @p[r=3,scores={sbsnd=1}]",
+      "next": "r02b10"
+    },
+    {
+      "id": "r02b10",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run give @p[r=3,m=!creative] snowball 1",
+      "next": "r02b11"
+    },
+    {
+      "id": "r02b11",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run title @p[r=3,scores={sbm=3}] clear",
+      "next": "r02b12"
+    },
+    {
+      "id": "r02b12",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run title @p[r=3,scores={sbm=3}] actionbar §r",
+      "next": "r02b13"
+    },
+    {
+      "id": "r02b13",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=3}] sbm 0",
+      "next": "r02b14"
+    },
+    {
+      "id": "r02b14",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=3}] sbsel 0",
+      "next": "r02b15"
+    },
+    {
+      "id": "r02b15",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=3}] sbpage 0",
+      "next": "r02b16"
+    },
+    {
+      "id": "r02b16",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "kill @e[type=snowball]"
+    },
+    {
+      "id": "r03b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 2,
+      "command": "scoreboard players set @a sbg 0",
+      "next": "r03b01"
+    },
+    {
+      "id": "r03b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=0,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 1",
+      "next": "r03b02"
+    },
+    {
+      "id": "r03b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=1}] run scoreboard players set @s sbm 2",
+      "next": "r03b03"
+    },
+    {
+      "id": "r03b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=1}] run scoreboard players set @s sbpage 1",
+      "next": "r03b04"
+    },
+    {
+      "id": "r03b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=1}] run scoreboard players set @s sbsel 0",
+      "next": "r03b05"
+    },
+    {
+      "id": "r03b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=1}] run playsound random.orb @s",
+      "next": "r03b06"
+    },
+    {
+      "id": "r03b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=1,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 2",
+      "next": "r03b07"
+    },
+    {
+      "id": "r03b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=2}] run scoreboard players set @s sbm 2",
+      "next": "r03b08"
+    },
+    {
+      "id": "r03b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=2}] run scoreboard players set @s sbpage 2",
+      "next": "r03b09"
+    },
+    {
+      "id": "r03b09",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=2}] run scoreboard players set @s sbsel 0",
+      "next": "r03b10"
+    },
+    {
+      "id": "r03b10",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=2}] run playsound random.orb @s",
+      "next": "r03b11"
+    },
+    {
+      "id": "r03b11",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=2,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 3",
+      "next": "r03b12"
+    },
+    {
+      "id": "r03b12",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=3}] run scoreboard players set @s sbm 2",
+      "next": "r03b13"
+    },
+    {
+      "id": "r03b13",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=3}] run scoreboard players set @s sbpage 3",
+      "next": "r03b14"
+    },
+    {
+      "id": "r03b14",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=3}] run scoreboard players set @s sbsel 0",
+      "next": "r03b15"
+    },
+    {
+      "id": "r03b15",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=3}] run playsound random.orb @s",
+      "next": "r03b16"
+    },
+    {
+      "id": "r03b16",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=3,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 4",
+      "next": "r03b17"
+    },
+    {
+      "id": "r03b17",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=4}] run scoreboard players set @s sbm 0",
+      "next": "r03b18"
+    },
+    {
+      "id": "r03b18",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=4}] run scoreboard players set @s sbsel 0",
+      "next": "r03b19"
+    },
+    {
+      "id": "r03b19",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=4}] run scoreboard players set @s sbpage 0",
+      "next": "r03b20"
+    },
+    {
+      "id": "r03b20",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=4}] run title @s actionbar §r",
+      "next": "r03b21"
+    },
+    {
+      "id": "r03b21",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=4}] run playsound random.orb @s",
+      "next": "r03b22"
+    },
+    {
+      "id": "r03b22",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=0,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 5",
+      "next": "r03b23"
+    },
+    {
+      "id": "r03b23",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=5}] run scoreboard players set @s sbm 3",
+      "next": "r03b24"
+    },
+    {
+      "id": "r03b24",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=5}] run scoreboard players set @s sbpage 1",
+      "next": "r03b25"
+    },
+    {
+      "id": "r03b25",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=5}] run playsound random.orb @s",
+      "next": "r03b26"
+    },
+    {
+      "id": "r03b26",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=1,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 6",
+      "next": "r03b27"
+    },
+    {
+      "id": "r03b27",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=6}] run scoreboard players set @s sbm 3",
+      "next": "r03b28"
+    },
+    {
+      "id": "r03b28",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=6}] run scoreboard players set @s sbpage 2",
+      "next": "r03b29"
+    },
+    {
+      "id": "r03b29",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=6}] run playsound random.orb @s",
+      "next": "r03b30"
+    },
+    {
+      "id": "r03b30",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=2,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 7",
+      "next": "r03b31"
+    },
+    {
+      "id": "r03b31",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=7}] run scoreboard players set @s sbm 3",
+      "next": "r03b32"
+    },
+    {
+      "id": "r03b32",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=7}] run scoreboard players set @s sbpage 3",
+      "next": "r03b33"
+    },
+    {
+      "id": "r03b33",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=7}] run playsound random.orb @s",
+      "next": "r03b34"
+    },
+    {
+      "id": "r03b34",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=3,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 8",
+      "next": "r03b35"
+    },
+    {
+      "id": "r03b35",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=8}] run scoreboard players set @s sbm 1",
+      "next": "r03b36"
+    },
+    {
+      "id": "r03b36",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=8}] run scoreboard players set @s sbpage 0",
+      "next": "r03b37"
+    },
+    {
+      "id": "r03b37",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=8}] run scoreboard players set @s sbsel 0",
+      "next": "r03b38"
+    },
+    {
+      "id": "r03b38",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=0,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 9",
+      "next": "r03b39"
+    },
+    {
+      "id": "r03b39",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=9}] run scoreboard players set @s sbm 3",
+      "next": "r03b40"
+    },
+    {
+      "id": "r03b40",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=9}] run scoreboard players set @s sbpage 4",
+      "next": "r03b41"
+    },
+    {
+      "id": "r03b41",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=9}] run playsound random.orb @s",
+      "next": "r03b42"
+    },
+    {
+      "id": "r03b42",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=1,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 10",
+      "next": "r03b43"
+    },
+    {
+      "id": "r03b43",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=10}] run scoreboard players set @s sbm 3",
+      "next": "r03b44"
+    },
+    {
+      "id": "r03b44",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=10}] run scoreboard players set @s sbpage 5",
+      "next": "r03b45"
+    },
+    {
+      "id": "r03b45",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=10}] run playsound random.orb @s",
+      "next": "r03b46"
+    },
+    {
+      "id": "r03b46",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=2,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 11",
+      "next": "r03b47"
+    },
+    {
+      "id": "r03b47",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=11}] run scoreboard players set @s sbm 3",
+      "next": "r03b48"
+    },
+    {
+      "id": "r03b48",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=11}] run scoreboard players set @s sbpage 6",
+      "next": "r03b49"
+    },
+    {
+      "id": "r03b49",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=11}] run playsound random.orb @s",
+      "next": "r03b50"
+    },
+    {
+      "id": "r03b50",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=3,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 12",
+      "next": "r03b51"
+    },
+    {
+      "id": "r03b51",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=12}] run scoreboard players set @s sbm 1",
+      "next": "r03b52"
+    },
+    {
+      "id": "r03b52",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=12}] run scoreboard players set @s sbpage 0",
+      "next": "r03b53"
+    },
+    {
+      "id": "r03b53",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=12}] run scoreboard players set @s sbsel 0",
+      "next": "r03b54"
+    },
+    {
+      "id": "r03b54",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=0,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 13",
+      "next": "r03b55"
+    },
+    {
+      "id": "r03b55",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=13}] run scoreboard players set @s sbm 3",
+      "next": "r03b56"
+    },
+    {
+      "id": "r03b56",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=13}] run scoreboard players set @s sbpage 7",
+      "next": "r03b57"
+    },
+    {
+      "id": "r03b57",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=13}] run playsound random.orb @s",
+      "next": "r03b58"
+    },
+    {
+      "id": "r03b58",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=1,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 14",
+      "next": "r03b59"
+    },
+    {
+      "id": "r03b59",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=14}] run scoreboard players set @s sbm 3",
+      "next": "r03b60"
+    },
+    {
+      "id": "r03b60",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=14}] run scoreboard players set @s sbpage 8",
+      "next": "r03b61"
+    },
+    {
+      "id": "r03b61",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=14}] run playsound random.orb @s",
+      "next": "r03b62"
+    },
+    {
+      "id": "r03b62",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=2,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 15",
+      "next": "r03b63"
+    },
+    {
+      "id": "r03b63",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=15}] run scoreboard players set @s sbm 3",
+      "next": "r03b64"
+    },
+    {
+      "id": "r03b64",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=15}] run scoreboard players set @s sbpage 9",
+      "next": "r03b65"
+    },
+    {
+      "id": "r03b65",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=15}] run playsound random.orb @s",
+      "next": "r03b66"
+    },
+    {
+      "id": "r03b66",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=3,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 16",
+      "next": "r03b67"
+    },
+    {
+      "id": "r03b67",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=16}] run scoreboard players set @s sbm 1",
+      "next": "r03b68"
+    },
+    {
+      "id": "r03b68",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=16}] run scoreboard players set @s sbpage 0",
+      "next": "r03b69"
+    },
+    {
+      "id": "r03b69",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=16}] run scoreboard players set @s sbsel 0",
+      "next": "r03b70"
+    },
+    {
+      "id": "r03b70",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=1,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 17",
+      "next": "r03b71"
+    },
+    {
+      "id": "r03b71",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run tp @s 64 2 0",
+      "next": "r03b72"
+    },
+    {
+      "id": "r03b72",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run scoreboard players set @s sbm 0",
+      "next": "r03b73"
+    },
+    {
+      "id": "r03b73",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run scoreboard players set @s sbsel 0",
+      "next": "r03b74"
+    },
+    {
+      "id": "r03b74",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run scoreboard players set @s sbpage 0",
+      "next": "r03b75"
+    },
+    {
+      "id": "r03b75",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run title @s actionbar §r",
+      "next": "r03b76"
+    },
+    {
+      "id": "r03b76",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=17}] run playsound random.orb @s",
+      "next": "r03b77"
+    },
+    {
+      "id": "r03b77",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=2,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 18",
+      "next": "r03b78"
+    },
+    {
+      "id": "r03b78",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=18}] run effect @s night_vision 120 0 true",
+      "next": "r03b79"
+    },
+    {
+      "id": "r03b79",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=18}] run scoreboard players set @s sbm 2",
+      "next": "r03b80"
+    },
+    {
+      "id": "r03b80",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=18}] run scoreboard players set @s sbpage 1",
+      "next": "r03b81"
+    },
+    {
+      "id": "r03b81",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=18}] run scoreboard players set @s sbsel 0",
+      "next": "r03b82"
+    },
+    {
+      "id": "r03b82",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=18}] run playsound random.levelup @s",
+      "next": "r03b83"
+    },
+    {
+      "id": "r03b83",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=3,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 19",
+      "next": "r03b84"
+    },
+    {
+      "id": "r03b84",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=19}] run effect @s speed 60 1 true",
+      "next": "r03b85"
+    },
+    {
+      "id": "r03b85",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=19}] run scoreboard players set @s sbm 2",
+      "next": "r03b86"
+    },
+    {
+      "id": "r03b86",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=19}] run scoreboard players set @s sbpage 1",
+      "next": "r03b87"
+    },
+    {
+      "id": "r03b87",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=19}] run scoreboard players set @s sbsel 0",
+      "next": "r03b88"
+    },
+    {
+      "id": "r03b88",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=19}] run playsound random.levelup @s",
+      "next": "r03b89"
+    },
+    {
+      "id": "r03b89",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=4,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 20",
+      "next": "r03b90"
+    },
+    {
+      "id": "r03b90",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=20}] run scoreboard players set @s sbm 0",
+      "next": "r03b91"
+    },
+    {
+      "id": "r03b91",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=20}] run scoreboard players set @s sbsel 0",
+      "next": "r03b92"
+    },
+    {
+      "id": "r03b92",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=20}] run scoreboard players set @s sbpage 0",
+      "next": "r03b93"
+    },
+    {
+      "id": "r03b93",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=20}] run title @s actionbar §r",
+      "next": "r03b94"
+    },
+    {
+      "id": "r03b94",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=20}] run playsound random.orb @s",
+      "next": "r03b95"
+    },
+    {
+      "id": "r03b95",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=5,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 21",
+      "next": "r03b96"
+    },
+    {
+      "id": "r03b96",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=21}] run scoreboard players add @s sbpoints 1",
+      "next": "r03b97"
+    },
+    {
+      "id": "r03b97",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=21}] run give @s apple 4",
+      "next": "r03b98"
+    },
+    {
+      "id": "r03b98",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=21}] run scoreboard players set @s sbm 3",
+      "next": "r03b99"
+    },
+    {
+      "id": "r03b99",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=21}] run scoreboard players set @s sbpage 10",
+      "next": "r03b100"
+    },
+    {
+      "id": "r03b100",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=21}] run playsound random.levelup @s",
+      "next": "r03b101"
+    },
+    {
+      "id": "r03b101",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=6,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 22",
+      "next": "r03b102"
+    },
+    {
+      "id": "r03b102",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players add @s sbsnd 1",
+      "next": "r03b103"
+    },
+    {
+      "id": "r03b103",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players operation @s sbsnd %= #two sbm",
+      "next": "r03b104"
+    },
+    {
+      "id": "r03b104",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players set @s sbm 2",
+      "next": "r03b105"
+    },
+    {
+      "id": "r03b105",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players set @s sbpage 2",
+      "next": "r03b106"
+    },
+    {
+      "id": "r03b106",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players set @s sbsel 2",
+      "next": "r03b107"
+    },
+    {
+      "id": "r03b107",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=22}] run playsound random.orb @s",
+      "next": "r03b108"
+    },
+    {
+      "id": "r03b108",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=7,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 23",
+      "next": "r03b109"
+    },
+    {
+      "id": "r03b109",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=23}] run scoreboard players set @s sbm 0",
+      "next": "r03b110"
+    },
+    {
+      "id": "r03b110",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=23}] run scoreboard players set @s sbsel 0",
+      "next": "r03b111"
+    },
+    {
+      "id": "r03b111",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=23}] run scoreboard players set @s sbpage 0",
+      "next": "r03b112"
+    },
+    {
+      "id": "r03b112",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=23}] run title @s actionbar §r",
+      "next": "r03b113"
+    },
+    {
+      "id": "r03b113",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=23}] run playsound random.orb @s",
+      "next": "r03b114"
+    },
+    {
+      "id": "r03b114",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=8,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 24",
+      "next": "r03b115"
+    },
+    {
+      "id": "r03b115",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=24}] run scoreboard players set @s sbm 0",
+      "next": "r03b116"
+    },
+    {
+      "id": "r03b116",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=24}] run scoreboard players set @s sbsel 0",
+      "next": "r03b117"
+    },
+    {
+      "id": "r03b117",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=24}] run scoreboard players set @s sbpage 0",
+      "next": "r03b118"
+    },
+    {
+      "id": "r03b118",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=24}] run title @s actionbar §r",
+      "next": "r03b119"
+    },
+    {
+      "id": "r03b119",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=24}] run playsound random.orb @s",
+      "next": "r03b120"
+    },
+    {
+      "id": "r03b120",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=9,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 25",
+      "next": "r03b121"
+    },
+    {
+      "id": "r03b121",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=25}] run scoreboard players set @s sbm 0",
+      "next": "r03b122"
+    },
+    {
+      "id": "r03b122",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=25}] run scoreboard players set @s sbsel 0",
+      "next": "r03b123"
+    },
+    {
+      "id": "r03b123",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=25}] run scoreboard players set @s sbpage 0",
+      "next": "r03b124"
+    },
+    {
+      "id": "r03b124",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=25}] run title @s actionbar §r",
+      "next": "r03b125"
+    },
+    {
+      "id": "r03b125",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=25}] run playsound random.orb @s",
+      "next": "r03b126"
+    },
+    {
+      "id": "r03b126",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=10,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 26",
+      "next": "r03b127"
+    },
+    {
+      "id": "r03b127",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=26}] run scoreboard players set @s sbm 0",
+      "next": "r03b128"
+    },
+    {
+      "id": "r03b128",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=26}] run scoreboard players set @s sbsel 0",
+      "next": "r03b129"
+    },
+    {
+      "id": "r03b129",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=26}] run scoreboard players set @s sbpage 0",
+      "next": "r03b130"
+    },
+    {
+      "id": "r03b130",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=26}] run title @s actionbar §r",
+      "next": "r03b131"
+    },
+    {
+      "id": "r03b131",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=26}] run playsound random.orb @s",
+      "next": "r03b132"
+    },
+    {
+      "id": "r03b132",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set @a sbg 0",
+      "next": "r03b133"
+    },
+    {
+      "id": "r03b133",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[rx=-86,rxm=-90] run scoreboard players set @s sblook 1",
+      "next": "r03b134"
+    },
+    {
+      "id": "r03b134",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[rxm=-80] run scoreboard players set @s sblook 0"
+    },
+    {
+      "id": "r04b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 2,
+      "command": "scoreboard players set @a sbg 0",
+      "next": "r04b01"
+    },
+    {
+      "id": "r04b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 27",
+      "next": "r04b02"
+    },
+    {
+      "id": "r04b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=27}] run scoreboard players set @s sbm 0",
+      "next": "r04b03"
+    },
+    {
+      "id": "r04b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=27}] run scoreboard players set @s sbsel 0",
+      "next": "r04b04"
+    },
+    {
+      "id": "r04b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=27}] run scoreboard players set @s sbpage 0",
+      "next": "r04b05"
+    },
+    {
+      "id": "r04b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=27}] run title @s actionbar §r",
+      "next": "r04b06"
+    },
+    {
+      "id": "r04b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=27}] run playsound random.orb @s",
+      "next": "r04b07"
+    },
+    {
+      "id": "r04b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 28",
+      "next": "r04b08"
+    },
+    {
+      "id": "r04b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=28}] run scoreboard players set @s sbm 1",
+      "next": "r04b09"
+    },
+    {
+      "id": "r04b09",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=28}] run scoreboard players set @s sbpage 0",
+      "next": "r04b10"
+    },
+    {
+      "id": "r04b10",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=28}] run scoreboard players set @s sbsel 0",
+      "next": "r04b11"
+    },
+    {
+      "id": "r04b11",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=1,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 29",
+      "next": "r04b12"
+    },
+    {
+      "id": "r04b12",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=29}] run scoreboard players set @s sbm 2",
+      "next": "r04b13"
+    },
+    {
+      "id": "r04b13",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=29}] run scoreboard players set @s sbpage 1",
+      "next": "r04b14"
+    },
+    {
+      "id": "r04b14",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=29}] run scoreboard players set @s sbsel 0",
+      "next": "r04b15"
+    },
+    {
+      "id": "r04b15",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=2,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 30",
+      "next": "r04b16"
+    },
+    {
+      "id": "r04b16",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=30}] run scoreboard players set @s sbm 2",
+      "next": "r04b17"
+    },
+    {
+      "id": "r04b17",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=30}] run scoreboard players set @s sbpage 1",
+      "next": "r04b18"
+    },
+    {
+      "id": "r04b18",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=30}] run scoreboard players set @s sbsel 0",
+      "next": "r04b19"
+    },
+    {
+      "id": "r04b19",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=3,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 31",
+      "next": "r04b20"
+    },
+    {
+      "id": "r04b20",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=31}] run scoreboard players set @s sbm 2",
+      "next": "r04b21"
+    },
+    {
+      "id": "r04b21",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=31}] run scoreboard players set @s sbpage 1",
+      "next": "r04b22"
+    },
+    {
+      "id": "r04b22",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=31}] run scoreboard players set @s sbsel 0",
+      "next": "r04b23"
+    },
+    {
+      "id": "r04b23",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=4,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 32",
+      "next": "r04b24"
+    },
+    {
+      "id": "r04b24",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=32}] run scoreboard players set @s sbm 2",
+      "next": "r04b25"
+    },
+    {
+      "id": "r04b25",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=32}] run scoreboard players set @s sbpage 2",
+      "next": "r04b26"
+    },
+    {
+      "id": "r04b26",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=32}] run scoreboard players set @s sbsel 0",
+      "next": "r04b27"
+    },
+    {
+      "id": "r04b27",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=5,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 33",
+      "next": "r04b28"
+    },
+    {
+      "id": "r04b28",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=33}] run scoreboard players set @s sbm 2",
+      "next": "r04b29"
+    },
+    {
+      "id": "r04b29",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=33}] run scoreboard players set @s sbpage 2",
+      "next": "r04b30"
+    },
+    {
+      "id": "r04b30",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=33}] run scoreboard players set @s sbsel 0",
+      "next": "r04b31"
+    },
+    {
+      "id": "r04b31",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=6,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 34",
+      "next": "r04b32"
+    },
+    {
+      "id": "r04b32",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=34}] run scoreboard players set @s sbm 2",
+      "next": "r04b33"
+    },
+    {
+      "id": "r04b33",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=34}] run scoreboard players set @s sbpage 2",
+      "next": "r04b34"
+    },
+    {
+      "id": "r04b34",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=34}] run scoreboard players set @s sbsel 0",
+      "next": "r04b35"
+    },
+    {
+      "id": "r04b35",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=7,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 35",
+      "next": "r04b36"
+    },
+    {
+      "id": "r04b36",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=35}] run scoreboard players set @s sbm 2",
+      "next": "r04b37"
+    },
+    {
+      "id": "r04b37",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=35}] run scoreboard players set @s sbpage 3",
+      "next": "r04b38"
+    },
+    {
+      "id": "r04b38",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=35}] run scoreboard players set @s sbsel 0",
+      "next": "r04b39"
+    },
+    {
+      "id": "r04b39",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=8,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 36",
+      "next": "r04b40"
+    },
+    {
+      "id": "r04b40",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=36}] run scoreboard players set @s sbm 2",
+      "next": "r04b41"
+    },
+    {
+      "id": "r04b41",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=36}] run scoreboard players set @s sbpage 3",
+      "next": "r04b42"
+    },
+    {
+      "id": "r04b42",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=36}] run scoreboard players set @s sbsel 0",
+      "next": "r04b43"
+    },
+    {
+      "id": "r04b43",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=9,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 37",
+      "next": "r04b44"
+    },
+    {
+      "id": "r04b44",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=37}] run scoreboard players set @s sbm 2",
+      "next": "r04b45"
+    },
+    {
+      "id": "r04b45",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=37}] run scoreboard players set @s sbpage 3",
+      "next": "r04b46"
+    },
+    {
+      "id": "r04b46",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=37}] run scoreboard players set @s sbsel 0",
+      "next": "r04b47"
+    },
+    {
+      "id": "r04b47",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=10,sbdown=0,sbg=0},rx=90,rxm=86] run scoreboard players set @s sbg 38",
+      "next": "r04b48"
+    },
+    {
+      "id": "r04b48",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=38}] run scoreboard players set @s sbm 2",
+      "next": "r04b49"
+    },
+    {
+      "id": "r04b49",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=38}] run scoreboard players set @s sbpage 2",
+      "next": "r04b50"
+    },
+    {
+      "id": "r04b50",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbg=38}] run scoreboard players set @s sbsel 0",
+      "next": "r04b51"
+    },
+    {
+      "id": "r04b51",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set @a sbg 0",
+      "next": "r04b52"
+    },
+    {
+      "id": "r04b52",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[rx=90,rxm=86] run scoreboard players set @s sbdown 1",
+      "next": "r04b53"
+    },
+    {
+      "id": "r04b53",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[rx=86] run scoreboard players set @s sbdown 0"
+    },
+    {
+      "id": "r05b00",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 4,
+      "command": "execute as @a[scores={sbm=1,sbsel=0}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§6✦ 雪 球 菜 单 ✦ §8║\n§8╠══════════════════╣\n§8║ §e▶ §f① §e传送中心 §8║\n§8║   §7② §f个人面板 §8║\n§8║   §7③ §f服务器玩法 §8║\n§8║   §7④ §f关闭菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b01"
+    },
+    {
+      "id": "r05b01",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§6✦ 雪 球 菜 单 ✦ §8║\n§8╠══════════════════╣\n§8║   §7① §f传送中心 §8║\n§8║ §e▶ §f② §e个人面板 §8║\n§8║   §7③ §f服务器玩法 §8║\n§8║   §7④ §f关闭菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b02"
+    },
+    {
+      "id": "r05b02",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=2}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§6✦ 雪 球 菜 单 ✦ §8║\n§8╠══════════════════╣\n§8║   §7① §f传送中心 §8║\n§8║   §7② §f个人面板 §8║\n§8║ §e▶ §f③ §e服务器玩法 §8║\n§8║   §7④ §f关闭菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b03"
+    },
+    {
+      "id": "r05b03",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=1,sbsel=3}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§6✦ 雪 球 菜 单 ✦ §8║\n§8╠══════════════════╣\n§8║   §7① §f传送中心 §8║\n§8║   §7② §f个人面板 §8║\n§8║   §7③ §f服务器玩法 §8║\n§8║ §e▶ §f④ §e关闭菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b04"
+    },
+    {
+      "id": "r05b04",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=0}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 传送中心 ◇ §8║\n§8╠══════════════════╣\n§8║ §e▶ §f① §a回到大厅 §8║\n§8║   §7② §f夜视体验 §8║\n§8║   §7③ §f速度提升 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b05"
+    },
+    {
+      "id": "r05b05",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 传送中心 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f回到大厅 §8║\n§8║ §e▶ §f② §a夜视体验 §8║\n§8║   §7③ §f速度提升 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b06"
+    },
+    {
+      "id": "r05b06",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=2}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 传送中心 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f回到大厅 §8║\n§8║   §7② §f夜视体验 §8║\n§8║ §e▶ §f③ §a速度提升 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b07"
+    },
+    {
+      "id": "r05b07",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=1,sbsel=3}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 传送中心 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f回到大厅 §8║\n§8║   §7② §f夜视体验 §8║\n§8║   §7③ §f速度提升 §8║\n§8║ §e▶ §f④ §a返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b08"
+    },
+    {
+      "id": "r05b08",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=0}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 个人面板 ◇ §8║\n§8╠══════════════════╣\n§8║ §e▶ §f① §a查看属性 §8║\n§8║   §7② §f每日签到 §8║\n§8║   §7③ §f菜单音效 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b09"
+    },
+    {
+      "id": "r05b09",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 个人面板 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f查看属性 §8║\n§8║ §e▶ §f② §a每日签到 §8║\n§8║   §7③ §f菜单音效 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b10"
+    },
+    {
+      "id": "r05b10",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=2}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 个人面板 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f查看属性 §8║\n§8║   §7② §f每日签到 §8║\n§8║ §e▶ §f③ §a菜单音效 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b11"
+    },
+    {
+      "id": "r05b11",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=2,sbsel=3}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 个人面板 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f查看属性 §8║\n§8║   §7② §f每日签到 §8║\n§8║   §7③ §f菜单音效 §8║\n§8║ §e▶ §f④ §a返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b12"
+    },
+    {
+      "id": "r05b12",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=0}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 服务器玩法 ◇ §8║\n§8╠══════════════════╣\n§8║ §e▶ §f① §a玩法规则 §8║\n§8║   §7② §f新手提示 §8║\n§8║   §7③ §f关于菜单 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b13"
+    },
+    {
+      "id": "r05b13",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 服务器玩法 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f玩法规则 §8║\n§8║ §e▶ §f② §a新手提示 §8║\n§8║   §7③ §f关于菜单 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b14"
+    },
+    {
+      "id": "r05b14",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=2}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 服务器玩法 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f玩法规则 §8║\n§8║   §7② §f新手提示 §8║\n§8║ §e▶ §f③ §a关于菜单 §8║\n§8║   §7④ §f返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b15"
+    },
+    {
+      "id": "r05b15",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=2,sbpage=3,sbsel=3}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§b◇ 服务器玩法 ◇ §8║\n§8╠══════════════════╣\n§8║   §7① §f玩法规则 §8║\n§8║   §7② §f新手提示 §8║\n§8║   §7③ §f关于菜单 §8║\n§8║ §e▶ §f④ §a返回主菜单 §8║\n§8╚══════════════════╝\n§7雪球切换 §8· §a抬头确认 §8· §c低头返回",
+      "next": "r05b16"
+    },
+    {
+      "id": "r05b16",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 返回大厅 ✦ §8║\n§8╠══════════════════╣\n§8║ §7传送回大厅      §8║\n§8║ §7安全点 §e64 2 0 §8║\n§8╚══════════════════╝\n§a抬头确认 §8· §c低头取消",
+      "next": "r05b17"
+    },
+    {
+      "id": "r05b17",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=2}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 夜视体验 ✦ §8║\n§8╠══════════════════╣\n§8║ §7夜视 §e120 §7秒 §8║\n§8║ §8可被其他效果覆盖 §8║\n§8╚══════════════════╝\n§a抬头确认 §8· §c低头取消",
+      "next": "r05b18"
+    },
+    {
+      "id": "r05b18",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=3}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 速度提升 ✦ §8║\n§8╠══════════════════╣\n§8║ §7速度 II §e60 §7秒 §8║\n§8║ §8可被其他效果覆盖 §8║\n§8╚══════════════════╝\n§a抬头确认 §8· §c低头取消",
+      "next": "r05b19"
+    },
+    {
+      "id": "r05b19",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=5}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 每日签到 ✦ §8║\n§8╠══════════════════╣\n§8║ §7积分 §a+1      §8║\n§8║ §7苹果 §f×4     §8║\n§8║ §8测试版可重复签到 §8║\n§8╚══════════════════╝\n§a抬头确认 §8· §c低头取消",
+      "next": "r05b20"
+    },
+    {
+      "id": "r05b20",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=7}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§a◇ 玩法规则 ◇ §8║\n§8╠══════════════════╣\n§8║ §7① 禁止作弊/外挂 §8║\n§8║ §7② 尊重其他玩家 §8║\n§8║ §7③ 听从管理员   §8║\n§8║ §7④ Bug 请反馈   §8║\n§8╚══════════════════╝\n§c低头返回 §8· §a抬头关闭",
+      "next": "r05b21"
+    },
+    {
+      "id": "r05b21",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=8}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§a◇ 新手提示 ◇ §8║\n§8╠══════════════════╣\n§8║ §7抛雪球：切换/打开 §8║\n§8║ §7抬头：确认/进入 §8║\n§8║ §7低头：返回/关闭 §8║\n§8╚══════════════════╝\n§c低头返回 §8· §a抬头关闭",
+      "next": "r05b22"
+    },
+    {
+      "id": "r05b22",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=9}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§a◇ 关于菜单 ◇ §8║\n§8╠══════════════════╣\n§8║ §7雪球菜单 §ev1.0 §8║\n§8║ §7网易 §f1.21.130 §8║\n§8║ §7三级菜单 · 计分板驱动 §8║\n§8╚══════════════════╝\n§c低头返回 §8· §a抬头关闭",
+      "next": "r05b23"
+    },
+    {
+      "id": "r05b23",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=10}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§a✦ 签到成功 ✦ §8║\n§8╠══════════════════╣\n§8║ §7积分 §a+1      §8║\n§8║ §7苹果 §f×4     §8║\n§8║ §8感谢支持！      §8║\n§8╚══════════════════╝\n§a抬头关闭 §8· §c低头返回",
+      "next": "r05b24"
+    },
+    {
+      "id": "r05b24",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=4,sbsnd=0}] run titleraw @s actionbar {\"rawtext\":[{\"text\":\"§l§b个人面板\\n§7玩家 \"},{\"selector\":\"@s\"},{\"text\":\"\\n§7菜单 \"},{\"score\":{\"name\":\"@s\",\"objective\":\"sbopen\"}},{\"text\":\"\\n§7积分 \"},{\"score\":{\"name\":\"@s\",\"objective\":\"sbpoints\"}},{\"text\":\"\\n§7音效 §c关\\n§8▬▬▬▬▬▬▬▬▬▬\\n§7低头返回\"}]}",
+      "next": "r05b25"
+    },
+    {
+      "id": "r05b25",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=6,sbsnd=0}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 菜单音效 ✦ §8║\n§8╠══════════════════╣\n§8║ §7当前状态：§c关 §8║\n§8║ §7抬头切换 开/关  §8║\n§8║                    §8║\n§8╚══════════════════╝\n§a抬头切换 §8· §c低头返回",
+      "next": "r05b26"
+    },
+    {
+      "id": "r05b26",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=4,sbsnd=1}] run titleraw @s actionbar {\"rawtext\":[{\"text\":\"§l§b个人面板\\n§7玩家 \"},{\"selector\":\"@s\"},{\"text\":\"\\n§7菜单 \"},{\"score\":{\"name\":\"@s\",\"objective\":\"sbopen\"}},{\"text\":\"\\n§7积分 \"},{\"score\":{\"name\":\"@s\",\"objective\":\"sbpoints\"}},{\"text\":\"\\n§7音效 §a开\\n§8▬▬▬▬▬▬▬▬▬▬\\n§7低头返回\"}]}",
+      "next": "r05b27"
+    },
+    {
+      "id": "r05b27",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute as @a[scores={sbm=3,sbpage=6,sbsnd=1}] run title @s actionbar §8╔══════════════════╗\n§8║ §l§d✦ 菜单音效 ✦ §8║\n§8╠══════════════════╣\n§8║ §7当前状态：§a开 §8║\n§8║ §7抬头切换 开/关  §8║\n§8║                    §8║\n§8╚══════════════════╝\n§a抬头切换 §8· §c低头返回"
+    }
+  ]
+}

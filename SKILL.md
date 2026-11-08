@@ -1,0 +1,305 @@
+---
+name: mcbe-command-blocks
+description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、FMBE/MBE 显示实体（playanimation + Molang），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、行为包函数或地图小游戏机制时。"
+---
+
+# MCBE 命令与命令方块链
+
+> **只适用于 Minecraft 基岩版（Bedrock Edition）**。Java 版的 `data`、NBT、`attribute`、`bossbar`、`team`、`item`、`forceload` 等在这里**不存在**。
+> 目标版本：**网易我的世界 1.21.130（协议 898）**。命令边界以网易开发者文档 + 游戏内 `/help` 为准；
+> 国际版 1.21.x 的部分新命令（`camera`、`inputpermission` 等）网易未验证，默认不要用。
+
+## 0. 开工前先确认
+
+1. **运行环境**：命令方块地图？行为包 + `tick.json`？还是聊天栏手动执行？
+2. **触发方式**：玩家操作、红石信号、还是每 tick 轮询？
+3. **玩家规模**：单人、本地联机、还是服务器（决定选择器与状态归属）。
+4. **版本**：`/help` 里是否有目标命令；不同版本的方块状态名可能不同。
+
+如果用户给的是 Java 语法，先翻译成基岩版；如果用户明确要 Java 版，说明本技能不适用。
+
+## 1. 设计流程（按顺序做，不要跳步）
+
+### 1.1 写清行为契约
+
+用 6 行回答：**谁触发 / 起始状态 / 中间状态 / 结束状态 / 失败时怎样 / 如何重置**。
+多人游戏还要写：状态是全局的还是每玩家的？玩家退出、死亡、迟到加入时怎么办？
+
+### 1.2 建状态表
+
+每个变量一行，先定状态再写命令：
+
+| 变量 | 载体 | 归属 | 类型/范围 | 初值 | 谁写 | 谁读 |
+|---|---|---|---|---|---|---|
+| `#state` | 计分板 `arena` | 全局假玩家 | 0=idle 1=count 2=run | 0 | 开始/结束链 | 所有判断 |
+| `@s.coins` | 计分板 `coins` | 每玩家 | int | 0 | 结算链 | 商店 |
+
+**基岩版只有 `dummy` 计分板**，没有自动死亡/击杀/生命值统计。所有状态都要显式读写。
+
+### 1.3 定时间模型
+
+- 需要 **每 tick** 轮询 → `repeat` + `Always Active` + `Delay 0`（20 次/秒）。
+- 需要 **每秒** 一次 → `repeat` 计数到 20 再复位，或 `repeat` + `Delay 20`。
+- 需要 **红石上升沿** → `impulse` + `Needs Redstone`（按钮/拉杆/压力板）。
+- 需要 **延迟 N tick** → `chain` 的 `Delay in Ticks`，或计分板倒计时（更可控、可暂停）。
+- 需要 **跨 tick 的长流程** → 状态机 + 每 tick 推进，不要用超长链硬扛。
+
+> 基岩版命令方块只在**偶数 tick（C-tick）**响应红石信号，所以红石时钟最高约 **10 次/秒**；`Always Active` 的 `repeat` 才能到 20 次/秒。
+
+### 1.4 分阶段
+
+一条链只做一件事，按固定顺序排：
+
+```
+INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
+```
+
+- **INPUT**：读按钮、物品、区域、分数。
+- **VALIDATE**：用 `execute if ...` / 纯条件 `execute` 门禁；不通过时，后面的 Conditional 块会跳过（Unconditional 块仍会执行）。
+- **TRANSITION**：改状态（计分板/标签/方块）。
+- **OUTPUT**：标题、音效、粒子、给予物品、生成实体。
+- **CLEANUP**：无条件复位临时标记（放在链尾，且设为 unconditional）。
+
+### 1.5 排布
+
+- 一条主干直线，`chain` 方块**背对**前一个方块（箭头指向下游）。
+- 条件块必须紧挨在它的判断对象**正后方**；拐弯/分支后“身后”的方块会变。
+- 分支用**并排的多条链**，或同一行里多个 `execute if ... run ...`（彼此不阻塞）。
+- 每个方块命名（Hover Note）写成 `阶段.编号.作用`，方便调试。
+
+### 1.6 写命令并自检
+
+- 一条命令一行；命令方块里不用写开头的 `/`（写了也能用）。
+- 选择器能窄就窄：`@e[type=zombie,tag=wave,c=1]`，不要裸 `@e`。
+- 每个条件都用 `execute if/unless` 表达；纯条件 `execute if ...`（不带 `run`）本身就是合法门。
+- 交付前跑一遍 `scripts/chain_lint.py`（见第 5 节）。
+
+### 1.7 写测试计划
+
+至少覆盖：单次触发、连续快速触发、边界值（0/最大值）、多人同时触发、玩家中途加入、区块卸载再加载、重置后再来一轮。
+
+### 1.8 按请求类型调整输出
+
+| 用户请求 | 输出 |
+|---|---|
+| “这条命令怎么写 / 为什么报错” | 直接给正确命令 + 1–2 个基岩版坑 + 一句验证方法，不要强行输出整套设计 |
+| “帮我调试” | 先按 `references/debugging.md` 的三层诊断定位，再给最小修复 |
+| “设计一个系统 / 命令方块链” | 走完 1.1–1.7，交付 design + spec + plan + tests |
+
+不确定版本时，先说明假设（如“按 1.21.x”），并给出用 `/help` 验证的方法。
+
+## 2. 不可违反的基岩版事实
+
+| 事实 | 后果 |
+|---|---|
+| 没有 `data`、`nbt=`、实体/方块 NBT | 不能读写字条、箱子、实体 NBT；用计分板/标签/方块状态代替 |
+| `execute` 只有 11 个子命令 | 没有 `store`、`detect`、`runasync`、`if data/items/predicate/biome/dimension/loaded` |
+| 计分板只有 `dummy` | 没有 `deathCount`、`health`、`xp` 等自动准则；死亡/击杀要外部事件或自建检测 |
+| 没有 `/team`、`/bossbar`、`/attribute`、`/item`、`/forceload` | 用 tag/计分板、titleraw/actionbar、effect、replaceitem、tickingarea 替代 |
+| 网易未验证/未实装：`camera`、`inputpermission`、`dialogue`、`loot`、`place`、`recipe`、`scriptevent`、`fog` | 用 `camerashake`、`tp ... facing`、`title`、`structure`、`give` 等替代；详见 `references/netease-1.21.130.md` |
+| `schedule` / `function` 在网易官方命令列表内 | 可以调度 Add-on 函数；服务器未启用函数时不要依赖 |
+| 方块状态写作 `["state"="value"]` | `[facing=east]` 是 Java 语法，基岩版会解析失败 |
+| 文本组件用 `{"rawtext":[{"text":"..."}]}` + `§` 颜色码 | Java 的 `color`、`clickEvent`、`hoverEvent` 不可移植 |
+| 红石只在偶数 tick 响应 | 红石时钟最高 10 Hz；`Always Active` 的 repeat 才是 20 Hz |
+| 条件链检查的是**身后方块**的成功次数 | 链式条件只反映紧邻前驱；条件失败仍会把触发传给下一个方块 |
+| 链式循环每 tick 最多执行一次 | 环状链不会在同一 tick 内无限循环 |
+| 命令方块只在加载/常加载区块运行 | 远处机关要用 `tickingarea` |
+| 命令文本上限 32,500 字符 | 超长命令要拆成函数或多个方块 |
+| 函数单次调用最多 10,000 条命令 | 大循环要分 tick，不能靠函数递归硬跑 |
+
+**网易 1.21.130 特别提醒**：
+
+- `schedule` **有**（网易官方命令列表明确列出），不要删；它调度的是 Add-on 函数。
+- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先用 AuroraBuild 的 `command_upgrader` 升级。
+- `tickingarea`、`structure`、`testfor`/`testforblocks`、`titleraw`、`camerashake`、`playanimation`、`event`、`damage` 在网易地图中实际使用，属于可用集合。
+- 详细边界见 `references/netease-1.21.130.md`。
+
+## 3. 命令方块速查
+
+### 3.1 三种类型
+
+| 类型 | 颜色 | 触发 | 典型用途 |
+|---|---|---|---|
+| `Impulse` | 橙 | 每次被激活一次 | 按钮、拉杆、一次性事件 |
+| `Repeat` | 紫 | 激活期间每 tick（或每 delay tick） | 时钟、轮询、状态机推进 |
+| `Chain` | 青 | 被前一个方块触发 | 顺序执行的步骤 |
+
+### 3.2 基岩版五个关键设置
+
+| 设置 | 取值 | 默认 | 说明 |
+|---|---|---|---|
+| Block Type | Impulse / Chain / Repeat | Impulse | 见上表 |
+| Condition | Unconditional / Conditional | Unconditional | Conditional 检查**身后**方块成功次数 > 0 |
+| Redstone | Needs Redstone / Always Active | Impulse/Repeat 默认 Needs；Chain 默认 Always | Chain 的 Always Active 只免除红石，仍要前驱触发 |
+| Delay in Ticks | 0..N | 0 | Impulse/Repeat 的 0 与 1 等效；Chain 的 0（同 tick）与 1（下一 tick）不同 |
+| Execute on First Tick | 开/关 | 开 | 仅 Repeat：激活后是否立刻跑第一次 |
+
+### 3.3 执行时序（背下来）
+
+```
+同一 tick：
+  repeat 执行 → 触发它面前的 chain → chain 按顺序逐个执行
+  条件 chain 检查“身后”方块成功次数；失败则不执行，但仍触发下一个
+  每个 chain 每 tick 最多执行一次（环只走一圈）
+
+带 delay：
+  chain 在 delay 后继续；不要用“条件失败”来截断整条延迟链，
+  条件只决定该方块自己是否执行。需要截断就加一个显式门方块。
+```
+
+### 3.4 成功次数不是 0/1
+
+基岩版命令方块的成功次数是**受影响的数量**（玩家数、方块数、命令返回值），不是 Java 的 0/1。
+所以 `execute as @a[...] run ...` 后面的 conditional chain 可以当“有没有人”的门；比较器也能读出这个数。
+
+## 4. 状态、门与常用配方
+
+### 4.1 全局状态 vs 每玩家状态
+
+```mcfunction
+# 全局：假玩家，名字以 # 开头，不会出现在侧边栏
+scoreboard players set #state arena 1
+scoreboard players add #tick arena 1
+
+# 每玩家：@s 或具体玩家名
+execute as @a run scoreboard players add @s coins 1
+execute as @a[scores={coins=10..}] run ...
+```
+
+### 4.2 四种门
+
+```mcfunction
+# AND：两个条件都成立
+execute if score #a obj matches 1 if score #b obj matches 1 run say both
+
+# OR：任一成立（先置标记，再判断）
+execute if score #a obj matches 1 run scoreboard players set #flag obj 1
+execute if score #b obj matches 1 run scoreboard players set #flag obj 1
+execute if score #flag obj matches 1 run say either
+
+# NOT
+execute unless entity @e[type=zombie,tag=wave] run say cleared
+
+# 纯条件门（不带 run）：成功则让后面的 conditional chain 继续
+execute if score #stock shop matches 1..
+```
+
+### 4.3 计数器、倒计时、冷却
+
+```mcfunction
+# 每秒时钟
+scoreboard players add #tick arena 1
+execute if score #tick arena matches 20.. run scoreboard players set #tick arena 0
+
+# 倒计时（只在 >0 时减）
+execute if score #count arena matches 1.. run scoreboard players remove #count arena 1
+
+# 冷却（每 tick 减，到 0 停止）
+execute if score #cd obj matches 1.. run scoreboard players remove #cd obj 1
+
+# 取模翻转 0/1
+scoreboard players operation #state obj %= #two obj
+```
+
+### 4.4 分支不要用条件链硬串
+
+错误直觉：`if 不成立 → 后面都不执行`。
+实际：条件块失败会**继续触发**下一个块；下一个块若是 unconditional 就会执行。
+所以分支写成彼此独立的 `execute if ... run ...`，或用独立链，不要指望“断链”。
+
+### 4.5 FMBE/MBE 显示实体
+
+用狐狸/盔甲架 + 主手/副手物品 + `playanimation` + Molang 伪装方块或模型：
+
+- **FMBE**：狐狸 + 主手物品；1 条初始化 + 7 条变量/姿态 `playanimation`（共 8 条）；一实体一显示。
+- **MBE**：盔甲架 + 副手物品；命令更少，但有碰撞箱。
+- **SMBE / SMBE-EX / SDME**：社区变体；SDME 在网易当前不可用。
+- 前置：成年狐狸、`replaceitem`、`tag`、隐身/抗性/消音、`tickingarea`、`structure save/load`。
+- 变量：`v.xpos/ypos/zpos`（1/16 格）、`v.xrot/yrot/zrot`（度）、`v.scale/xzscale/yscale`、`v.xbasepos/...`。
+- 每条 `playanimation` 的顺序不能乱；第一条控制器必须是 `controller.animation.fox.move`。
+- 显示是客户端视觉，不能当方块检测；一个方块一个实体，先算性能预算。
+- 完整前置、8 条命令、变量表、MBE 尺寸/旋转、例子拆解见 `references/fmbe-mbe.md`。
+
+## 5. 交付物与工具
+
+被要求设计命令方块链时，**不要只丢一堆命令**。交付：
+
+1. `design.md`：行为契约、状态表、时序、ASCII 排布、失败/重置路径。
+2. `spec.json`：按 `assets/chain-spec.schema.json` 描述每个方块（类型、条件、红石、延迟、命令、next）。
+3. **运行 linter**：
+
+   ```bash
+   python3 scripts/chain_lint.py spec.json --format markdown
+   ```
+
+   把输出的构建表（方块顺序、设置、坐标、命令）和错误/警告一并交付。
+4. 测试清单（单次/连续/边界/多人/重载/重置）。
+5. 游戏内搭建步骤：先放哪个、朝哪、每个方块的设置、需要的计分板与 gamerule。
+
+linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参数、条件链拓扑、孤立块、环、相邻性、红石频率、延迟语义、`dummy` 计分板误用等。
+
+### 交付模板
+
+```markdown
+## 设计：<名字>
+
+### 1. 行为契约
+- 触发 / 起始状态 / 结束状态 / 失败行为 / 重置
+
+### 2. 状态表
+| 变量 | 载体 | 归属 | 范围 | 初值 | 写入 | 读取 |
+
+### 3. 时序与链图
+- 时钟：20 Hz / 10 Hz / 事件驱动
+- 链图（repeat → chain → ...）
+- 延迟/超时/取消
+
+### 4. 构建表
+| # | 方块 | 类型 | 条件 | 红石 | 延迟 | 坐标/朝向 | 命令 |
+
+### 5. 测试
+- [ ] 单次 / 连续 / 边界 / 多人 / 重载 / 重置
+```
+
+## 6. 回答前自检
+
+- [ ] 每条命令都能在基岩版解析（没有 Java 残留）。
+- [ ] 每个链段都有明确的头（`repeat` 或 `impulse`），没有孤立 `chain`。
+- [ ] 条件方块紧贴在判断对象的正后方；拐弯处重新确认“身后”。
+- [ ] 每个状态变量都有初值、写入点和清理点。
+- [ ] 多人：选择器不会把 A 的状态用到 B 身上。
+- [ ] 区块加载：远处机关有 `tickingarea`。
+- [ ] 时序：红石 10 Hz vs Always Active 20 Hz 说清楚。
+- [ ] 存在重置路径，且重置链本身不会被旧状态卡住。
+- [ ] 已运行 linter，0 error。
+
+## 7. 参考文件导航
+
+| 文件 | 什么时候读 |
+|---|---|
+| `references/command-block-mechanics.md` | 需要精确的方块时序、条件链、成功次数、限制 |
+| `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
+| `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
+| `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |
+| `references/scoreboard-memory.md` | 用 dummy 计分板存状态、做数学、编码 |
+| `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
+| `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
+| `references/functions-and-packs.md` | 行为包、`.mcfunction`、`tick.json`、manifest、schedule |
+| `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
+| `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |
+| `references/netease-1.21.130.md` | 网易命令边界、`schedule` 结论、未验证命令、旧语法升级 |
+| `references/netease-corpus-patterns.md` | 真实网易地图的菜单/状态/结构/表现惯用法 |
+| `assets/chain-spec.schema.json` | 写 spec.json 时 |
+| `examples/` | 需要完整范例：倒计时、商店、开关灯 |
+
+## 8. 主要事实来源
+
+- [Command Block — Minecraft Wiki](https://minecraft.wiki/w/Command_Block)（类型、条件、延迟、C-tick、链式触发）
+- [Commands/execute — Minecraft Wiki](https://minecraft.wiki/w/Commands/execute)（基岩版 11 个子命令、深度优先 fork）
+- [Target selectors — Minecraft Wiki](https://minecraft.wiki/w/Target_selectors)（基岩版参数：`r/rm`、`c`、`family`、`hasitem`、`haspermission`）
+- [Commands/scoreboard — Minecraft Wiki](https://minecraft.wiki/w/Commands/scoreboard)（仅 `dummy`、`random`、`test`、`operation`）
+- [Function (Bedrock Edition) — Minecraft Wiki](https://minecraft.wiki/w/Function_(Bedrock_Edition))（`tick.json`、10,000 条限制）
+- [Minecraft Creator Docs — Commands](https://learn.microsoft.com/en-us/minecraft/creator/commands/)（各命令的基岩版签名）
+- [网易开发者官网 — 命令列表及概述](https://dev.mc.163.com/dev/mcmanual/mc-dev/mconline/10-addon教程/第04章：指令系统，你的创作管家/课程04.命令列表及概述.html)（网易 1.21.130 命令边界；明确列出 `schedule`，标注 `fog` 未实装）
+- 12 个真实网易地图（`.bdx`/`.mcworld`）的 AuroraStructure 解析语料（18,945 条命令）

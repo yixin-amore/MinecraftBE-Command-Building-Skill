@@ -1,0 +1,194 @@
+{
+  "name": "arena-countdown",
+  "description": "Button starts a 3-second countdown; a repeat clock advances one second at a time, shows 3/2/1/GO, then switches the arena to running state.",
+  "target_version": "1.21.0",
+  "setup": [
+    "scoreboard objectives add arena dummy",
+    "scoreboard players set #state arena 0",
+    "scoreboard players set #count arena 0",
+    "scoreboard players set #tick arena 0",
+    "scoreboard players set #second arena 0"
+  ],
+  "blocks": [
+    {
+      "id": "clock",
+      "type": "repeat",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players add #tick arena 1",
+      "next": "tick_wrap",
+      "note": "20 ticks per second"
+    },
+    {
+      "id": "tick_wrap",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #tick arena matches 20.. run scoreboard players set #tick arena 0",
+      "next": "pulse",
+      "note": "succeeds only on the wrap tick, so the rest runs once per second"
+    },
+    {
+      "id": "pulse",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #second arena 1",
+      "next": "show3",
+      "note": "one-second flag: display blocks run unconditionally but gate on this"
+    },
+    {
+      "id": "show3",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 3 run title @a title §e3",
+      "next": "show2"
+    },
+    {
+      "id": "show2",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 2 run title @a title §e2",
+      "next": "show1"
+    },
+    {
+      "id": "show1",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 1 run title @a title §e1",
+      "next": "go"
+    },
+    {
+      "id": "go",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 0 run title @a title §aGO!",
+      "next": "start_running"
+    },
+    {
+      "id": "start_running",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 0 run scoreboard players set #state arena 2",
+      "next": "count_down"
+    },
+    {
+      "id": "count_down",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 1.. run scoreboard players remove #count arena 1",
+      "next": "clear_pulse",
+      "note": "decrement after displaying, so 3 is visible for a full second"
+    },
+    {
+      "id": "clear_pulse",
+      "type": "chain",
+      "condition": "unconditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #second arena 0",
+      "next": null,
+      "note": "must be unconditional so it also runs when the countdown path was skipped"
+    },
+    {
+      "id": "start_btn",
+      "type": "impulse",
+      "condition": "unconditional",
+      "redstone": "needs_redstone",
+      "delay": 0,
+      "command": "scoreboard players set #state arena 1",
+      "next": "start_count"
+    },
+    {
+      "id": "start_count",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #count arena 3",
+      "next": "start_tick"
+    },
+    {
+      "id": "start_tick",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #tick arena 19",
+      "next": "start_title",
+      "note": "next tick wraps the clock so 3 appears immediately"
+    },
+    {
+      "id": "start_title",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "title @a title §6Get ready!",
+      "next": null
+    },
+    {
+      "id": "reset_btn",
+      "type": "impulse",
+      "condition": "unconditional",
+      "redstone": "needs_redstone",
+      "delay": 0,
+      "command": "scoreboard players set #state arena 0",
+      "next": "reset_count"
+    },
+    {
+      "id": "reset_count",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #count arena 0",
+      "next": "reset_tick"
+    },
+    {
+      "id": "reset_tick",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "scoreboard players set #tick arena 0",
+      "next": "reset_title"
+    },
+    {
+      "id": "reset_title",
+      "type": "chain",
+      "condition": "conditional",
+      "redstone": "always_active",
+      "delay": 0,
+      "command": "title @a clear",
+      "next": null
+    }
+  ],
+  "tests": [
+    "Press start once: 3, 2, 1, GO appear one second apart.",
+    "Press start twice quickly: countdown restarts at 3 without skipping.",
+    "Press reset during countdown: title clears and state returns to idle.",
+    "Two players online: both see the same countdown titles.",
+    "Leave and rejoin during countdown: state stays consistent."
+  ],
+  "notes": [
+    "State: #state 0=idle, 1=counting, 2=running.",
+    "The #second flag is the key: display blocks are unconditional, so they run every tick, but the flag gates them to one second.",
+    "If you prefer fewer blocks, titleraw with a score component can show #count directly."
+  ]
+}
