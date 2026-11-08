@@ -246,6 +246,18 @@ scoreboard players operation #state obj %= #two obj
 - **拔刀剑**：钓鱼钩触发、副手 `data` 武器 ID、盔甲架 `n/旋转` 定方向、粒子+`damage`；`kill` 钩子收尾。
 - 完整套路、代码骨架、文件索引和坑见 `references/misc-map-systems.md`。
 
+### 4.8 一遍过交付（实测校准）
+
+目标不是“命令写对”，而是“到服务器能跑、能看、不卡”：
+
+- **执行位置**：命令方块远离展示区时，别用 `r/rm` 选实体；用 `x/y/z/dx/dy/dz` 或 `execute positioned`。
+- **导入**：BuildTask 之后**逐块 `CommandBlockUpdate` repair**；只摆方块不算导入成功。
+- **性能**：FMBE 不要 20 Hz 跑 48 条 Molang；初始化一次 + 1 Hz 刷新 + 每 tick 锚定。
+- **实体**：`summon fox` 不要带 name/event 参数；用普通 summon + tag；`hasitem` 查实际 ID（`player_head` 不是 `skull`）。
+- **UI**：`title` 纯文本约 512 字节；大面板用 `titleraw`；菜单只发 actionbar，不弹大标题。
+- **视觉**：无头 bot 不能看客户端模型；功能可一遍过，视觉需要一张截图校准 `v.ypos/v.zpos/v.xpos`。
+- 完整清单和两次交付（雪球菜单 / FMBE 玩家）的坑见 `references/one-pass-delivery.md`。
+
 ## 5. 交付物与工具
 
 被要求设计命令方块链时，**不要只丢一堆命令**。交付：
@@ -311,7 +323,8 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/dataization-rpg.md` | 数据化 RPG：属性分层、伤害事务、T显/血条、等级/经验、装备/怪物、性能与旧语法升级 |
-| `references/misc-map-systems.md` | 杂项地图系统：菜单/选人、商店/彩票、开箱、反作弊、领地/卡密门、匹配/密室、拔刀剑、死亡动画 |
+| `references/misc-map-systems.md` | 杂项地图系统：菜单/选人、商店/彩票、开箱、反作弊/领地/卡密门、匹配/密室、拔刀剑、死亡动画 |
+| `references/one-pass-delivery.md` | 一遍过交付：执行位置、导入 repair、性能、实体/物品、UI、视觉校准清单 |
 | `references/functions-and-packs.md` | 行为包、`.mcfunction`、`tick.json`、manifest、schedule |
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |

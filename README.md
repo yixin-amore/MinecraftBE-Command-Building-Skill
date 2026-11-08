@@ -21,6 +21,7 @@ mcbe-command-blocks/
 │   ├── fmbe-mbe.md                  # FMBE/MBE 显示实体：前置、1+7 条链、变量、例子
 │   ├── dataization-rpg.md           # 数据化 RPG：属性/伤害/T显/等级/装备/怪物
 │   ├── misc-map-systems.md          # 杂项：菜单/商店/开箱/反作弊/小游戏/拔刀剑
+│   ├── one-pass-delivery.md         # 一遍过交付：导入 repair、执行位置、性能、视觉校准
 │   ├── functions-and-packs.md       # mcfunction、tick.json、manifest、schedule
 │   ├── debugging.md                 # 症状→原因→修复、探针、二分法
 │   ├── bedrock-vs-java.md           # 差异速查 + Java→Bedrock 翻译表
