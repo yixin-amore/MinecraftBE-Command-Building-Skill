@@ -230,6 +230,20 @@ playanimation @e[name=a] animation.player.attack.positions none 0 "v.n=4;v.xzsca
 - [ ] 区块加载/`tickingarea` 已处理。
 - [ ] 保存/加载后重新执行初始化。
 
+## 10. 实测校准：多部件模型不要堆在同一点
+
+2026-11 在网易 28890143 做 6 部件 1:1 玩家时踩到的坑：
+
+- **一个部件一只狐狸，狐狸站在部件中心**。不要把 6 只狐狸堆在同一个基点、再用 `v.xpos/ypos/zpos` 拉开；FMBE 物品枢轴/嘴部偏移会把头、身体、手臂的前后关系搞错，出现“头贴在身体前面/上下分离”。
+- **坐标取 .5 中心**：`summon fox 70 ...` 实际会吸到 `70.5`，而 `69.625` 这类小数坐标不会；混用会让模型左右不对称。统一用 `70.5 / 70.125 / 70.375 ...` 这种真实中心。
+- **tag 用绝对体积选择器**：命令方块在 y=210 时，`r=2` 是相对命令方块，不是模型；用 `x=..,y=..,z=..,dx=..,dy=..,dz=..`。
+- **普通版 vs EX 版**：普通版读 `v.xzscale/v.yscale`；EX 版读 `v.extend_scale/v.extend_xrot`。同一命令里两组都写，兼容两种运行时：
+  - 身体：`scale=0.5, yscale=1.5` 或 `extend_scale=1.224744871, extend_xrot=90`
+  - 四肢：`scale=0.25, yscale=3` 或 `extend_scale=1.732050808, extend_xrot=90`
+- **头部/身体接触**：脚底 y=2；腿中心 2.375、身体中心 3.125、头中心 3.75；每段 0.75/0.75/0.5，正好 2.0 格。
+- **渲染 1 Hz** + **每 tick 分部件锚定**；20 Hz 跑 48 条 Molang 会拖垮服务器。
+- AIEX 的结构导出也是“1 命令方块 → 1 狐狸”，狐狸就是站在方块位置；这是比“单基点 + 偏移”更稳的工程方式。
+
 ## 10. 来源
 
 - [FMBE - A New Way to Create Display Entities](https://wiki.bedrock.dev/commands/display-entities.html)

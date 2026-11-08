@@ -88,7 +88,10 @@ tag @e[type=fox,x=69,y=1,z=7,dx=2,dy=3,dz=2] add pm_head
 - 头物品实际是 `player_head`（`skull 3` 给出来），`hasitem` 要查 `player_head`，查 `skull` 会 false。
 - `r=1` 是命令方块位置，不是模型位置；用体积选择器。
 - 一次性渲染可能不保持姿势；**1 Hz 刷新** + 每 tick 锚定，兼顾稳定与性能。
-- 无头 bot 只能验证实体/物品/tag，不能看客户端模型；视觉必须截图校准 `v.ypos/v.zpos/v.xpos`。
+- 多部件模型**一个部件一只狐狸，站在部件中心**；不要堆在同一点靠 `v.pos` 偏移，否则头/身体会前后错位。
+- 整数 `summon` 坐标会吸到 `.5`，小数坐标不会；统一用真实中心，避免左右不对称。
+- 普通版写 `xzscale/yscale`，EX 版写 `extend_scale/extend_xrot`；同一命令两组都写。
+- 无头 bot 只能验证实体/物品/tag，不能看客户端模型；视觉必须截图校准。
 
 ### 雪球菜单
 
