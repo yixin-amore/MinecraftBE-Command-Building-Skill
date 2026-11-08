@@ -1,6 +1,6 @@
 ---
 name: mcbe-command-blocks
-description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
 whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、行为包函数或地图小游戏机制时。"
 ---
 
@@ -234,6 +234,18 @@ scoreboard players operation #state obj %= #two obj
 - 装备/词条：物品只是外观，数值在计分板；`hasitem` 读槽位，注意胸甲是 `slot.armor.chest`。
 - 完整属性层、伤害链、T显/血条、等级/经验、装备/怪物、性能与旧语法升级见 `references/dataization-rpg.md`。
 
+### 4.7 杂项地图系统（菜单/商店/开箱/反作弊/小游戏）
+
+- **菜单/选人**：鸡蛋/雪球/纸做无 UI 按钮，一个整数 objective 存页面，`rxm=88` 低头关闭、`rx=-88` 抬头确认；选人用 `选人` 从 -1 递增 + `tag=选中`。
+- **公告栏**：sidebar + 假玩家“行名” + 定期 `remove/add` objective 清旧行；比每 tick `titleraw` 省。
+- **商店**：木桶装商品，`clone` + `setblock air destroy` + `tp` item；批量用数字键盘分数；折扣 `价格*折扣/100`。
+- **开箱**：进度 + `random` + `clone`/`structure load` + `tp` item + `clear` 钥匙；多人共用输出位会拿错物品。
+- **反作弊**：反穿墙用 XP 球探针 + `VL`；防矿透用矿物年龄 + 附近玩家分 + 衰减 + 阈值审核；都只当嫌疑分，不要自动永封。
+- **领地/卡密门**：领地是 NPC+基岩+编号+推开，不是真正方块保护；卡密门用 `^^1^` 检查面前铁门 + 蜡烛钥匙。
+- **小游戏**：匹配区计数+倒计时；四队按最低人数均衡；密室杀手用角色分数+`@r` 分配；死亡动画用“立即重生 + 自己位置无玩家实体”检测。
+- **拔刀剑**：钓鱼钩触发、副手 `data` 武器 ID、盔甲架 `n/旋转` 定方向、粒子+`damage`；`kill` 钩子收尾。
+- 完整套路、代码骨架、文件索引和坑见 `references/misc-map-systems.md`。
+
 ## 5. 交付物与工具
 
 被要求设计命令方块链时，**不要只丢一堆命令**。交付：
@@ -299,6 +311,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/dataization-rpg.md` | 数据化 RPG：属性分层、伤害事务、T显/血条、等级/经验、装备/怪物、性能与旧语法升级 |
+| `references/misc-map-systems.md` | 杂项地图系统：菜单/选人、商店/彩票、开箱、反作弊、领地/卡密门、匹配/密室、拔刀剑、死亡动画 |
 | `references/functions-and-packs.md` | 行为包、`.mcfunction`、`tick.json`、manifest、schedule |
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |
