@@ -6,6 +6,27 @@
 > 只针对 Bedrock。Java 版的 `data`、NBT、`execute store`、`team`、`bossbar`、`attribute`、`item`、`forceload` 在这里都不存在。
 > 网易 1.21.130 还有自己的边界：`schedule`/`function` 可用；`camera`/`inputpermission`/`dialogue`/`loot`/`place`/`recipe`/`scriptevent`/`fog` 未验证/未实装。
 
+## 快速开始
+
+```bash
+# 1. 安装到用户级技能目录
+git clone https://github.com/yixin-amore/MinecraftBE-Command-Building-Skill.git
+mkdir -p ~/.dsh/skills
+cp -R MinecraftBE-Command-Building-Skill ~/.dsh/skills/mcbe-command-blocks
+
+# 2. 依赖（只有 BDX 生成需要 brotli）
+python3 -m pip install brotli
+
+# 3. 跑一个最小示例
+cd ~/.dsh/skills/mcbe-command-blocks
+python3 scripts/buildgen.py examples/build-pipeline/plan.json /tmp/demo.bdx
+python3 scripts/mcworldgen.py examples/build-pipeline/plan.json /tmp/demo.mcworld
+```
+
+- `.bdx`：用 BDX 导入器导入。
+- `.mcworld`：直接打开，首次 tick 自动建造。
+- 在 DSH 中直接说需求，模型会按 `SKILL.md` 执行。
+
 ## 目录
 
 ```
@@ -42,7 +63,8 @@ mcbe-command-blocks/
 │   ├── interior-brief.template.md # 内饰简报（动线/焦点/分层/光）
 │   ├── manifest.template.json   # 行为包 manifest 模板
 │   ├── tick.template.json       # tick.json 模板
-│   └── bdx2mcworld.go           # BDX→MCWorld 参考实现
+│   ├── bdx2mcworld.go           # BDX→MCWorld 参考实现
+│   └── mcworld-template.mcworld # 干净平坦世界模板
 ├── scripts/
 │   ├── chain_lint.py            # 校验 spec + 生成构建表（无第三方依赖）
 │   ├── bdxgen.py                # 完整方块/命令方块 BDX 生成器（brotli）
@@ -57,7 +79,8 @@ mcbe-command-blocks/
     ├── toggle-lamp/             # 开关灯：取模翻转 + 并行分支 + 坐标
     ├── snowball-menu/           # 雪球三级菜单：256 方块、紧凑布局、BDX + UI 预览
     ├── fmbe-player/             # FMBE 1:1 玩家：10 部件、142 方块、预览 + BDX
-    └── bdx-generator/           # BDX/MCWorld 最小生成样例（3 方块）
+    ├── bdx-generator/           # BDX/MCWorld 最小生成样例（3 方块）
+    └── build-pipeline/          # 建筑 plan → BDX/MCWorld 完整示例
 ```
 
 ## Roadmap
@@ -65,51 +88,185 @@ mcbe-command-blocks/
 - **建筑设计**：已加入 `building-design.md` + `building-corpus-learning.md` + Sunrain 索引；后续用更多参考细化。
 - **项目名称**：`MinecraftBE Commands & Building`；GitHub 仓库 `MinecraftBE-Command-Building-Skill`。
 
-## 安装
+## 1. 安装
 
-**项目级（当前工作区）**：已经放在
+### 项目级（只对当前工作区生效）
 
+```bash
+git clone https://github.com/yixin-amore/MinecraftBE-Command-Building-Skill.git
+mkdir -p <workspace>/.dsh/skills
+cp -R MinecraftBE-Command-Building-Skill <workspace>/.dsh/skills/mcbe-command-blocks
 ```
-<workspace>/.dsh/skills/mcbe-command-blocks/
-```
 
-DSH 启动时会扫描 `<project>/.dsh/skills`，技能目录里必须有 `SKILL.md`。
+DSH 启动时会扫描 `<workspace>/.dsh/skills`，目录里必须有 `SKILL.md`。
 
-**用户级（所有项目可用）**：
+### 用户级（所有项目生效）
 
 ```bash
 mkdir -p ~/.dsh/skills
-cp -R .dsh/skills/mcbe-command-blocks ~/.dsh/skills/
-# 或者用软链接，改一处全局生效：
-# ln -s "$PWD/.dsh/skills/mcbe-command-blocks" ~/.dsh/skills/mcbe-command-blocks
+cp -R MinecraftBE-Command-Building-Skill ~/.dsh/skills/mcbe-command-blocks
 ```
 
-## 怎么用
+或者软链接，改一处全局生效：
 
-直接描述任务，例如：
+```bash
+ln -sfn "$PWD/MinecraftBE-Command-Building-Skill" ~/.dsh/skills/mcbe-command-blocks
+```
 
-- “基岩版怎么让玩家站上金块时触发命令？”
-- “帮我设计一个 3 秒倒计时 + 开局的命令方块链。”
-- “这个命令方块链为什么第二个方块不执行？”
-- “把这段 Java 命令翻译成基岩版。”
+### 环境要求
 
-模型会按 `SKILL.md` 的流程先定状态/时序，再给方块设置与测试清单。
-
-## 建筑 → BDX / MCWorld（独立）
-
-用同一份 building plan：
+| 需求 | 说明 |
+|---|---|
+| Python 3.10+ | 所有脚本 |
+| `brotli` | 仅 `bdxgen.py` / `buildgen.py` |
+| BDX 导入器 | 导入 `.bdx` 时需要 |
+| Minecraft Bedrock | 打开 `.mcworld` 时需要 |
 
 ```bash
 python3 -m pip install brotli
-python3 scripts/buildgen.py examples/build-pipeline/plan.json out.bdx
-python3 scripts/mcworldgen.py examples/build-pipeline/plan.json out.mcworld
 ```
 
-- `buildgen.py`：`fills`/`blocks`/`commands` → 完整方块 BDX（普通方块 + 命令方块）。
-- `mcworldgen.py`：把 plan 写进世界自带的首次 tick function；打开世界即执行建造。
-- 两者都不需要 AuroraBuild、Go 或 Minecraft 客户端；`mcworldgen` 使用仓库内的干净平坦模板。
+## 2. 验证安装
 
-## 校验 spec / 生成构建表
+```bash
+cd ~/.dsh/skills/mcbe-command-blocks
+test -f SKILL.md && echo SKILL_OK
+
+python3 scripts/buildgen.py examples/build-pipeline/plan.json /tmp/check.bdx
+python3 scripts/mcworldgen.py examples/build-pipeline/plan.json /tmp/check.mcworld
+ls -lh /tmp/check.bdx /tmp/check.mcworld
+```
+
+预期：
+
+```text
+SKILL_OK
+{"normal_blocks": 91, "command_blocks": 1, ...}
+{"name": "Build Pipeline Demo", ...}
+```
+
+## 3. 在 DSH 里使用
+
+直接把需求说清楚，模型会读 `SKILL.md`，先定状态/时序，再写 spec/plan 和文件。
+
+**好需求：**
+
+> “在 `300 64 500` 建一座 20×20 的石屋，导出 BDX 和 MCWorld。”
+
+**需要补参数的需求：**
+
+> “建个好看的主城。”
+
+后者需要先确认坐标、尺寸、风格、功能、性能预算。
+
+常用说法：
+
+- “基岩版怎么让玩家站上金块时触发命令？”
+- “设计一个 3 秒倒计时 + 开局的命令方块链，并生成 BDX。”
+- “这个链为什么第二个方块不执行？”
+- “把这段 Java 命令翻译成基岩版。”
+- “按这个 plan 生成 BDX 和 MCWorld。”
+
+## 4. 命令方块：spec → BDX
+
+`spec.json` 描述链；`chain_lint.py` 校验；`bdxgen.py` 生成命令方块 BDX。
+
+```bash
+# 校验
+python3 scripts/chain_lint.py examples/arena-countdown/spec.json
+
+# 生成构建表
+python3 scripts/chain_lint.py examples/arena-countdown/spec.json --write plan.md
+
+# 生成 BDX
+python3 scripts/bdxgen.py --spec examples/bdx-generator/demo.json /tmp/demo.bdx
+```
+
+最小 spec 片段：
+
+```json
+{
+  "name": "my-chain",
+  "setup": ["scoreboard objectives add obj dummy"],
+  "blocks": [
+    {"id": "clock", "type": "repeat", "redstone": "always_active",
+     "command": "scoreboard players add #tick obj 1", "next": "step"},
+    {"id": "step", "type": "chain", "command": "say 20 ticks", "next": null}
+  ],
+  "tests": ["..."],
+  "notes": ["..."]
+}
+```
+
+完整字段见 `assets/chain-spec.schema.json`。
+
+## 5. 建筑：plan → BDX / MCWorld
+
+一份 `plan.json` 同时驱动两边：
+
+```json
+{
+  "name": "My Build",
+  "fills": [
+    {"from": [0, 64, 0], "to": [8, 64, 8], "block": "stone_bricks"}
+  ],
+  "blocks": [
+    {"pos": [4, 65, 4], "block": "sea_lantern"}
+  ],
+  "commands": [
+    {"pos": [0, 65, 0], "type": "chain", "command": "say build ready"}
+  ]
+}
+```
+
+```bash
+# 完整方块 BDX（普通方块 + 命令方块）
+python3 scripts/buildgen.py plan.json out.bdx
+
+# MCWorld：首次 tick 由 behavior pack 建造
+python3 scripts/mcworldgen.py plan.json out.mcworld
+```
+
+字段：
+
+| 字段 | 说明 |
+|---|---|
+| `fills` | `from` / `to` / `block`，可加 `data` / `states` |
+| `blocks` | 单方块 `pos` / `block` |
+| `commands` | 命令方块 `pos` / `type` / `command` |
+
+- `buildgen.py` 展开 fills，写完整 BDX；不依赖 AuroraBuild/Go。
+- `mcworldgen.py` 使用仓库内 `assets/mcworld-template.mcworld` + behavior pack，打开世界即建造。
+- 大建筑会展开成很多方块；脚本有 2,000,000 块上限，超了拆 plan。
+
+## 6. 导入/打开
+
+### BDX
+
+用任意 BDX 导入器导入 `out.bdx`；导入参数以导入器为准。  
+如果是命令方块链，导入后确认：
+
+- 命令方块 mode/chain/facing 正确
+- 坐标与世界匹配
+- 需要时加 `tickingarea`
+
+### MCWorld
+
+双击 `out.mcworld` 打开即可。首次进入后 behavior pack 的首次 tick 会执行建造。  
+如果没建造，先确认世界设置里 **Cheats / Command Blocks** 已开启（模板默认开启）。
+
+## 7. 排错
+
+| 症状 | 处理 |
+|---|---|
+| `ModuleNotFoundError: brotli` | `python3 -m pip install brotli` |
+| DSH 不加载技能 | 确认目录里有 `SKILL.md`，路径是 `.dsh/skills/mcbe-command-blocks/` |
+| BDX 无法导入 | 先 `python3 scripts/chain_lint.py` 或检查 BDX 头 `BD@` |
+| MCWorld 没建造 | 确认 Cheats/Command Blocks 开启；打开世界后等 1 tick |
+| 建筑太大 | 拆 plan；单次 BDX/MCWorld 不要一次塞几百万方块 |
+| 命令链不跑 | 检查 head mode、facing、conditional、tickingarea |
+
+## 8. 校验 spec / 生成构建表
 
 ```bash
 python3 -m pip install brotli   # bdxgen.py 需要
