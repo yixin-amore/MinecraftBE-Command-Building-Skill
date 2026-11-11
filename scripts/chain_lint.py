@@ -178,9 +178,6 @@ class SpecError(Exception):
     pass
 
 
-# ---------------------------------------------------------------------------
-# Parsing helpers
-# ---------------------------------------------------------------------------
 
 def strip_slash(cmd: str) -> str:
     return cmd.strip()[1:].lstrip() if cmd.strip().startswith("/") else cmd.strip()
@@ -339,9 +336,6 @@ def md_cell(text: str, limit: int = 100) -> str:
     return f"`{text}`"
 
 
-# ---------------------------------------------------------------------------
-# Loading and structural validation
-# ---------------------------------------------------------------------------
 
 def load_spec(path: str) -> dict[str, Any]:
     try:
@@ -486,9 +480,6 @@ def parse_spec(data: dict[str, Any]) -> Report:
     return report
 
 
-# ---------------------------------------------------------------------------
-# Graph and semantics
-# ---------------------------------------------------------------------------
 
 def build_graph(report: Report) -> None:
     ids = {b.id for b in report.blocks}
@@ -852,9 +843,6 @@ def check_semantics(report: Report) -> None:
                     fix="put the condition block in a straight line or use execute if")
 
 
-# ---------------------------------------------------------------------------
-# Rendering
-# ---------------------------------------------------------------------------
 
 def render_markdown(report: Report, max_cmd: int = 200) -> str:
     lines: list[str] = []
@@ -1036,9 +1024,6 @@ def render_json(report: Report) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2)
 
 
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
 
 def analyze(data: dict[str, Any]) -> Report:
     report = parse_spec(data)

@@ -1,0 +1,93 @@
+{
+  "file": "examples/bdx-generator/demo.bdx",
+  "format": "BDX",
+  "size": {
+    "Width": 3,
+    "Height": 1,
+    "Length": 1
+  },
+  "command_blocks": [
+    {
+      "pos": [
+        0,
+        -64,
+        0
+      ],
+      "block": "minecraft:repeating_command_block",
+      "type": "repeat",
+      "facing": "east",
+      "conditional": false,
+      "auto": true,
+      "delay": 0,
+      "first_tick": true,
+      "track_output": false,
+      "command": "scoreboard objectives add demo dummy",
+      "nbt": {
+        "Command": "scoreboard objectives add demo dummy",
+        "CustomName": "",
+        "ExecuteOnFirstTick": 1,
+        "LastOutput": "",
+        "TickDelay": 0,
+        "TrackOutput": 0,
+        "auto": 1,
+        "conditionalMode": 0,
+        "id": "CommandBlock"
+      }
+    },
+    {
+      "pos": [
+        1,
+        -64,
+        0
+      ],
+      "block": "minecraft:chain_command_block",
+      "type": "chain",
+      "facing": "east",
+      "conditional": false,
+      "auto": true,
+      "delay": 0,
+      "first_tick": true,
+      "track_output": false,
+      "command": "scoreboard players add @a demo 1",
+      "nbt": {
+        "Command": "scoreboard players add @a demo 1",
+        "CustomName": "",
+        "ExecuteOnFirstTick": 1,
+        "LastOutput": "",
+        "TickDelay": 0,
+        "TrackOutput": 0,
+        "auto": 1,
+        "conditionalMode": 0,
+        "id": "CommandBlock"
+      }
+    },
+    {
+      "pos": [
+        2,
+        -64,
+        0
+      ],
+      "block": "minecraft:chain_command_block",
+      "type": "chain",
+      "facing": "east",
+      "conditional": false,
+      "auto": true,
+      "delay": 0,
+      "first_tick": true,
+      "track_output": false,
+      "command": "titleraw @a actionbar {\"rawtext\":[{\"text\":\"demo\"}]}",
+      "nbt": {
+        "Command": "titleraw @a actionbar {\"rawtext\":[{\"text\":\"demo\"}]}",
+        "CustomName": "",
+        "ExecuteOnFirstTick": 1,
+        "LastOutput": "",
+        "TickDelay": 0,
+        "TrackOutput": 0,
+        "auto": 1,
+        "conditionalMode": 0,
+        "id": "CommandBlock"
+      }
+    }
+  ],
+  "functions": null
+}

@@ -1,0 +1,37 @@
+{
+  "blocks": [
+    {
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "type": "repeat",
+      "command": "scoreboard objectives add demo dummy",
+      "facing": "east",
+      "delay": 0
+    },
+    {
+      "pos": [
+        1,
+        0,
+        0
+      ],
+      "type": "chain",
+      "command": "scoreboard players add @a demo 1",
+      "facing": "east",
+      "delay": 0
+    },
+    {
+      "pos": [
+        2,
+        0,
+        0
+      ],
+      "type": "chain",
+      "command": "titleraw @a actionbar {\"rawtext\":[{\"text\":\"demo\"}]}",
+      "facing": "east",
+      "delay": 0
+    }
+  ]
+}
