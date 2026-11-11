@@ -80,7 +80,7 @@ write_bdx(blocks, "demo.bdx")
 ```
 
 脚本位置：`scripts/bdxgen.py`。
-它只处理**命令方块**；普通方块/箱子/告示牌请用 AuroraBuild/BDump 的完整 writer。
+它只处理**命令方块**；普通方块/箱子/告示牌请用完整结构 writer。
 
 ## 2. MCWorld 的真实格式
 
@@ -95,7 +95,7 @@ world_icon.jpeg    # 可选
 
 - **不是**把 BDX 改名；也**不是**只放一个 `.mcstructure`。
 - LevelDB 里存 chunk/section/block/NBT；不要手写。
-- 用 AuroraBuild 的 `bedrock-world-operator`：
+- 用 `bedrock-world-operator`：
 
 ```go
 bw, _ := world.Open(worldDir, nil) // 空目录会 FillDefault
@@ -120,7 +120,7 @@ bw.CloseWorld()
 ## 3. 完整流水线
 
 1. **写方块表**：坐标、mode、facing、command、delay、conditional、needs_redstone。
-2. **生成 BDX**：`scripts/bdxgen.py`（命令方块）或 AuroraBuild（混合方块）。
+2. **生成 BDX**：`scripts/bdxgen.py`（命令方块）或完整结构 writer（混合方块）。
 3. **回读验证**：`mcbeextract` / `structure.BDX.FromFile`，核对方块数、坐标、mode、命令。
 4. **转 MCWorld**：`bdx2mcworld`，指定起点（如 `0 64 0`）。
 5. **回读 MCWorld**：`world.Open` + `LoadChunk`/`LoadNBT`，确认 `id=CommandBlock`、命令一致。

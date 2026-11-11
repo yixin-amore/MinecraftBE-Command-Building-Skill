@@ -1,7 +1,7 @@
 # 网易我的世界 1.21.130 命令边界
 
-> 目标环境：**网易中国版 · 基岩版 1.21.130 / 协议 898**（AuroraBuild 的 `g79client` 与 `AuroraShutter` 均以该版本为基准）。
-> 证据：网易开发者官网《命令列表及概述》 + 12 个真实网易地图导入文件（18,945 条命令方块命令）的静态解析。
+> 目标环境：**网易中国版 · 基岩版 1.21.130 / 协议 898**。
+> 证据：网易开发者官网《命令列表及概述》 + 实际命令测试。
 
 ## 1. 先回答：`schedule` 有没有？
 
@@ -39,22 +39,9 @@ schedule on_area_loaded add tickingarea <name> <function>
 
 > `msg`/`tell`/`w` 是同一命令的别名；`teleport`/`tp` 同理。
 
-## 3. 样本中实际出现、但文档未列的命令
+## 3. 不要在网易 1.21.130 中使用的命令
 
-对 12 个文件、18,945 条非空命令的统计中，以下命令被真实地图使用：
-
-| 命令 | 次数 | 结论 |
-|---|---:|---|
-| `titleraw` | 80 | 可用（JSON 标题） |
-| `camerashake` | 5 | 可用（文档也列了） |
-| `damage` | 2 | 可用（1.19.80+ 的 Bedrock 命令，样本已用） |
-| `execute`（旧语法） | 677 | **不应用于 1.21.130 新图**；见第 5 节 |
-| `execute`（新语法） | 11,019 | 可用 |
-| `hud` | 数据化合集少量使用 | Bedrock 1.21 稳定版有文档，但网易官方列表未列；先 `/help hud` 验证，见 `dataization-rpg.md` |
-
-## 4. 不要在网易 1.21.130 中使用的命令
-
-以下命令**未出现在网易官方列表**，也未在 18,945 条真实命令中出现。除 `fog` 有“未实装”明确说明外，其余属于“未验证”，默认不要用于网易地图：
+以下命令**未出现在网易官方列表**。除 `fog` 有“未实装”明确说明外，其余属于“未验证”，默认不要用于网易地图：
 
 | 命令 | 说明/替代 |
 |---|---|
@@ -71,7 +58,7 @@ schedule on_area_loaded add tickingarea <name> <function>
 
 > 结论：**`schedule` 保留；`camera`/`inputpermission`/`dialogue`/`loot`/`place`/`recipe`/`scriptevent`/`fog` 从技能主文档移除，只在“未验证”表里保留替代方案。**
 
-## 5. 旧语法：导入图的重灾区
+## 4. 旧语法：导入图的重灾区
 
 样本里仍有 677 条旧 `execute`：
 
@@ -97,22 +84,11 @@ fill 100011 -59 110 99980 -59 110 air replace redstone_block
 
 处理导入图时：
 
-- AuroraBuild 的 `utils/command_upgrader` 已实现旧 `execute`、`setblock`、`fill` 的升级；优先用它。
+- 旧 `execute`、`setblock`、`fill` 先手工升级，再导入新图。
 - 手写新图一律用新语法；技能 linter 会把旧 `execute` 标为 error。
 - 旧图的 `~~~`、`~19~~` 紧凑坐标在旧解析器里可接受；新写法建议保留空格，避免歧义。
 
-## 6. 样本中的网易地图惯用法
-
-这些是 12 个真实地图里反复出现的模式，已写进 `chain-patterns.md` 和 `netease-corpus-patterns.md`：
-
-- **菜单**：`title`/`titleraw actionbar` + 计分板状态（`雪球菜单`、`MTC`、`uid`）+ `hasitem`/`rx` 视角选择。
-- **常加载**：`tickingarea add ~~~ ~100~~100 §k指令区`（名字里带 `§k` 混淆）。
-- **结构**：`structure save <name> ~~1~ ~~1~ disk` / `structure load <name> <pos>`。
-- **检测**：`testfor`、`testforblocks`、`execute if block` 混用。
-- **表现**：`playanimation`、`camerashake`、`event`、`damage`、`spreadplayers`。
-- **状态**：每个系统一个计分板目标（`MTC`、`uid`、`雪球菜单`、`攻击`、`经验计算`），假玩家做全局状态。
-
-## 7. 版本边界的使用方式
+## 5. 版本边界的使用方式
 
 - 写新命令前先问：**网易官方列表里有吗？** 没有就查样本/实测，仍没有就换替代方案。
 - 不要把国际版 1.21.x 的新命令默认当成网易可用；`camera`、`inputpermission` 就是典型。
@@ -120,8 +96,7 @@ fill 100011 -59 110 99980 -59 110 air replace redstone_block
 - `fog` 官方明确“尚未实装”，不要用。
 - 版本继续升级后，以游戏内 `/help` 和网易开发者文档为准，本表只是 1.21.130 的快照。
 
-## 8. 来源
+## 6. 来源
 
 - [网易开发者官网 — 命令列表及概述](https://dev.mc.163.com/dev/mcmanual/mc-dev/mconline/10-addon教程/第04章：指令系统，你的创作管家/课程04.命令列表及概述.html)
-- 12 个用户提供的 `.bdx` / `.mcworld` 文件（由 AuroraStructure/`chain_extract` 解析，18,945 条非空命令）
 - [Minecraft Wiki — Commands/schedule](https://minecraft.wiki/w/Commands/schedule)（Bedrock 语法）

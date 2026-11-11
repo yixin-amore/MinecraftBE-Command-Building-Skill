@@ -13,7 +13,7 @@ python3 ../../scripts/bdxgen.py --spec demo.json demo.bdx
 
 ## 转 MCWorld
 
-在 AuroraBuild 仓库中：
+在参考实现仓库中：
 
 ```bash
 go run ./cmd/bdx2mcworld demo.bdx demo.mcworld 0 64 0

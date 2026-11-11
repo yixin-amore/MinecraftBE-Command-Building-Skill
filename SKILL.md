@@ -111,7 +111,7 @@ INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
 **网易 1.21.130 特别提醒**：
 
 - `schedule` **有**（网易官方命令列表明确列出），不要删；它调度的是 Add-on 函数。
-- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先用 AuroraBuild 的 `command_upgrader` 升级。
+- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先手工升级。
 - `tickingarea`、`structure`、`testfor`/`testforblocks`、`titleraw`、`camerashake`、`playanimation`、`event`、`damage` 在网易地图中实际使用，属于可用集合。
 - 详细边界见 `references/netease-1.21.130.md`。
 
@@ -263,7 +263,7 @@ scoreboard players operation #state obj %= #two obj
 
 - **BDX** = `BD@` + brotli(`BDX` + `0x00` + `0x00` + command-stream + `ID 88`)；author 保持空（非空实测被读取器判无效）；不是 NBT，也不是 zip。
 - 命令方块用 `PlaceBlockWithCommandBlockData`（ID 27）：block name string ID、facing+conditional、mode、command、delay、flags；坐标用 AddInt32X/Y/Z 相对移动。
-- 技能脚本 `scripts/bdxgen.py` 可把 `Block` 列表写成 BDX；普通方块/箱子用 AuroraBuild 的完整 writer。
+- 技能脚本 `scripts/bdxgen.py` 可把 `Block` 列表写成 BDX；普通方块/箱子用完整结构 writer。
 - **MCWorld** = zip 根目录 `level.dat` + `levelname.txt` + `db/`；不要手写 LevelDB，用 `world.Open` + `BDX.ToMCWorld`。
 - 生成后必须回读：BDX 用 `mcbeextract`/`BDX.FromFile`；MCWorld 用 `world.Open` + `LoadNBT` 检查 `id=CommandBlock`。
 - 完整格式、代码、坑和实测见 `references/bdx-mcworld-generation.md`。
@@ -410,7 +410,6 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |
 | `references/netease-1.21.130.md` | 网易命令边界、`schedule` 结论、未验证命令、旧语法升级 |
-| `references/netease-corpus-patterns.md` | 真实网易地图的菜单/状态/结构/表现惯用法 |
 | `assets/chain-spec.schema.json` | 写 spec.json 时 |
 | `examples/` | 需要完整范例：倒计时、商店、开关灯 |
 
@@ -423,4 +422,3 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 - [Function (Bedrock Edition) — Minecraft Wiki](https://minecraft.wiki/w/Function_(Bedrock_Edition))（`tick.json`、10,000 条限制）
 - [Minecraft Creator Docs — Commands](https://learn.microsoft.com/en-us/minecraft/creator/commands/)（各命令的基岩版签名）
 - [网易开发者官网 — 命令列表及概述](https://dev.mc.163.com/dev/mcmanual/mc-dev/mconline/10-addon教程/第04章：指令系统，你的创作管家/课程04.命令列表及概述.html)（网易 1.21.130 命令边界；明确列出 `schedule`，标注 `fog` 未实装）
-- 12 个真实网易地图（`.bdx`/`.mcworld`）的 AuroraStructure 解析语料（18,945 条命令）

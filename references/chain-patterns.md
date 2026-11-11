@@ -32,9 +32,9 @@
 - **常加载**：远处机关先 `tickingarea add ~~~ ~100~~100 §k指令区`；没有它，面板/时钟会停。
 - **菜单**：`titleraw actionbar` 显示，`scores=` 选页，`rx/rxm` 选“抬头确认/低头取消”。
 - **结构复用**：带方块实体的模板用 `structure save/load`；纯方块用 `clone`。
-- **旧图**：旧 `execute @a ~ ~ ~` 在 1.21.130 新图不能用；先用 AuroraBuild `command_upgrader` 升级。
+- **旧图**：旧 `execute @a ~ ~ ~` 在 1.21.130 新图不能用；先手工升级。
 - **表现**：用 `camerashake`、`playanimation`、`event`、`damage`；不要用未验证的 `camera`/`inputpermission`/`fog`。
-- 详细命令边界见 `netease-1.21.130.md`，真实地图惯用法见 `netease-corpus-patterns.md`。
+- 详细命令边界见 `netease-1.21.130.md`。
 
 ---
 
