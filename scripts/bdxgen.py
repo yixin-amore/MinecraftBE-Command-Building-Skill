@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Generate Bedrock .bdx structures without AuroraBuild.
+"""Generate a Bedrock .bdx command-block structure without AuroraBuild.
 
 BDX = b"BD@" + brotli("BDX\0\0" + command-stream)
-This module writes normal blocks (legacy data or block-state strings) and
-command blocks in the same BDX.
+The command stream is a sequence of tiny binary commands (see command IDs).
+This module writes command blocks only.
 
 Usage:
-    from bdxgen import Block, BuildBlock, write_bdx, write_build_bdx
-    write_bdx([Block(0, 0, 0, "repeat", "say hello")], "commands.bdx")
-    write_build_bdx([BuildBlock(0, 64, 0, "stone_bricks")], "build.bdx")
+    from bdxgen import Block, write_bdx
+    blocks = [Block(0, 0, 0, "repeat", "say hello", facing="east")]
+    write_bdx(blocks, "demo.bdx")
 """
 from __future__ import annotations
 
@@ -19,8 +19,6 @@ from typing import Iterable, Literal
 
 # BDX command IDs (big-endian payloads)
 ID_CREATE_CONSTANT_STRING = 1
-ID_PLACE_BLOCK_WITH_STATES = 5
-ID_PLACE_BLOCK = 7
 ID_ADD_INT32_X = 21
 ID_ADD_INT32_Y = 23
 ID_ADD_INT32_Z = 25
@@ -29,16 +27,6 @@ ID_TERMINATE = 88
 
 FACING = {"down": 0, "up": 1, "north": 2, "south": 3, "west": 4, "east": 5}
 MODE = {"impulse": 0, "repeat": 1, "chain": 2}
-
-
-@dataclass
-class BuildBlock:
-    x: int
-    y: int
-    z: int
-    block: str
-    data: int = 0
-    states: str = ""
 
 
 @dataclass
@@ -135,56 +123,6 @@ def write_bdx(
     with open(path, "wb") as f:
         f.write(b"BD@")
         f.write(brotli.compress(blob, quality=9))
-
-
-def write_build_bdx(items: Iterable[Block | BuildBlock], path: str, *, sort_blocks: bool = True) -> None:
-    """Write normal blocks + command blocks to a .bdx file.
-
-    Normal blocks use PlaceBlock (legacy data) or PlaceBlockWithBlockStates
-    (raw Bedrock block-state string). Command blocks use
-    PlaceBlockWithCommandBlockData. No external writer is required.
-    """
-    items = list(items)
-    if sort_blocks:
-        items.sort(key=lambda b: (b.y, b.z, b.x))
-
-    names: dict[str, int] = {}
-    def sid(s: str) -> int:
-        if s not in names:
-            names[s] = len(names)
-        return names[s]
-
-    # Build the constant-string table before writing any placements.
-    for it in items:
-        if isinstance(it, BuildBlock):
-            sid(it.block)
-            if it.states:
-                sid(it.states)
-        else:
-            sid({"impulse": "command_block", "repeat": "repeating_command_block", "chain": "chain_command_block"}[it.mode])
-
-    stream = bytearray()
-    for s in names:
-        stream += _cmd(ID_CREATE_CONSTANT_STRING, _cstr(s))
-
-    pos = [0, 0, 0]
-    for it in items:
-        stream += _move(it.x - pos[0], it.y - pos[1], it.z - pos[2])
-        pos = [it.x, it.y, it.z]
-        if isinstance(it, BuildBlock):
-            if it.states:
-                stream += _cmd(ID_PLACE_BLOCK_WITH_STATES, struct.pack(">HH", names[it.block], names[it.states]))
-            else:
-                stream += _cmd(ID_PLACE_BLOCK, struct.pack(">HH", names[it.block], int(it.data) & 0xFFFF))
-        else:
-            name = {"impulse": "command_block", "repeat": "repeating_command_block", "chain": "chain_command_block"}[it.mode]
-            stream += _place(names[name], it)
-    stream += bytes([ID_TERMINATE])
-
-    header = b"BDX\x00\x00"
-    with open(path, "wb") as f:
-        f.write(b"BD@")
-        f.write(brotli.compress(header + bytes(stream), quality=9))
 
 
 def demo(path: str = "demo.bdx") -> None:

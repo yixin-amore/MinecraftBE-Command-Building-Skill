@@ -46,7 +46,7 @@ execute if score <init> matches 0 run setblock <x0> <y0> <z0> redstone_block
 
 ## 5. 交付与验证
 
-- 交付：BDX + StartPos + 单区块 tickingarea + 依赖建筑说明。
+- 交付：BDX + StartPos + 单区块 tickingarea + 依赖场景说明。
 - 回读：检查 `Width/Height/Length`、block 类型数量、每个 head 的坐标/朝向/命令。
 - 一条链只有一个头；无孤立 chain；不同层不互相指向。
 - 服务器只做一次导入验收；不边调边交付。
