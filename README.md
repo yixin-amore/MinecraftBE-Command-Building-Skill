@@ -1,6 +1,6 @@
-# MCBE Commands & Command Blocks — AI Skill
+# MinecraftBE Commands & Building — AI Skill
 
-一个面向 AI 的 Minecraft 基岩版（Bedrock Edition）技能包：教模型写**基岩版命令**，并按工程化流程**设计命令方块链**。
+一个面向 AI 的 Minecraft 基岩版（Bedrock Edition）技能包：教模型写**基岩版命令**、设计**命令方块链**，并按工程化流程做**建筑/内饰/奇观**。
 目标环境：**网易我的世界 1.21.130（协议 898）**。
 
 > 只针对 Bedrock。Java 版的 `data`、NBT、`execute store`、`team`、`bossbar`、`attribute`、`item`、`forceload` 在这里都不存在。
@@ -61,7 +61,7 @@ mcbe-command-blocks/
 ## Roadmap
 
 - **建筑设计**：已加入 `building-design.md` + `building-corpus-learning.md` + Sunrain 索引；后续用更多参考细化。
-- **仓库改名**：建筑规范稳定后，仓库计划改名为 `MinecraftBE-Command&Building-Skill`（现在先不改，避免链接失效）。
+- **项目名称**：`MinecraftBE Commands & Building`；GitHub 仓库 `MinecraftBE-Command-Building-Skill`。
 
 ## 安装
 
