@@ -144,14 +144,6 @@ python3 scripts/chain_lint.py examples/arena-countdown/spec.json --write plan.md
 
 完整字段见 `assets/chain-spec.schema.json`。
 
-## 语料分析（真实网易地图）
-
-本技能用 AuroraBuild 的 `AuroraStructure` 模块解析了用户提供的 12 个 `.bdx` / `.mcworld`：
-
-- 19,501 个命令方块，18,945 条非空命令。
-- 命令频率、菜单/常加载/结构/表现模式、旧语法比例见 `references/netease-corpus-patterns.md`。
-- 结论：`execute` 是绝对主力；计分板是状态核心；`tickingarea` 是远处机关的命脉；旧 `execute @a ~ ~ ~` 必须升级。
-
 ## 主要事实来源
 
 - [Command Block — Minecraft Wiki](https://minecraft.wiki/w/Command_Block)
