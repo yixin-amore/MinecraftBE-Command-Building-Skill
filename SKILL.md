@@ -1,7 +1,7 @@
 ---
 name: mcbe-command-blocks
-description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、mcfunction 与 tick.json、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, behavior-pack functions, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
-whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、行为包函数或地图小游戏机制时。"
+description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、BDX 生成或地图小游戏机制时。"
 ---
 
 # MCBE 命令与命令方块链
@@ -12,7 +12,7 @@ whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命�
 
 ## 0. 开工前先确认
 
-1. **运行环境**：命令方块地图？行为包 + `tick.json`？还是聊天栏手动执行？
+1. **运行环境**：命令方块地图？聊天栏手动执行？还是导入 BDX？
 2. **触发方式**：玩家操作、红石信号、还是每 tick 轮询？
 3. **玩家规模**：单人、本地联机、还是服务器（决定选择器与状态归属）。
 4. **版本**：`/help` 里是否有目标命令；不同版本的方块状态名可能不同。
@@ -111,7 +111,7 @@ INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
 **网易 1.21.130 特别提醒**：
 
 - `schedule` **有**（网易官方命令列表明确列出），不要删；它调度的是 Add-on 函数。
-- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先手工升级。
+- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先用 AuroraBuild 的 `command_upgrader` 升级。
 - `tickingarea`、`structure`、`testfor`/`testforblocks`、`titleraw`、`camerashake`、`playanimation`、`event`、`damage` 在网易地图中实际使用，属于可用集合。
 - 详细边界见 `references/netease-1.21.130.md`。
 
@@ -259,13 +259,14 @@ scoreboard players operation #state obj %= #two obj
 - **视觉**：无头 bot 不能看客户端模型；功能可一遍过，视觉需要一张截图校准 `v.ypos/v.zpos/v.xpos`。
 - 完整清单和两次交付（雪球菜单 / FMBE 玩家）的坑见 `references/one-pass-delivery.md`。
 
-### 4.9 生成 BDX（只做命令）
+### 4.9 生成 BDX（命令 + 建筑）
 
 - **BDX** = `BD@` + brotli(`BDX` + `0x00` + `0x00` + command-stream + `ID 88`)；author 保持空；不是 NBT，也不是 zip。
-- 命令方块用 `PlaceBlockWithCommandBlockData`（ID 27）：block name string ID、facing+conditional、mode、command、delay、flags；坐标用 AddInt32X/Y/Z 相对移动。
-- `scripts/bdxgen.py` 只写命令方块；输入 spec 的 `blocks`，输出 BDX。
-- 生成后必须回读：BDX 用 `mcbeextract`/`BDX.FromFile`，核对方块数、坐标、mode、命令。
-- **不生成 MCWorld**；需要世界时由用户用 BDX 导入器导入现有世界。
+- 命令方块用 `PlaceBlockWithCommandBlockData`（ID 27）；普通方块用 `PlaceBlock` / `PlaceBlockWithBlockStates`。
+- `scripts/bdxgen.py`：命令方块，或 `BuildBlock` 普通方块 + 命令方块混排。
+- `scripts/buildgen.py`：建筑 plan 的 `fills`/`blocks`/`commands` → 完整 BDX。
+- 生成后回读：`mcbeextract` / `BDX.FromFile`，核对方块数、坐标、mode、命令。
+- **不生成 MCWorld，不做行为包**；需要世界时由用户用 BDX 导入器导入现有世界。
 
 ### 4.10 BDX 命令链打包：盘旋与初始化分离
 
@@ -278,7 +279,7 @@ scoreboard players operation #state obj %= #two obj
   - FMBE 的 `playanimation` 属于持续前置，必须放在**独立 repeat 链**，不能塞进普通初始化。
 - **触发**：repeat 主链首条在 `(x0,y0,z0)` 放红石块，impulse 头放 `(x1,y0,z0)` 并设 Needs Redstone。
 - **FMBE 小坑**：部件 tag 体积要独占（0.4×0.4×0.4），不能重叠；部件 fox 每轮要 `tp` 锚定，防重力/挤压散架。
-- **交付包**：BDX + StartPos + 单区块 tickingarea + 依赖场景说明。
+- **交付包**：BDX + StartPos + 单区块 tickingarea + 依赖建筑说明。
 - 完整布局、验证、验收见 `references/bdx-chain-packaging.md`。
 
 ### 4.11 多思考、联动、创造性
@@ -293,6 +294,42 @@ scoreboard players operation #state obj %= #two obj
 - **最小闭环优先**：一个触发/状态/反馈/重置跑通，再加第二技能/阶段/地图。
 - 先给“目标/3 方向/推荐/联动图/闭环/风险”，确认后再开工；模板见 `assets/design-brief.template.md`。
 - 完整方法、评分表、联动样例见 `references/creative-thinking.md`。
+
+### 4.12 建筑/语料学习
+
+用户给大量建筑/指令文件时，先建索引，不要逐文件读：
+
+- **资产分四类**：schematic/schem、BDX、参考图、目录分类。
+- **索引**：`scripts/sunrain_index.py` 输出 index.jsonl / stats / catalog / contact sheet；查询用 `scripts/corpus_query.py`。
+- **归类三层**：功能（主城/Lobby/空岛/起床/玩法）、风格（中式/日式/中世纪/现代/幻想）、元素（塔/桥/树/内饰/灯光）。
+- **风格卡**：尺寸、轮廓、Palette Top、层高、细节密度、动线、可借鉴/不照搬。
+- **模仿**：至少改 3 个约束（场地/功能/尺度/母题/材质），保留结构逻辑，不复制坐标。
+- **建造顺序**：场地→体块→屋顶→立面→材质→内部→内饰/灯光→环境→截图→导出。
+- 完整方法见 `references/building-corpus-learning.md` 和 `references/building-design.md`；模板 `assets/building-brief.template.md`。
+
+### 4.13 内饰设计
+
+室内不是“把家具摆满”，先定功能/动线/焦点/层高：
+
+- **1/3/5 法则**：1 个主焦点、3 个层次（地面/家具/顶部）、每 5~8 格一个变化。
+- **先空壳后家具**：先做墙/柱/屋顶/地面，再放座椅/柜台/祭坛；主通道 ≥2 格。
+- **光**：暖色吊灯/壁灯 + 冷色彩窗；要有明暗，不要全屋插火把。
+- **材质**：地面/墙面/顶部/强调四层；≤5 家族，强调 ≤10%。
+- **教堂**：narthex→nave→aisles（侧祭坛/忏悔室）→transept→choir→apse；肋拱+吊灯+彩窗。
+- **高级 pass**：切深窗洞、slab 肋拱、rood screen、pulpit、altar rail、mural、censer、地面金带；block states 先实测。
+- **检查**：入口识别、主路径不堵、焦点层次、家具尺度、多人碰撞、性能。
+- 完整清单、模板、反模式见 `references/interior-design.md`；模板 `assets/interior-brief.template.md`。
+
+### 4.14 亮眼/奇观设计
+
+用户说“不够亮眼”时，不要只加方块：
+
+- 先给 3 个方向（稳健/联动/大胆），选一个**主焦点**。
+- 6 个杠杆：剪影、尺度对比、色彩对撞、发光体、运动/声音、叙事焦点。
+- 夜景：檐口/扶壁/塔尖 lantern/sea_lantern；内部吊灯/浮空烛/祭坛发光十字；主焦点亮 2~3 档。
+- 避免土味：颜色 ≤5 家族；粒子/钟声只放 2~3 个点，节流。
+- 工程：fill + 隐藏命令方块；先离线渲染，再服务器回读。
+- 详见 `references/spectacle-design.md`；教堂案例见 `references/gothic-cathedral-case.md`。
 
 ## 5. 交付物与工具
 
@@ -362,8 +399,12 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/misc-map-systems.md` | 杂项地图系统：菜单/选人、商店/彩票、开箱、反作弊/领地/卡密门、匹配/密室、拔刀剑、死亡动画 |
 | `references/one-pass-delivery.md` | 一遍过交付：执行位置、导入 repair、性能、实体/物品、UI、视觉校准清单 |
 | `references/bdx-chain-packaging.md` | BDX 打包：单区块盘旋、初始化/FMBE/主体分离、验收 |
+| `references/building-design.md` | 建筑设计：场地/体量/轮廓/材质/立面/屋顶/动线/建造顺序 |
+| `references/building-corpus-learning.md` | 建筑/指令语料：索引、归类、风格卡、模仿、建造 |
+| `references/gothic-cathedral-case.md` | 案例：300 样本→哥特教堂重做、fill 导入、回读 |
+| `references/interior-design.md` | 内饰：动线/焦点/分层/光/材质/教堂模板/检查表 |
+| `references/spectacle-design.md` | 亮眼/奇观：剪影/对比/发光/运动/声音/反土味 |
 | `references/creative-thinking.md` | 多思考/联动/创造性：6 问、3 方向、联动矩阵、红队、最小闭环 |
-| `references/functions-and-packs.md` | 行为包、`.mcfunction`、`tick.json`、manifest、schedule |
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |
 | `references/netease-1.21.130.md` | 网易命令边界、`schedule` 结论、未验证命令、旧语法升级 |
