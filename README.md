@@ -45,7 +45,9 @@ mcbe-command-blocks/
 │   └── bdx2mcworld.go           # BDX→MCWorld 参考实现
 ├── scripts/
 │   ├── chain_lint.py            # 校验 spec + 生成构建表（无第三方依赖）
-│   ├── bdxgen.py                # 命令方块 BDX 生成器（brotli）
+│   ├── bdxgen.py                # 完整方块/命令方块 BDX 生成器（brotli）
+│   ├── buildgen.py              # 建筑 plan → 完整方块 BDX
+│   ├── mcworldgen.py            # 建筑 plan → 可打开即建的 MCWorld
 │   ├── sunrain_index.py         # 建筑/BDX/图片语料索引器
 │   ├── corpus_query.py          # 索引查询
 │   └── schematic_blocks.py      # schematic 材质/方块统计
@@ -92,6 +94,20 @@ cp -R .dsh/skills/mcbe-command-blocks ~/.dsh/skills/
 - “把这段 Java 命令翻译成基岩版。”
 
 模型会按 `SKILL.md` 的流程先定状态/时序，再给方块设置与测试清单。
+
+## 建筑 → BDX / MCWorld（独立）
+
+用同一份 building plan：
+
+```bash
+python3 -m pip install brotli
+python3 scripts/buildgen.py examples/build-pipeline/plan.json out.bdx
+python3 scripts/mcworldgen.py examples/build-pipeline/plan.json out.mcworld
+```
+
+- `buildgen.py`：`fills`/`blocks`/`commands` → 完整方块 BDX（普通方块 + 命令方块）。
+- `mcworldgen.py`：把 plan 写进世界自带的首次 tick function；打开世界即执行建造。
+- 两者都不需要 AuroraBuild、Go 或 Minecraft 客户端；`mcworldgen` 使用仓库内的干净平坦模板。
 
 ## 校验 spec / 生成构建表
 

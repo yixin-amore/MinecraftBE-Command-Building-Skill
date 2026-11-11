@@ -263,8 +263,9 @@ scoreboard players operation #state obj %= #two obj
 
 - **BDX** = `BD@` + brotli(`BDX` + `0x00` + `0x00` + command-stream + `ID 88`)；author 保持空（非空实测被读取器判无效）；不是 NBT，也不是 zip。
 - 命令方块用 `PlaceBlockWithCommandBlockData`（ID 27）：block name string ID、facing+conditional、mode、command、delay、flags；坐标用 AddInt32X/Y/Z 相对移动。
-- 技能脚本 `scripts/bdxgen.py` 可把 `Block` 列表写成 BDX；普通方块/箱子用 AuroraBuild 的完整 writer。
-- **MCWorld** = zip 根目录 `level.dat` + `levelname.txt` + `db/`；不要手写 LevelDB，用 `world.Open` + `BDX.ToMCWorld`。
+- `scripts/bdxgen.py` 可写**普通方块 + 命令方块** BDX（`BuildBlock` / `Block`）；`scripts/buildgen.py` 把 fills/blocks/commands plan 展开成完整 BDX。
+- `scripts/mcworldgen.py` 把 plan 写入世界自带首次 tick function，配合 `assets/mcworld-template.mcworld` 生成可打开即建的 MCWorld，不需要外部 writer。
+- **MCWorld** = zip 根目录 `level.dat` + `levelname.txt` + `db/`；游戏内世界也可是 behavior pack + function 驱动建造。
 - 生成后必须回读：BDX 用 `mcbeextract`/`BDX.FromFile`；MCWorld 用 `world.Open` + `LoadNBT` 检查 `id=CommandBlock`。
 - 完整格式、代码、坑和实测见 `references/bdx-mcworld-generation.md`。
 
