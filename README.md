@@ -42,7 +42,7 @@ mcbe-command-blocks/
 │   ├── interior-brief.template.md # 内饰简报（动线/焦点/分层/光）
 │   ├── manifest.template.json   # 行为包 manifest 模板
 │   ├── tick.template.json       # tick.json 模板
-│   └── bdx2mcworld.go           # BDX→MCWorld 参考实现（复制进 AuroraBuild）
+│   └── bdx2mcworld.go           # BDX→MCWorld 参考实现
 ├── scripts/
 │   ├── chain_lint.py            # 校验 spec + 生成构建表（无第三方依赖）
 │   ├── bdxgen.py                # 命令方块 BDX 生成器（brotli）
@@ -158,7 +158,7 @@ python3 scripts/chain_lint.py examples/arena-countdown/spec.json --write plan.md
 - 技能是**静态知识 + 静态校验**：linter 不能执行 Minecraft，最终以游戏内测试为准。
 - 版本以**网易 1.21.130**为基准；`/help` 是版本差异的最终裁判。
 - `schedule` **有**（网易官方命令列表明确列出），不要删；它调度 Add-on 函数。
-- 旧导入图里的 `execute @a ~ ~ ~` 旧语法，新图不要用；先用 AuroraBuild `command_upgrader` 升级。
+- 旧导入图里的 `execute @a ~ ~ ~` 旧语法，新图不要用；先手工升级。
 
 ## License
 
