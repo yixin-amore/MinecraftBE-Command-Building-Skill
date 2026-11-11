@@ -6,6 +6,8 @@
 > 只针对 Bedrock。Java 版的 `data`、NBT、`execute store`、`team`、`bossbar`、`attribute`、`item`、`forceload` 在这里都不存在。
 > 网易 1.21.130 还有自己的边界：`schedule`/`function` 可用；`camera`/`inputpermission`/`dialogue`/`loot`/`place`/`recipe`/`scriptevent`/`fog` 未验证/未实装。
 
+> 交流群：2166056402
+
 ## 快速开始
 
 ```bash
