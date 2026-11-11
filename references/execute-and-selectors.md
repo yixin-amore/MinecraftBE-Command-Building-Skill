@@ -1,7 +1,7 @@
 # execute 与目标选择器（基岩版）
 
 > Bedrock 1.19.50+ 的新 execute 语法。旧语法 `execute <target> <pos> <command>` 已被移除，不要再用。
-> 网易 1.21.130 同样使用新语法；导入的旧地图里若看到 `execute @a ~ ~ ~`，先手工升级。
+> 网易 1.21.130 同样使用新语法；导入的旧地图里若看到 `execute @a ~ ~ ~`，先用 AuroraBuild `command_upgrader` 或手工升级。
 
 ## 1. execute 的 11 个子命令
 

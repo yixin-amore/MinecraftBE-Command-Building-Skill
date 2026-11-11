@@ -92,7 +92,7 @@ titleraw @a actionbar {"rawtext":[{"text":"§e"},{"score":{"name":"#count","obje
 - `times` 单位 tick：`10 70 20` 是默认（淡入 0.5s / 停留 3.5s / 淡出 1s）。
 - `actionbar` 只有一行，适合持续状态；`title` 会盖住屏幕中央，不要每 tick 刷。
 - 同一玩家同时只能有一个 title；新 title 会替换旧的。
--  Minecraft 地图常用 `titleraw actionbar` 做菜单。
+- 网易地图大量用 `titleraw actionbar` 做菜单（见 `netease-corpus-patterns.md`）。
 
 ### 用 title 做倒计时
 
