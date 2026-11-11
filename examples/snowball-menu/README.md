@@ -70,7 +70,7 @@
 
 ## 导入位置
 
-已导入服务器 **28890143**：
+示例部署坐标：
 
 - 原点：`64 200 0`
 - 尺寸：15×6×9
@@ -99,7 +99,7 @@ scoreboard players set <玩家> sbdown 0
 
 ## 已在服务器验证
 
-通过 AuroraBuild 的 `Control` + `BuildTask` 导入，并用 `Aiwan_Bot` 在 28890143 实测：
+验收记录（示例）：
 
 - [x] `fill` 清掉旧版宽结构，导入紧凑版；256 个命令方块全部校验存在。
 - [x] 抛雪球打开：`sbm=1`，`sbopen` 递增；只发 actionbar，不再发 `title`/`subtitle`。

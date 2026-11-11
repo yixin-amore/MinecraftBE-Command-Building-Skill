@@ -230,7 +230,78 @@ playanimation @e[name=a] animation.player.attack.positions none 0 "v.n=4;v.xzsca
 - [ ] 区块加载/`tickingarea` 已处理。
 - [ ] 保存/加载后重新执行初始化。
 
-## 10. 来源
+## 10. 实测校准：多部件模型不要堆在同一点
+
+多部件 FMBE 模型实测：
+
+- **一个部件一只狐狸，狐狸站在部件中心**。不要把 6 只狐狸堆在同一个基点、再用 `v.xpos/ypos/zpos` 拉开；FMBE 物品枢轴/嘴部偏移会把头、身体、手臂的前后关系搞错，出现“头贴在身体前面/上下分离”。
+- **坐标取 .5 中心**：`summon fox 70 ...` 实际会吸到 `70.5`，而 `69.625` 这类小数坐标不会；混用会让模型左右不对称。统一用 `70.5 / 70.125 / 70.375 ...` 这种真实中心。
+- **tag 用绝对体积选择器**：命令方块在 y=210 时，`r=2` 是相对命令方块，不是模型；用 `x=..,y=..,z=..,dx=..,dy=..,dz=..`。
+- **普通版 vs EX 版**：普通版读 `v.xzscale/v.yscale`；EX 版读 `v.extend_scale/v.extend_xrot`。同一命令里两组都写，兼容两种运行时：
+  - 身体：`scale=0.5, yscale=1.5` 或 `extend_scale=1.224744871, extend_xrot=90`
+  - 四肢：`scale=0.25, yscale=3` 或 `extend_scale=1.732050808, extend_xrot=90`
+- **头部/身体接触**：脚底 y=2；腿中心 2.375、身体中心 3.125、头中心 3.75；每段 0.75/0.75/0.5，正好 2.0 格。
+- **不要用 `player_head` 当部件**：它的物品枢轴和普通方块不同，实测会头贴到身体前面；用 0.5 格皮肤块 + 头发/眼睛/嘴（v3 共 10 个部件），全部同一类方块。
+- **渲染 1 Hz** + **每 tick 分部件锚定**；20 Hz 跑 48 条 Molang 会拖垮服务器。
+- AIEX 的结构导出也是“1 命令方块 → 1 狐狸”，狐狸就是站在方块位置；这是比“单基点 + 偏移”更稳的工程方式。
+
+## 11. AIEX 逆向：它为什么准
+
+从 `AIEX-FMBE-v2.05.1-debug.apk.1` 里提取到的关键文件：
+
+- `assets/ai_modeling_system_prompt.txt`：建模 AI 的系统提示词。
+- `assets/dist/assets/index.js`：场景、矩阵、导出。
+- `AIEX2.0.5` 的 `src/upstream-ex/modules/js/04-import-export/01-var-deps-and-mcstructure-export.js`：**未压缩**的导出实现。
+
+### 10.1 真变量与矩阵
+
+提示词原文要点：
+
+- 基础几何是**中心在原点的 1×1×1 立方体**，8 顶点 `LBB/RBB/LTB/RTB/LBF/RBF/LTF/RTF`；
+- 真变量只有：
+  `xpos/ypos/zpos`、`xrot/yrot/zrot`、`scale`、
+  `extend_scale/extend_xrot/extend_yrot`、`xbasepos/ybasepos/zbasepos`；
+- **普通版**才有 `xzscale/yscale`，**EX 版**用 `extend_*`；
+- 矩阵组合：
+  `T(base) → ScaleY(extend_scale) → RotY(-extend_yrot) → RotX(-extend_xrot) → ScaleZ(extend_scale) → RotX(extend_xrot) → RotY(extend_yrot) → Scale(scale) → RotZ(-zrot) → RotX(xrot) → RotY(-yrot) → T(pos)`；
+- AI 必须用 **vertexReport 的 8 顶点 + matrix4Rows** 复核，不能只看变量名。
+
+> 这就是它“准”的根本：不是提示词魔法，而是**每次输出后用矩阵/8 顶点做几何复核**，不满足就继续修。
+
+### 10.2 建模工具
+
+AIEX2 的 EX 模式用 **`add_boxes`** 描述一个柱体：
+
+- `origin`：底面中心；
+- `up`：底面指向顶面的单位法线；
+- `span`：底面中心到顶面中心的向量，长度=柱长；
+- `side`：正方形截面边长。
+
+程序反算成 `scale/extend_scale/extend_xrot/extend_yrot`，并在落盘前用几何回读校验；所以 AI 不需要手算矩阵。
+
+普通版则直接给 `scale + xzscale/yscale`（方块）或 `scale + extend_scale`（EX 方块）。
+
+### 10.3 导出：1 命令方块 → 1 狐狸
+
+AIEX 的 `.mcstructure` 导出：
+
+- 每模型方块 → **1 个命令方块 + 1 只狐狸**；
+- 狐狸站在方块位置，命令方块用 `execute positioned ~-1~~ run playanimation @e[x=~,z=~,y=~,r=1] animation.player.attack.positions _ 0 "..."` 选中它；
+- 一条命令里写该方块的全部 `v.*`，后缀 `'方块编号：<id>';` 用于重新导入识别；
+- 狐狸身上**没有 tag、没有指令**；命令方块只负责“念”变量。
+
+这印证了：**多部件模型必须一只狐狸一个部件、站在各自位置**；把 6 只堆在同一点靠 `v.pos` 拉偏移，枢轴/嘴部偏移一叠加就会头身错位。
+
+### 10.4 对我们的改造
+
+- v2 已改为 **6 只狐狸站在 6 个部件中心**；
+- 用绝对体积选择器打 tag，不再用命令方块位置的 `r`；
+- 同时写 `xzscale/yscale`（普通版）和 `extend_scale/extend_xrot=90`（EX 版）；
+- 头/身体/四肢按 0.5/0.75/0.25 的**真实中心**排列。
+
+> 如果进服看仍有偏差，优先确认是**视角透视**（俯视会把上下层投成左右偏移）还是**部件本身错位**；用平视截图判断，不要用俯视截图校准。
+
+## 12. 来源
 
 - [FMBE - A New Way to Create Display Entities](https://wiki.bedrock.dev/commands/display-entities.html)
 - [MBE - Max's Block Entity](https://wiki.bedrock.dev/commands/block-entities.html)

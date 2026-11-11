@@ -21,6 +21,15 @@ mcbe-command-blocks/
 │   ├── fmbe-mbe.md                  # FMBE/MBE 显示实体：前置、1+7 条链、变量、例子
 │   ├── dataization-rpg.md           # 数据化 RPG：属性/伤害/T显/等级/装备/怪物
 │   ├── misc-map-systems.md          # 杂项：菜单/商店/开箱/反作弊/小游戏/拔刀剑
+│   ├── one-pass-delivery.md         # 一遍过交付：导入 repair、执行位置、性能、视觉校准
+│   ├── bdx-mcworld-generation.md    # BDX 命令流 / MCWorld 生成与回读
+│   ├── bdx-chain-packaging.md       # BDX 打包：单区块盘旋/初始化分离/验收
+│   ├── building-design.md           # 建筑：场地/体量/轮廓/材质/立面/屋顶/动线
+│   ├── building-corpus-learning.md  # 语料索引/归类/风格卡/模仿/建造
+│   ├── gothic-cathedral-case.md     # 案例：300 样本→哥特教堂重做
+│   ├── interior-design.md           # 内饰：动线/焦点/分层/光/材质/教堂模板
+│   ├── spectacle-design.md          # 亮眼/奇观：剪影/对比/发光/运动/声音
+│   ├── creative-thinking.md         # 6 问、3 方向、联动矩阵、红队、最小闭环
 │   ├── functions-and-packs.md       # mcfunction、tick.json、manifest、schedule
 │   ├── debugging.md                 # 症状→原因→修复、探针、二分法
 │   ├── bedrock-vs-java.md           # 差异速查 + Java→Bedrock 翻译表
@@ -28,17 +37,31 @@ mcbe-command-blocks/
 │   └── netease-corpus-patterns.md   # 12 个真实网易地图的命令方块语料分析
 ├── assets/
 │   ├── chain-spec.schema.json   # spec.json 的 JSON Schema
+│   ├── design-brief.template.md # 设计前思考模板（3 方向/联动图/风险）
+│   ├── building-brief.template.md # 建筑简报（参考/体量/材质/动线）
+│   ├── interior-brief.template.md # 内饰简报（动线/焦点/分层/光）
 │   ├── manifest.template.json   # 行为包 manifest 模板
-│   └── tick.template.json       # tick.json 模板
+│   ├── tick.template.json       # tick.json 模板
+│   └── bdx2mcworld.go           # BDX→MCWorld 参考实现（复制进 AuroraBuild）
 ├── scripts/
-│   └── chain_lint.py            # 校验 spec + 生成构建表（无第三方依赖）
+│   ├── chain_lint.py            # 校验 spec + 生成构建表（无第三方依赖）
+│   ├── bdxgen.py                # 命令方块 BDX 生成器（brotli）
+│   ├── sunrain_index.py         # 建筑/BDX/图片语料索引器
+│   ├── corpus_query.py          # 索引查询
+│   └── schematic_blocks.py      # schematic 材质/方块统计
 └── examples/
     ├── arena-countdown/         # 倒计时：秒时钟 + 状态机 + 脉冲标记
     ├── vending-machine/         # 售货机：条件流水线 + 库存 + 清理
     ├── toggle-lamp/             # 开关灯：取模翻转 + 并行分支 + 坐标
     ├── snowball-menu/           # 雪球三级菜单：256 方块、紧凑布局、BDX + UI 预览
-    └── fmbe-player/             # FMBE 1:1 玩家：6 部件、86 方块、预览 + BDX
+    ├── fmbe-player/             # FMBE 1:1 玩家：10 部件、142 方块、预览 + BDX
+    └── bdx-generator/           # BDX/MCWorld 最小生成样例（3 方块）
 ```
+
+## Roadmap
+
+- **建筑设计**：已加入 `building-design.md` + `building-corpus-learning.md` + Sunrain 索引；后续用更多参考细化。
+- **仓库改名**：建筑规范稳定后，仓库计划改名为 `MinecraftBE-Command&Building-Skill`（现在先不改，避免链接失效）。
 
 ## 安装
 
@@ -73,6 +96,8 @@ cp -R .dsh/skills/mcbe-command-blocks ~/.dsh/skills/
 ## 校验 spec / 生成构建表
 
 ```bash
+python3 -m pip install brotli   # bdxgen.py 需要
+python3 scripts/bdxgen.py --spec examples/bdx-generator/demo.json /tmp/demo.bdx
 python3 scripts/chain_lint.py examples/arena-countdown/spec.json
 python3 scripts/chain_lint.py examples/arena-countdown/spec.json --format json
 python3 scripts/chain_lint.py examples/arena-countdown/spec.json --write plan.md
@@ -142,3 +167,7 @@ python3 scripts/chain_lint.py examples/arena-countdown/spec.json --write plan.md
 - 版本以**网易 1.21.130**为基准；`/help` 是版本差异的最终裁判。
 - `schedule` **有**（网易官方命令列表明确列出），不要删；它调度 Add-on 函数。
 - 旧导入图里的 `execute @a ~ ~ ~` 旧语法，新图不要用；先用 AuroraBuild `command_upgrader` 升级。
+
+## License
+
+MIT

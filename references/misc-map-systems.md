@@ -431,7 +431,57 @@ kill @e[type=fishing_hook,r=2]
 | `拔刀剑` 系列 | 钓鱼钩、副手 data、盔甲架刀光、`damage` |
 | `高质简洁公告栏` | sidebar 假玩家行、定期重建 |
 
-## 10. 检查清单
+## 10. 触屏/屏幕坐标检测（二代）
+
+来源：`二代触屏检测.docx`。核心不是读取真实触摸事件，而是用**烟花火箭**当“屏幕射线标记”，通过**二分法**反推它在屏幕上的水平/竖直比例。
+
+### 原理
+
+```mcfunction
+scoreboard objectives add 水平视角 dummy
+scoreboard objectives add 竖直视角 dummy
+scoreboard objectives add 水平上限 dummy
+scoreboard objectives add 竖直上限 dummy
+scoreboard players set 百 水平视角 100
+
+# 1) 识别触屏者：主手烟花
+execute as @a[hasitem={item=firework_rocket,location=slot.weapon.mainhand,quantity=1}] run tag @s add 触屏者
+replaceitem entity @a[tag=触屏者] slot.weapon.mainhand 0 firework_rocket 2 1
+tag @e[type=fireworks_rocket] add 触摸点
+
+# 2) 把触摸点放到视线前方 15 格
+execute as @e[tag=触摸点] at @s facing entity @p[tag=触屏者] eyes run tp @s ^^^ ~ ~
+execute as @a[tag=触屏者] at @s anchored eyes run tp @e[tag=触摸点] ~~~
+execute as @e[tag=触摸点] at @s run tp @s ^^^-15
+
+# 3) 二分测水平：先判左右，再 128/64/32/.../1 逐级加/减
+execute as @a[tag=触屏者] at @s anchored eyes positioned ^100000^^ as @e[tag=触摸点,r=100000] run tag @s add 左
+execute as @a[tag=触屏者] at @s anchored eyes positioned ^-100000^^ as @e[tag=触摸点,r=100000] run tag @s add 右
+execute as @a[tag=触屏者] at @s anchored eyes positioned ^100012.8^^ as @e[tag=触摸点,r=100000,tag=左] run scoreboard players add @s 水平视角 128
+execute as @a[tag=触屏者] at @s anchored eyes positioned ^100012.8^^ as @e[tag=触摸点,r=100000,tag=左] at @s rotated as @p[tag=触屏者] run tp @s ^-12.8^^
+# ... 64/32/16/8/4/2/1，负方向对称 ...
+
+# 4) 归一化成百分比
+execute as @a[tag=触屏者] run scoreboard players operation @s 水平视角 *= 百 水平视角
+execute as @a[tag=触屏者] run scoreboard players operation @s 水平视角 /= @s 水平上限
+execute as @a[tag=触屏者] run titleraw @s actionbar {"rawtext":[{"text":"x:"},{"score":{"name":"@s","objective":"水平视角"}},{"text":" y:"},{"score":{"name":"@s","objective":"竖直视角"}}]}
+
+# 5) 清理
+kill @e[type=fireworks_rocket]
+tag @a[tag=触屏者] remove 触屏者
+```
+
+### 关键点
+
+- **不是真正读取触摸屏**，而是把烟花火箭放到视线前方，用二分法测出它在屏幕上的角度比例；所以只能得到“瞄准点/触摸点”的近似。
+- 先 `tag=校准` 记录 `水平上限/竖直上限`，再算百分比；换分辨率/视角要重新校准。
+- 二分从 **128** 开始，逐级 64/32/16/8/4/2/1；每级都要把触摸点沿视线方向 `tp` 回相应偏移，否则下一级基准错误。
+- `positioned ^100000^^` + `r=100000` 是“沿视线方向无限远”的判断技巧；大半径选择器很贵，只适合小游戏/低频。
+- 只对**主手烟花**生效；生存最后一格放 2 个火箭，取校准点；用完 `kill` 烟花。
+- 移动端屏幕比例、FOV、视角摇晃都会影响精度；按钮区间要留死区。
+- `stopsound @a firework.shoot` 关掉火箭声。
+
+## 11. 检查清单
 
 - [ ] 触发器物品锁定，投掷物/钩子有清理。
 - [ ] 页面分数有初值/关闭/重置；不会卡在旧页面。
