@@ -30,6 +30,7 @@
 - [N 叉树 / NX 树](references/nx-tree.md)
 - [指令计算机：实体像素/栅格](references/command-computer.md)
 - [19 个社区指令文件 → 系统框架](references/command-corpus-framework.md)
+- [提问、期待效果与联想创新](references/intake-and-reasoning.md)
 
 ## 快速开始
 
@@ -78,6 +79,7 @@ mcbe-command-blocks/
 │   ├── interior-design.md
 │   ├── spectacle-design.md
 │   ├── creative-thinking.md
+│   ├── intake-and-reasoning.md      # 提问/期待效果/联想/创新协议
 │   ├── debugging.md
 │   ├── bedrock-vs-java.md
 │   └── netease-1.21.130.md

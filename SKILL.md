@@ -32,6 +32,21 @@ whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命�
 基础模型、内存布局、算法与复杂度见 `references/command-foundations.md`；  
 整数/坐标/几何/概率见 `references/command-mathematics.md`。
 
+### 0.2 先问用户，再开始设计
+
+设计类请求先做 **3–7 个高杠杆问题**，不要一上来写命令：
+
+1. **期待效果**：玩家第一眼/前 30 秒要看到、听到、感受到什么？（震撼/紧张/爽/神秘/仪式/压迫/治愈）
+2. **玩家在做什么**：战斗/解谜/探索/建造/经营/社交？
+3. **成功/失败长什么样**：通关瞬间、团灭瞬间各一句话。
+4. **约束**：坐标/尺寸/单人多人/版本/性能/现有系统。
+5. **输出**：设计/spec/命令/BDX/建筑体块。
+6. **差异点**：最不想像什么、参考作品/关键词。
+
+问完先复述“目标 / 期待效果 / 硬约束 / 未知”，再给 **稳健/联动/大胆 3 个方向**，用 6 维评分选一个；红队后再冻结 spec。  
+用户说“直接做”时不要追问，但要在开头写清假设。  
+完整问题库、期待效果→设计杠杆、联想/SCAMPER/约束/视角/组合法见 `references/intake-and-reasoning.md`。
+
 ## 1. 设计流程（按顺序做，不要跳步）
 
 ### 1.0 先建模，再写方块
@@ -453,6 +468,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/interior-design.md` | 内饰：动线/焦点/分层/光/材质/教堂模板/检查表 |
 | `references/spectacle-design.md` | 亮眼/奇观：剪影/对比/发光/运动/声音/反土味 |
 | `references/creative-thinking.md` | 多思考/联动/创造性：6 问、3 方向、联动矩阵、红队、最小闭环 |
+| `references/intake-and-reasoning.md` | 提问协议：期待效果/约束/3 方向；联想/SCAMPER/约束/视角/组合 |
 | `references/debugging.md` | 链不跑、条件不触发、多人异常、重载失效 |
 | `references/bedrock-vs-java.md` | 用户给的是 Java 语法，或需要差异速查 |
 | `references/netease-1.21.130.md` | 网易命令边界、`schedule` 结论、未验证命令、旧语法升级 |
