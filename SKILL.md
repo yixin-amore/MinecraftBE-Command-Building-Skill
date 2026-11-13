@@ -463,6 +463,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/command-corpus-framework.md` | 19 个社区指令文件的归类/统计/分层框架/反模式 |
 | `references/block-map.md` | Java→Bedrock 方块名映射；雪块 `snow` / 雪层 `snow_layer` |
 | `references/value-noise.md` | 值噪声/精度哈希：大坐标精度、align、四角锚点、fill 地形 |
+| `references/value-noise-7cmd.md` | 7 命令值噪声核：a/b/c/d/nxs/o、四角插值、落列、缺扫描器 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |
