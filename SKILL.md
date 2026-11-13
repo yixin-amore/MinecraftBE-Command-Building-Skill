@@ -271,7 +271,16 @@ scoreboard players operation fb_state obj %= fb_two obj
 - **触屏坐标**：烟花火箭当屏幕射线，`positioned ^100000^^` + `r` 左右/上下二分，归一化成 0..100 的屏幕比例；分辨率/FOV 变了要重校准。
 - 完整套路、代码骨架、文件索引和坑见 `references/misc-map-systems.md`。
 
+### 4.7.1 指令计算机：实体像素与栅格
+
+- **显示层**用 item/方块像素；**存储层**仍用计分板/标签，别把 item 当唯一内存。
+- `align xyz` + `positioned` 把像素吸附到格点；选择器用 `type=item,tag=px,x/y/z,r`。
+- `fill ... air destroy` 会掉落，掉落物可能再次进入 `@e[type=item]` 形成反馈；删除用 `air`/`replace`。
+- 时钟用 `fb_tick` + repeat；刷新按规模降级，不要 20 Hz 全量重绘。
+- 详见 `references/command-computer.md`。
+
 ### 4.8 一遍过交付（实测校准）
+
 
 目标不是“命令写对”，而是“到服务器能跑、能看、不卡”：
 
@@ -416,6 +425,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/command-foundations.md` | 命令计算模型、内存、控制流、算法、复杂度、不变量 |
 | `references/command-mathematics.md` | 整数/定点、坐标/向量、几何、概率、位集、常见数学坑 |
 | `references/nx-tree.md` | N 叉树/NX：执行分叉、射线、圆/椭圆、体积扫描与成本 |
+| `references/command-computer.md` | 指令计算机：item 像素、栅格吸附、存储/显示分层、反馈风险 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |

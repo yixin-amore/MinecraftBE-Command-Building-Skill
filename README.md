@@ -28,6 +28,7 @@
 - [命令计算基础](references/command-foundations.md)
 - [命令数学](references/command-mathematics.md)
 - [N 叉树 / NX 树](references/nx-tree.md)
+- [指令计算机：实体像素/栅格](references/command-computer.md)
 
 ## 快速开始
 
@@ -57,6 +58,7 @@ mcbe-command-blocks/
 │   ├── command-foundations.md       # 计算模型/内存/控制流/算法/复杂度
 │   ├── command-mathematics.md       # 整数/定点/坐标/几何/概率
 │   ├── nx-tree.md                   # N 叉树/NX：执行分叉/圆/射线/体积
+│   ├── command-computer.md         # 指令计算机：item 像素/栅格/噪声
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
 │   ├── execute-and-selectors.md
