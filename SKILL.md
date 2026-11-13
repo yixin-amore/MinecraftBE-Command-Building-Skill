@@ -1,6 +1,6 @@
 ---
 name: mcbe-command-blocks
-description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、命令计算模型/数学/N 叉树、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
 whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、BDX 生成或地图小游戏机制时。"
 ---
 
@@ -19,7 +19,30 @@ whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命�
 
 如果用户给的是 Java 语法，先翻译成基岩版；如果用户明确要 Java 版，说明本技能不适用。
 
+### 0.1 不是背例子：先选计算模型
+
+写命令前先用 3–5 行说清模型，不能直接套模板：
+
+- 这是**状态机**、**数据流/事务**、**队列/调度器**、**树/图**，还是**几何采样**？
+- 状态存在哪里：计分板、tag、方块、实体？
+- 需要什么数学：整数、取模、钳制、坐标、距离、概率、几何表？
+- 复杂度：分支数/实体数/每 tick 命令数/最坏情况？
+- 是否用 **N 叉树/执行分叉**（射线、圆、椭圆、体积扫描）？见 `references/nx-tree.md`。
+
+基础模型、内存布局、算法与复杂度见 `references/command-foundations.md`；  
+整数/坐标/几何/概率见 `references/command-mathematics.md`。
+
 ## 1. 设计流程（按顺序做，不要跳步）
+
+### 1.0 先建模，再写方块
+
+1. 行为契约（1.1）。
+2. 选计算模型（状态机/数据流/队列/树/图）。
+3. 设计内存布局（分数/tag/数组/队列）。
+4. 写数学（范围/取模/钳制/坐标/概率）。
+5. 估算复杂度与命令数；超过预算就拆。
+
+模型没定清楚时，先补模型，不要先堆 `execute`。
 
 ### 1.1 写清行为契约
 
@@ -389,6 +412,9 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | 文件 | 什么时候读 |
 |---|---|
 | `references/command-block-mechanics.md` | 需要精确的方块时序、条件链、成功次数、限制 |
+| `references/command-foundations.md` | 命令计算模型、内存、控制流、算法、复杂度、不变量 |
+| `references/command-mathematics.md` | 整数/定点、坐标/向量、几何、概率、位集、常见数学坑 |
+| `references/nx-tree.md` | N 叉树/NX：执行分叉、射线、圆/椭圆、体积扫描与成本 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |

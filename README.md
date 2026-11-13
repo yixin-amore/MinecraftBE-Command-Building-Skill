@@ -15,6 +15,20 @@
 - **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光。
 - **输出**：只生成 **BDX**。不做 MCWorld，不做行为包。
 
+## 先学模型，不是背例子
+
+这个 Skill 不把“例子”当知识本身。每个任务先建立：
+
+1. **计算模型**：状态机 / 数据流事务 / 队列 / 树 / 图 / 几何采样。
+2. **内存布局**：计分板、tag、数组、队列、树索引。
+3. **数学**：整数、取模、钳制、坐标、距离、概率、几何表。
+4. **复杂度**：分支数、实体数、每 tick 命令数、最坏情况。
+5. **不变量**：幂等、可重置、有界、可观测。
+
+- [命令计算基础](references/command-foundations.md)
+- [命令数学](references/command-mathematics.md)
+- [N 叉树 / NX 树](references/nx-tree.md)
+
 ## 快速开始
 
 ```bash
@@ -40,6 +54,9 @@ mcbe-command-blocks/
 ├── SKILL.md
 ├── references/
 │   ├── command-block-mechanics.md
+│   ├── command-foundations.md       # 计算模型/内存/控制流/算法/复杂度
+│   ├── command-mathematics.md       # 整数/定点/坐标/几何/概率
+│   ├── nx-tree.md                   # N 叉树/NX：执行分叉/圆/射线/体积
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
 │   ├── execute-and-selectors.md
