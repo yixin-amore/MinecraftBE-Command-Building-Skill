@@ -29,6 +29,7 @@
 - [命令数学](references/command-mathematics.md)
 - [N 叉树 / NX 树](references/nx-tree.md)
 - [指令计算机：实体像素/栅格](references/command-computer.md)
+- [19 个社区指令文件 → 系统框架](references/command-corpus-framework.md)
 
 ## 快速开始
 
@@ -59,6 +60,7 @@ mcbe-command-blocks/
 │   ├── command-mathematics.md       # 整数/定点/坐标/几何/概率
 │   ├── nx-tree.md                   # N 叉树/NX：执行分叉/圆/射线/体积
 │   ├── command-computer.md         # 指令计算机：item 像素/栅格/噪声
+│   ├── command-corpus-framework.md  # 19 个社区指令语料的归类/统计框架
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
 │   ├── execute-and-selectors.md
@@ -86,6 +88,7 @@ mcbe-command-blocks/
 │   └── interior-brief.template.md
 ├── scripts/
 │   ├── chain_lint.py
+│   ├── command_corpus.py          # 指令文本归类/统计
 │   ├── bdxgen.py
 │   ├── buildgen.py
 │   ├── sunrain_index.py

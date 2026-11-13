@@ -279,7 +279,16 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 时钟用 `fb_tick` + repeat；刷新按规模降级，不要 20 Hz 全量重绘。
 - 详见 `references/command-computer.md`。
 
+### 4.7.2 从语料抽框架（19 个社区文件）
+
+- 语料主体是 **N 叉执行树 + 坐标变换 + 实体锚点 + 少量计分板状态**，不是“命令堆”。
+- 分层：执行 / 空间 / 数据 / 实体 / UI / 世界 / 性能。
+- 典型：binaryTree2D/3D、rotatedCircle（空间）；JSON-Line（UI 编码）；物品数量数据化（查表编码）；鱼竿枪（UID/投射物）；noneEntity（二进制坐标序列）；TNT（structure 回放）。
+- 19 文件、3,719 行、2,681 非注释行；`positioned` 1,431、`rotated` 857、`facing` 420。
+- 完整分类/统计/反模式见 `references/command-corpus-framework.md`；统计脚本 `scripts/command_corpus.py`。
+
 ### 4.8 一遍过交付（实测校准）
+
 
 
 目标不是“命令写对”，而是“到服务器能跑、能看、不卡”：
@@ -426,6 +435,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/command-mathematics.md` | 整数/定点、坐标/向量、几何、概率、位集、常见数学坑 |
 | `references/nx-tree.md` | N 叉树/NX：执行分叉、射线、圆/椭圆、体积扫描与成本 |
 | `references/command-computer.md` | 指令计算机：item 像素、栅格吸附、存储/显示分层、反馈风险 |
+| `references/command-corpus-framework.md` | 19 个社区指令文件的归类/统计/分层框架/反模式 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |
