@@ -12,10 +12,10 @@
     "scoreboard objectives add sbpoints dummy",
     "scoreboard objectives add sbsnd dummy",
     "scoreboard objectives add sbg dummy",
-    "scoreboard players set #four sbm 4",
-    "scoreboard players set #three sbm 3",
-    "scoreboard players set #two sbm 2",
-    "scoreboard players set #one sbm 1"
+    "scoreboard players set fb_four sbm 4",
+    "scoreboard players set fb_three sbm 3",
+    "scoreboard players set fb_two sbm 2",
+    "scoreboard players set fb_one sbm 1"
   ],
   "tests": [
     "Throw a snowball: main menu actionbar opens; there is no big title/subtitle.",
@@ -124,7 +124,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #four sbm 4",
+      "command": "scoreboard players set fb_four sbm 4",
       "next": "r00b10"
     },
     {
@@ -133,7 +133,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #three sbm 3",
+      "command": "scoreboard players set fb_three sbm 3",
       "next": "r00b11"
     },
     {
@@ -142,7 +142,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #two sbm 2",
+      "command": "scoreboard players set fb_two sbm 2",
       "next": "r00b12"
     },
     {
@@ -151,7 +151,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #one sbm 1"
+      "command": "scoreboard players set fb_one sbm 1"
     },
     {
       "id": "r01b00",
@@ -266,7 +266,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[type=snowball] at @s run scoreboard players operation @p[r=3,scores={sbm=1..2}] sbsel %= #four sbm",
+      "command": "execute as @e[type=snowball] at @s run scoreboard players operation @p[r=3,scores={sbm=1..2}] sbsel %= fb_four sbm",
       "next": "r02b04"
     },
     {
@@ -1318,7 +1318,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @a[scores={sbg=22}] run scoreboard players operation @s sbsnd %= #two sbm",
+      "command": "execute as @a[scores={sbg=22}] run scoreboard players operation @s sbsnd %= fb_two sbm",
       "next": "r03b104"
     },
     {

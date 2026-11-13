@@ -661,6 +661,11 @@ def check_command(report: Report, cmd: str, block_id: str | None) -> None:
             "Bedrock has no scoreboard players get/enable/display",
             block_id=block_id,
             fix="use test or execute if score")
+    if re.search(r"(?<![A-Za-z0-9_])#[A-Za-z_][A-Za-z0-9_]*", cmd) and ("score" in cmd or word == "scoreboard"):
+        add(report, "error", "SB_HASH_FAKE_PLAYER",
+            "NetEase 1.21.130 rejects fake-player names starting with #",
+            block_id=block_id,
+            fix="use a normal fake-player name, e.g. fb_fire_timer (fb_ prefix)")
 
     # text
     if re.match(r"^title\s+\S+\s+(title|subtitle|actionbar)\s+\{", cmd):

@@ -4,10 +4,10 @@
   "target_version": "1.21.0",
   "setup": [
     "scoreboard objectives add arena dummy",
-    "scoreboard players set #state arena 0",
-    "scoreboard players set #count arena 0",
-    "scoreboard players set #tick arena 0",
-    "scoreboard players set #second arena 0"
+    "scoreboard players set fb_state arena 0",
+    "scoreboard players set fb_count arena 0",
+    "scoreboard players set fb_tick arena 0",
+    "scoreboard players set fb_second arena 0"
   ],
   "blocks": [
     {
@@ -16,7 +16,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players add #tick arena 1",
+      "command": "scoreboard players add fb_tick arena 1",
       "next": "tick_wrap",
       "note": "20 ticks per second"
     },
@@ -26,7 +26,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #tick arena matches 20.. run scoreboard players set #tick arena 0",
+      "command": "execute if score fb_tick arena matches 20.. run scoreboard players set fb_tick arena 0",
       "next": "pulse",
       "note": "succeeds only on the wrap tick, so the rest runs once per second"
     },
@@ -36,7 +36,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #second arena 1",
+      "command": "scoreboard players set fb_second arena 1",
       "next": "show3",
       "note": "one-second flag: display blocks run unconditionally but gate on this"
     },
@@ -46,7 +46,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 3 run title @a title §e3",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 3 run title @a title §e3",
       "next": "show2"
     },
     {
@@ -55,7 +55,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 2 run title @a title §e2",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 2 run title @a title §e2",
       "next": "show1"
     },
     {
@@ -64,7 +64,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 1 run title @a title §e1",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 1 run title @a title §e1",
       "next": "go"
     },
     {
@@ -73,7 +73,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 0 run title @a title §aGO!",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 0 run title @a title §aGO!",
       "next": "start_running"
     },
     {
@@ -82,7 +82,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 0 run scoreboard players set #state arena 2",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 0 run scoreboard players set fb_state arena 2",
       "next": "count_down"
     },
     {
@@ -91,7 +91,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #second arena matches 1 if score #state arena matches 1 if score #count arena matches 1.. run scoreboard players remove #count arena 1",
+      "command": "execute if score fb_second arena matches 1 if score fb_state arena matches 1 if score fb_count arena matches 1.. run scoreboard players remove fb_count arena 1",
       "next": "clear_pulse",
       "note": "decrement after displaying, so 3 is visible for a full second"
     },
@@ -101,7 +101,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #second arena 0",
+      "command": "scoreboard players set fb_second arena 0",
       "next": null,
       "note": "must be unconditional so it also runs when the countdown path was skipped"
     },
@@ -111,7 +111,7 @@
       "condition": "unconditional",
       "redstone": "needs_redstone",
       "delay": 0,
-      "command": "scoreboard players set #state arena 1",
+      "command": "scoreboard players set fb_state arena 1",
       "next": "start_count"
     },
     {
@@ -120,7 +120,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #count arena 3",
+      "command": "scoreboard players set fb_count arena 3",
       "next": "start_tick"
     },
     {
@@ -129,7 +129,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #tick arena 19",
+      "command": "scoreboard players set fb_tick arena 19",
       "next": "start_title",
       "note": "next tick wraps the clock so 3 appears immediately"
     },
@@ -148,7 +148,7 @@
       "condition": "unconditional",
       "redstone": "needs_redstone",
       "delay": 0,
-      "command": "scoreboard players set #state arena 0",
+      "command": "scoreboard players set fb_state arena 0",
       "next": "reset_count"
     },
     {
@@ -157,7 +157,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #count arena 0",
+      "command": "scoreboard players set fb_count arena 0",
       "next": "reset_tick"
     },
     {
@@ -166,7 +166,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set #tick arena 0",
+      "command": "scoreboard players set fb_tick arena 0",
       "next": "reset_title"
     },
     {
@@ -187,8 +187,8 @@
     "Leave and rejoin during countdown: state stays consistent."
   ],
   "notes": [
-    "State: #state 0=idle, 1=counting, 2=running.",
-    "The #second flag is the key: display blocks are unconditional, so they run every tick, but the flag gates them to one second.",
-    "If you prefer fewer blocks, titleraw with a score component can show #count directly."
+    "State: fb_state 0=idle, 1=counting, 2=running.",
+    "The fb_second flag is the key: display blocks are unconditional, so they run every tick, but the flag gates them to one second.",
+    "If you prefer fewer blocks, titleraw with a score component can show fb_count directly."
   ]
 }

@@ -16,20 +16,20 @@
 
 | 变量 | 归属 | 含义 | 初值 |
 |---|---|---|---|
-| `#stock` | 全局 | 剩余库存 | 10 |
+| `fb_stock` | 全局 | 剩余库存 | 10 |
 | `@s.shop` | 每玩家 | 本次购买标记 0/1 | 0 |
 
 ## 链
 
 ```
 buy_btn (impulse)
- └─ stock_gate (conditional)   execute if #stock >= 1
+ └─ stock_gate (conditional)   execute if fb_stock >= 1
      └─ take (conditional)    clear @s emerald 0 1
          └─ give (conditional) give @s bread 1
-             └─ stock (conditional) #stock -= 1
+             └─ stock (conditional) fb_stock -= 1
                  └─ fx (conditional) playsound random.orb @s
                      └─ cleanup (unconditional) @a shop = 0
-                         └─ sold_out (unconditional) if #stock == 0 → actionbar
+                         └─ sold_out (unconditional) if fb_stock == 0 → actionbar
 ```
 
 ## 关键设计
@@ -82,7 +82,7 @@ buy_btn (impulse)
 
 ## 变体
 
-- **多种商品**：把 `give @s bread 1` 换成 `give @s <item>`，价格用不同物品/数量；或者用 `#price` 分数 + 多个 `clear` 分支。
+- **多种商品**：把 `give @s bread 1` 换成 `give @s <item>`，价格用不同物品/数量；或者用 `fb_price` 分数 + 多个 `clear` 分支。
 - **每人限购**：加 `@s.bought` 计数和上限判断。
 - **无限库存**：删掉 `stock`/`sold_out`，把 `stock_gate` 改成 `execute if entity @a[...]`。
 - **用钻石计价**：把 `emerald` 换成 `diamond`，`clear @s diamond 0 1`。

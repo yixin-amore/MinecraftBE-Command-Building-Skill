@@ -32,7 +32,7 @@ whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命�
 
 | 变量 | 载体 | 归属 | 类型/范围 | 初值 | 谁写 | 谁读 |
 |---|---|---|---|---|---|---|
-| `#state` | 计分板 `arena` | 全局假玩家 | 0=idle 1=count 2=run | 0 | 开始/结束链 | 所有判断 |
+| `fb_state` | 计分板 `arena` | 全局假玩家 | 0=idle 1=count 2=run | 0 | 开始/结束链 | 所有判断 |
 | `@s.coins` | 计分板 `coins` | 每玩家 | int | 0 | 结算链 | 商店 |
 
 **基岩版只有 `dummy` 计分板**，没有自动死亡/击杀/生命值统计。所有状态都要显式读写。
@@ -158,9 +158,9 @@ INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
 ### 4.1 全局状态 vs 每玩家状态
 
 ```mcfunction
-# 全局：假玩家，名字以 # 开头，不会出现在侧边栏
-scoreboard players set #state arena 1
-scoreboard players add #tick arena 1
+# 全局：假玩家，使用 fb_ 前缀（不要用 #，网易会报错）
+scoreboard players set fb_state arena 1
+scoreboard players add fb_tick arena 1
 
 # 每玩家：@s 或具体玩家名
 execute as @a run scoreboard players add @s coins 1
@@ -171,35 +171,35 @@ execute as @a[scores={coins=10..}] run ...
 
 ```mcfunction
 # AND：两个条件都成立
-execute if score #a obj matches 1 if score #b obj matches 1 run say both
+execute if score fb_a obj matches 1 if score fb_b obj matches 1 run say both
 
 # OR：任一成立（先置标记，再判断）
-execute if score #a obj matches 1 run scoreboard players set #flag obj 1
-execute if score #b obj matches 1 run scoreboard players set #flag obj 1
-execute if score #flag obj matches 1 run say either
+execute if score fb_a obj matches 1 run scoreboard players set fb_flag obj 1
+execute if score fb_b obj matches 1 run scoreboard players set fb_flag obj 1
+execute if score fb_flag obj matches 1 run say either
 
 # NOT
 execute unless entity @e[type=zombie,tag=wave] run say cleared
 
 # 纯条件门（不带 run）：成功则让后面的 conditional chain 继续
-execute if score #stock shop matches 1..
+execute if score fb_stock shop matches 1..
 ```
 
 ### 4.3 计数器、倒计时、冷却
 
 ```mcfunction
 # 每秒时钟
-scoreboard players add #tick arena 1
-execute if score #tick arena matches 20.. run scoreboard players set #tick arena 0
+scoreboard players add fb_tick arena 1
+execute if score fb_tick arena matches 20.. run scoreboard players set fb_tick arena 0
 
 # 倒计时（只在 >0 时减）
-execute if score #count arena matches 1.. run scoreboard players remove #count arena 1
+execute if score fb_count arena matches 1.. run scoreboard players remove fb_count arena 1
 
 # 冷却（每 tick 减，到 0 停止）
-execute if score #cd obj matches 1.. run scoreboard players remove #cd obj 1
+execute if score fb_cd obj matches 1.. run scoreboard players remove fb_cd obj 1
 
 # 取模翻转 0/1
-scoreboard players operation #state obj %= #two obj
+scoreboard players operation fb_state obj %= fb_two obj
 ```
 
 ### 4.4 分支不要用条件链硬串

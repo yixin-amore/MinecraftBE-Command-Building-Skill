@@ -4,7 +4,7 @@
   "target_version": "1.21.0",
   "setup": [
     "scoreboard objectives add shop dummy",
-    "scoreboard players set #stock shop 10"
+    "scoreboard players set fb_stock shop 10"
   ],
   "blocks": [
     {
@@ -23,7 +23,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #stock shop matches 1..",
+      "command": "execute if score fb_stock shop matches 1..",
       "next": "take",
       "note": "pure condition gate: checks stock before payment"
     },
@@ -52,7 +52,7 @@
       "condition": "conditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players remove #stock shop 1",
+      "command": "scoreboard players remove fb_stock shop 1",
       "next": "fx"
     },
     {
@@ -80,7 +80,7 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score #stock shop matches 0 run title @a actionbar §cSold out",
+      "command": "execute if score fb_stock shop matches 0 run title @a actionbar §cSold out",
       "next": null
     },
     {
@@ -89,7 +89,7 @@
       "condition": "unconditional",
       "redstone": "needs_redstone",
       "delay": 0,
-      "command": "scoreboard players set #stock shop 10",
+      "command": "scoreboard players set fb_stock shop 10",
       "next": "restock_msg"
     },
     {

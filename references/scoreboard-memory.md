@@ -41,15 +41,16 @@ scoreboard players list @s
 ## 3. 假玩家（全局变量）
 
 ```mcfunction
-scoreboard players set #state arena 1
-scoreboard players add #tick arena 1
-scoreboard players set #max arena 100
-scoreboard players set #two arena 2
+scoreboard players set fb_state arena 1
+scoreboard players add fb_tick arena 1
+scoreboard players set fb_max arena 100
+scoreboard players set fb_two arena 2
 ```
 
 - 名字以 `#` 开头，不会出现在侧边栏。
 - 适合全局状态、常量、计数器、计时器。
-- 约定：`#state`、`#tick`、`#count`、`#cd`、`#flag`、`#two`、`#max`。
+- 约定：`fb_state`、`fb_tick`、`fb_count`、`fb_cd`、`fb_flag`、`fb_two`、`fb_max`。
+- **不要用 `#state` 这类假玩家名**：网易 1.21.130 解析 `scoreboard ... #name` / `if score #name ...` 会报“意外的 #”。统一用 `fb_` 前缀。
 - 常量要显式初始化，不要依赖“未跟踪=0”的隐含行为（可读性差）。
 
 ## 4. 每玩家状态
@@ -84,7 +85,7 @@ scoreboard players operation @s result > @s other      # 取较大
 ```
 
 - 运算符：`=`、`+=`、`-=`、`*=`、`/=`、`%=`、`><`、`<`、`>`。
-- 右边是“目标 + 目标名”，可以是 `@s`、`#fake`、玩家名。
+- 右边是“目标 + 目标名”，可以是 `@s`、`fb_fake`、玩家名。
 - 除数为 0：基岩版“成功但不改变目标值”，不会报错；要自己防 0。
 - 负数除法向下取整（不是向 0 取整），做“每 20 tick 一次”时通常没问题，做负数坐标要小心。
 - `%=` 用正余数；`-1 % 2 = 1`。
@@ -93,27 +94,27 @@ scoreboard players operation @s result > @s other      # 取较大
 
 ```mcfunction
 # 钳制到 0..100
-execute if score #n obj matches 101.. run scoreboard players set #n obj 100
-execute if score #n obj matches ..-1 run scoreboard players set #n obj 0
+execute if score fb_n obj matches 101.. run scoreboard players set fb_n obj 100
+execute if score fb_n obj matches ..-1 run scoreboard players set fb_n obj 0
 
 # 取绝对值（先复制，再判断负号）
-scoreboard players operation #abs obj = #n obj
-execute if score #abs obj matches ..-1 run scoreboard players operation #abs obj *= #neg obj
+scoreboard players operation fb_abs obj = fb_n obj
+execute if score fb_abs obj matches ..-1 run scoreboard players operation fb_abs obj *= fb_neg obj
 
 # 求符号（-1/0/1）
-scoreboard players set #sign obj 0
-execute if score #n obj matches 1.. run scoreboard players set #sign obj 1
-execute if score #n obj matches ..-1 run scoreboard players set #sign obj -1
+scoreboard players set fb_sign obj 0
+execute if score fb_n obj matches 1.. run scoreboard players set fb_sign obj 1
+execute if score fb_n obj matches ..-1 run scoreboard players set fb_sign obj -1
 
 # 乘以 1.5（先乘 3 再除 2）
-scoreboard players operation #r obj = #n obj
-scoreboard players operation #r obj *= #three obj
-scoreboard players operation #r obj /= #two obj
+scoreboard players operation fb_r obj = fb_n obj
+scoreboard players operation fb_r obj *= fb_three obj
+scoreboard players operation fb_r obj /= fb_two obj
 
 # 百分比：hp * 100 / max
-scoreboard players operation #pct obj = #hp obj
-scoreboard players operation #pct obj *= #hundred obj
-scoreboard players operation #pct obj /= #maxhp obj
+scoreboard players operation fb_pct obj = fb_hp obj
+scoreboard players operation fb_pct obj *= fb_hundred obj
+scoreboard players operation fb_pct obj /= fb_maxhp obj
 ```
 
 ## 6. 范围比较
@@ -157,18 +158,18 @@ scoreboard objectives setdisplay sidebar coins descending
 
 | 类型 | 命名 | 例子 |
 |---|---|---|
-| 全局状态 | `#state` | 0=idle 1=count 2=run 3=end |
-| 计时 | `#tick` / `#cd` / `#hold` | 每 tick +1 或 -1 |
-| 计数 | `#count` / `#wave` / `#score` | 整数 |
-| 常量 | `#two` / `#max` / `#hundred` | 显式初始化 |
-| 临时标记 | `#flag` / `#done` | 用完清零 |
+| 全局状态 | `fb_state` | 0=idle 1=count 2=run 3=end |
+| 计时 | `fb_tick` / `fb_cd` / `fb_hold` | 每 tick +1 或 -1 |
+| 计数 | `fb_count` / `fb_wave` / `fb_score` | 整数 |
+| 常量 | `fb_two` / `fb_max` / `fb_hundred` | 显式初始化 |
+| 临时标记 | `fb_flag` / `fb_done` | 用完清零 |
 | 每玩家 | `@s.<name>` | `coins`, `kills`, `cd`, `job` |
 
 状态编码：
 
 - 0..N 的枚举最直观；不要用“多个布尔分数”表达互斥状态。
 - 布尔用 0/1，方便 `matches 1` 和取模。
-- 需要“阶段 + 子阶段”时用两个分数（`#phase`, `#step`），不要硬编码成 10、11、12。
+- 需要“阶段 + 子阶段”时用两个分数（`fb_phase`, `fb_step`），不要硬编码成 10、11、12。
 - 坐标存整数（计分板没有小数）；需要小数时放大 100 倍存。
 
 ## 10. 没有自动统计怎么办
@@ -191,10 +192,10 @@ scoreboard objectives setdisplay sidebar coins descending
 ```mcfunction
 # 初始化（世界加载/重置时跑一次）
 scoreboard objectives add arena dummy
-scoreboard players set #state arena 0
-scoreboard players set #tick arena 0
-scoreboard players set #count arena 0
-scoreboard players set #two arena 2
+scoreboard players set fb_state arena 0
+scoreboard players set fb_tick arena 0
+scoreboard players set fb_count arena 0
+scoreboard players set fb_two arena 2
 
 # 清理（每轮结束）
 scoreboard players set @a temp 0

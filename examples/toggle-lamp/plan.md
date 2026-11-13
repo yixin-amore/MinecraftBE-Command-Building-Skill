@@ -22,10 +22,10 @@ A button toggles a redstone lamp between on and off using a modulo-2 state score
 
 | # | id | type | condition | redstone | delay | next | command |
 |---|---|---|---|---|---|---|---|
-| 1 | `button` | impulse | unconditional | needs_redstone | 0 | `wrap` | `scoreboard players add #state lamp 1` |
-| 2 | `wrap` | chain | conditional | always_active | 0 | `on` | `scoreboard players operation #state lamp %= #two lamp` |
-| 3 | `on` | chain | unconditional | always_active | 0 | `off` | `execute if score #state lamp matches 1 run setblock 10 65 10 redstone_block` |
-| 4 | `off` | chain | unconditional | always_active | 0 | `click` | `execute if score #state lamp matches 0 run setblock 10 65 10 air` |
+| 1 | `button` | impulse | unconditional | needs_redstone | 0 | `wrap` | `scoreboard players add fb_state lamp 1` |
+| 2 | `wrap` | chain | conditional | always_active | 0 | `on` | `scoreboard players operation fb_state lamp %= fb_two lamp` |
+| 3 | `on` | chain | unconditional | always_active | 0 | `off` | `execute if score fb_state lamp matches 1 run setblock 10 65 10 redstone_block` |
+| 4 | `off` | chain | unconditional | always_active | 0 | `click` | `execute if score fb_state lamp matches 0 run setblock 10 65 10 air` |
 | 5 | `click` | chain | unconditional | always_active | 0 | — | `playsound random.click @a` |
 
 ## Layout
@@ -44,8 +44,8 @@ Run once before building:
 
 ```mcfunction
 scoreboard objectives add lamp dummy
-scoreboard players set #two lamp 2
-scoreboard players set #state lamp 0
+scoreboard players set fb_two lamp 2
+scoreboard players set fb_state lamp 0
 ```
 
 ## Tests
@@ -53,13 +53,13 @@ scoreboard players set #state lamp 0
 - [ ] Press once: redstone block appears at 10 65 10 and the lamp at 10 66 10 lights.
 - [ ] Press again: redstone block becomes air and the lamp turns off.
 - [ ] Press 10 times: state alternates correctly, never goes negative or above 1.
-- [ ] Reload the world: #state keeps its value, so the next press still toggles.
+- [ ] Reload the world: fb_state keeps its value, so the next press still toggles.
 - [ ] Run /setblock 10 65 10 air manually: the next press resynchronizes the lamp.
 
 ## Design notes
 
 - The two output blocks must be unconditional; the conditional chain would otherwise skip the second branch.
-- If the lamp gets out of sync, set #state manually or add a resync step that checks the block at 10 65 10.
+- If the lamp gets out of sync, set fb_state manually or add a resync step that checks the block at 10 65 10.
 
 ---
 

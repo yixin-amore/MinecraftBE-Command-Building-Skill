@@ -7,7 +7,7 @@
 | 项目 | 内容 |
 |---|---|
 | 触发 | 按钮（Impulse + Needs Redstone） |
-| 状态 | `#state` 0=关 1=开 |
+| 状态 | `fb_state` 0=关 1=开 |
 | 输出 | `10 65 10` 放/移除红石块；`10 66 10` 是红石灯 |
 | 结束 | 每次按下在开/关之间切换 |
 
@@ -15,8 +15,8 @@
 
 | 变量 | 归属 | 含义 | 初值 |
 |---|---|---|---|
-| `#state` | 全局 | 0=off 1=on | 0 |
-| `#two` | 全局 | 常量 2 | 2 |
+| `fb_state` | 全局 | 0=off 1=on | 0 |
+| `fb_two` | 全局 | 常量 2 | 2 |
 
 ## 链
 
@@ -43,17 +43,17 @@ button (impulse) → wrap (chain, conditional) → on (chain, unconditional) →
 ### 1. 取模翻转
 
 ```mcfunction
-scoreboard players add #state lamp 1
-scoreboard players operation #state lamp %= #two lamp
+scoreboard players add fb_state lamp 1
+scoreboard players operation fb_state lamp %= fb_two lamp
 ```
 
 - 0 → 1 → 0 → 1 …
-- `%=` 是正余数；`#state` 不会变成 2。
-- `#two` 必须初始化；除数为 0 时基岩版不改变目标值（会卡住）。
+- `%=` 是正余数；`fb_state` 不会变成 2。
+- `fb_two` 必须初始化；除数为 0 时基岩版不改变目标值（会卡住）。
 
 ### 2. 两个输出块都是 unconditional
 
-`on` 的命令在 `#state=0` 时失败（`execute if` 不成立），但它仍然会触发 `off`。
+`on` 的命令在 `fb_state=0` 时失败（`execute if` 不成立），但它仍然会触发 `off`。
 如果 `off` 设成 Conditional，它会检查 `on` 的失败并跳过，灯就关不掉。
 所以两个输出块都设 Unconditional，各自用 `execute if` 判断。
 
@@ -71,21 +71,21 @@ scoreboard players operation #state lamp %= #two lamp
    - `11`：Conditional
    - `12`、`13`、`14`：Unconditional
 5. 在 `10 65 10` 放一个红石块（初始为开或关都行），在 `10 66 10` 放红石灯。
-6. 按按钮测试；如果初始灯状态和 `#state` 不一致，按一次或手动 `setblock` 同步。
+6. 按按钮测试；如果初始灯状态和 `fb_state` 不一致，按一次或手动 `setblock` 同步。
 
 ## 测试
 
 - [ ] 按一次：红石块出现，灯亮。
 - [ ] 再按一次：红石块消失，灯灭。
 - [ ] 连按 10 次：状态正确交替，不出现 2 或 -1。
-- [ ] 退出重进：`#state` 保留，下一次按仍能切换。
+- [ ] 退出重进：`fb_state` 保留，下一次按仍能切换。
 - [ ] 手动把 `10 65 10` 改成空气：下一次按会切到“开”，灯亮（状态以分数为准）。
 
 ## 变体
 
-- **三态开关**：`%= 3`，加 `#three`，三个输出块。
+- **三态开关**：`%= 3`，加 `fb_three`，三个输出块。
 - **门**：把 `setblock` 改成 `fill` 门框区域为空气/铁块。
-- **每玩家独立开关**：把 `#state` 换成 `@s.state`，用 `execute as @a` 处理。
+- **每玩家独立开关**：把 `fb_state` 换成 `@s.state`，用 `execute as @a` 处理。
 
 ## 生成构建表
 

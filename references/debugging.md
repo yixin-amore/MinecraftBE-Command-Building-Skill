@@ -52,9 +52,9 @@ tellraw @s {"rawtext":[{"text":"§e[DBG] stage 1"}]}
 ```mcfunction
 tellraw @a {"rawtext":[
   {"text":"§e[DBG] state="},
-  {"score":{"name":"#state","objective":"arena"}},
+  {"score":{"name":"fb_state","objective":"arena"}},
   {"text":" count="},
-  {"score":{"name":"#count","objective":"arena"}}
+  {"score":{"name":"fb_count","objective":"arena"}}
 ]}
 ```
 
@@ -76,8 +76,8 @@ execute unless entity @a[r=5,tag=ready] run say selector_empty
 ### 测试条件
 
 ```mcfunction
-execute if score #state arena matches 1 run say state_is_1
-execute unless score #state arena matches 1 run say state_is_not_1
+execute if score fb_state arena matches 1 run say state_is_1
+execute unless score fb_state arena matches 1 run say state_is_not_1
 ```
 
 ## 4. 症状 → 原因 → 修复

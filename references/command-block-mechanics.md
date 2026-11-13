@@ -133,7 +133,7 @@
 execute as @a[r=5,tag=ready] run scoreboard players add @s coins 1
 
 # 纯条件门：不改任何东西，只把成功/失败传给下一个 Conditional
-execute if score #stock shop matches 1..
+execute if score fb_stock shop matches 1..
 ```
 
 ## 7. 一次触发到底跑几个 tick
@@ -234,7 +234,7 @@ tickingarea list
 目标：按钮按下后，第 0 tick 记录， 第 2 tick 播放声音，第 5 tick 给物品。
 
 ```
-[按钮] → [I: scoreboard players set #step obj 1]        (Impulse, Needs Redstone, Delay 0)
+[按钮] → [I: scoreboard players set fb_step obj 1]        (Impulse, Needs Redstone, Delay 0)
         → [C: playsound random.click @a]                  (Chain, Unconditional, Delay 2)
         → [C: give @p bread 1]                            (Chain, Unconditional, Delay 3)
 ```
@@ -243,7 +243,7 @@ tickingarea list
 
 ```
 tick T     按钮激活，Impulse 在 T+1 执行（Delay 0 = 1 tick）
-tick T+1   #step=1，触发下一个 Chain；该 Chain Delay 2
+tick T+1   fb_step=1，触发下一个 Chain；该 Chain Delay 2
 tick T+3   播放声音，触发下一个 Chain；该 Chain Delay 3
 tick T+6   给予面包
 ```

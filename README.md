@@ -168,7 +168,7 @@ python3 scripts/bdxgen.py --spec examples/bdx-generator/demo.json /tmp/demo.bdx
   "setup": ["scoreboard objectives add obj dummy"],
   "blocks": [
     {"id": "clock", "type": "repeat", "redstone": "always_active",
-     "command": "scoreboard players add #tick obj 1", "next": "step"},
+     "command": "scoreboard players add fb_tick obj 1", "next": "step"},
     {"id": "step", "type": "chain", "command": "say 20 ticks", "next": null}
   ],
   "tests": ["..."],

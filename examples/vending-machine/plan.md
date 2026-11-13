@@ -29,14 +29,14 @@ A one-press vending machine: nearest player in range with an emerald pays one em
 | # | id | type | condition | redstone | delay | next | command |
 |---|---|---|---|---|---|---|---|
 | 1 | `buy_btn` | impulse | unconditional | needs_redstone | 0 | `stock_gate` | `execute as @a[r=4,hasitem={item=emerald,quantity=1..},c=1] run scoreboard players set @s shop 1` |
-| 2 | `stock_gate` | chain | conditional | always_active | 0 | `take` | `execute if score #stock shop matches 1..` |
+| 2 | `stock_gate` | chain | conditional | always_active | 0 | `take` | `execute if score fb_stock shop matches 1..` |
 | 3 | `take` | chain | conditional | always_active | 0 | `give` | `execute as @a[scores={shop=1},c=1] run clear @s emerald 0 1` |
 | 4 | `give` | chain | conditional | always_active | 0 | `stock` | `execute as @a[scores={shop=1},c=1] run give @s bread 1` |
-| 5 | `stock` | chain | conditional | always_active | 0 | `fx` | `scoreboard players remove #stock shop 1` |
+| 5 | `stock` | chain | conditional | always_active | 0 | `fx` | `scoreboard players remove fb_stock shop 1` |
 | 6 | `fx` | chain | conditional | always_active | 0 | `cleanup` | `execute as @a[scores={shop=1},c=1] run playsound random.orb @s` |
 | 7 | `cleanup` | chain | unconditional | always_active | 0 | `sold_out` | `scoreboard players set @a shop 0` |
-| 8 | `sold_out` | chain | unconditional | always_active | 0 | — | `execute if score #stock shop matches 0 run title @a actionbar §cSold out` |
-| 9 | `restock_btn` | impulse | unconditional | needs_redstone | 0 | `restock_msg` | `scoreboard players set #stock shop 10` |
+| 8 | `sold_out` | chain | unconditional | always_active | 0 | — | `execute if score fb_stock shop matches 0 run title @a actionbar §cSold out` |
+| 9 | `restock_btn` | impulse | unconditional | needs_redstone | 0 | `restock_msg` | `scoreboard players set fb_stock shop 10` |
 | 10 | `restock_msg` | chain | conditional | always_active | 0 | — | `title @a actionbar §aRestocked` |
 
 ## Setup
@@ -45,7 +45,7 @@ Run once before building:
 
 ```mcfunction
 scoreboard objectives add shop dummy
-scoreboard players set #stock shop 10
+scoreboard players set fb_stock shop 10
 ```
 
 ## Tests

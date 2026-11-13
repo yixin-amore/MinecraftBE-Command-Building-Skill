@@ -22,7 +22,7 @@
 - 数组按顺序拼接；换行用 `\n`。
 - **格式只用 `§` 代码**；Java 的 `color`、`bold`、`clickEvent`、`hoverEvent` 在基岩版文本里不可用。
 - `translate` 用 `with` 传参，占位符是 `%%s` / `%%1`（两个百分号）。
-- `score` 可以显示分数：`{"score":{"name":"#count","objective":"arena"}}`；`"*"` 表示读消息的玩家自己。
+- `score` 可以显示分数：`{"score":{"name":"fb_count","objective":"arena"}}`；`"*"` 表示读消息的玩家自己。
 - `selector` 显示被选中实体的名字。
 
 ### `§` 格式代码
@@ -56,7 +56,7 @@ tellraw @a {"rawtext":[
   {"text":" §fjoined the game"}
 ]}
 
-tellraw @a {"rawtext":[{"text":"§eWave: "},{"score":{"name":"#wave","objective":"arena"}}]}
+tellraw @a {"rawtext":[{"text":"§eWave: "},{"score":{"name":"fb_wave","objective":"arena"}}]}
 ```
 
 **坑**：
@@ -85,7 +85,7 @@ title @a actionbar §e3
 title @a times 10 60 20
 
 titleraw @a title {"rawtext":[{"text":"§lCHAPTER I"}]}
-titleraw @a actionbar {"rawtext":[{"text":"§e"},{"score":{"name":"#count","objective":"arena"}}]}
+titleraw @a actionbar {"rawtext":[{"text":"§e"},{"score":{"name":"fb_count","objective":"arena"}}]}
 ```
 
 - `title` 是纯文本 + `§`；`titleraw` 是 JSON。
@@ -97,7 +97,7 @@ titleraw @a actionbar {"rawtext":[{"text":"§e"},{"score":{"name":"#count","obje
 ### 用 title 做倒计时
 
 ```mcfunction
-titleraw @a actionbar {"rawtext":[{"text":"§eTime: "},{"score":{"name":"#count","objective":"arena"}},{"text":"s"}]}
+titleraw @a actionbar {"rawtext":[{"text":"§eTime: "},{"score":{"name":"fb_count","objective":"arena"}},{"text":"s"}]}
 ```
 
 每秒执行一次即可；不要每 tick 执行（会闪）。
@@ -107,7 +107,7 @@ titleraw @a actionbar {"rawtext":[{"text":"§eTime: "},{"score":{"name":"#count"
 没有 `bossbar`（网易也没有），用 actionbar 或 sidebar：
 
 ```mcfunction
-titleraw @a actionbar {"rawtext":[{"text":"§cBoss "},{"score":{"name":"#bosshp","objective":"boss"}},{"text":" / 100"}]}
+titleraw @a actionbar {"rawtext":[{"text":"§cBoss "},{"score":{"name":"fb_bosshp","objective":"boss"}},{"text":" / 100"}]}
 ```
 
 或：

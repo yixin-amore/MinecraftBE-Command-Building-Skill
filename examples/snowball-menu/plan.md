@@ -297,10 +297,10 @@ Three-level snowball menu with a compact boxed actionbar UI, selection highlight
 | 7 | `r00b06` | chain | unconditional | always_active | 0 | `r00b07` | `scoreboard objectives add sbpoints dummy` |
 | 8 | `r00b07` | chain | unconditional | always_active | 0 | `r00b08` | `scoreboard objectives add sbsnd dummy` |
 | 9 | `r00b08` | chain | unconditional | always_active | 0 | `r00b09` | `scoreboard objectives add sbg dummy` |
-| 10 | `r00b09` | chain | unconditional | always_active | 0 | `r00b10` | `scoreboard players set #four sbm 4` |
-| 11 | `r00b10` | chain | unconditional | always_active | 0 | `r00b11` | `scoreboard players set #three sbm 3` |
-| 12 | `r00b11` | chain | unconditional | always_active | 0 | `r00b12` | `scoreboard players set #two sbm 2` |
-| 13 | `r00b12` | chain | unconditional | always_active | 0 | — | `scoreboard players set #one sbm 1` |
+| 10 | `r00b09` | chain | unconditional | always_active | 0 | `r00b10` | `scoreboard players set fb_four sbm 4` |
+| 11 | `r00b10` | chain | unconditional | always_active | 0 | `r00b11` | `scoreboard players set fb_three sbm 3` |
+| 12 | `r00b11` | chain | unconditional | always_active | 0 | `r00b12` | `scoreboard players set fb_two sbm 2` |
+| 13 | `r00b12` | chain | unconditional | always_active | 0 | — | `scoreboard players set fb_one sbm 1` |
 | 14 | `r01b00` | repeat | unconditional | always_active | 20 | `r01b01` | `execute as @a run scoreboard players add @s sbm 0` |
 | 15 | `r01b01` | chain | unconditional | always_active | 0 | `r01b02` | `execute as @a run scoreboard players add @s sbsel 0` |
 | 16 | `r01b02` | chain | unconditional | always_active | 0 | `r01b03` | `execute as @a run scoreboard players add @s sbpage 0` |
@@ -313,7 +313,7 @@ Three-level snowball menu with a compact boxed actionbar UI, selection highlight
 | 23 | `r02b00` | repeat | unconditional | always_active | 0 | `r02b01` | `execute as @e[type=snowball] at @s run scoreboard players add @p[r=3] sbm 0` |
 | 24 | `r02b01` | chain | unconditional | always_active | 0 | `r02b02` | `execute as @e[type=snowball] at @s run scoreboard players add @p[r=3,scores={sbm=0}] sbopen 1` |
 | 25 | `r02b02` | chain | unconditional | always_active | 0 | `r02b03` | `execute as @e[type=snowball] at @s run scoreboard players add @p[r=3,scores={sbm=1..2}] sbsel 1` |
-| 26 | `r02b03` | chain | unconditional | always_active | 0 | `r02b04` | `execute as @e[type=snowball] at @s run scoreboard players operation @p[r=3,scores={sbm=1..2}] sbsel %= #four sbm` |
+| 26 | `r02b03` | chain | unconditional | always_active | 0 | `r02b04` | `execute as @e[type=snowball] at @s run scoreboard players operation @p[r=3,scores={sbm=1..2}] sbsel %= fb_four sbm` |
 | 27 | `r02b04` | chain | unconditional | always_active | 0 | `r02b05` | `execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbm 1` |
 | 28 | `r02b05` | chain | unconditional | always_active | 0 | `r02b06` | `execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbsel 0` |
 | 29 | `r02b06` | chain | unconditional | always_active | 0 | `r02b07` | `execute as @e[type=snowball] at @s run scoreboard players set @p[r=3,scores={sbm=0}] sbpage 0` |
@@ -430,7 +430,7 @@ Three-level snowball menu with a compact boxed actionbar UI, selection highlight
 | 140 | `r03b100` | chain | unconditional | always_active | 0 | `r03b101` | `execute as @a[scores={sbg=21}] run playsound random.levelup @s` |
 | 141 | `r03b101` | chain | unconditional | always_active | 0 | `r03b102` | `execute as @a[scores={sbm=3,sbpage=6,sblook=0,sbg=0},rx=-86,rxm=-90] run scoreboard players set @s sbg 22` |
 | 142 | `r03b102` | chain | unconditional | always_active | 0 | `r03b103` | `execute as @a[scores={sbg=22}] run scoreboard players add @s sbsnd 1` |
-| 143 | `r03b103` | chain | unconditional | always_active | 0 | `r03b104` | `execute as @a[scores={sbg=22}] run scoreboard players operation @s sbsnd %= #two sbm` |
+| 143 | `r03b103` | chain | unconditional | always_active | 0 | `r03b104` | `execute as @a[scores={sbg=22}] run scoreboard players operation @s sbsnd %= fb_two sbm` |
 | 144 | `r03b104` | chain | unconditional | always_active | 0 | `r03b105` | `execute as @a[scores={sbg=22}] run scoreboard players set @s sbm 2` |
 | 145 | `r03b105` | chain | unconditional | always_active | 0 | `r03b106` | `execute as @a[scores={sbg=22}] run scoreboard players set @s sbpage 2` |
 | 146 | `r03b106` | chain | unconditional | always_active | 0 | `r03b107` | `execute as @a[scores={sbg=22}] run scoreboard players set @s sbsel 2` |
@@ -559,10 +559,10 @@ scoreboard objectives add sbopen dummy
 scoreboard objectives add sbpoints dummy
 scoreboard objectives add sbsnd dummy
 scoreboard objectives add sbg dummy
-scoreboard players set #four sbm 4
-scoreboard players set #three sbm 3
-scoreboard players set #two sbm 2
-scoreboard players set #one sbm 1
+scoreboard players set fb_four sbm 4
+scoreboard players set fb_three sbm 3
+scoreboard players set fb_two sbm 2
+scoreboard players set fb_one sbm 1
 ```
 
 ## Tests

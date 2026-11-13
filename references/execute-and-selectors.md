@@ -191,8 +191,8 @@ execute unless score @s coins matches 1.. run say zero_or_less
 
 # 两个分数比较
 execute if score @s coins >= @s cap run say capped
-execute if score #a obj < #b obj run say less
-execute if score #a obj = #b obj run say equal
+execute if score fb_a obj < fb_b obj run say less
+execute if score fb_a obj = fb_b obj run say equal
 ```
 
 - `matches` 后面是整数范围：`5`、`5..`、`..5`、`5..10`。
@@ -203,7 +203,7 @@ execute if score #a obj = #b obj run say equal
 ### 条件串联
 
 ```mcfunction
-execute if score #state obj matches 1 if score #count obj matches 0 run say go
+execute if score fb_state obj matches 1 if score fb_count obj matches 0 run say go
 execute as @a at @s if block ~ ~-1 ~ stone run say on_stone
 ```
 
@@ -259,21 +259,21 @@ execute as @a[x=0,y=64,z=0,dx=9,dy=3,dz=9] run ...
 
 ```mcfunction
 # 每 tick 清零
-scoreboard players set #online obj 0
+scoreboard players set fb_online obj 0
 
 # 每个玩家给全局假玩家 +1（Bedrock 没有 store，这是标准替代）
-execute as @a run scoreboard players add #online obj 1
+execute as @a run scoreboard players add fb_online obj 1
 
 # 判断人数
-execute if score #online obj matches 3.. run say 3+
+execute if score fb_online obj matches 3.. run say 3+
 ```
 
 ### 统计实体数量
 
 ```mcfunction
-scoreboard players set #zombies obj 0
-execute as @e[type=zombie,tag=wave] run scoreboard players add #zombies obj 1
-execute if score #zombies obj matches 1.. run say zombies_left
+scoreboard players set fb_zombies obj 0
+execute as @e[type=zombie,tag=wave] run scoreboard players add fb_zombies obj 1
+execute if score fb_zombies obj matches 1.. run say zombies_left
 ```
 
 ### 把玩家传送到各自的重生点
