@@ -303,7 +303,16 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 19 文件、3,719 行、2,681 非注释行；`positioned` 1,431、`rotated` 857、`facing` 420。
 - 完整分类/统计/反模式见 `references/command-corpus-framework.md`；统计脚本 `scripts/command_corpus.py`。
 
+### 4.7.3 值噪声 / 精度哈希
+
+- 样本“值噪声基本命令”不是普通 Perlin：它用**大坐标浮点精度丢失 + `align` + 四角实体变换**做坐标哈希，再用 `fill` 铺地形。
+- 关键：`a/b/c/d` 四角、`point` 落点、`xp_orb` 采样、`fishing_hook` 起点、`nxs` 方向锚点。
+- 极端坐标（23388608、1048576、4096 等）是精度工具，不是普通世界坐标；换版本可能变。
+- 学习顺序：一个方向 4×4 → 四方向 16×16 → 清理/限高。
+- 详见 `references/value-noise.md`。
+
 ### 4.8 一遍过交付（实测校准）
+
 
 
 
@@ -453,6 +462,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/command-computer.md` | 指令计算机：item 像素、栅格吸附、存储/显示分层、反馈风险 |
 | `references/command-corpus-framework.md` | 19 个社区指令文件的归类/统计/分层框架/反模式 |
 | `references/block-map.md` | Java→Bedrock 方块名映射；雪块 `snow` / 雪层 `snow_layer` |
+| `references/value-noise.md` | 值噪声/精度哈希：大坐标精度、align、四角锚点、fill 地形 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |
