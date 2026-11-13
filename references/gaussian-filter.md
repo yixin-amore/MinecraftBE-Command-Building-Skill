@@ -185,3 +185,31 @@ execute as @e[type=egg] at @p positioned ~ -50 ~
 
 > **高斯滤波 = NX 方向树采样 + 二分找表面 + 3×3/5×5 邻域加权 + 重新铺块。**  
 > 样本的 5 条命令重点在“邻居采样和权重”，不是单个高度。
+
+---
+
+## 11. 计分板侧 box blur（完整地形机里的用法）
+
+当高度已经在计分板里（不是从世界读表面）时，不需要 `t/boat/f` 做 NX 方向树，
+直接把 3×3 邻域放进 `execute`：
+
+```mcfunction
+# 中心入账
+execute as @e[tag=nt_col] at @s run scoreboard players operation @s acc = @s hgt
+execute as @e[tag=nt_col] at @s run scoreboard players set @s cnt 1
+# 8 个邻居：命中才累加，同时数邻居
+execute as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt
+execute as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1
+# ... 另外 7 个偏移 ...
+execute as @e[tag=nt_col] at @s run scoreboard players operation @s acc /= @s cnt
+execute as @e[tag=nt_col] at @s run scoreboard players operation @s hgt = @s acc
+```
+
+- **必须 `as ... at @s`**：`positioned` 才相对柱子；漏掉 `at @s` 会采到命令方块旁边。
+- **边界按 `cnt` 归一化**：角落只有 4 个邻居，固定除以 9 会下沉。
+- **先平滑后夹断**：在“未夹断的中间高度”上做两遍，最后再映射到 2..18。
+- 两遍 3×3 均值 ≈ 高斯；相邻高差约减半，山体保留。
+- 完整机器（32×32 / 429 方块 / 随机种子）见 `examples/noise-terrain/` 与
+  `references/value-noise-terrain-machine.md`。
+
+> 一句话：**高度在计分板里时，平滑就是 `as+at @s+positioned` 的邻域求和 + `cnt` 归一化；不用二分表面，也不用新增实体。**

@@ -1,0 +1,6883 @@
+{
+ "name": "value-noise-terrain",
+ "description": "256 根柱子 + 32 位整数值噪声 fBm（3 层）+ 2 遍 3×3 邻域均值平滑 → 2..18 高度 → 32×32 地形。boot impulse 抽种子；grid 每 tick 两根柱子；calc 分 stage 并行算；draw 每 4 tick 一档。",
+ "target_version": "1.21.130",
+ "setup": [
+  "gamerule commandblocksenabled true",
+  "导入后 setblock 0 64 0 redstone_block 触发"
+ ],
+ "tests": [
+  "导入后 15 秒内地形长出来",
+  "chat 的高度分布与 design.md 一致",
+  "再触发一次换种子、换地形"
+ ],
+ "notes": [
+  "值噪声 + 邻域平滑；除法朝 0 截断；中间量 < 2^31"
+ ],
+ "blocks": [
+  {
+   "id": "boot00",
+   "type": "impulse",
+   "condition": "unconditional",
+   "redstone": "needs_redstone",
+   "delay": 0,
+   "command": "setblock 0 64 0 air",
+   "pos": [
+    0,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot01",
+   "note": "boot.00 自清理触发脉冲"
+  },
+  {
+   "id": "boot01",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add ctl dummy",
+   "pos": [
+    1,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot02",
+   "note": "boot.01 objective ctl"
+  },
+  {
+   "id": "boot02",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add nz dummy",
+   "pos": [
+    2,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot03",
+   "note": "boot.02 objective nz"
+  },
+  {
+   "id": "boot03",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add px dummy",
+   "pos": [
+    3,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot04",
+   "note": "boot.03 objective px"
+  },
+  {
+   "id": "boot04",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add pz dummy",
+   "pos": [
+    4,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot05",
+   "note": "boot.04 objective pz"
+  },
+  {
+   "id": "boot05",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add hgt dummy",
+   "pos": [
+    5,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot06",
+   "note": "boot.05 objective hgt"
+  },
+  {
+   "id": "boot06",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add u dummy",
+   "pos": [
+    6,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot07",
+   "note": "boot.06 objective u"
+  },
+  {
+   "id": "boot07",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add ix dummy",
+   "pos": [
+    7,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot08",
+   "note": "boot.07 objective ix"
+  },
+  {
+   "id": "boot08",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add fx dummy",
+   "pos": [
+    8,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot09",
+   "note": "boot.08 objective fx"
+  },
+  {
+   "id": "boot09",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add fx2 dummy",
+   "pos": [
+    9,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot10",
+   "note": "boot.09 objective fx2"
+  },
+  {
+   "id": "boot10",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add iz dummy",
+   "pos": [
+    10,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot11",
+   "note": "boot.10 objective iz"
+  },
+  {
+   "id": "boot11",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add fz dummy",
+   "pos": [
+    11,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot12",
+   "note": "boot.11 objective fz"
+  },
+  {
+   "id": "boot12",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add fz2 dummy",
+   "pos": [
+    12,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot13",
+   "note": "boot.12 objective fz2"
+  },
+  {
+   "id": "boot13",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add base dummy",
+   "pos": [
+    13,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot14",
+   "note": "boot.13 objective base"
+  },
+  {
+   "id": "boot14",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add hh dummy",
+   "pos": [
+    14,
+    64,
+    1
+   ],
+   "facing": "east",
+   "next": "boot15",
+   "note": "boot.14 objective hh"
+  },
+  {
+   "id": "boot15",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add bi dummy",
+   "pos": [
+    15,
+    64,
+    1
+   ],
+   "facing": "south",
+   "next": "boot16",
+   "note": "boot.15 objective bi"
+  },
+  {
+   "id": "boot16",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add acc dummy",
+   "pos": [
+    15,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot17",
+   "note": "boot.16 objective acc"
+  },
+  {
+   "id": "boot17",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard objectives add cnt dummy",
+   "pos": [
+    14,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot18",
+   "note": "boot.17 objective cnt"
+  },
+  {
+   "id": "boot18",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k1 nz 1",
+   "pos": [
+    13,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot19",
+   "note": "boot.18 常量 k1=1"
+  },
+  {
+   "id": "boot19",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k2 nz 2",
+   "pos": [
+    12,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot20",
+   "note": "boot.19 常量 k2=2"
+  },
+  {
+   "id": "boot20",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k4 nz 4",
+   "pos": [
+    11,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot21",
+   "note": "boot.20 常量 k4=4"
+  },
+  {
+   "id": "boot21",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k65536 nz 65536",
+   "pos": [
+    10,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot22",
+   "note": "boot.21 常量 k65536=65536"
+  },
+  {
+   "id": "boot22",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k251 nz 251",
+   "pos": [
+    9,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot23",
+   "note": "boot.22 常量 k251=251"
+  },
+  {
+   "id": "boot23",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k127 nz 127",
+   "pos": [
+    8,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot24",
+   "note": "boot.23 常量 k127=127"
+  },
+  {
+   "id": "boot24",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set k311 nz 311",
+   "pos": [
+    7,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot25",
+   "note": "boot.24 常量 k311=311"
+  },
+  {
+   "id": "boot25",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kbias nz 625",
+   "pos": [
+    6,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot26",
+   "note": "boot.25 常量 kbias=625"
+  },
+  {
+   "id": "boot26",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kdiv nz 30",
+   "pos": [
+    5,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot27",
+   "note": "boot.26 常量 kdiv=30"
+  },
+  {
+   "id": "boot27",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kmidraw nz 38",
+   "pos": [
+    4,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot28",
+   "note": "boot.27 常量 kmidraw=38"
+  },
+  {
+   "id": "boot28",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set koffraw nz 28",
+   "pos": [
+    3,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot29",
+   "note": "boot.28 常量 koffraw=28"
+  },
+  {
+   "id": "boot29",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ksalty nz 20000",
+   "pos": [
+    2,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot30",
+   "note": "boot.29 常量 ksalty=20000"
+  },
+  {
+   "id": "boot30",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ko1 nz 127",
+   "pos": [
+    1,
+    64,
+    2
+   ],
+   "facing": "west",
+   "next": "boot31",
+   "note": "boot.30 常量 ko1=127"
+  },
+  {
+   "id": "boot31",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ko2 nz 311",
+   "pos": [
+    0,
+    64,
+    2
+   ],
+   "facing": "south",
+   "next": "boot32",
+   "note": "boot.31 常量 ko2=311"
+  },
+  {
+   "id": "boot32",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ko3 nz 438",
+   "pos": [
+    0,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot33",
+   "note": "boot.32 常量 ko3=438"
+  },
+  {
+   "id": "boot33",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kd1 nz 8",
+   "pos": [
+    1,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot34",
+   "note": "boot.33 常量 kd1=8"
+  },
+  {
+   "id": "boot34",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kl1 nz 32",
+   "pos": [
+    2,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot35",
+   "note": "boot.34 常量 kl1=32"
+  },
+  {
+   "id": "boot35",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ks1 nz 11",
+   "pos": [
+    3,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot36",
+   "note": "boot.35 常量 ks1=11"
+  },
+  {
+   "id": "boot36",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ka1 nz 2",
+   "pos": [
+    4,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot37",
+   "note": "boot.36 常量 ka1=2"
+  },
+  {
+   "id": "boot37",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kox1 nz 2",
+   "pos": [
+    5,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot38",
+   "note": "boot.37 常量 kox1=2"
+  },
+  {
+   "id": "boot38",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set koz1 nz 1",
+   "pos": [
+    6,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot39",
+   "note": "boot.38 常量 koz1=1"
+  },
+  {
+   "id": "boot39",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kd2 nz 4",
+   "pos": [
+    7,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot40",
+   "note": "boot.39 常量 kd2=4"
+  },
+  {
+   "id": "boot40",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kl2 nz 64",
+   "pos": [
+    8,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot41",
+   "note": "boot.40 常量 kl2=64"
+  },
+  {
+   "id": "boot41",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ks2 nz 47",
+   "pos": [
+    9,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot42",
+   "note": "boot.41 常量 ks2=47"
+  },
+  {
+   "id": "boot42",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ka2 nz 2",
+   "pos": [
+    10,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot43",
+   "note": "boot.42 常量 ka2=2"
+  },
+  {
+   "id": "boot43",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kd3 nz 2",
+   "pos": [
+    11,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot44",
+   "note": "boot.43 常量 kd3=2"
+  },
+  {
+   "id": "boot44",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set kl3 nz 128",
+   "pos": [
+    12,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot45",
+   "note": "boot.44 常量 kl3=128"
+  },
+  {
+   "id": "boot45",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set ks3 nz 83",
+   "pos": [
+    13,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot46",
+   "note": "boot.45 常量 ks3=83"
+  },
+  {
+   "id": "boot46",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "kill @e[tag=nt_col]",
+   "pos": [
+    14,
+    64,
+    3
+   ],
+   "facing": "east",
+   "next": "boot47",
+   "note": "boot.46 清旧柱子"
+  },
+  {
+   "id": "boot47",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "kill @e[tag=nt_cursor]",
+   "pos": [
+    15,
+    64,
+    3
+   ],
+   "facing": "south",
+   "next": "boot48",
+   "note": "boot.47 清旧游标"
+  },
+  {
+   "id": "boot48",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "tickingarea remove noise",
+   "pos": [
+    15,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot49",
+   "note": "boot.48 清旧常加载"
+  },
+  {
+   "id": "boot49",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "tickingarea add 0 60 0 31 104 59 noise",
+   "pos": [
+    14,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot50",
+   "note": "boot.49 圈常加载：墙+地形"
+  },
+  {
+   "id": "boot50",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players add fb_seed nz 1",
+   "pos": [
+    13,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot51",
+   "note": "boot.50 兜底种子 +1"
+  },
+  {
+   "id": "boot51",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_seed nz %= ksalty nz",
+   "pos": [
+    12,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot52",
+   "note": "boot.51 兜底种子夹回范围"
+  },
+  {
+   "id": "boot52",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players random fb_seed nz 0 20000",
+   "pos": [
+    11,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot53",
+   "note": "boot.52 抽随机种子"
+  },
+  {
+   "id": "boot53",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn2 ctl 0",
+   "pos": [
+    10,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot54",
+   "note": "boot.53 清零 bn2"
+  },
+  {
+   "id": "boot54",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn3 ctl 0",
+   "pos": [
+    9,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot55",
+   "note": "boot.54 清零 bn3"
+  },
+  {
+   "id": "boot55",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn4 ctl 0",
+   "pos": [
+    8,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot56",
+   "note": "boot.55 清零 bn4"
+  },
+  {
+   "id": "boot56",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn5 ctl 0",
+   "pos": [
+    7,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot57",
+   "note": "boot.56 清零 bn5"
+  },
+  {
+   "id": "boot57",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn6 ctl 0",
+   "pos": [
+    6,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot58",
+   "note": "boot.57 清零 bn6"
+  },
+  {
+   "id": "boot58",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn7 ctl 0",
+   "pos": [
+    5,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot59",
+   "note": "boot.58 清零 bn7"
+  },
+  {
+   "id": "boot59",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn8 ctl 0",
+   "pos": [
+    4,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot60",
+   "note": "boot.59 清零 bn8"
+  },
+  {
+   "id": "boot60",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn9 ctl 0",
+   "pos": [
+    3,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot61",
+   "note": "boot.60 清零 bn9"
+  },
+  {
+   "id": "boot61",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn10 ctl 0",
+   "pos": [
+    2,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot62",
+   "note": "boot.61 清零 bn10"
+  },
+  {
+   "id": "boot62",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn11 ctl 0",
+   "pos": [
+    1,
+    64,
+    4
+   ],
+   "facing": "west",
+   "next": "boot63",
+   "note": "boot.62 清零 bn11"
+  },
+  {
+   "id": "boot63",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn12 ctl 0",
+   "pos": [
+    0,
+    64,
+    4
+   ],
+   "facing": "south",
+   "next": "boot64",
+   "note": "boot.63 清零 bn12"
+  },
+  {
+   "id": "boot64",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn13 ctl 0",
+   "pos": [
+    0,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot65",
+   "note": "boot.64 清零 bn13"
+  },
+  {
+   "id": "boot65",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn14 ctl 0",
+   "pos": [
+    1,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot66",
+   "note": "boot.65 清零 bn14"
+  },
+  {
+   "id": "boot66",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn15 ctl 0",
+   "pos": [
+    2,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot67",
+   "note": "boot.66 清零 bn15"
+  },
+  {
+   "id": "boot67",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn16 ctl 0",
+   "pos": [
+    3,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot68",
+   "note": "boot.67 清零 bn16"
+  },
+  {
+   "id": "boot68",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn17 ctl 0",
+   "pos": [
+    4,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot69",
+   "note": "boot.68 清零 bn17"
+  },
+  {
+   "id": "boot69",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set bn18 ctl 0",
+   "pos": [
+    5,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot70",
+   "note": "boot.69 清零 bn18"
+  },
+  {
+   "id": "boot70",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_cx ctl 0",
+   "pos": [
+    6,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot71",
+   "note": "boot.70 清零 fb_cx（重跑必须）"
+  },
+  {
+   "id": "boot71",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_cz ctl 0",
+   "pos": [
+    7,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot72",
+   "note": "boot.71 清零 fb_cz（重跑必须）"
+  },
+  {
+   "id": "boot72",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_n ctl 0",
+   "pos": [
+    8,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot73",
+   "note": "boot.72 清零 fb_n（重跑必须）"
+  },
+  {
+   "id": "boot73",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_b ctl 0",
+   "pos": [
+    9,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot74",
+   "note": "boot.73 清零 fb_b（重跑必须）"
+  },
+  {
+   "id": "boot74",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_t ctl 0",
+   "pos": [
+    10,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot75",
+   "note": "boot.74 清零 fb_t（重跑必须）"
+  },
+  {
+   "id": "boot75",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_cur ctl 0",
+   "pos": [
+    11,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot76",
+   "note": "boot.75 清零 fb_cur（重跑必须）"
+  },
+  {
+   "id": "boot76",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players set fb_state ctl 10",
+   "pos": [
+    12,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": "boot77",
+   "note": "boot.76 状态=10 等区块加载"
+  },
+  {
+   "id": "boot77",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "tellraw @a {\"rawtext\":[{\"text\":\"§e值噪声 fBm 启动 §7| 种子 \"},{\"score\":{\"name\":\"fb_seed\",\"objective\":\"nz\"}},{\"text\":\" §7| 32×32 扫描\"}]}",
+   "pos": [
+    13,
+    64,
+    5
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "boot.77 提示"
+  },
+  {
+   "id": "prep00",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 2,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep01",
+   "note": "prep.00 状态快照"
+  },
+  {
+   "id": "prep01",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run fill 0 64 24 31 64 55 minecraft:stone",
+   "pos": [
+    1,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep02",
+   "note": "prep.01 地形底板"
+  },
+  {
+   "id": "prep02",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run fill 0 65 24 31 84 55 air",
+   "pos": [
+    2,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep03",
+   "note": "prep.02 清空地形体"
+  },
+  {
+   "id": "prep03",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run kill @e[tag=nt_col]",
+   "pos": [
+    3,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep04",
+   "note": "prep.03 再清柱子"
+  },
+  {
+   "id": "prep04",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run kill @e[tag=nt_cursor]",
+   "pos": [
+    4,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep05",
+   "note": "prep.04 再清游标"
+  },
+  {
+   "id": "prep05",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run summon armor_stand 1 65 25",
+   "pos": [
+    5,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep06",
+   "note": "prep.05 召唤扫描游标"
+  },
+  {
+   "id": "prep06",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 positioned 1 65 25 run tag @e[type=armor_stand,r=0.6] add nt_cursor",
+   "pos": [
+    6,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep07",
+   "note": "prep.06 标记游标"
+  },
+  {
+   "id": "prep07",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run effect @e[tag=nt_cursor] invisibility 999999 0 true",
+   "pos": [
+    7,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep08",
+   "note": "prep.07 游标隐身"
+  },
+  {
+   "id": "prep08",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run scoreboard players set fb_cx ctl 0",
+   "pos": [
+    8,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep09",
+   "note": "prep.08 再清 fb_cx"
+  },
+  {
+   "id": "prep09",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run scoreboard players set fb_cz ctl 0",
+   "pos": [
+    9,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep10",
+   "note": "prep.09 再清 fb_cz"
+  },
+  {
+   "id": "prep10",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run scoreboard players set fb_n ctl 0",
+   "pos": [
+    10,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep11",
+   "note": "prep.10 再清 fb_n"
+  },
+  {
+   "id": "prep11",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run scoreboard players set fb_b ctl 0",
+   "pos": [
+    11,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep12",
+   "note": "prep.11 再清 fb_b"
+  },
+  {
+   "id": "prep12",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run scoreboard players set fb_state ctl 1",
+   "pos": [
+    12,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": "prep13",
+   "note": "prep.12 状态=1 进入扫描"
+  },
+  {
+   "id": "prep13",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 10 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b值噪声 fBm §7· 扫描 256 格\"}]}",
+   "pos": [
+    13,
+    65,
+    1
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "prep.13 提示"
+  },
+  {
+   "id": "grid00",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 1,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid01",
+   "note": "grid.00 状态快照"
+  },
+  {
+   "id": "grid01",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s run summon armor_stand ~ ~ ~",
+   "pos": [
+    1,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid02",
+   "note": "grid.01 召唤柱子 x+0"
+  },
+  {
+   "id": "grid02",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s run tag @e[type=armor_stand,r=0.6,tag=!nt_cursor] add nt_col",
+   "pos": [
+    2,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid03",
+   "note": "grid.02 柱子 x+0 转正"
+  },
+  {
+   "id": "grid03",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s positioned ~2 ~ ~ run summon armor_stand ~ ~ ~",
+   "pos": [
+    3,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid04",
+   "note": "grid.03 召唤柱子 x+2"
+  },
+  {
+   "id": "grid04",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s positioned ~2 ~ ~ run tag @e[type=armor_stand,r=0.6,tag=!nt_cursor] add nt_col",
+   "pos": [
+    4,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid05",
+   "note": "grid.04 柱子 x+2 转正"
+  },
+  {
+   "id": "grid05",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl = fb_cx ctl",
+   "pos": [
+    5,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid06",
+   "note": "grid.05 px 基准"
+  },
+  {
+   "id": "grid06",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl *= k4 nz",
+   "pos": [
+    6,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid07",
+   "note": "grid.06 px ×4"
+  },
+  {
+   "id": "grid07",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl += k1 nz",
+   "pos": [
+    7,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid08",
+   "note": "grid.07 px +1"
+  },
+  {
+   "id": "grid08",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s run scoreboard players operation @e[tag=nt_col,r=0.6,c=1] px = fb_t ctl",
+   "pos": [
+    8,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid09",
+   "note": "grid.08 写 A.px"
+  },
+  {
+   "id": "grid09",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl += k2 nz",
+   "pos": [
+    9,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid10",
+   "note": "grid.09 px +2"
+  },
+  {
+   "id": "grid10",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s positioned ~2 ~ ~ run scoreboard players operation @e[tag=nt_col,r=0.6,c=1] px = fb_t ctl",
+   "pos": [
+    10,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid11",
+   "note": "grid.10 写 B.px"
+  },
+  {
+   "id": "grid11",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl = fb_cz ctl",
+   "pos": [
+    11,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid12",
+   "note": "grid.11 pz 基准"
+  },
+  {
+   "id": "grid12",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl *= k2 nz",
+   "pos": [
+    12,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid13",
+   "note": "grid.12 pz ×2"
+  },
+  {
+   "id": "grid13",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players operation fb_t ctl += k1 nz",
+   "pos": [
+    13,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid14",
+   "note": "grid.13 pz +1"
+  },
+  {
+   "id": "grid14",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s run scoreboard players operation @e[tag=nt_col,r=0.6,c=1] pz = fb_t ctl",
+   "pos": [
+    14,
+    66,
+    1
+   ],
+   "facing": "east",
+   "next": "grid15",
+   "note": "grid.14 写 A.pz"
+  },
+  {
+   "id": "grid15",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 as @e[tag=nt_cursor] at @s positioned ~2 ~ ~ run scoreboard players operation @e[tag=nt_col,r=0.6,c=1] pz = fb_t ctl",
+   "pos": [
+    15,
+    66,
+    1
+   ],
+   "facing": "south",
+   "next": "grid16",
+   "note": "grid.15 写 B.pz"
+  },
+  {
+   "id": "grid16",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players add fb_n ctl 2",
+   "pos": [
+    15,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid17",
+   "note": "grid.16 计数 +2"
+  },
+  {
+   "id": "grid17",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 run scoreboard players add fb_cx ctl 1",
+   "pos": [
+    14,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid18",
+   "note": "grid.17 列 +1"
+  },
+  {
+   "id": "grid18",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_cx ctl matches 8.. run scoreboard players set fb_cx ctl 0",
+   "pos": [
+    13,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid19",
+   "note": "grid.18 列回绕"
+  },
+  {
+   "id": "grid19",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_cx ctl matches 0 as @e[tag=nt_cursor] at @s run tp @s ~-28 ~ ~2",
+   "pos": [
+    12,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid20",
+   "note": "grid.19 换行：回列首 z+2"
+  },
+  {
+   "id": "grid20",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_cx ctl matches 0 run scoreboard players add fb_cz ctl 1",
+   "pos": [
+    11,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid21",
+   "note": "grid.20 行 +1"
+  },
+  {
+   "id": "grid21",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_cx ctl matches 1.. as @e[tag=nt_cursor] at @s run tp @s ~4 ~ ~",
+   "pos": [
+    10,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid22",
+   "note": "grid.21 列前进 4 格"
+  },
+  {
+   "id": "grid22",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_n ctl matches 256.. run scoreboard players set fb_state ctl 2",
+   "pos": [
+    9,
+    66,
+    2
+   ],
+   "facing": "west",
+   "next": "grid23",
+   "note": "grid.22 扫描完成 → 计算"
+  },
+  {
+   "id": "grid23",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 1 if score fb_n ctl matches 256.. run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b值噪声 fBm §7· 计算高度\"}]}",
+   "pos": [
+    8,
+    66,
+    2
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "grid.23 提示"
+  },
+  {
+   "id": "calc100",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc101",
+   "note": "calc1.00 状态快照"
+  },
+  {
+   "id": "calc101",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players set @s acc 0",
+   "pos": [
+    1,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc102",
+   "note": "calc1.01 acc=0"
+  },
+  {
+   "id": "calc102",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s ix = @s px",
+   "pos": [
+    2,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc103",
+   "note": "calc1.02 L1 x 下标源"
+  },
+  {
+   "id": "calc103",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s ix += kox1 nz",
+   "pos": [
+    3,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc104",
+   "note": "calc1.03 L1 x 相位+2"
+  },
+  {
+   "id": "calc104",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s ix /= kd1 nz",
+   "pos": [
+    4,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc105",
+   "note": "calc1.04 L1 x 晶格下标"
+  },
+  {
+   "id": "calc105",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx = @s px",
+   "pos": [
+    5,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc106",
+   "note": "calc1.05 L1 x 小数源"
+  },
+  {
+   "id": "calc106",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx += kox1 nz",
+   "pos": [
+    6,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc107",
+   "note": "calc1.06 L1 x 相位+2"
+  },
+  {
+   "id": "calc107",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx %= kd1 nz",
+   "pos": [
+    7,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc108",
+   "note": "calc1.07 L1 x 取余"
+  },
+  {
+   "id": "calc108",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx *= kl1 nz",
+   "pos": [
+    8,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc109",
+   "note": "calc1.08 L1 x →1/256"
+  },
+  {
+   "id": "calc109",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players set @s fx2 256",
+   "pos": [
+    9,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc110",
+   "note": "calc1.09 L1 x 补数"
+  },
+  {
+   "id": "calc110",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx2 -= @s fx",
+   "pos": [
+    10,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc111",
+   "note": "calc1.10 L1 x 补数完成"
+  },
+  {
+   "id": "calc111",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s iz = @s pz",
+   "pos": [
+    11,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc112",
+   "note": "calc1.11 L1 z 下标源"
+  },
+  {
+   "id": "calc112",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s iz += koz1 nz",
+   "pos": [
+    12,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc113",
+   "note": "calc1.12 L1 z 相位+1"
+  },
+  {
+   "id": "calc113",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s iz /= kd1 nz",
+   "pos": [
+    13,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc114",
+   "note": "calc1.13 L1 z 晶格下标"
+  },
+  {
+   "id": "calc114",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz = @s pz",
+   "pos": [
+    14,
+    68,
+    1
+   ],
+   "facing": "east",
+   "next": "calc115",
+   "note": "calc1.14 L1 z 小数源"
+  },
+  {
+   "id": "calc115",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz += koz1 nz",
+   "pos": [
+    15,
+    68,
+    1
+   ],
+   "facing": "south",
+   "next": "calc116",
+   "note": "calc1.15 L1 z 相位+1"
+  },
+  {
+   "id": "calc116",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz %= kd1 nz",
+   "pos": [
+    15,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc117",
+   "note": "calc1.16 L1 z 取余"
+  },
+  {
+   "id": "calc117",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz *= kl1 nz",
+   "pos": [
+    14,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc118",
+   "note": "calc1.17 L1 z →1/256"
+  },
+  {
+   "id": "calc118",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players set @s fz2 256",
+   "pos": [
+    13,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc119",
+   "note": "calc1.18 L1 z 补数"
+  },
+  {
+   "id": "calc119",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz2 -= @s fz",
+   "pos": [
+    12,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc120",
+   "note": "calc1.19 L1 z 补数完成"
+  },
+  {
+   "id": "calc120",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base = @s ix",
+   "pos": [
+    11,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc121",
+   "note": "calc1.20 L1 base=ix"
+  },
+  {
+   "id": "calc121",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base *= k127 nz",
+   "pos": [
+    10,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc122",
+   "note": "calc1.21 L1 ×127"
+  },
+  {
+   "id": "calc122",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u = @s iz",
+   "pos": [
+    9,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc123",
+   "note": "calc1.22 L1 u=iz"
+  },
+  {
+   "id": "calc123",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u *= k311 nz",
+   "pos": [
+    8,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc124",
+   "note": "calc1.23 L1 ×311"
+  },
+  {
+   "id": "calc124",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base += @s u",
+   "pos": [
+    7,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc125",
+   "note": "calc1.24 L1 合并"
+  },
+  {
+   "id": "calc125",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base += ks1 nz",
+   "pos": [
+    6,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc126",
+   "note": "calc1.25 L1 +层种子"
+  },
+  {
+   "id": "calc126",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base += fb_seed nz",
+   "pos": [
+    5,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc127",
+   "note": "calc1.26 L1 +随机种子"
+  },
+  {
+   "id": "calc127",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    4,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc128",
+   "note": "calc1.27 L1 角0 base"
+  },
+  {
+   "id": "calc128",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    3,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc129",
+   "note": "calc1.28 L1 角0 u=h"
+  },
+  {
+   "id": "calc129",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    2,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc130",
+   "note": "calc1.29 L1 角0 u=h+1"
+  },
+  {
+   "id": "calc130",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    1,
+    68,
+    2
+   ],
+   "facing": "west",
+   "next": "calc131",
+   "note": "calc1.30 L1 角0 h(h+1)"
+  },
+  {
+   "id": "calc131",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    0,
+    68,
+    2
+   ],
+   "facing": "south",
+   "next": "calc132",
+   "note": "calc1.31 L1 角0 %251"
+  },
+  {
+   "id": "calc132",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    0,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc133",
+   "note": "calc1.32 L1 角0 权重x"
+  },
+  {
+   "id": "calc133",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    1,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc134",
+   "note": "calc1.33 L1 角0 权重z"
+  },
+  {
+   "id": "calc134",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi = @s hh",
+   "pos": [
+    2,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc135",
+   "note": "calc1.34 L1 角0 初始化"
+  },
+  {
+   "id": "calc135",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    3,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc136",
+   "note": "calc1.35 L1 角1 base"
+  },
+  {
+   "id": "calc136",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh += ko1 nz",
+   "pos": [
+    4,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc137",
+   "note": "calc1.36 L1 角1 角偏移"
+  },
+  {
+   "id": "calc137",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    5,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc138",
+   "note": "calc1.37 L1 角1 u=h"
+  },
+  {
+   "id": "calc138",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    6,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc139",
+   "note": "calc1.38 L1 角1 u=h+1"
+  },
+  {
+   "id": "calc139",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    7,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc140",
+   "note": "calc1.39 L1 角1 h(h+1)"
+  },
+  {
+   "id": "calc140",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    8,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc141",
+   "note": "calc1.40 L1 角1 %251"
+  },
+  {
+   "id": "calc141",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    9,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc142",
+   "note": "calc1.41 L1 角1 权重x"
+  },
+  {
+   "id": "calc142",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    10,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc143",
+   "note": "calc1.42 L1 角1 权重z"
+  },
+  {
+   "id": "calc143",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    11,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc144",
+   "note": "calc1.43 L1 角1 累加"
+  },
+  {
+   "id": "calc144",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    12,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc145",
+   "note": "calc1.44 L1 角2 base"
+  },
+  {
+   "id": "calc145",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh += ko2 nz",
+   "pos": [
+    13,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc146",
+   "note": "calc1.45 L1 角2 角偏移"
+  },
+  {
+   "id": "calc146",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    14,
+    68,
+    3
+   ],
+   "facing": "east",
+   "next": "calc147",
+   "note": "calc1.46 L1 角2 u=h"
+  },
+  {
+   "id": "calc147",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    15,
+    68,
+    3
+   ],
+   "facing": "south",
+   "next": "calc148",
+   "note": "calc1.47 L1 角2 u=h+1"
+  },
+  {
+   "id": "calc148",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    15,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc149",
+   "note": "calc1.48 L1 角2 h(h+1)"
+  },
+  {
+   "id": "calc149",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    14,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc150",
+   "note": "calc1.49 L1 角2 %251"
+  },
+  {
+   "id": "calc150",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    13,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc151",
+   "note": "calc1.50 L1 角2 权重x"
+  },
+  {
+   "id": "calc151",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    12,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc152",
+   "note": "calc1.51 L1 角2 权重z"
+  },
+  {
+   "id": "calc152",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    11,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc153",
+   "note": "calc1.52 L1 角2 累加"
+  },
+  {
+   "id": "calc153",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    10,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc154",
+   "note": "calc1.53 L1 角3 base"
+  },
+  {
+   "id": "calc154",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh += ko3 nz",
+   "pos": [
+    9,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc155",
+   "note": "calc1.54 L1 角3 角偏移"
+  },
+  {
+   "id": "calc155",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    8,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc156",
+   "note": "calc1.55 L1 角3 u=h"
+  },
+  {
+   "id": "calc156",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    7,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc157",
+   "note": "calc1.56 L1 角3 u=h+1"
+  },
+  {
+   "id": "calc157",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    6,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc158",
+   "note": "calc1.57 L1 角3 h(h+1)"
+  },
+  {
+   "id": "calc158",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    5,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc159",
+   "note": "calc1.58 L1 角3 %251"
+  },
+  {
+   "id": "calc159",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    4,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc160",
+   "note": "calc1.59 L1 角3 权重x"
+  },
+  {
+   "id": "calc160",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    3,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc161",
+   "note": "calc1.60 L1 角3 权重z"
+  },
+  {
+   "id": "calc161",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    2,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc162",
+   "note": "calc1.61 L1 角3 累加"
+  },
+  {
+   "id": "calc162",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi /= k65536 nz",
+   "pos": [
+    1,
+    68,
+    4
+   ],
+   "facing": "west",
+   "next": "calc163",
+   "note": "calc1.62 L1 归一化 0..250"
+  },
+  {
+   "id": "calc163",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s bi *= ka1 nz",
+   "pos": [
+    0,
+    68,
+    4
+   ],
+   "facing": "south",
+   "next": "calc164",
+   "note": "calc1.63 L1 振幅×2"
+  },
+  {
+   "id": "calc164",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s acc += @s bi",
+   "pos": [
+    0,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc165",
+   "note": "calc1.64 L1 累加 acc"
+  },
+  {
+   "id": "calc165",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s ix = @s px",
+   "pos": [
+    1,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc166",
+   "note": "calc1.65 L2 x 下标源"
+  },
+  {
+   "id": "calc166",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s ix /= kd2 nz",
+   "pos": [
+    2,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc167",
+   "note": "calc1.66 L2 x 晶格下标"
+  },
+  {
+   "id": "calc167",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx = @s px",
+   "pos": [
+    3,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc168",
+   "note": "calc1.67 L2 x 小数源"
+  },
+  {
+   "id": "calc168",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx %= kd2 nz",
+   "pos": [
+    4,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc169",
+   "note": "calc1.68 L2 x 取余"
+  },
+  {
+   "id": "calc169",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx *= kl2 nz",
+   "pos": [
+    5,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc170",
+   "note": "calc1.69 L2 x →1/256"
+  },
+  {
+   "id": "calc170",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players set @s fx2 256",
+   "pos": [
+    6,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc171",
+   "note": "calc1.70 L2 x 补数"
+  },
+  {
+   "id": "calc171",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fx2 -= @s fx",
+   "pos": [
+    7,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc172",
+   "note": "calc1.71 L2 x 补数完成"
+  },
+  {
+   "id": "calc172",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s iz = @s pz",
+   "pos": [
+    8,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc173",
+   "note": "calc1.72 L2 z 下标源"
+  },
+  {
+   "id": "calc173",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s iz /= kd2 nz",
+   "pos": [
+    9,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc174",
+   "note": "calc1.73 L2 z 晶格下标"
+  },
+  {
+   "id": "calc174",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz = @s pz",
+   "pos": [
+    10,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc175",
+   "note": "calc1.74 L2 z 小数源"
+  },
+  {
+   "id": "calc175",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz %= kd2 nz",
+   "pos": [
+    11,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc176",
+   "note": "calc1.75 L2 z 取余"
+  },
+  {
+   "id": "calc176",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz *= kl2 nz",
+   "pos": [
+    12,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc177",
+   "note": "calc1.76 L2 z →1/256"
+  },
+  {
+   "id": "calc177",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players set @s fz2 256",
+   "pos": [
+    13,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc178",
+   "note": "calc1.77 L2 z 补数"
+  },
+  {
+   "id": "calc178",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s fz2 -= @s fz",
+   "pos": [
+    14,
+    68,
+    5
+   ],
+   "facing": "east",
+   "next": "calc179",
+   "note": "calc1.78 L2 z 补数完成"
+  },
+  {
+   "id": "calc179",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base = @s ix",
+   "pos": [
+    15,
+    68,
+    5
+   ],
+   "facing": "south",
+   "next": "calc180",
+   "note": "calc1.79 L2 base=ix"
+  },
+  {
+   "id": "calc180",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 as @e[tag=nt_col] run scoreboard players operation @s base *= k127 nz",
+   "pos": [
+    15,
+    68,
+    6
+   ],
+   "facing": "west",
+   "next": "calc181",
+   "note": "calc1.80 L2 ×127"
+  },
+  {
+   "id": "calc181",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 2 run scoreboard players set fb_state ctl 3",
+   "pos": [
+    14,
+    68,
+    6
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc1.81 stage 完成 → 3"
+  },
+  {
+   "id": "calc200",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc201",
+   "note": "calc2.00 状态快照"
+  },
+  {
+   "id": "calc201",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s iz",
+   "pos": [
+    1,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc202",
+   "note": "calc2.01 L2 u=iz"
+  },
+  {
+   "id": "calc202",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u *= k311 nz",
+   "pos": [
+    2,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc203",
+   "note": "calc2.02 L2 ×311"
+  },
+  {
+   "id": "calc203",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += @s u",
+   "pos": [
+    3,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc204",
+   "note": "calc2.03 L2 合并"
+  },
+  {
+   "id": "calc204",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += ks2 nz",
+   "pos": [
+    4,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc205",
+   "note": "calc2.04 L2 +层种子"
+  },
+  {
+   "id": "calc205",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += fb_seed nz",
+   "pos": [
+    5,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc206",
+   "note": "calc2.05 L2 +随机种子"
+  },
+  {
+   "id": "calc206",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    6,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc207",
+   "note": "calc2.06 L2 角0 base"
+  },
+  {
+   "id": "calc207",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    7,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc208",
+   "note": "calc2.07 L2 角0 u=h"
+  },
+  {
+   "id": "calc208",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    8,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc209",
+   "note": "calc2.08 L2 角0 u=h+1"
+  },
+  {
+   "id": "calc209",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    9,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc210",
+   "note": "calc2.09 L2 角0 h(h+1)"
+  },
+  {
+   "id": "calc210",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    10,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc211",
+   "note": "calc2.10 L2 角0 %251"
+  },
+  {
+   "id": "calc211",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    11,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc212",
+   "note": "calc2.11 L2 角0 权重x"
+  },
+  {
+   "id": "calc212",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    12,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc213",
+   "note": "calc2.12 L2 角0 权重z"
+  },
+  {
+   "id": "calc213",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi = @s hh",
+   "pos": [
+    13,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc214",
+   "note": "calc2.13 L2 角0 初始化"
+  },
+  {
+   "id": "calc214",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    14,
+    69,
+    1
+   ],
+   "facing": "east",
+   "next": "calc215",
+   "note": "calc2.14 L2 角1 base"
+  },
+  {
+   "id": "calc215",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh += ko1 nz",
+   "pos": [
+    15,
+    69,
+    1
+   ],
+   "facing": "south",
+   "next": "calc216",
+   "note": "calc2.15 L2 角1 角偏移"
+  },
+  {
+   "id": "calc216",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    15,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc217",
+   "note": "calc2.16 L2 角1 u=h"
+  },
+  {
+   "id": "calc217",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    14,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc218",
+   "note": "calc2.17 L2 角1 u=h+1"
+  },
+  {
+   "id": "calc218",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    13,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc219",
+   "note": "calc2.18 L2 角1 h(h+1)"
+  },
+  {
+   "id": "calc219",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    12,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc220",
+   "note": "calc2.19 L2 角1 %251"
+  },
+  {
+   "id": "calc220",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    11,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc221",
+   "note": "calc2.20 L2 角1 权重x"
+  },
+  {
+   "id": "calc221",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    10,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc222",
+   "note": "calc2.21 L2 角1 权重z"
+  },
+  {
+   "id": "calc222",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    9,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc223",
+   "note": "calc2.22 L2 角1 累加"
+  },
+  {
+   "id": "calc223",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    8,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc224",
+   "note": "calc2.23 L2 角2 base"
+  },
+  {
+   "id": "calc224",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh += ko2 nz",
+   "pos": [
+    7,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc225",
+   "note": "calc2.24 L2 角2 角偏移"
+  },
+  {
+   "id": "calc225",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    6,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc226",
+   "note": "calc2.25 L2 角2 u=h"
+  },
+  {
+   "id": "calc226",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    5,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc227",
+   "note": "calc2.26 L2 角2 u=h+1"
+  },
+  {
+   "id": "calc227",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    4,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc228",
+   "note": "calc2.27 L2 角2 h(h+1)"
+  },
+  {
+   "id": "calc228",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    3,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc229",
+   "note": "calc2.28 L2 角2 %251"
+  },
+  {
+   "id": "calc229",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    2,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc230",
+   "note": "calc2.29 L2 角2 权重x"
+  },
+  {
+   "id": "calc230",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    1,
+    69,
+    2
+   ],
+   "facing": "west",
+   "next": "calc231",
+   "note": "calc2.30 L2 角2 权重z"
+  },
+  {
+   "id": "calc231",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    0,
+    69,
+    2
+   ],
+   "facing": "south",
+   "next": "calc232",
+   "note": "calc2.31 L2 角2 累加"
+  },
+  {
+   "id": "calc232",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    0,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc233",
+   "note": "calc2.32 L2 角3 base"
+  },
+  {
+   "id": "calc233",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh += ko3 nz",
+   "pos": [
+    1,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc234",
+   "note": "calc2.33 L2 角3 角偏移"
+  },
+  {
+   "id": "calc234",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    2,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc235",
+   "note": "calc2.34 L2 角3 u=h"
+  },
+  {
+   "id": "calc235",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    3,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc236",
+   "note": "calc2.35 L2 角3 u=h+1"
+  },
+  {
+   "id": "calc236",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    4,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc237",
+   "note": "calc2.36 L2 角3 h(h+1)"
+  },
+  {
+   "id": "calc237",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    5,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc238",
+   "note": "calc2.37 L2 角3 %251"
+  },
+  {
+   "id": "calc238",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    6,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc239",
+   "note": "calc2.38 L2 角3 权重x"
+  },
+  {
+   "id": "calc239",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    7,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc240",
+   "note": "calc2.39 L2 角3 权重z"
+  },
+  {
+   "id": "calc240",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    8,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc241",
+   "note": "calc2.40 L2 角3 累加"
+  },
+  {
+   "id": "calc241",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi /= k65536 nz",
+   "pos": [
+    9,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc242",
+   "note": "calc2.41 L2 归一化 0..250"
+  },
+  {
+   "id": "calc242",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi *= ka2 nz",
+   "pos": [
+    10,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc243",
+   "note": "calc2.42 L2 振幅×2"
+  },
+  {
+   "id": "calc243",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s acc += @s bi",
+   "pos": [
+    11,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc244",
+   "note": "calc2.43 L2 累加 acc"
+  },
+  {
+   "id": "calc244",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s ix = @s px",
+   "pos": [
+    12,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc245",
+   "note": "calc2.44 L3 x 下标源"
+  },
+  {
+   "id": "calc245",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s ix /= kd3 nz",
+   "pos": [
+    13,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc246",
+   "note": "calc2.45 L3 x 晶格下标"
+  },
+  {
+   "id": "calc246",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fx = @s px",
+   "pos": [
+    14,
+    69,
+    3
+   ],
+   "facing": "east",
+   "next": "calc247",
+   "note": "calc2.46 L3 x 小数源"
+  },
+  {
+   "id": "calc247",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fx %= kd3 nz",
+   "pos": [
+    15,
+    69,
+    3
+   ],
+   "facing": "south",
+   "next": "calc248",
+   "note": "calc2.47 L3 x 取余"
+  },
+  {
+   "id": "calc248",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fx *= kl3 nz",
+   "pos": [
+    15,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc249",
+   "note": "calc2.48 L3 x →1/256"
+  },
+  {
+   "id": "calc249",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players set @s fx2 256",
+   "pos": [
+    14,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc250",
+   "note": "calc2.49 L3 x 补数"
+  },
+  {
+   "id": "calc250",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fx2 -= @s fx",
+   "pos": [
+    13,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc251",
+   "note": "calc2.50 L3 x 补数完成"
+  },
+  {
+   "id": "calc251",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s iz = @s pz",
+   "pos": [
+    12,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc252",
+   "note": "calc2.51 L3 z 下标源"
+  },
+  {
+   "id": "calc252",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s iz /= kd3 nz",
+   "pos": [
+    11,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc253",
+   "note": "calc2.52 L3 z 晶格下标"
+  },
+  {
+   "id": "calc253",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fz = @s pz",
+   "pos": [
+    10,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc254",
+   "note": "calc2.53 L3 z 小数源"
+  },
+  {
+   "id": "calc254",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fz %= kd3 nz",
+   "pos": [
+    9,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc255",
+   "note": "calc2.54 L3 z 取余"
+  },
+  {
+   "id": "calc255",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fz *= kl3 nz",
+   "pos": [
+    8,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc256",
+   "note": "calc2.55 L3 z →1/256"
+  },
+  {
+   "id": "calc256",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players set @s fz2 256",
+   "pos": [
+    7,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc257",
+   "note": "calc2.56 L3 z 补数"
+  },
+  {
+   "id": "calc257",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s fz2 -= @s fz",
+   "pos": [
+    6,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc258",
+   "note": "calc2.57 L3 z 补数完成"
+  },
+  {
+   "id": "calc258",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base = @s ix",
+   "pos": [
+    5,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc259",
+   "note": "calc2.58 L3 base=ix"
+  },
+  {
+   "id": "calc259",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base *= k127 nz",
+   "pos": [
+    4,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc260",
+   "note": "calc2.59 L3 ×127"
+  },
+  {
+   "id": "calc260",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s iz",
+   "pos": [
+    3,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc261",
+   "note": "calc2.60 L3 u=iz"
+  },
+  {
+   "id": "calc261",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u *= k311 nz",
+   "pos": [
+    2,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc262",
+   "note": "calc2.61 L3 ×311"
+  },
+  {
+   "id": "calc262",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += @s u",
+   "pos": [
+    1,
+    69,
+    4
+   ],
+   "facing": "west",
+   "next": "calc263",
+   "note": "calc2.62 L3 合并"
+  },
+  {
+   "id": "calc263",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += ks3 nz",
+   "pos": [
+    0,
+    69,
+    4
+   ],
+   "facing": "south",
+   "next": "calc264",
+   "note": "calc2.63 L3 +层种子"
+  },
+  {
+   "id": "calc264",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s base += fb_seed nz",
+   "pos": [
+    0,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc265",
+   "note": "calc2.64 L3 +随机种子"
+  },
+  {
+   "id": "calc265",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    1,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc266",
+   "note": "calc2.65 L3 角0 base"
+  },
+  {
+   "id": "calc266",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    2,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc267",
+   "note": "calc2.66 L3 角0 u=h"
+  },
+  {
+   "id": "calc267",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    3,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc268",
+   "note": "calc2.67 L3 角0 u=h+1"
+  },
+  {
+   "id": "calc268",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    4,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc269",
+   "note": "calc2.68 L3 角0 h(h+1)"
+  },
+  {
+   "id": "calc269",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    5,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc270",
+   "note": "calc2.69 L3 角0 %251"
+  },
+  {
+   "id": "calc270",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    6,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc271",
+   "note": "calc2.70 L3 角0 权重x"
+  },
+  {
+   "id": "calc271",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    7,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc272",
+   "note": "calc2.71 L3 角0 权重z"
+  },
+  {
+   "id": "calc272",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s bi = @s hh",
+   "pos": [
+    8,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc273",
+   "note": "calc2.72 L3 角0 初始化"
+  },
+  {
+   "id": "calc273",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    9,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc274",
+   "note": "calc2.73 L3 角1 base"
+  },
+  {
+   "id": "calc274",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh += ko1 nz",
+   "pos": [
+    10,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc275",
+   "note": "calc2.74 L3 角1 角偏移"
+  },
+  {
+   "id": "calc275",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    11,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc276",
+   "note": "calc2.75 L3 角1 u=h"
+  },
+  {
+   "id": "calc276",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    12,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc277",
+   "note": "calc2.76 L3 角1 u=h+1"
+  },
+  {
+   "id": "calc277",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    13,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc278",
+   "note": "calc2.77 L3 角1 h(h+1)"
+  },
+  {
+   "id": "calc278",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    14,
+    69,
+    5
+   ],
+   "facing": "east",
+   "next": "calc279",
+   "note": "calc2.78 L3 角1 %251"
+  },
+  {
+   "id": "calc279",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    15,
+    69,
+    5
+   ],
+   "facing": "south",
+   "next": "calc280",
+   "note": "calc2.79 L3 角1 权重x"
+  },
+  {
+   "id": "calc280",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz2",
+   "pos": [
+    15,
+    69,
+    6
+   ],
+   "facing": "west",
+   "next": "calc281",
+   "note": "calc2.80 L3 角1 权重z"
+  },
+  {
+   "id": "calc281",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 3 run scoreboard players set fb_state ctl 4",
+   "pos": [
+    14,
+    69,
+    6
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc2.81 stage 完成 → 4"
+  },
+  {
+   "id": "calc300",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc301",
+   "note": "calc3.00 状态快照"
+  },
+  {
+   "id": "calc301",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    1,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc302",
+   "note": "calc3.01 L3 角1 累加"
+  },
+  {
+   "id": "calc302",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    2,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc303",
+   "note": "calc3.02 L3 角2 base"
+  },
+  {
+   "id": "calc303",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh += ko2 nz",
+   "pos": [
+    3,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc304",
+   "note": "calc3.03 L3 角2 角偏移"
+  },
+  {
+   "id": "calc304",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    4,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc305",
+   "note": "calc3.04 L3 角2 u=h"
+  },
+  {
+   "id": "calc305",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    5,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc306",
+   "note": "calc3.05 L3 角2 u=h+1"
+  },
+  {
+   "id": "calc306",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    6,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc307",
+   "note": "calc3.06 L3 角2 h(h+1)"
+  },
+  {
+   "id": "calc307",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    7,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc308",
+   "note": "calc3.07 L3 角2 %251"
+  },
+  {
+   "id": "calc308",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx2",
+   "pos": [
+    8,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc309",
+   "note": "calc3.08 L3 角2 权重x"
+  },
+  {
+   "id": "calc309",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    9,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc310",
+   "note": "calc3.09 L3 角2 权重z"
+  },
+  {
+   "id": "calc310",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    10,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc311",
+   "note": "calc3.10 L3 角2 累加"
+  },
+  {
+   "id": "calc311",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh = @s base",
+   "pos": [
+    11,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc312",
+   "note": "calc3.11 L3 角3 base"
+  },
+  {
+   "id": "calc312",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh += ko3 nz",
+   "pos": [
+    12,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc313",
+   "note": "calc3.12 L3 角3 角偏移"
+  },
+  {
+   "id": "calc313",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s u = @s hh",
+   "pos": [
+    13,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc314",
+   "note": "calc3.13 L3 角3 u=h"
+  },
+  {
+   "id": "calc314",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players add @s u 1",
+   "pos": [
+    14,
+    70,
+    1
+   ],
+   "facing": "east",
+   "next": "calc315",
+   "note": "calc3.14 L3 角3 u=h+1"
+  },
+  {
+   "id": "calc315",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s u",
+   "pos": [
+    15,
+    70,
+    1
+   ],
+   "facing": "south",
+   "next": "calc316",
+   "note": "calc3.15 L3 角3 h(h+1)"
+  },
+  {
+   "id": "calc316",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh %= k251 nz",
+   "pos": [
+    15,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc317",
+   "note": "calc3.16 L3 角3 %251"
+  },
+  {
+   "id": "calc317",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fx",
+   "pos": [
+    14,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc318",
+   "note": "calc3.17 L3 角3 权重x"
+  },
+  {
+   "id": "calc318",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hh *= @s fz",
+   "pos": [
+    13,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc319",
+   "note": "calc3.18 L3 角3 权重z"
+  },
+  {
+   "id": "calc319",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s bi += @s hh",
+   "pos": [
+    12,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc320",
+   "note": "calc3.19 L3 角3 累加"
+  },
+  {
+   "id": "calc320",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s bi /= k65536 nz",
+   "pos": [
+    11,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc321",
+   "note": "calc3.20 L3 归一化 0..250"
+  },
+  {
+   "id": "calc321",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s acc += @s bi",
+   "pos": [
+    10,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc322",
+   "note": "calc3.21 L3 累加 acc"
+  },
+  {
+   "id": "calc322",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s acc -= kbias nz",
+   "pos": [
+    9,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc323",
+   "note": "calc3.22 去偏置"
+  },
+  {
+   "id": "calc323",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s acc /= kdiv nz",
+   "pos": [
+    8,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc324",
+   "note": "calc3.23 ÷30"
+  },
+  {
+   "id": "calc324",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s acc += kmidraw nz",
+   "pos": [
+    7,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc325",
+   "note": "calc3.24 +38 中间高度"
+  },
+  {
+   "id": "calc325",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 as @e[tag=nt_col] run scoreboard players operation @s hgt = @s acc",
+   "pos": [
+    6,
+    70,
+    2
+   ],
+   "facing": "west",
+   "next": "calc326",
+   "note": "calc3.25 hgt=中间高度"
+  },
+  {
+   "id": "calc326",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 4 run scoreboard players set fb_state ctl 5",
+   "pos": [
+    5,
+    70,
+    2
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc3.26 stage 完成 → 5"
+  },
+  {
+   "id": "calc400",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc401",
+   "note": "calc4.00 状态快照"
+  },
+  {
+   "id": "calc401",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s run scoreboard players operation @s acc = @s hgt",
+   "pos": [
+    1,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc402",
+   "note": "calc4.01 第1遍 中心值"
+  },
+  {
+   "id": "calc402",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s run scoreboard players set @s cnt 1",
+   "pos": [
+    2,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc403",
+   "note": "calc4.02 第1遍 cnt=1"
+  },
+  {
+   "id": "calc403",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    3,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc404",
+   "note": "calc4.03 第1遍 邻居(-2,-2) 累加"
+  },
+  {
+   "id": "calc404",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    4,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc405",
+   "note": "calc4.04 第1遍 邻居(-2,-2) 计数"
+  },
+  {
+   "id": "calc405",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    5,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc406",
+   "note": "calc4.05 第1遍 邻居(-2,+0) 累加"
+  },
+  {
+   "id": "calc406",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    6,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc407",
+   "note": "calc4.06 第1遍 邻居(-2,+0) 计数"
+  },
+  {
+   "id": "calc407",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    7,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc408",
+   "note": "calc4.07 第1遍 邻居(-2,+2) 累加"
+  },
+  {
+   "id": "calc408",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~-2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    8,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc409",
+   "note": "calc4.08 第1遍 邻居(-2,+2) 计数"
+  },
+  {
+   "id": "calc409",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~0 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    9,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc410",
+   "note": "calc4.09 第1遍 邻居(+0,-2) 累加"
+  },
+  {
+   "id": "calc410",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~0 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    10,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc411",
+   "note": "calc4.10 第1遍 邻居(+0,-2) 计数"
+  },
+  {
+   "id": "calc411",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~0 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    11,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc412",
+   "note": "calc4.11 第1遍 邻居(+0,+2) 累加"
+  },
+  {
+   "id": "calc412",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~0 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    12,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc413",
+   "note": "calc4.12 第1遍 邻居(+0,+2) 计数"
+  },
+  {
+   "id": "calc413",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    13,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc414",
+   "note": "calc4.13 第1遍 邻居(+2,-2) 累加"
+  },
+  {
+   "id": "calc414",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    14,
+    71,
+    1
+   ],
+   "facing": "east",
+   "next": "calc415",
+   "note": "calc4.14 第1遍 邻居(+2,-2) 计数"
+  },
+  {
+   "id": "calc415",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    15,
+    71,
+    1
+   ],
+   "facing": "south",
+   "next": "calc416",
+   "note": "calc4.15 第1遍 邻居(+2,+0) 累加"
+  },
+  {
+   "id": "calc416",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    15,
+    71,
+    2
+   ],
+   "facing": "west",
+   "next": "calc417",
+   "note": "calc4.16 第1遍 邻居(+2,+0) 计数"
+  },
+  {
+   "id": "calc417",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    14,
+    71,
+    2
+   ],
+   "facing": "west",
+   "next": "calc418",
+   "note": "calc4.17 第1遍 邻居(+2,+2) 累加"
+  },
+  {
+   "id": "calc418",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s positioned ~2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    13,
+    71,
+    2
+   ],
+   "facing": "west",
+   "next": "calc419",
+   "note": "calc4.18 第1遍 邻居(+2,+2) 计数"
+  },
+  {
+   "id": "calc419",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s run scoreboard players operation @s acc /= @s cnt",
+   "pos": [
+    12,
+    71,
+    2
+   ],
+   "facing": "west",
+   "next": "calc420",
+   "note": "calc4.19 第1遍 求平均"
+  },
+  {
+   "id": "calc420",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 as @e[tag=nt_col] at @s run scoreboard players operation @s hgt = @s acc",
+   "pos": [
+    11,
+    71,
+    2
+   ],
+   "facing": "west",
+   "next": "calc421",
+   "note": "calc4.20 第1遍 写回 hgt"
+  },
+  {
+   "id": "calc421",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 5 run scoreboard players set fb_state ctl 6",
+   "pos": [
+    10,
+    71,
+    2
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc4.21 stage 完成 → 6"
+  },
+  {
+   "id": "calc500",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc501",
+   "note": "calc5.00 状态快照"
+  },
+  {
+   "id": "calc501",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s run scoreboard players operation @s acc = @s hgt",
+   "pos": [
+    1,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc502",
+   "note": "calc5.01 第2遍 中心值"
+  },
+  {
+   "id": "calc502",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s run scoreboard players set @s cnt 1",
+   "pos": [
+    2,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc503",
+   "note": "calc5.02 第2遍 cnt=1"
+  },
+  {
+   "id": "calc503",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    3,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc504",
+   "note": "calc5.03 第2遍 邻居(-2,-2) 累加"
+  },
+  {
+   "id": "calc504",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    4,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc505",
+   "note": "calc5.04 第2遍 邻居(-2,-2) 计数"
+  },
+  {
+   "id": "calc505",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    5,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc506",
+   "note": "calc5.05 第2遍 邻居(-2,+0) 累加"
+  },
+  {
+   "id": "calc506",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    6,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc507",
+   "note": "calc5.06 第2遍 邻居(-2,+0) 计数"
+  },
+  {
+   "id": "calc507",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    7,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc508",
+   "note": "calc5.07 第2遍 邻居(-2,+2) 累加"
+  },
+  {
+   "id": "calc508",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~-2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    8,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc509",
+   "note": "calc5.08 第2遍 邻居(-2,+2) 计数"
+  },
+  {
+   "id": "calc509",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~0 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    9,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc510",
+   "note": "calc5.09 第2遍 邻居(+0,-2) 累加"
+  },
+  {
+   "id": "calc510",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~0 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    10,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc511",
+   "note": "calc5.10 第2遍 邻居(+0,-2) 计数"
+  },
+  {
+   "id": "calc511",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~0 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    11,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc512",
+   "note": "calc5.11 第2遍 邻居(+0,+2) 累加"
+  },
+  {
+   "id": "calc512",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~0 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    12,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc513",
+   "note": "calc5.12 第2遍 邻居(+0,+2) 计数"
+  },
+  {
+   "id": "calc513",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    13,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc514",
+   "note": "calc5.13 第2遍 邻居(+2,-2) 累加"
+  },
+  {
+   "id": "calc514",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~-2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    14,
+    72,
+    1
+   ],
+   "facing": "east",
+   "next": "calc515",
+   "note": "calc5.14 第2遍 邻居(+2,-2) 计数"
+  },
+  {
+   "id": "calc515",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    15,
+    72,
+    1
+   ],
+   "facing": "south",
+   "next": "calc516",
+   "note": "calc5.15 第2遍 邻居(+2,+0) 累加"
+  },
+  {
+   "id": "calc516",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~0 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    15,
+    72,
+    2
+   ],
+   "facing": "west",
+   "next": "calc517",
+   "note": "calc5.16 第2遍 邻居(+2,+0) 计数"
+  },
+  {
+   "id": "calc517",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players operation @s acc += @e[tag=nt_col,r=0.6,c=1] hgt",
+   "pos": [
+    14,
+    72,
+    2
+   ],
+   "facing": "west",
+   "next": "calc518",
+   "note": "calc5.17 第2遍 邻居(+2,+2) 累加"
+  },
+  {
+   "id": "calc518",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s positioned ~2 ~ ~2 if entity @e[tag=nt_col,r=0.6] run scoreboard players add @s cnt 1",
+   "pos": [
+    13,
+    72,
+    2
+   ],
+   "facing": "west",
+   "next": "calc519",
+   "note": "calc5.18 第2遍 邻居(+2,+2) 计数"
+  },
+  {
+   "id": "calc519",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s run scoreboard players operation @s acc /= @s cnt",
+   "pos": [
+    12,
+    72,
+    2
+   ],
+   "facing": "west",
+   "next": "calc520",
+   "note": "calc5.19 第2遍 求平均"
+  },
+  {
+   "id": "calc520",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 as @e[tag=nt_col] at @s run scoreboard players operation @s hgt = @s acc",
+   "pos": [
+    11,
+    72,
+    2
+   ],
+   "facing": "west",
+   "next": "calc521",
+   "note": "calc5.20 第2遍 写回 hgt"
+  },
+  {
+   "id": "calc521",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 6 run scoreboard players set fb_state ctl 7",
+   "pos": [
+    10,
+    72,
+    2
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc5.21 stage 完成 → 7"
+  },
+  {
+   "id": "calc600",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    73,
+    1
+   ],
+   "facing": "east",
+   "next": "calc601",
+   "note": "calc6.00 状态快照"
+  },
+  {
+   "id": "calc601",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 7 as @e[tag=nt_col] run scoreboard players operation @s hgt -= koffraw nz",
+   "pos": [
+    1,
+    73,
+    1
+   ],
+   "facing": "east",
+   "next": "calc602",
+   "note": "calc6.01 -28 → 2..18"
+  },
+  {
+   "id": "calc602",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 7 as @e[tag=nt_col] if score @s hgt matches ..1 run scoreboard players set @s hgt 2",
+   "pos": [
+    2,
+    73,
+    1
+   ],
+   "facing": "east",
+   "next": "calc603",
+   "note": "calc6.02 夹下界 2"
+  },
+  {
+   "id": "calc603",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 7 as @e[tag=nt_col] if score @s hgt matches 19.. run scoreboard players set @s hgt 18",
+   "pos": [
+    3,
+    73,
+    1
+   ],
+   "facing": "east",
+   "next": "calc604",
+   "note": "calc6.03 夹上界 18"
+  },
+  {
+   "id": "calc604",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 7 run scoreboard players set fb_state ctl 8",
+   "pos": [
+    4,
+    73,
+    1
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "calc6.04 stage 完成 → 8"
+  },
+  {
+   "id": "draw00",
+   "type": "repeat",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 4,
+   "command": "scoreboard players operation fb_cur ctl = fb_state ctl",
+   "pos": [
+    0,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw01",
+   "note": "draw.00 状态快照"
+  },
+  {
+   "id": "draw01",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 0 as @e[tag=nt_col] if score @s hgt matches 2 at @s run fill ~-1 ~1 ~-1 ~0 ~1 ~0 minecraft:dirt",
+   "pos": [
+    1,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw02",
+   "note": "draw.01 档0(h2) 土"
+  },
+  {
+   "id": "draw02",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 0 as @e[tag=nt_col] if score @s hgt matches 2 at @s run fill ~-1 ~2 ~-1 ~0 ~2 ~0 minecraft:grass",
+   "pos": [
+    2,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw03",
+   "note": "draw.02 档0(h2) 表层"
+  },
+  {
+   "id": "draw03",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 0 as @e[tag=nt_col] if score @s hgt matches 2 at @s run scoreboard players add bn2 ctl 1",
+   "pos": [
+    3,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw04",
+   "note": "draw.03 档0(h2) 计数"
+  },
+  {
+   "id": "draw04",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 1 as @e[tag=nt_col] if score @s hgt matches 3 at @s run fill ~-1 ~1 ~-1 ~0 ~1 ~0 minecraft:stone",
+   "pos": [
+    4,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw05",
+   "note": "draw.04 档1(h3) 石头"
+  },
+  {
+   "id": "draw05",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 1 as @e[tag=nt_col] if score @s hgt matches 3 at @s run fill ~-1 ~2 ~-1 ~0 ~2 ~0 minecraft:dirt",
+   "pos": [
+    5,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw06",
+   "note": "draw.05 档1(h3) 土"
+  },
+  {
+   "id": "draw06",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 1 as @e[tag=nt_col] if score @s hgt matches 3 at @s run fill ~-1 ~3 ~-1 ~0 ~3 ~0 minecraft:grass",
+   "pos": [
+    6,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw07",
+   "note": "draw.06 档1(h3) 表层"
+  },
+  {
+   "id": "draw07",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 1 as @e[tag=nt_col] if score @s hgt matches 3 at @s run scoreboard players add bn3 ctl 1",
+   "pos": [
+    7,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw08",
+   "note": "draw.07 档1(h3) 计数"
+  },
+  {
+   "id": "draw08",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 2 as @e[tag=nt_col] if score @s hgt matches 4 at @s run fill ~-1 ~1 ~-1 ~0 ~2 ~0 minecraft:stone",
+   "pos": [
+    8,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw09",
+   "note": "draw.08 档2(h4) 石头"
+  },
+  {
+   "id": "draw09",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 2 as @e[tag=nt_col] if score @s hgt matches 4 at @s run fill ~-1 ~3 ~-1 ~0 ~3 ~0 minecraft:dirt",
+   "pos": [
+    9,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw10",
+   "note": "draw.09 档2(h4) 土"
+  },
+  {
+   "id": "draw10",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 2 as @e[tag=nt_col] if score @s hgt matches 4 at @s run fill ~-1 ~4 ~-1 ~0 ~4 ~0 minecraft:grass",
+   "pos": [
+    10,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw11",
+   "note": "draw.10 档2(h4) 表层"
+  },
+  {
+   "id": "draw11",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 2 as @e[tag=nt_col] if score @s hgt matches 4 at @s run scoreboard players add bn4 ctl 1",
+   "pos": [
+    11,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw12",
+   "note": "draw.11 档2(h4) 计数"
+  },
+  {
+   "id": "draw12",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 3 as @e[tag=nt_col] if score @s hgt matches 5 at @s run fill ~-1 ~1 ~-1 ~0 ~3 ~0 minecraft:stone",
+   "pos": [
+    12,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw13",
+   "note": "draw.12 档3(h5) 石头"
+  },
+  {
+   "id": "draw13",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 3 as @e[tag=nt_col] if score @s hgt matches 5 at @s run fill ~-1 ~4 ~-1 ~0 ~4 ~0 minecraft:dirt",
+   "pos": [
+    13,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw14",
+   "note": "draw.13 档3(h5) 土"
+  },
+  {
+   "id": "draw14",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 3 as @e[tag=nt_col] if score @s hgt matches 5 at @s run fill ~-1 ~5 ~-1 ~0 ~5 ~0 minecraft:grass",
+   "pos": [
+    14,
+    90,
+    1
+   ],
+   "facing": "east",
+   "next": "draw15",
+   "note": "draw.14 档3(h5) 表层"
+  },
+  {
+   "id": "draw15",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 3 as @e[tag=nt_col] if score @s hgt matches 5 at @s run scoreboard players add bn5 ctl 1",
+   "pos": [
+    15,
+    90,
+    1
+   ],
+   "facing": "south",
+   "next": "draw16",
+   "note": "draw.15 档3(h5) 计数"
+  },
+  {
+   "id": "draw16",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 4 as @e[tag=nt_col] if score @s hgt matches 6 at @s run fill ~-1 ~1 ~-1 ~0 ~4 ~0 minecraft:stone",
+   "pos": [
+    15,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw17",
+   "note": "draw.16 档4(h6) 石头"
+  },
+  {
+   "id": "draw17",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 4 as @e[tag=nt_col] if score @s hgt matches 6 at @s run fill ~-1 ~5 ~-1 ~0 ~5 ~0 minecraft:dirt",
+   "pos": [
+    14,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw18",
+   "note": "draw.17 档4(h6) 土"
+  },
+  {
+   "id": "draw18",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 4 as @e[tag=nt_col] if score @s hgt matches 6 at @s run fill ~-1 ~6 ~-1 ~0 ~6 ~0 minecraft:grass",
+   "pos": [
+    13,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw19",
+   "note": "draw.18 档4(h6) 表层"
+  },
+  {
+   "id": "draw19",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 4 as @e[tag=nt_col] if score @s hgt matches 6 at @s run scoreboard players add bn6 ctl 1",
+   "pos": [
+    12,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw20",
+   "note": "draw.19 档4(h6) 计数"
+  },
+  {
+   "id": "draw20",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 5 as @e[tag=nt_col] if score @s hgt matches 7 at @s run fill ~-1 ~1 ~-1 ~0 ~5 ~0 minecraft:stone",
+   "pos": [
+    11,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw21",
+   "note": "draw.20 档5(h7) 石头"
+  },
+  {
+   "id": "draw21",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 5 as @e[tag=nt_col] if score @s hgt matches 7 at @s run fill ~-1 ~6 ~-1 ~0 ~6 ~0 minecraft:dirt",
+   "pos": [
+    10,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw22",
+   "note": "draw.21 档5(h7) 土"
+  },
+  {
+   "id": "draw22",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 5 as @e[tag=nt_col] if score @s hgt matches 7 at @s run fill ~-1 ~7 ~-1 ~0 ~7 ~0 minecraft:grass",
+   "pos": [
+    9,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw23",
+   "note": "draw.22 档5(h7) 表层"
+  },
+  {
+   "id": "draw23",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 5 as @e[tag=nt_col] if score @s hgt matches 7 at @s run scoreboard players add bn7 ctl 1",
+   "pos": [
+    8,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw24",
+   "note": "draw.23 档5(h7) 计数"
+  },
+  {
+   "id": "draw24",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 6 as @e[tag=nt_col] if score @s hgt matches 8 at @s run fill ~-1 ~1 ~-1 ~0 ~6 ~0 minecraft:stone",
+   "pos": [
+    7,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw25",
+   "note": "draw.24 档6(h8) 石头"
+  },
+  {
+   "id": "draw25",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 6 as @e[tag=nt_col] if score @s hgt matches 8 at @s run fill ~-1 ~7 ~-1 ~0 ~7 ~0 minecraft:dirt",
+   "pos": [
+    6,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw26",
+   "note": "draw.25 档6(h8) 土"
+  },
+  {
+   "id": "draw26",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 6 as @e[tag=nt_col] if score @s hgt matches 8 at @s run fill ~-1 ~8 ~-1 ~0 ~8 ~0 minecraft:grass",
+   "pos": [
+    5,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw27",
+   "note": "draw.26 档6(h8) 表层"
+  },
+  {
+   "id": "draw27",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 6 as @e[tag=nt_col] if score @s hgt matches 8 at @s run scoreboard players add bn8 ctl 1",
+   "pos": [
+    4,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw28",
+   "note": "draw.27 档6(h8) 计数"
+  },
+  {
+   "id": "draw28",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 7 as @e[tag=nt_col] if score @s hgt matches 9 at @s run fill ~-1 ~1 ~-1 ~0 ~7 ~0 minecraft:stone",
+   "pos": [
+    3,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw29",
+   "note": "draw.28 档7(h9) 石头"
+  },
+  {
+   "id": "draw29",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 7 as @e[tag=nt_col] if score @s hgt matches 9 at @s run fill ~-1 ~8 ~-1 ~0 ~8 ~0 minecraft:dirt",
+   "pos": [
+    2,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw30",
+   "note": "draw.29 档7(h9) 土"
+  },
+  {
+   "id": "draw30",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 7 as @e[tag=nt_col] if score @s hgt matches 9 at @s run fill ~-1 ~9 ~-1 ~0 ~9 ~0 minecraft:grass",
+   "pos": [
+    1,
+    90,
+    2
+   ],
+   "facing": "west",
+   "next": "draw31",
+   "note": "draw.30 档7(h9) 表层"
+  },
+  {
+   "id": "draw31",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 7 as @e[tag=nt_col] if score @s hgt matches 9 at @s run scoreboard players add bn9 ctl 1",
+   "pos": [
+    0,
+    90,
+    2
+   ],
+   "facing": "south",
+   "next": "draw32",
+   "note": "draw.31 档7(h9) 计数"
+  },
+  {
+   "id": "draw32",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 8 as @e[tag=nt_col] if score @s hgt matches 10 at @s run fill ~-1 ~1 ~-1 ~0 ~8 ~0 minecraft:stone",
+   "pos": [
+    0,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw33",
+   "note": "draw.32 档8(h10) 石头"
+  },
+  {
+   "id": "draw33",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 8 as @e[tag=nt_col] if score @s hgt matches 10 at @s run fill ~-1 ~9 ~-1 ~0 ~9 ~0 minecraft:dirt",
+   "pos": [
+    1,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw34",
+   "note": "draw.33 档8(h10) 土"
+  },
+  {
+   "id": "draw34",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 8 as @e[tag=nt_col] if score @s hgt matches 10 at @s run fill ~-1 ~10 ~-1 ~0 ~10 ~0 minecraft:grass",
+   "pos": [
+    2,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw35",
+   "note": "draw.34 档8(h10) 表层"
+  },
+  {
+   "id": "draw35",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 8 as @e[tag=nt_col] if score @s hgt matches 10 at @s run scoreboard players add bn10 ctl 1",
+   "pos": [
+    3,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw36",
+   "note": "draw.35 档8(h10) 计数"
+  },
+  {
+   "id": "draw36",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 9 as @e[tag=nt_col] if score @s hgt matches 11 at @s run fill ~-1 ~1 ~-1 ~0 ~9 ~0 minecraft:stone",
+   "pos": [
+    4,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw37",
+   "note": "draw.36 档9(h11) 石头"
+  },
+  {
+   "id": "draw37",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 9 as @e[tag=nt_col] if score @s hgt matches 11 at @s run fill ~-1 ~10 ~-1 ~0 ~10 ~0 minecraft:dirt",
+   "pos": [
+    5,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw38",
+   "note": "draw.37 档9(h11) 土"
+  },
+  {
+   "id": "draw38",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 9 as @e[tag=nt_col] if score @s hgt matches 11 at @s run fill ~-1 ~11 ~-1 ~0 ~11 ~0 minecraft:grass",
+   "pos": [
+    6,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw39",
+   "note": "draw.38 档9(h11) 表层"
+  },
+  {
+   "id": "draw39",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 9 as @e[tag=nt_col] if score @s hgt matches 11 at @s run scoreboard players add bn11 ctl 1",
+   "pos": [
+    7,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw40",
+   "note": "draw.39 档9(h11) 计数"
+  },
+  {
+   "id": "draw40",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 10 as @e[tag=nt_col] if score @s hgt matches 12 at @s run fill ~-1 ~1 ~-1 ~0 ~10 ~0 minecraft:stone",
+   "pos": [
+    8,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw41",
+   "note": "draw.40 档10(h12) 石头"
+  },
+  {
+   "id": "draw41",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 10 as @e[tag=nt_col] if score @s hgt matches 12 at @s run fill ~-1 ~11 ~-1 ~0 ~11 ~0 minecraft:dirt",
+   "pos": [
+    9,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw42",
+   "note": "draw.41 档10(h12) 土"
+  },
+  {
+   "id": "draw42",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 10 as @e[tag=nt_col] if score @s hgt matches 12 at @s run fill ~-1 ~12 ~-1 ~0 ~12 ~0 minecraft:grass",
+   "pos": [
+    10,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw43",
+   "note": "draw.42 档10(h12) 表层"
+  },
+  {
+   "id": "draw43",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 10 as @e[tag=nt_col] if score @s hgt matches 12 at @s run scoreboard players add bn12 ctl 1",
+   "pos": [
+    11,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw44",
+   "note": "draw.43 档10(h12) 计数"
+  },
+  {
+   "id": "draw44",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 11 as @e[tag=nt_col] if score @s hgt matches 13 at @s run fill ~-1 ~1 ~-1 ~0 ~11 ~0 minecraft:stone",
+   "pos": [
+    12,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw45",
+   "note": "draw.44 档11(h13) 石头"
+  },
+  {
+   "id": "draw45",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 11 as @e[tag=nt_col] if score @s hgt matches 13 at @s run fill ~-1 ~12 ~-1 ~0 ~12 ~0 minecraft:dirt",
+   "pos": [
+    13,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw46",
+   "note": "draw.45 档11(h13) 土"
+  },
+  {
+   "id": "draw46",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 11 as @e[tag=nt_col] if score @s hgt matches 13 at @s run fill ~-1 ~13 ~-1 ~0 ~13 ~0 minecraft:grass",
+   "pos": [
+    14,
+    90,
+    3
+   ],
+   "facing": "east",
+   "next": "draw47",
+   "note": "draw.46 档11(h13) 表层"
+  },
+  {
+   "id": "draw47",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 11 as @e[tag=nt_col] if score @s hgt matches 13 at @s run scoreboard players add bn13 ctl 1",
+   "pos": [
+    15,
+    90,
+    3
+   ],
+   "facing": "south",
+   "next": "draw48",
+   "note": "draw.47 档11(h13) 计数"
+  },
+  {
+   "id": "draw48",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 12 as @e[tag=nt_col] if score @s hgt matches 14 at @s run fill ~-1 ~1 ~-1 ~0 ~12 ~0 minecraft:stone",
+   "pos": [
+    15,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw49",
+   "note": "draw.48 档12(h14) 石头"
+  },
+  {
+   "id": "draw49",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 12 as @e[tag=nt_col] if score @s hgt matches 14 at @s run fill ~-1 ~13 ~-1 ~0 ~13 ~0 minecraft:dirt",
+   "pos": [
+    14,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw50",
+   "note": "draw.49 档12(h14) 土"
+  },
+  {
+   "id": "draw50",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 12 as @e[tag=nt_col] if score @s hgt matches 14 at @s run fill ~-1 ~14 ~-1 ~0 ~14 ~0 minecraft:snow",
+   "pos": [
+    13,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw51",
+   "note": "draw.50 档12(h14) 表层"
+  },
+  {
+   "id": "draw51",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 12 as @e[tag=nt_col] if score @s hgt matches 14 at @s run scoreboard players add bn14 ctl 1",
+   "pos": [
+    12,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw52",
+   "note": "draw.51 档12(h14) 计数"
+  },
+  {
+   "id": "draw52",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 13 as @e[tag=nt_col] if score @s hgt matches 15 at @s run fill ~-1 ~1 ~-1 ~0 ~13 ~0 minecraft:stone",
+   "pos": [
+    11,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw53",
+   "note": "draw.52 档13(h15) 石头"
+  },
+  {
+   "id": "draw53",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 13 as @e[tag=nt_col] if score @s hgt matches 15 at @s run fill ~-1 ~14 ~-1 ~0 ~14 ~0 minecraft:dirt",
+   "pos": [
+    10,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw54",
+   "note": "draw.53 档13(h15) 土"
+  },
+  {
+   "id": "draw54",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 13 as @e[tag=nt_col] if score @s hgt matches 15 at @s run fill ~-1 ~15 ~-1 ~0 ~15 ~0 minecraft:snow",
+   "pos": [
+    9,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw55",
+   "note": "draw.54 档13(h15) 表层"
+  },
+  {
+   "id": "draw55",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 13 as @e[tag=nt_col] if score @s hgt matches 15 at @s run scoreboard players add bn15 ctl 1",
+   "pos": [
+    8,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw56",
+   "note": "draw.55 档13(h15) 计数"
+  },
+  {
+   "id": "draw56",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 14 as @e[tag=nt_col] if score @s hgt matches 16 at @s run fill ~-1 ~1 ~-1 ~0 ~14 ~0 minecraft:stone",
+   "pos": [
+    7,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw57",
+   "note": "draw.56 档14(h16) 石头"
+  },
+  {
+   "id": "draw57",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 14 as @e[tag=nt_col] if score @s hgt matches 16 at @s run fill ~-1 ~15 ~-1 ~0 ~15 ~0 minecraft:dirt",
+   "pos": [
+    6,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw58",
+   "note": "draw.57 档14(h16) 土"
+  },
+  {
+   "id": "draw58",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 14 as @e[tag=nt_col] if score @s hgt matches 16 at @s run fill ~-1 ~16 ~-1 ~0 ~16 ~0 minecraft:snow",
+   "pos": [
+    5,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw59",
+   "note": "draw.58 档14(h16) 表层"
+  },
+  {
+   "id": "draw59",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 14 as @e[tag=nt_col] if score @s hgt matches 16 at @s run scoreboard players add bn16 ctl 1",
+   "pos": [
+    4,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw60",
+   "note": "draw.59 档14(h16) 计数"
+  },
+  {
+   "id": "draw60",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 15 as @e[tag=nt_col] if score @s hgt matches 17 at @s run fill ~-1 ~1 ~-1 ~0 ~15 ~0 minecraft:stone",
+   "pos": [
+    3,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw61",
+   "note": "draw.60 档15(h17) 石头"
+  },
+  {
+   "id": "draw61",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 15 as @e[tag=nt_col] if score @s hgt matches 17 at @s run fill ~-1 ~16 ~-1 ~0 ~16 ~0 minecraft:dirt",
+   "pos": [
+    2,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw62",
+   "note": "draw.61 档15(h17) 土"
+  },
+  {
+   "id": "draw62",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 15 as @e[tag=nt_col] if score @s hgt matches 17 at @s run fill ~-1 ~17 ~-1 ~0 ~17 ~0 minecraft:snow",
+   "pos": [
+    1,
+    90,
+    4
+   ],
+   "facing": "west",
+   "next": "draw63",
+   "note": "draw.62 档15(h17) 表层"
+  },
+  {
+   "id": "draw63",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 15 as @e[tag=nt_col] if score @s hgt matches 17 at @s run scoreboard players add bn17 ctl 1",
+   "pos": [
+    0,
+    90,
+    4
+   ],
+   "facing": "south",
+   "next": "draw64",
+   "note": "draw.63 档15(h17) 计数"
+  },
+  {
+   "id": "draw64",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 16 as @e[tag=nt_col] if score @s hgt matches 18 at @s run fill ~-1 ~1 ~-1 ~0 ~16 ~0 minecraft:stone",
+   "pos": [
+    0,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw65",
+   "note": "draw.64 档16(h18) 石头"
+  },
+  {
+   "id": "draw65",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 16 as @e[tag=nt_col] if score @s hgt matches 18 at @s run fill ~-1 ~17 ~-1 ~0 ~17 ~0 minecraft:dirt",
+   "pos": [
+    1,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw66",
+   "note": "draw.65 档16(h18) 土"
+  },
+  {
+   "id": "draw66",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 16 as @e[tag=nt_col] if score @s hgt matches 18 at @s run fill ~-1 ~18 ~-1 ~0 ~18 ~0 minecraft:snow",
+   "pos": [
+    2,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw67",
+   "note": "draw.66 档16(h18) 表层"
+  },
+  {
+   "id": "draw67",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 16 as @e[tag=nt_col] if score @s hgt matches 18 at @s run scoreboard players add bn18 ctl 1",
+   "pos": [
+    3,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw68",
+   "note": "draw.67 档16(h18) 计数"
+  },
+  {
+   "id": "draw68",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 run scoreboard players add fb_b ctl 1",
+   "pos": [
+    4,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw69",
+   "note": "draw.68 下一档"
+  },
+  {
+   "id": "draw69",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 17.. run scoreboard players set fb_state ctl 99",
+   "pos": [
+    5,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw70",
+   "note": "draw.69 铺设完成"
+  },
+  {
+   "id": "draw70",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 17.. run tellraw @a {\"rawtext\":[{\"text\":\"§a地形完成 §7| 高度分布 \"},{\"text\":\"§72:\"},{\"score\":{\"name\":\"bn2\",\"objective\":\"ctl\"}},{\"text\":\"§73:\"},{\"score\":{\"name\":\"bn3\",\"objective\":\"ctl\"}},{\"text\":\"§74:\"},{\"score\":{\"name\":\"bn4\",\"objective\":\"ctl\"}},{\"text\":\"§75:\"},{\"score\":{\"name\":\"bn5\",\"objective\":\"ctl\"}},{\"text\":\"§76:\"},{\"score\":{\"name\":\"bn6\",\"objective\":\"ctl\"}},{\"text\":\"§77:\"},{\"score\":{\"name\":\"bn7\",\"objective\":\"ctl\"}},{\"text\":\"§78:\"},{\"score\":{\"name\":\"bn8\",\"objective\":\"ctl\"}},{\"text\":\"§79:\"},{\"score\":{\"name\":\"bn9\",\"objective\":\"ctl\"}},{\"text\":\"§710:\"},{\"score\":{\"name\":\"bn10\",\"objective\":\"ctl\"}},{\"text\":\"§711:\"},{\"score\":{\"name\":\"bn11\",\"objective\":\"ctl\"}},{\"text\":\"§712:\"},{\"score\":{\"name\":\"bn12\",\"objective\":\"ctl\"}},{\"text\":\"§713:\"},{\"score\":{\"name\":\"bn13\",\"objective\":\"ctl\"}},{\"text\":\"§714:\"},{\"score\":{\"name\":\"bn14\",\"objective\":\"ctl\"}},{\"text\":\"§715:\"},{\"score\":{\"name\":\"bn15\",\"objective\":\"ctl\"}},{\"text\":\"§716:\"},{\"score\":{\"name\":\"bn16\",\"objective\":\"ctl\"}},{\"text\":\"§717:\"},{\"score\":{\"name\":\"bn17\",\"objective\":\"ctl\"}},{\"text\":\"§718:\"},{\"score\":{\"name\":\"bn18\",\"objective\":\"ctl\"}}]}",
+   "pos": [
+    6,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw71",
+   "note": "draw.70 高度分布"
+  },
+  {
+   "id": "draw71",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 17.. run title @a title §a地形生成完成",
+   "pos": [
+    7,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": "draw72",
+   "note": "draw.71 标题"
+  },
+  {
+   "id": "draw72",
+   "type": "chain",
+   "condition": "unconditional",
+   "redstone": "always_active",
+   "delay": 0,
+   "command": "execute if score fb_cur ctl matches 8 if score fb_b ctl matches 17.. run playsound random.levelup @a",
+   "pos": [
+    8,
+    90,
+    5
+   ],
+   "facing": "east",
+   "next": null,
+   "note": "draw.72 音效"
+  }
+ ]
+}

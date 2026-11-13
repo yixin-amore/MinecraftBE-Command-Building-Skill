@@ -309,6 +309,9 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 关键：`a/b/c/d` 四角、`point` 落点、`xp_orb` 采样、`fishing_hook` 起点、`nxs` 方向锚点。
 - 极端坐标（23388608、1048576、4096 等）是精度工具，不是普通世界坐标；换版本可能变。
 - 学习顺序：一个方向 4×4 → 四方向 16×16 → 清理/限高。
+- 完整机器（32×32、256 柱子、3 层 fBm、3×3 平滑、随机种子、429 方块）见
+  `references/value-noise-terrain-machine.md` 和 `examples/noise-terrain/`；
+  它把 7 命令核 / 高斯滤波样本拼成可导入的 BDX，并记录了“秒完成/漏 at @s/计数器未清”等坑。
 - 详见 `references/value-noise.md`。
 
 ### 4.8 一遍过交付（实测校准）
@@ -464,7 +467,8 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/block-map.md` | Java→Bedrock 方块名映射；雪块 `snow` / 雪层 `snow_layer` |
 | `references/value-noise.md` | 值噪声/精度哈希：大坐标精度、align、四角锚点、fill 地形 |
 | `references/value-noise-7cmd.md` | 7 命令值噪声核：a/b/c/d/nxs/o、四角插值、落列、缺扫描器 |
-| `references/gaussian-filter.md` | 高斯滤波/NX 平滑：t/boat 分叉、二分表面、3×3 权重、清理风险 |
+| `references/gaussian-filter.md` | 高斯滤波/NX 平滑：t/boat 分叉、二分表面、3×3 权重、计分板侧 box blur、清理风险 |
+| `references/value-noise-terrain-machine.md` | 完整值噪声地形机：扫描/噪声/平滑/铺设状态机、局部选择器、溢出、六个失败模式 |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |

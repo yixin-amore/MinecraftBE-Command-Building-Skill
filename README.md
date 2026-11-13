@@ -32,6 +32,7 @@
 - [19 个社区指令文件 → 系统框架](references/command-corpus-framework.md)
 - [Java→Bedrock 方块名映射](references/block-map.md)
 - [值噪声 / 精度哈希](references/value-noise.md)
+- [完整值噪声地形机](references/value-noise-terrain-machine.md)
 - [提问、期待效果与联想创新](references/intake-and-reasoning.md)
 
 ## 快速开始
@@ -67,6 +68,7 @@ mcbe-command-blocks/
 │   ├── value-noise.md               # 值噪声/精度哈希/四角锚点
 │   ├── value-noise-7cmd.md          # 7 命令值噪声核拆解
 │   ├── gaussian-filter.md           # 高斯滤波/NX 地形平滑
+│   ├── value-noise-terrain-machine.md # 完整值噪声地形机（32×32/429 方块）
 │   ├── block-map.md                 # Java→Bedrock 方块名映射（snow/snow_layer）
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
@@ -109,6 +111,7 @@ mcbe-command-blocks/
     ├── toggle-lamp/
     ├── snowball-menu/
     ├── fmbe-player/
+    ├── noise-terrain/               # 值噪声 32×32 地形机（429 方块，可复现）
     ├── bdx-generator/
     └── build-pipeline/
 ```
