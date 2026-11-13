@@ -63,6 +63,7 @@ mcbe-command-blocks/
 │   ├── scoreboard-memory.md
 │   ├── text-ui-and-effects.md
 │   ├── fmbe-mbe.md
+│   ├── render-controller-vars.md     # playanimation 改 render controller 变量
 │   ├── dataization-rpg.md
 │   ├── misc-map-systems.md
 │   ├── one-pass-delivery.md

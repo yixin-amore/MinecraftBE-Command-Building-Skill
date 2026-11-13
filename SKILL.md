@@ -243,6 +243,7 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 每条 `playanimation` 的顺序不能乱；第一条控制器必须是 `controller.animation.fox.move`。
 - 显示是客户端视觉，不能当方块检测；一个方块一个实体，先算性能预算。
 - 完整前置、8 条命令、变量表、MBE 尺寸/旋转、例子拆解见 `references/fmbe-mbe.md`。
+- `playanimation` 还可写实体 **render controller 变量**（`variable.glow_alpha`、`variable.profession_index` 等），改发光/变体/UV/部件 alpha；必须是对应实体、部分变量只读，详见 `references/render-controller-vars.md`。
 
 ### 4.6 数据化 RPG 属性系统
 
@@ -421,6 +422,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/scoreboard-memory.md` | 用 dummy 计分板存状态、做数学、编码 |
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
+| `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |
 | `references/dataization-rpg.md` | 数据化 RPG：属性分层、伤害事务、T显/血条、等级/经验、装备/怪物、性能与旧语法升级 |
 | `references/misc-map-systems.md` | 杂项地图系统：菜单/选人、商店/彩票、开箱、反作弊/领地/卡密门、匹配/密室、拔刀剑、死亡动画 |
 | `references/one-pass-delivery.md` | 一遍过交付：执行位置、导入 repair、性能、实体/物品、UI、视觉校准清单 |
