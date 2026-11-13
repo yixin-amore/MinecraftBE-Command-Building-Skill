@@ -66,6 +66,7 @@ mcbe-command-blocks/
 │   ├── command-corpus-framework.md  # 19 个社区指令语料的归类/统计框架
 │   ├── value-noise.md               # 值噪声/精度哈希/四角锚点
 │   ├── value-noise-7cmd.md          # 7 命令值噪声核拆解
+│   ├── gaussian-filter.md           # 高斯滤波/NX 地形平滑
 │   ├── block-map.md                 # Java→Bedrock 方块名映射（snow/snow_layer）
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
