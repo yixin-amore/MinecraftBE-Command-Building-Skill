@@ -115,3 +115,73 @@ kill @e[name=o]
 
 > 7 条命令 = **采样点生成 + 四角插值 + 落一列 + 清理**；  
 > 真正的地形机还需要一个移动 `nxs` 的扫描器。
+
+## 8. 更正：它是 NX 树，不是“一列”
+
+之前把它按“一次一列”解释是不完整的。样本的关键是 **`nxs` 不是一个游标，而是一组分支锚点**：
+
+```mcfunction
+rotated as @e[tag=nxs] positioned ^^^4
+rotated as @e[tag=nxs] positioned ^^^2
+rotated as @e[tag=nxs] positioned ^^^1
+rotated as @e[tag=nxs] positioned ^^^0.5
+rotated as @e[tag=nxs] positioned ^4^^
+rotated as @e[tag=nxs] positioned ^2^^
+rotated as @e[tag=nxs] positioned ^1^^
+rotated as @e[tag=nxs] positioned ^0.5^^
+```
+
+每多一层 `as/rotated as @e[tag=nxs]`，执行上下文就按 `nxs` 数量分叉一次。
+
+- 1 个 nxs：一条分支
+- N 个 nxs：N 条分支
+- 嵌套 k 层：最多 N^k 个采样上下文
+
+所以命令 1 不是只 summon 一个 `o`，而是**一次生成整组采样点**。命令 2-5 再用 a/b/c/d 对每个 `o` 做四角插值，命令 6 对整组 `o` 各 fill 一列，命令 7 整组清理。
+
+这就是 **NX 树 / N 叉执行树**：
+
+```text
+a（根）
+ └─ nxs 分支 × N
+     ├─ nxs 子分支 × N
+     │   └─ ... → o 采样点
+     └─ ...
+```
+
+## 9. 正确的 7 命令职责
+
+| 命令 | 职责 |
+|---|---|
+| 1 | `a` 根 + `nxs` 多层分叉 + 大坐标折叠，生成整组 `o` |
+| 2 | 所有 `o` 按 `a` 角插值 |
+| 3 | 所有 `o` 按 `b` 角插值 |
+| 4 | 所有 `o` 按 `c` 角插值 |
+| 5 | 所有 `o` 按 `d` 角插值 |
+| 6 | `at @e[name=o]` 对每个采样点 fill 一列 |
+| 7 | 清理整组 `o` |
+
+7 个命令方块能出地形，靠的就是**每条命令内部对 `@e[tag=nxs]`/`@e[name=o]` 的分叉**，不是 7 条顺序命令逐列跑。
+
+## 10. 使用它需要的前置
+
+不是只有 7 个方块：
+
+1. `a/b/c/d` 四个角锚点
+2. 一组 `nxs` 分支锚点（决定采样密度/方向）
+3. `o` 的 summon/kill 生命周期
+4. 一个 repeat 时钟（或玩家触发）
+5. 区块加载/实体上限
+6. 把 `【】` 改成 `[]`，压缩坐标拆开
+
+7 条是**噪声核**；NX 分支数量由 `nxs` 数量决定。  
+如果只放 1 个 `nxs`，它就退化成一条分支；如果 `nxs` 太多，分叉数会爆炸。
+
+## 11. 为什么之前导入没生成
+
+- 用了计分板循环，不是 `nxs` NX 树
+- 没有建立 `a/b/c/d` 和 `nxs` 分支锚点
+- boot/命令方块 NBT 未可靠写入
+- 所以“文件导入”与“NX 核”都没真正跑起来
+
+正确方向：先搭 `a/b/c/d + nxs`，再用 7 命令核，不要用 `fb_i` 循环代替 NX。
