@@ -60,7 +60,7 @@ class Block:
     needs_redstone: bool = False
     custom_name: str = ""
     last_output: str = ""
-    track_output: bool = False
+    track_output: bool = True
 
 
 def _cstr(s: str) -> bytes:
@@ -218,7 +218,7 @@ def from_spec(data: dict, path: str) -> None:
             needs_redstone=bool(b.get("needs_redstone", False)),
             custom_name=b.get("custom_name", ""),
             last_output=b.get("last_output", ""),
-            track_output=bool(b.get("track_output", False)),
+            track_output=bool(b.get("track_output", True)),
         ))
     write_bdx(blocks, path, author=data.get("author", ""), sort_blocks=bool(data.get("sort_blocks", True)))
     print(f"wrote {path}: {len(blocks)} blocks")
