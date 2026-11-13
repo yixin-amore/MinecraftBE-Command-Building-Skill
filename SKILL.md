@@ -111,7 +111,7 @@ INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
 **网易 1.21.130 特别提醒**：
 
 - `schedule` **有**（网易官方命令列表明确列出），不要删；它调度的是 Add-on 函数。
-- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先用 AuroraBuild 的 `command_upgrader` 升级。
+- 样本里大量导入图仍用旧 `execute @a ~ ~ ~` 语法；新图一律用 `execute as ... at ... run ...`，旧图先手工升级。
 - `tickingarea`、`structure`、`testfor`/`testforblocks`、`titleraw`、`camerashake`、`playanimation`、`event`、`damage` 在网易地图中实际使用，属于可用集合。
 - 详细边界见 `references/netease-1.21.130.md`。
 
@@ -418,6 +418,5 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 - [Commands/execute — Minecraft Wiki](https://minecraft.wiki/w/Commands/execute)（基岩版 11 个子命令、深度优先 fork）
 - [Target selectors — Minecraft Wiki](https://minecraft.wiki/w/Target_selectors)（基岩版参数：`r/rm`、`c`、`family`、`hasitem`、`haspermission`）
 - [Commands/scoreboard — Minecraft Wiki](https://minecraft.wiki/w/Commands/scoreboard)（仅 `dummy`、`random`、`test`、`operation`）
-- [Function (Bedrock Edition) — Minecraft Wiki](https://minecraft.wiki/w/Function_(Bedrock_Edition))（`tick.json`、10,000 条限制）
 - [Minecraft Creator Docs — Commands](https://learn.microsoft.com/en-us/minecraft/creator/commands/)（各命令的基岩版签名）
 - [网易开发者官网 — 命令列表及概述](https://dev.mc.163.com/dev/mcmanual/mc-dev/mconline/10-addon教程/第04章：指令系统，你的创作管家/课程04.命令列表及概述.html)（网易 1.21.130 命令边界；明确列出 `schedule`，标注 `fog` 未实装）

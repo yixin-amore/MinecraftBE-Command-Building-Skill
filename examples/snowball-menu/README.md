@@ -114,9 +114,9 @@ scoreboard players set <玩家> sbdown 0
 
 ## 重新导入
 
-`snowball-menu.bdx` 是标准 BDX，可直接用 AuroraBuild-cli、AuroraBuild 的 BuildTask 或其它 BDX 导入工具导入到 **`64 200 0`**。
+`snowball-menu.bdx` 是标准 BDX，可直接用任意 BDX 导入工具导入到 **`64 200 0`**。
 
-- 结构尺寸 15×6×9，占一个区块柱；导入后建议逐块校验/回写命令方块 NBT（BuildTask 偶尔会漏 NBT）。
+- 结构尺寸 15×6×9，占一个区块柱；导入后建议逐块校验/回写命令方块 NBT（导入后逐块校验 NBT）。
 - 回城点写死在动作页 1 的 `tp @s 64 2 0`；改坐标后重新导入。
 - 如果要改菜单文字/动作，编辑 `snowball-menu.spec.json` 或使用你自己的生成器；生成器不随本仓库提供。
 

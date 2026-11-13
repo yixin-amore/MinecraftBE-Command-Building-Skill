@@ -330,7 +330,7 @@ effect @e[tag=生物,type=!player] fire_resistance 5 255 true
 - 实体多时 `hasitem`/`@e` 很贵；装备层可 5 tick 重建一次。
 - `titleraw` 大 JSON 只给需要的玩家（`rxm`、`hasitem`、`tag`），不要 `@a` 每 tick 发。
 - 计分板整数：先乘后除、及时 clamp、避免溢出；百分比用 100/1000 放大。
-- 用函数/`tick.json` 拆分大链；命令方块链深度有限，别把 200 条塞一条。
+- 把大链拆成多个独立命令方块链；单条链不要塞 200 条。
 
 ## 11. 旧语法 → 新语法（样本地图重灾区）
 

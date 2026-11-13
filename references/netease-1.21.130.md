@@ -1,6 +1,6 @@
 # 网易我的世界 1.21.130 命令边界
 
-> 目标环境：**网易中国版 · 基岩版 1.21.130 / 协议 898**（AuroraBuild 的 `g79client` 与 `AuroraShutter` 均以该版本为基准）。
+> 目标环境：**网易中国版 · 基岩版 1.21.130 / 协议 898**。
 > 证据：网易开发者官网《命令列表及概述》 + 12 个真实网易地图导入文件（18,945 条命令方块命令）的静态解析。
 
 ## 1. 先回答：`schedule` 有没有？
@@ -89,15 +89,15 @@ execute as @a[tag=准备] at @s run setblock ~ ~ ~ redstone_block
 
 ```mcfunction
 # 旧：fill ... <block> <data> replace ...
-fill 100011 -59 110 99980 -59 110 air 0 replace redstone_block
+fill 0 -59 0 9 -59 9 air 0 replace redstone_block
 
 # 新：用方块状态；空气不需要 data
-fill 100011 -59 110 99980 -59 110 air replace redstone_block
+fill 0 -59 0 9 -59 9 air replace redstone_block
 ```
 
 处理导入图时：
 
-- AuroraBuild 的 `utils/command_upgrader` 已实现旧 `execute`、`setblock`、`fill` 的升级；优先用它。
+- 旧 `execute`、`setblock`、`fill` 先手工升级，再导入新图。
 - 手写新图一律用新语法；技能 linter 会把旧 `execute` 标为 error。
 - 旧图的 `~~~`、`~19~~` 紧凑坐标在旧解析器里可接受；新写法建议保留空格，避免歧义。
 
@@ -123,5 +123,4 @@ fill 100011 -59 110 99980 -59 110 air replace redstone_block
 ## 8. 来源
 
 - [网易开发者官网 — 命令列表及概述](https://dev.mc.163.com/dev/mcmanual/mc-dev/mconline/10-addon教程/第04章：指令系统，你的创作管家/课程04.命令列表及概述.html)
-- 12 个用户提供的 `.bdx` / `.mcworld` 文件（由 AuroraStructure/`chain_extract` 解析，18,945 条非空命令）
 - [Minecraft Wiki — Commands/schedule](https://minecraft.wiki/w/Commands/schedule)（Bedrock 语法）

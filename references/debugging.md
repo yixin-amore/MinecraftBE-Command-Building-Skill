@@ -100,12 +100,12 @@ execute unless score fb_state arena matches 1 run say state_is_not_1
 | 粒子/音效位置不对 | 没有 `at @s`，在命令方块位置播放 | `execute as @a at @s run particle ...` |
 | 只有房主有效，别人没效果 | 用了 `@p`/`@s` 但上下文不对；多人状态串了 | 每个玩家显式 `execute as @a`；用 `@s` 的分数 |
 | 靠近能用，走远失效 | 区块卸载 | `tickingarea` |
-| 重载后失效 | 状态卡住；重置链没跑；函数没加载 | 手动跑 reset；检查 `tick.json`；重启世界 |
+| 重载后失效 | 状态卡住；重置链没跑 | 手动跑 reset；检查初始化链 |
 | 新函数 `/function` 找不到 | 新文件需要重启世界（`reload` 只重载已有函数） | 退出重进世界 |
 | `fill`/`clone` 失败 | 区域未加载；超出体积；源和目标重叠 | 先加载；拆分；`clone ... force` |
 | 命令方块报 “Unknown command” | 用了 Java 命令/语法 | 查 `bedrock-vs-java.md`；用 `/help` 验证 |
 | 网易 1.21.130 报 Unknown command | 用了 `camera`/`inputpermission`/`dialogue`/`loot`/`place`/`recipe`/`scriptevent`/`fog`，或旧 `execute` | 查 `netease-1.21.130.md`；换替代方案；旧图先升级 |
-| `schedule` 报错但命令存在 | 服务器没启用行为包/函数，或函数路径不对 | 确认 Add-on 已启用、`functions/` 路径正确；`schedule` 只调度函数 |
+| `schedule` 报错但命令存在 | 服务器未启用函数 | 先确认服务器支持并启用函数；否则不要使用 `schedule` |
 | 命令没报错但没效果 | `execute if` 条件为假；目标为空 | 用探针打印条件；用 `execute if entity` 测选择器 |
 
 ## 5. 二分法
@@ -137,7 +137,7 @@ execute unless score fb_state arena matches 1 run say state_is_not_1
 
 ## 8. 重载/持久化测试
 
-- [ ] 退出世界再进，`tick.json` 函数仍在跑。
+- [ ] 退出世界再进，命令方块链仍在跑。
 - [ ] 命令方块链的状态（计分板）保留。
 - [ ] 远处机关在无人时仍运行（tickingarea）。
 - [ ] `/reload` 后已有函数更新；新函数需要重启。

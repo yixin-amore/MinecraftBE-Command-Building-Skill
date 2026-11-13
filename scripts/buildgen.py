@@ -17,7 +17,7 @@ Plan JSON:
 
 This is intentionally small and deterministic: it expands fills to blocks,
 then writes a BDX containing both normal blocks and command blocks. It does not
-need AuroraBuild, Java, or a Minecraft client.
+need an external writer, Java, or a Minecraft client.
 
 Usage:
     python3 scripts/buildgen.py plan.json out.bdx

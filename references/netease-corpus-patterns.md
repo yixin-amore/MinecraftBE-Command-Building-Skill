@@ -1,7 +1,7 @@
 # 网易真实地图命令方块语料分析
 
 > 样本：用户提供的 12 个 `.bdx` / `.mcworld` 导入文件，共 **18,945 条非空命令**、**19,501 个命令方块**（含空命令）。
-> 解析工具：AuroraBuild 的 `AuroraStructure` 模块（`structure.StructureFromFile` + `GetChunks` + `GetChunksNBT`）。
+
 > 版本目标：网易 1.21.130 / 协议 898。
 
 ## 1. 样本概览
@@ -114,7 +114,7 @@ execute as @a[tag=准备] at @s run setblock ~ ~ ~ redstone_block
 要点：
 
 - 旧 `execute <target> <pos> <command>` 在 1.19.50 后移除；网易 1.21.130 新图不要用。
-- 旧图导入先用 AuroraBuild `utils/command_upgrader` 升级，再手工检查 `detect` → `if block`、`~~~` 坐标、旧 data 参数。
+- 旧图导入先手工升级，再检查 `detect` → `if block`、`~~~` 坐标、旧 data 参数。
 - 旧 `fill ... <block> <data> replace ...` 的 data 参数也要去掉或改方块状态。
 
 ## 6. 模式四：检测与区域
@@ -160,7 +160,7 @@ spreadplayers -5025 -4985 3 5 @e[type=armor_stand,name=矿方包,r=100]
 
 ## 9. 复现方式
 
-解析工具在 `work/repo/cmd/mcbeextract`（AuroraStructure 模块），输出 JSON：
+解析工具只要能读取 BDX 并输出 JSON 即可：
 
 ```bash
 go run ./cmd/mcbeextract "/path/to/file.bdx" > out.json

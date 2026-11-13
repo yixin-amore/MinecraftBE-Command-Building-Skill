@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Bedrock .bdx structures without AuroraBuild.
+"""Generate Bedrock .bdx structures without an external writer.
 
 BDX = b"BD@" + brotli("BDX\0\0" + command-stream)
 This module writes normal blocks (legacy data or block-state strings) and
@@ -128,7 +128,7 @@ def write_bdx(
         stream += _place(names[name], b)
     stream += bytes([ID_TERMINATE])
 
-    # Non-empty author metadata is rejected by the AuroraStructure loader
+    # Non-empty author metadata is rejected by common BDX loaders
     # (unsigned BDX); keep it empty for maximum compatibility.
     header = b"BDX\x00\x00"
     blob = header + bytes(stream)
