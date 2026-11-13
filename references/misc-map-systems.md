@@ -355,7 +355,7 @@ execute as @a[scores={死亡动画=1..13}] at @s run titleraw @s title {"rawtext
 
 ```mcfunction
 # 副手特殊值鹦鹉螺壳 + 主手钓鱼竿 = 武器
-execute as @a[hasitem=[{item=nautilus_shell,location=slot.weapon.offhand},{item=fishing_rod,location=slot.weapon.mainhand}],tag=!保护] at @s run execute as @e[type=fishing_hook,r=2] at @s run tag @s add 拔刀斩
+execute as @a[hasitem=[{item=nautilus_shell,location=slot.weapon.offhand,data=31},{item=fishing_rod,location=slot.weapon.mainhand}],tag=!保护] at @s run execute as @e[type=fishing_hook,r=2] at @s run tag @s add 拔刀斩
 
 # 以钩子为原点，沿视线方向放粒子/伤害
 execute as @a[tag=拔刀斩] at @s positioned ^^0.75^5 run tag @e[r=5,family=!inanimate,c=1] add 击中

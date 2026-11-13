@@ -728,10 +728,6 @@ def check_command(report: Report, cmd: str, block_id: str | None) -> None:
                     add(report, "error", "HASITEM_COUNT",
                         "Bedrock hasitem uses quantity=, not count=",
                         block_id=block_id, fix="replace count= with quantity=")
-                if re.search(r"\bdata\s*=", value):
-                    add(report, "error", "HASITEM_DATA",
-                        "Bedrock hasitem does not support item data=; use item/states",
-                        block_id=block_id, fix="remove data= from hasitem")
                 if "item=" not in value and "[" not in value:
                     add(report, "error", "HASITEM_ITEM",
                         "hasitem needs an item= field", block_id=block_id)

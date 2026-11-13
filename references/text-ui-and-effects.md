@@ -143,7 +143,7 @@ particle <effect> [x y z]
 ```mcfunction
 particle flame ~ ~1 ~
 particle heart ~ ~1 ~
-particle end_rod ~ ~1 ~
+particle minecraft:end_rod ~ ~1 ~
 ```
 
 - 基岩版**没有** `xd yd zd speed count`；只有效果名和位置。

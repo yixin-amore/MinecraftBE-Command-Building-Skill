@@ -89,10 +89,10 @@ execute as @a[tag=准备] at @s run setblock ~ ~ ~ redstone_block
 
 ```mcfunction
 # 旧：fill ... <block> <data> replace ...
-fill 0 -59 0 9 -59 9 air 0 replace redstone_block
+fill 100011 -59 110 99980 -59 110 air 0 replace redstone_block
 
 # 新：用方块状态；空气不需要 data
-fill 0 -59 0 9 -59 9 air replace redstone_block
+fill 100011 -59 110 99980 -59 110 air replace redstone_block
 ```
 
 处理导入图时：

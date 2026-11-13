@@ -446,7 +446,7 @@ particle <effect> [x y z]
 ```mcfunction
 particle flame ~ ~1 ~
 particle heart ~ ~1 ~
-particle end_rod ~ ~ ~
+particle minecraft:end_rod ~ ~ ~
 ```
 
 - **基岩版只有效果名和位置**；没有 Java 的 `delta/speed/count`。
