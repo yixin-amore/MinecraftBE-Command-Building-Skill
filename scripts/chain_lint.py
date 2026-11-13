@@ -595,6 +595,22 @@ def check_command(report: Report, cmd: str, block_id: str | None) -> None:
             f"/{word} is not available/verified on NetEase 1.21.130: {NETEASE_UNSUPPORTED[word]}",
             block_id=block_id)
 
+    # Java block names that silently fail or place the wrong block on Bedrock
+    for java_name, bedrock_name in {
+        "snow_block": "snow",
+        "grass_block": "grass",
+        "note_block": "noteblock",
+        "cobweb": "web",
+        "spawner": "mob_spawner",
+        "magma_block": "magma",
+        "slime_block": "slime",
+    }.items():
+        if re.search(rf"\b(?:minecraft:)?{re.escape(java_name)}\b", cmd):
+            add(report, "error", "JAVA_BLOCK_NAME",
+                f"Java block name '{java_name}' is not Bedrock; use '{bedrock_name}'",
+                block_id=block_id,
+                fix=f"replace {java_name} with {bedrock_name}")
+
     # execute internals
     if word == "execute":
         if re.search(r"\b(store|detect|runasync)\b", cmd):

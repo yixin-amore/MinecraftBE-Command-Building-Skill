@@ -30,6 +30,7 @@
 - [N 叉树 / NX 树](references/nx-tree.md)
 - [指令计算机：实体像素/栅格](references/command-computer.md)
 - [19 个社区指令文件 → 系统框架](references/command-corpus-framework.md)
+- [Java→Bedrock 方块名映射](references/block-map.md)
 - [提问、期待效果与联想创新](references/intake-and-reasoning.md)
 
 ## 快速开始
@@ -62,6 +63,7 @@ mcbe-command-blocks/
 │   ├── nx-tree.md                   # N 叉树/NX：执行分叉/圆/射线/体积
 │   ├── command-computer.md         # 指令计算机：item 像素/栅格/噪声
 │   ├── command-corpus-framework.md  # 19 个社区指令语料的归类/统计框架
+│   ├── block-map.md                 # Java→Bedrock 方块名映射（snow/snow_layer）
 │   ├── chain-patterns.md
 │   ├── bedrock-command-reference.md
 │   ├── execute-and-selectors.md
@@ -91,6 +93,7 @@ mcbe-command-blocks/
 ├── scripts/
 │   ├── chain_lint.py
 │   ├── command_corpus.py          # 指令文本归类/统计
+│   ├── block_map.py               # Java 方块名归一化
 │   ├── bdxgen.py
 │   ├── buildgen.py
 │   ├── sunrain_index.py

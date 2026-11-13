@@ -138,6 +138,7 @@ INPUT → VALIDATE → TRANSITION → OUTPUT → CLEANUP
 | 网易未验证/未实装：`camera`、`inputpermission`、`dialogue`、`loot`、`place`、`recipe`、`scriptevent`、`fog` | 用 `camerashake`、`tp ... facing`、`title`、`structure`、`give` 等替代；详见 `references/netease-1.21.130.md` |
 | `schedule` / `function` 在网易官方命令列表内 | 可以调度 Add-on 函数；服务器未启用函数时不要依赖 |
 | 方块状态写作 `["state"="value"]` | `[facing=east]` 是 Java 语法，基岩版会解析失败 |
+| Java 方块名 ≠ Bedrock 方块名 | `snow_block` 应为 `snow`；顶层雪是 `snow_layer`，不是 `snow` |
 | 文本组件用 `{"rawtext":[{"text":"..."}]}` + `§` 颜色码 | Java 的 `color`、`clickEvent`、`hoverEvent` 不可移植 |
 | 红石只在偶数 tick 响应 | 红石时钟最高 10 Hz；`Always Active` 的 repeat 才是 20 Hz |
 | 条件链检查的是**身后方块**的成功次数 | 链式条件只反映紧邻前驱；条件失败仍会把触发传给下一个方块 |
@@ -451,6 +452,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/nx-tree.md` | N 叉树/NX：执行分叉、射线、圆/椭圆、体积扫描与成本 |
 | `references/command-computer.md` | 指令计算机：item 像素、栅格吸附、存储/显示分层、反馈风险 |
 | `references/command-corpus-framework.md` | 19 个社区指令文件的归类/统计/分层框架/反模式 |
+| `references/block-map.md` | Java→Bedrock 方块名映射；雪块 `snow` / 雪层 `snow_layer` |
 | `references/chain-patterns.md` | 要选型：时钟、门、状态机、队列、波次、冷却 |
 | `references/bedrock-command-reference.md` | 查某条命令的基岩版语法和坑 |
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |

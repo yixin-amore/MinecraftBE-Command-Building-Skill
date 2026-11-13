@@ -17,6 +17,12 @@ import struct
 from dataclasses import dataclass, field
 from typing import Iterable, Literal
 
+try:
+    from block_map import normalize as normalize_block
+except ImportError:  # pragma: no cover
+    def normalize_block(name: str) -> str:
+        return name
+
 # BDX command IDs (big-endian payloads)
 ID_CREATE_CONSTANT_STRING = 1
 ID_PLACE_BLOCK_WITH_STATES = 5
@@ -157,6 +163,7 @@ def write_build_bdx(items: Iterable[Block | BuildBlock], path: str, *, sort_bloc
     # Build the constant-string table before writing any placements.
     for it in items:
         if isinstance(it, BuildBlock):
+            it.block = normalize_block(it.block)
             sid(it.block)
             if it.states:
                 sid(it.states)
