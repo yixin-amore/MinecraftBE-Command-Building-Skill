@@ -333,3 +333,11 @@ execute as @a in the_end run say in_end
 - [Commands/execute — Minecraft Wiki](https://minecraft.wiki/w/Commands/execute)
 - [Target selectors — Minecraft Wiki](https://minecraft.wiki/w/Target_selectors)
 - [Minecraft Creator Docs — execute](https://learn.microsoft.com/en-us/minecraft/creator/commands/commands/execute)
+
+## 附：`r=` 的距离基准（实测坑）
+
+- `r=` / `rm=` / `distance=` 的参照点是**执行者位置**（玩家、机器人、命令方块），
+  `execute positioned` **不会**把锚点传给 `r=`。
+- 实测：目标距执行者 13.6 格时，`@e[type=armor_stand,r=2]` 选不中，`r=1000` 能选中；
+  `c=1` 单独用正常。
+- 做法：先清场（`kill @e[type=X]`）再 `tag @e[type=X] add ...`，不要用 `r` 圈范围。

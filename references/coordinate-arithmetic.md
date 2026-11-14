@@ -398,8 +398,16 @@ execute as @a unless score @s init matches 1 run scoreboard players set @s init 
 | `scoreboard players operation a syn min= b syn` | ❌ 指令格式错误 |
 | `scoreboard players operation a syn *= -1` | ❌ “意外的 -1” |
 | `scoreboard players random d syn 1 6` | ✅ 无报错 |
+| `tag @e[type=armor_stand,r=2] add t`（执行者离目标 13 格） | ❌ 不生效 |
+| `tag @e[type=armor_stand,r=1000] add t` | ✅ 生效 |
+| `tag @e[type=armor_stand,c=1] add t` | ✅ 生效 |
+| `execute positioned <锚点> run tag @e[...r=2]` | ❌ 仍按执行者算距离 |
 
-> 结论：**判等/判大用 `matches` 或 `unless` 反向比较**，`min=/max=` 手写。
+> 结论 1：**判等/判大用 `matches` 或 `unless` 反向比较**，`min=/max=` 手写。
+>
+> 结论 2：**`r=` 的距离基准是执行者（玩家/机器人/命令方块），不是 `positioned` 的锚点**。
+> 给实体打标签/批量选中时，别用 `r=` 圈定范围——先 `kill` 清场再用
+> `tag @e[type=X] add ...`，或用 `c=1` 取最近一个。
 
 ## 6. 四思想怎么组合
 
