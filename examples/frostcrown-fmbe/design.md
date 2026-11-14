@@ -1,0 +1,175 @@
+# 设计：霜冠·维丝佩拉 v2（FMBE 真实命中版）
+
+> 网易 1.21.130 · 14 部件 FMBE + 2 个隐形 cow 核心 + 1 耐久头盔命中检测。
+> 436 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
+
+## 1. 行为契约
+
+| 项 | 内容 |
+|---|---|
+| 谁触发 | 玩家走进冰窟（体积选择器 `x=504,y=2,z=504,dx=23,dy=6,dz=23`）→ `st 0→1`；复位由红石块 `505 43 506` 触发 `init` |
+| 起始 | `st=0`：14 个 FMBE 部件待机、2 个隐形核心戴 1 耐久头盔、血条不显示 |
+| 中间 | `st=1`：三阶段、两技能、冰甲破盾、真实命中、个人伤害 |
+| 结束 | `st=2` 胜利（核心/部件消失、传出、战利品）／`st=3` 团灭（4 秒无 fighter） |
+| 失败 | 团灭只播标题；重放红石块复位 |
+| 重置 | `init` 清旧部件/核心/冰晶/仆从、重召 FMBE、重设全部分、清触发红石块 |
+| 多人 | 全局 Boss；`fighter`/`dmg` 每玩家；任意玩家真实命中都扣全局血 |
+
+## 2. v1 的两个问题与修正
+
+### 2.1 v1：不是 FMBE
+
+v1 是一只 `ravager`；只有粒子/发光，没有模型拼接和动画。v2 改成：
+
+- 14 只 **fox** 部件（主手方块物品模型）；
+- 两只隐形 **cow** 核心（胸口 + 头部），只做受击体积；
+- 两套 `playanimation` 姿态：`idle` 与 `cast`。
+
+### 2.2 v1：扣血是“手持武器靠近”
+
+v1 的判定是：
+
+```mcfunction
+execute as @a[tag=fighter,scores={cd=0},hasitem={item=netherite_sword,location=slot.weapon.mainhand}] at @s if entity @e[tag=boss,r=5] ...
+```
+
+它只看“剑 + 5 格内 + 冷却”，玩家站着不动也会每 0.4 秒掉血，不是真实打击。v2 改成**护甲碎裂事件**：
+
+```mcfunction
+# m05（每 tick）
+replaceitem entity @e[tag=boss_core] slot.armor.head 0 keep leather_helmet 1 9999
+# m06（conditional，紧跟 m05）
+scoreboard players set hit bs 1
+```
+
+原理：
+
+1. 核心头盔数据 `9999`，一次受击就碎；
+2. `replaceitem ... keep` 在槽位有物品时**不替换**（成功 0）；槽位空了才补（成功 1）；
+3. `m06` 是 conditional chain block，只有上一条 `replaceitem` 成功才执行 → `hit=1`；
+4. 只有 `hit=1` 才扣血；距离/手持物完全不参与。
+
+真机小链验证（同一 cow、同一头盔）：
+
+```text
+BEFORE 0
+打一下  → AFTER1 1
+再打一下 → AFTER2 2
+```
+
+### 2.3 为什么两个核心
+
+FMBE 部件有碰撞箱，会挡住核心。把两个隐形 cow 核心放在 **FMBE 部件的南侧**（玩家进门方向）：
+
+- 胸口核心 `515.5 5.0 516.4`
+- 头部核心 `515.5 7.2 516.2`
+
+任意一个头盔碎都置 `hit=1`；`replaceitem @e[tag=boss_core]` 一次补两只，成功次数>0 即可。
+两个核心都每 tick `tp` 锚定，防止被推走/掉落。
+
+## 3. FMBE 部件
+
+| 部件 | 主手物品 | 坐标 | scale / yscale |
+|---|---|---|---|
+| head | wither_skeleton_skull | 515.5 7.4 515.5 | 0.90 / 1.0 |
+| crown | gold_block | 515.5 8.6 515.5 | 0.35 / 0.6 |
+| halo | end_rod | 515.5 9.4 515.5 | 0.45 / 0.8 |
+| eye_l | sea_lantern | 515.0 7.6 515.1 | 0.15 / 1.0 |
+| eye_r | sea_lantern | 516.0 7.6 515.1 | 0.15 / 1.0 |
+| torso | blue_ice | 515.5 6.2 515.5 | 1.20 / 1.6 |
+| shoulder_l | polished_diorite | 514.1 6.9 515.5 | 0.65 / 0.8 |
+| shoulder_r | polished_diorite | 516.9 6.9 515.5 | 0.65 / 0.8 |
+| arm_l | packed_ice | 513.3 5.5 515.5 | 0.40 / 2.0 |
+| arm_r | packed_ice | 517.7 5.5 515.5 | 0.40 / 2.0 |
+| staff | end_rod | 518.8 5.8 515.5 | 0.80 / 1.0 |
+| cloak | light_blue_concrete | 515.5 5.8 516.4 | 1.00 / 1.3 |
+| wing_l | white_stained_glass | 513.0 6.8 516.0 | 0.70 / 1.2 |
+| wing_r | white_stained_glass | 518.0 6.8 516.0 | 0.70 / 1.2 |
+
+- 每个部件用 **0.4×0.4×0.4 独占体积**打 `boss_part` + `boss_p_<name>`，不靠 `r=0.6`（会重叠）。
+- 每个部件 `invisibility/resistance/slowness`；`event ... ageable_grow_up` 保证成年。
+- 每 tick `tp` 回锚点，防重力/AI/玩家挤压。
+- 8 条 `playanimation` 链的顺序不能乱，第一条必须是 `controller.animation.fox.move`。
+
+## 4. 动画
+
+`pose_idle` / `pose_cast` 两条 repeat 链，delay 2：
+
+```text
+pose=0：14 部件 × 8 条 idle playanimation
+pose=1：14 部件 × 8 条 cast playanimation
+```
+
+每条命令自己带 `execute if score pose bs matches 0/1`，两条链不会互相覆盖。
+`main` 在技能前摇 `ct>=0` 时置 `pose=1`，技能结束 `ct=-1` 时回 0。
+
+- `idle`：双臂垂下、法杖竖直、光环水平、披风微飘。
+- `cast`：双臂抬起 105°、法杖前倾、光环倾斜、翅膀展开、头微低。
+
+## 5. 状态表
+
+| 变量 | 载体 | 范围 | 初值 | 说明 |
+|---|---|---|---|---|
+| `hp` | `bs` | 0..6000 | 6000 | 全局血量 |
+| `sh` | `bs` | 0/1 | 0 | 冰甲 |
+| `st` | `bs` | 0/1/2/3 | 0 | 待机/战斗/胜利/团灭 |
+| `ph` | `bs` | 1..3 | 1 | 阶段 |
+| `pa` | `bs` | 1..3 | 1 | 已播报阶段 |
+| `t` | `bs` | 0..∞ | 0 | 战斗 tick |
+| `bt` | `bs` | 0..19 | 0 | 1 秒节拍 |
+| `sc` | `bs` | 0..80 | 60 | 技能冷却 |
+| `ct` | `bs` | -1/30..0 | -1 | 前摇 |
+| `sk` | `bs` | 1/2 | 1 | 霜环/冰魂 |
+| `stg` | `bs` | 0..60 | 0 | 破防窗口 |
+| `wn` | `bs` | 0..∞ | 0 | 团灭计时 |
+| `hit` | `bs` | 0/1 | 0 | **只由头盔碎裂事件置 1** |
+| `pose` | `bs` | 0/1 | 0 | FMBE 姿态 |
+| `dmg` | `dmg` | 0..∞ | 0 | 每玩家伤害 |
+| `fighter` | tag | — | — | 战斗中玩家 |
+| `boss_core` / `boss_core_body` / `boss_core_head` | tag | — | — | 两个核心 |
+| `boss_part` / `boss_p_<name>` | tag | — | — | FMBE 部件 |
+
+## 6. 链与布局
+
+| 链 | 类型 | 块数 | 坐标 |
+|---|---|---:|---|
+| `init_a` | impulse + chain | 63 | y=43，`506,43,506` 起蛇形 |
+| `init_b` | impulse + chain | 53 | y=43，`506,43,516` 起蛇形 |
+| `main` | repeat + chain | 96 | y=42，`506,42,506` 起蛇形 |
+| `pose_idle` | repeat + chain | 112 | y=44，`506,44,506` 起 |
+| `pose_cast` | repeat + chain | 112 | y=44，`506,44,518` 起 |
+| **合计** | | **436** | 包围盒 13×3×21 |
+
+- 5 个链头：`ia01`/`ib01`（Needs Redstone）、`m01`/`pi01`/`pc01`（Always Active）。
+- `m06` 是唯一的 conditional 块，紧贴 `m05`；`i` 链拆成 63/53 两段，避免长链吞 tag 命令。
+- `init_b` 链尾拔掉 `505 43 506` 和 `505 43 516` 两块触发红石。
+
+## 7. 战斗数值
+
+| 项 | 数值 |
+|---|---|
+| 总血量 | 6000 |
+| 阶段 | 4000 / 2000 |
+| 普通命中 | 40 |
+| 破防 | 3 秒 ×2 |
+| 踩踏 | 8 / 秒，r=4.5 |
+| 霜环 | 18 魔法，r=6.5，减速 II |
+| 冰魂 | 2 只流浪者，上限 3 |
+| 暴雪（P3） | 4 / 秒 |
+| 团灭 | 4 秒无 fighter |
+
+## 8. 导入
+
+1. 建筑 `frostcrown-arena.bdx` → StartPos `500 0 500`。
+2. 命令 `frostcrown-commands.bdx` → StartPos `506 42 506`；逐块 repair。
+3. `ia01`/`ib01` Needs Redstone；`m01/pi01/pc01` Always Active；`m06` conditional 且紧贴 `m05`。
+4. 红石块 `505 43 506` + `505 43 516` 触发；走进 `515 2 515` 开战。
+
+## 9. 验证
+
+- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，436 blocks。
+- `readbdx.py`：436 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
+- 真机命中链：`BEFORE 0 → AFTER1 1 → AFTER2 2`（conditional 块确实读到 replaceitem 成功）。
+- 真机完整导入：436/436 块写入；触发后 `HP_OK / ST_IDLE / HEAD_OK`（无 `NO_PARTS/NO_CORES`；复查 `PARTS 14 / CORES 2 / UNIQUE 14`）；
+  进圈 `ST=1 / HP=6000`；对 `boss_core_body` 实体攻击一次后 `HP=5960`。
+- **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、二/三阶段演出（无头 bot 看不到模型）。

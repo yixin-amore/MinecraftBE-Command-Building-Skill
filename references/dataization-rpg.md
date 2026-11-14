@@ -291,6 +291,30 @@ replaceitem entity @s slot.weapon.mainhand 0 keep iron_sword 1 0 {"minecraft:ite
 - `item_lock` 防止移动/丢弃；`keep_on_death` 死亡保留。
 - 锁物品要提供“解锁/卸下”路径，否则玩家背包被卡死。
 
+### 真实受击检测：1 耐久护甲 + `replaceitem ... keep`
+
+“靠近 Boss + 手持武器”不是命中；`hasitem` + `r=5` 只能判断距离/背包，不能判断这一下有没有打到。
+用护甲耐久做事件源：
+
+```mcfunction
+# 核心每 tick 尝试补头盔。头盔还在 → keep 不替换，成功 0；
+# 头盔被真实攻击打碎 → 槽位为空，keep 补上，成功 1。
+replaceitem entity @e[tag=hit_core] slot.armor.head 0 keep leather_helmet 1 9999
+
+# 下一块必须是 conditional；它读上一块的“成功次数”。
+scoreboard players set hit bs 1
+```
+
+- `leather_helmet 1 9999`：一次受击就碎；`9999` 是护甲数据，实测网易 1.21.130 可用。
+- `keep` 只在槽位为空时补；所以“补成功”= 这一 tick 之前头盔碎了 = **真实命中**。
+- 条件块必须**紧贴** `replaceitem`，中间不能插别的命令；它看的是上一条的成功次数。
+- 命中标志只在伤害事务里用，事务末尾 `hit=0`，保证一次命中只扣一次。
+- 冰甲/无敌阶段仍可保留 `hit`，只 gate 扣血，不 gate 命中检测；否则破盾后第一下会丢。
+- 多核心（FMBE 模型挡住一个 hitbox）：`@e[tag=hit_core]` 一次补全部，任意一个补成功即 `hit=1`；伤害仍只结算一次。
+- FMBE 部件有碰撞箱，会把核心挡在后面；把真实受击核心放在模型**南侧/玩家来的方向**，或胸口+头部各放一个。
+- `keep` 是网易/旧版扩展；国际版标准 `replaceitem` 没有这个位置参数，不能直接移植。
+- 完整可跑例子见 `examples/frostcrown-fmbe/`（14 部件 FMBE + 2 核心 + 436 块）。
+
 ### 随机词条装备
 
 - 用 `uid`/`装备ID` 记录装备，用 scoreboard 存词条数值，T显时拼出来。

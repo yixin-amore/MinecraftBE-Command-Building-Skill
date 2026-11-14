@@ -3,6 +3,7 @@
 > FMBE / MBE 不是真正的方块，而是**用实体 + 动画 + Molang 伪装出来的显示模型**。
 > 服务端看到的是一只狐狸/盔甲架；客户端看到的是方块或物品模型。
 > 必读：[FMBE - A New Way to Create Display Entities](https://wiki.bedrock.dev/commands/display-entities.html)、[MBE - Max's Block Entity](https://wiki.bedrock.dev/commands/block-entities.html)。
+> 工具/模拟器导航：[FMBE Hub](https://fmbe-hub.ora-san.org/)。
 
 ## 1. 先分清几个名字
 
@@ -64,6 +65,25 @@ stopsound @a mob.fox.aggro
 - `@n` 是最近实体；如果目标版本不支持，用 `@e[name="wiki:fmbe",c=1]` 代替。
 - 狐狸会动；用 `tp @e[tag=wiki:fmbe] <锚点>` 或高频 `tp @s ~~~` 固定。
 - 狐狸成年用 `minecraft:as_adult` 或 `event ... ageable_grow_up`。
+
+## 2.5 多部件 FMBE：初始化链要分段
+
+一个 14 部件 Boss 不是“召唤 14 只狐狸”这么简单：每个部件要 `summon → tag → 主手物品 → 锚定`，
+初始化命令很容易超过 100 块。真机上遇到过：
+
+- 115 块单条 impulse 链，14 只部件都在，但只有 9 个唯一 tag；
+- 中间几条 `tag` 被服务器吞掉，`tp`/`replaceitem` 找不到目标，部件留在装配点；
+- 拆成 **63 + 53** 两条 impulse 链，各自用红石触发后复查 `PARTS 14 / UNIQUE 14`。
+
+做法：
+
+1. 每个部件一个独占 tag（`boss_p_<name>`）或稳定 name；不要用互相重叠的 `r=0.6` 体积。
+2. 初始化链超过 ~70 块就拆段；每段一个 impulse 头，触发红石可以并排。
+3. 由最后一段统一清掉所有触发红石，避免重复触发。
+4. 初始化后先跑一次计数（`execute as @e[tag=...] run scoreboard add`），再开战。
+5. 多部件 FMBE 的碰撞箱会挡住真实受击核心；核心要放在模型前方，或用胸口+头部两个核心。
+
+完整 14 部件、两套姿态、真实命中检测的例子见 `examples/frostcrown-fmbe/`。
 
 ## 3. FMBE 的动画链（1 条初始化 + 7 条变量/姿态）
 
@@ -227,6 +247,8 @@ playanimation @e[name=a] animation.player.attack.positions none 0 "v.n=4;v.xzsca
 - [ ] 变量单位是 1/16 格，旋转是角度。
 - [ ] 狐狸被 `tp` 固定在锚点，不会乱跑。
 - [ ] 显示实体有 tag，不会误伤野生狐狸。
+- [ ] 多部件初始化链 >70 块已拆段；触发后计数确认“部件数 = 唯一 tag 数”。
+- [ ] 有真实受击核心；不是用距离/`hasitem` 判定命中。
 - [ ] 区块加载/`tickingarea` 已处理。
 - [ ] 保存/加载后重新执行初始化。
 

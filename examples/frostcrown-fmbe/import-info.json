@@ -1,0 +1,14 @@
+{
+  "start_pos": [
+    506,
+    42,
+    506
+  ],
+  "command_blocks": 436,
+  "init": 116,
+  "init_a": 63,
+  "init_b": 53,
+  "main": 96,
+  "pose_idle": 112,
+  "pose_cast": 112
+}

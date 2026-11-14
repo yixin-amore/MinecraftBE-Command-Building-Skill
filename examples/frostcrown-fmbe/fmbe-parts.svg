@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620">
+  <rect width="980" height="620" fill="#07131f"/>
+  <text x="490" y="42" text-anchor="middle" fill="#cfefff" font-family="sans-serif" font-size="24">霜冠·维丝佩拉 · FMBE 14 部件（正面拆解示意）</text>
+  <text x="490" y="70" text-anchor="middle" fill="#7fa8bd" font-family="sans-serif" font-size="14">非游戏截图 · 实际显示由 14 只 fox + 主手物品模型拼装</text>
+
+  <!-- floor -->
+  <ellipse cx="490" cy="548" rx="210" ry="34" fill="#0d2b3d" stroke="#245a75"/>
+  <ellipse cx="490" cy="548" rx="130" ry="20" fill="#16465e"/>
+
+  <!-- wings -->
+  <polygon points="390,255 300,190 318,300 390,345" fill="#b9e6f5" opacity="0.55" stroke="#dff8ff"/>
+  <polygon points="590,255 680,190 662,300 590,345" fill="#b9e6f5" opacity="0.55" stroke="#dff8ff"/>
+  <text x="300" y="330" fill="#9bd7ea" font-family="sans-serif" font-size="12">wing_l</text>
+  <text x="642" y="330" fill="#9bd7ea" font-family="sans-serif" font-size="12">wing_r</text>
+
+  <!-- cloak -->
+  <polygon points="410,360 570,360 600,515 380,515" fill="#59a9c8" opacity="0.65" stroke="#a7e4f5"/>
+  <text x="450" y="500" fill="#d8f7ff" font-family="sans-serif" font-size="12">cloak</text>
+
+  <!-- torso -->
+  <rect x="430" y="300" width="120" height="145" rx="18" fill="#2a7fa8" stroke="#aee8fb" stroke-width="2"/>
+  <text x="458" y="380" fill="#e6fbff" font-family="sans-serif" font-size="14">torso</text>
+
+  <!-- shoulders -->
+  <rect x="365" y="285" width="60" height="55" rx="12" fill="#cfd8dc" stroke="#f4fbff"/>
+  <rect x="555" y="285" width="60" height="55" rx="12" fill="#cfd8dc" stroke="#f4fbff"/>
+  <text x="365" y="275" fill="#e7f6fb" font-family="sans-serif" font-size="12">shoulder_l</text>
+  <text x="555" y="275" fill="#e7f6fb" font-family="sans-serif" font-size="12">shoulder_r</text>
+
+  <!-- arms -->
+  <rect x="330" y="330" width="34" height="160" rx="14" fill="#8dd8ef" stroke="#e4fbff" transform="rotate(8 347 410)"/>
+  <rect x="616" y="330" width="34" height="160" rx="14" fill="#8dd8ef" stroke="#e4fbff" transform="rotate(-8 633 410)"/>
+  <text x="292" y="470" fill="#bdecf8" font-family="sans-serif" font-size="12">arm_l</text>
+  <text x="640" y="470" fill="#bdecf8" font-family="sans-serif" font-size="12">arm_r</text>
+
+  <!-- staff -->
+  <line x1="700" y1="300" x2="720" y2="525" stroke="#9ef3d6" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="700" cy="300" r="13" fill="#b8ffe9" stroke="#ffffff"/>
+  <text x="702" y="552" fill="#9ef3d6" font-family="sans-serif" font-size="12">staff</text>
+
+  <!-- head -->
+  <rect x="442" y="170" width="96" height="105" rx="22" fill="#e8e4d8" stroke="#ffffff" stroke-width="2"/>
+  <text x="463" y="230" fill="#32312d" font-family="sans-serif" font-size="13">head</text>
+
+  <!-- eyes -->
+  <circle cx="470" cy="205" r="10" fill="#b9fff3" stroke="#ffffff"/>
+  <circle cx="510" cy="205" r="10" fill="#b9fff3" stroke="#ffffff"/>
+  <text x="420" y="160" fill="#9ff5e2" font-family="sans-serif" font-size="11">eye_l / eye_r</text>
+
+  <!-- crown -->
+  <path d="M448 174 L458 132 L478 158 L490 118 L502 158 L522 132 L532 174 Z" fill="#f5c542" stroke="#fff2b0" stroke-width="2"/>
+  <text x="535" y="135" fill="#ffe28a" font-family="sans-serif" font-size="12">crown</text>
+
+  <!-- halo -->
+  <ellipse cx="490" cy="105" rx="64" ry="14" fill="none" stroke="#d8fff6" stroke-width="6"/>
+  <text x="560" y="100" fill="#d8fff6" font-family="sans-serif" font-size="12">halo</text>
+
+  <!-- core markers -->
+  <circle cx="490" cy="355" r="8" fill="#ff4d6d" opacity="0.9"/>
+  <circle cx="490" cy="250" r="8" fill="#ff4d6d" opacity="0.9"/>
+  <text x="505" y="360" fill="#ffb3c1" font-family="sans-serif" font-size="11">cow core（胸）</text>
+  <text x="505" y="255" fill="#ffb3c1" font-family="sans-serif" font-size="11">cow core（头）</text>
+
+  <!-- side labels -->
+  <rect x="40" y="90" width="230" height="155" rx="12" fill="#0c2230" stroke="#1f4b5e"/>
+  <text x="56" y="118" fill="#e8fbff" font-family="sans-serif" font-size="15">真实命中</text>
+  <text x="56" y="145" fill="#9fc8d8" font-family="sans-serif" font-size="12">头盔 1 耐久 → 碎了</text>
+  <text x="56" y="165" fill="#9fc8d8" font-family="sans-serif" font-size="12">replaceitem keep 补回</text>
+  <text x="56" y="185" fill="#9fc8d8" font-family="sans-serif" font-size="12">conditional 块置 hit=1</text>
+  <text x="56" y="215" fill="#ffd166" font-family="sans-serif" font-size="12">不是“靠近就扣血”</text>
+
+  <rect x="710" y="90" width="230" height="155" rx="12" fill="#0c2230" stroke="#1f4b5e"/>
+  <text x="726" y="118" fill="#e8fbff" font-family="sans-serif" font-size="15">动画</text>
+  <text x="726" y="145" fill="#9fc8d8" font-family="sans-serif" font-size="12">idle：双臂垂下</text>
+  <text x="726" y="165" fill="#9fc8d8" font-family="sans-serif" font-size="12">cast：双臂抬起 105°</text>
+  <text x="726" y="185" fill="#9fc8d8" font-family="sans-serif" font-size="12">8 条 playanimation / 部件</text>
+  <text x="726" y="215" fill="#ffd166" font-family="sans-serif" font-size="12">pose 0 / 1 两条链</text>
+
+  <text x="490" y="590" text-anchor="middle" fill="#5f8292" font-family="sans-serif" font-size="12">14 parts · 2 cores · 436 command blocks · 5 chains</text>
+</svg>

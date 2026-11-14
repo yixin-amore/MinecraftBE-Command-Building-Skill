@@ -259,6 +259,7 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 每条 `playanimation` 的顺序不能乱；第一条控制器必须是 `controller.animation.fox.move`。
 - 显示是客户端视觉，不能当方块检测；一个方块一个实体，先算性能预算。
 - 完整前置、8 条命令、变量表、MBE 尺寸/旋转、例子拆解见 `references/fmbe-mbe.md`。
+- 多部件 Boss：初始化链 >70 块要拆段；真实受击别用距离，用 1 耐久护甲 + `replaceitem ... keep` + conditional 块。完整例子见 `examples/frostcrown-fmbe/`。
 - `playanimation` 还可写实体 **render controller 变量**（`variable.glow_alpha`、`variable.profession_index` 等），改发光/变体/UV/部件 alpha；必须是对应实体、部分变量只读，详见 `references/render-controller-vars.md`。
 
 ### 4.6 数据化 RPG 属性系统
@@ -492,7 +493,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/netease-1.21.130.md` | 网易命令边界、`schedule` 结论、未验证命令、旧语法升级 |
 | `references/netease-corpus-patterns.md` | 真实网易地图的菜单/状态/结构/表现惯用法 |
 | `assets/chain-spec.schema.json` | 写 spec.json 时 |
-| `examples/` | 需要完整范例：倒计时、商店、开关灯 |
+| `examples/` | 需要完整范例：倒计时、商店、开关灯、噪声地形、FMBE Boss |
 
 ## 8. 主要事实来源
 
