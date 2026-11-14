@@ -7,17 +7,17 @@
 | 项 | 结果 |
 |---|---|
 | 建筑 `frostcrown-arena.bdx` | 导入在 `500 0 500`，沿用 |
-| 命令方块 | **434/434**（`init_a 59` + `init_b 53` + `main 98` + `pose_idle 112` + `pose_cast 112`） |
+| 命令方块 | **455/455**（`init_a 64` + `init_b 53` + `main 114` + `pose_idle 112` + `pose_cast 112`） |
 | StartPos | `506 42 506` |
 | 触发 | `505 43 506` 与 `505 43 516` 两块红石；`init_b` 链尾自动拔掉 |
-| 部件/载体 | `PARTS 14 / CORES 1 / UNIQUE 14` |
+| 部件/载体 | `PARTS 14 / CORES 1 / AIM 1 / UNIQUE 14` |
 
 > 115 块单条 init 链在真机会吞掉中间几条 `tag` 命令；拆成 59/53 两条后复查 14/14/1。
 
 ## 2. 实测
 
 ```text
-PARTS 14 / CORES 1 / UNIQUE 14
+PARTS 14 / CORES 1 / AIM 1 / UNIQUE 14
 ST 1  HP 6000                  ← bot 走进 515 2 520，载体开始追
 载体移动标记：AT_515_517       ← 从 z=516.3 追到 z=517（停在 2.5 格）
 damage @e[tag=boss_core] 10 entity_attack
@@ -26,7 +26,7 @@ AFTER HP 5960  HIT 0           ← 真实命中扣 40；hit 在链尾清 0
 
 关键结论：
 
-- **Boss 会动**：载体面向最近 fighter 并以 0.18 格/tick 前进；14 个 FMBE 部件相对 `tp` 跟随。
+- **Boss 会动**：载体面向最近 fighter 并以 0.18 格/tick 前进；14 个 FMBE 部件用 `^` 相对定位、`facing boss_aim` 转 yaw。
 - **真实命中仍成立**：载体戴 1 耐久头盔，碎后 `replaceitem ... keep` 补回，conditional 置 `hit=1` 才扣血。
 - **一次命中只扣一次**：`hit` 读回 0。
 - **待机不追人**：`st=0` 时载体回中心。

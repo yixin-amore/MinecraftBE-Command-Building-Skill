@@ -1,7 +1,7 @@
 # 设计：霜冠·维丝佩拉 v2（FMBE 真实命中版）
 
 > 网易 1.21.130 · 14 部件 FMBE + 1 个会追人的隐形 cow 载体 + 1 耐久头盔命中检测。
-> 434 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
+> 455 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
 
 ## 1. 行为契约
 
@@ -82,12 +82,15 @@ execute if score st bs matches 1 as @e[tag=boss_carrier] at @s rotated as @s if 
 # 锁 y；出界回中心
 execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~
 execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
-# 部件相对跟随（head 示例）
-execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_head] ~0 ~2.9 ~-0.8
+# 部件位置相对载体（head 示例）：^ 随 yaw 旋转
+# 朝向点 boss_aim 在载体前方 10 格，给部件提供 yaw
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ^0 ^2.9 ^-0.8
+execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]
 ```
 
-- 部件用 `~` 世界轴偏移，模型保持南向，不随载体 yaw 旋转；稳定，不会左右手互换。
-- 想旋转模型就把偏移改 `^` 并先校准；`^` 的左右轴在客户端确认。
+- 只改位置不改 yaw 会“平移不转身”；每个部件必须再 `facing entity boss_aim`。
+- `boss_aim` 是隐形 armor_stand，二阶段冰晶 tag 已排除它。
+- `^` 的左右轴需客户端校准；左右手相反就把 x 偏移取反。
 - 载体换僵尸/劫掠兽也能走同一套命令，但要重测护甲渲染、碰撞箱和 AI。
 
 ## 3. FMBE 部件
@@ -151,18 +154,19 @@ pose=1：14 部件 × 8 条 cast playanimation
 | `dmg` | `dmg` | 0..∞ | 0 | 每玩家伤害 |
 | `fighter` | tag | — | — | 战斗中玩家 |
 | `boss_core` / `boss_carrier` | tag | — | — | 移动载体（受击核心） |
+| `boss_aim` | tag | — | — | 隐形朝向点（armor_stand） |
 | `boss_part` / `boss_p_<name>` | tag | — | — | FMBE 部件 |
 
 ## 6. 链与布局
 
 | 链 | 类型 | 块数 | 坐标 |
 |---|---|---:|---|
-| `init_a` | impulse + chain | 59 | y=43，`506,43,506` 起蛇形 |
+| `init_a` | impulse + chain | 64 | y=43，`506,43,506` 起蛇形 |
 | `init_b` | impulse + chain | 53 | y=43，`506,43,516` 起蛇形 |
-| `main` | repeat + chain | 98 | y=42，`506,42,506` 起蛇形 |
+| `main` | repeat + chain | 114 | y=42，`506,42,506` 起蛇形 |
 | `pose_idle` | repeat + chain | 112 | y=44，`506,44,506` 起 |
 | `pose_cast` | repeat + chain | 112 | y=44，`506,44,518` 起 |
-| **合计** | | **434** | 包围盒 13×3×21 |
+| **合计** | | **455** | 包围盒 13×3×21 |
 
 - 5 个链头：`ia01`/`ib01`（Needs Redstone）、`m01`/`pi01`/`pc01`（Always Active）。
 - `m06` 是唯一的 conditional 块，紧贴 `m05`；`i` 链拆成 59/53 两段，避免长链吞 tag 命令。
@@ -191,10 +195,11 @@ pose=1：14 部件 × 8 条 cast playanimation
 
 ## 9. 验证
 
-- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，434 blocks。
-- `readbdx.py`：434 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
+- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，455 blocks。
+- `readbdx.py`：455 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
 - 真机命中链：`BEFORE 0 → AFTER1 1 → AFTER2 2`（conditional 块确实读到 replaceitem 成功）。
-- 真机导入后：`PARTS 14 / CORES 1 / UNIQUE 14`；进圈 `ST=1 / HP=6000`。
+- 真机导入后：`PARTS 14 / CORES 1 / AIM 1 / UNIQUE 14`；进圈 `ST=1 / HP=6000`。
 - 移动验证：bot 放到 `515 2 520`，载体从 `z=516.3` 追到 `z=517`（诊断红石块 `AT_515_517`），停止距离 2.5。
 - 命中验证：对 `boss_core` 实体攻击一次后 `HP=5960`，`hit` 在事务末尾清 0。
+- **模型转身**：位置用 `^`、yaw 用 `facing boss_aim`；代码路径已写入，客户端需确认左右轴和遮挡。
 - **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、移动时的模型朝向、二/三阶段演出（无头 bot 看不到模型）。

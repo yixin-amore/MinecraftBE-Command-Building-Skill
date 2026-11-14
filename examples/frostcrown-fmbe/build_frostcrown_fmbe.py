@@ -47,6 +47,7 @@ BOSS = (CX + 0.5, 4.8, CZ + 0.5)
 # 它被命令推着追玩家；FMBE 部件每 tick 以它为原点相对 tp。
 CORE_POS = (CX + 0.5, 4.5, CZ + 1.3)
 CORE_OFFSET_Z = CORE_POS[2] - (CZ + 0.5)   # 部件相对载体的 z 偏移=-0.8
+AIM_POS = (CORE_POS[0], CORE_POS[1], CORE_POS[2] + 10)  # 载体前方 10 格，给部件提供 yaw 目标
 # 空中装配线：每个部件一个独立 x 的装配点，间隔 1 格；c=1 永远不会选错。
 STAGE_Y, STAGE_Z = 20.0, CZ + 6.0
 ARENA_SEL = f"x={CX - 11},y={CY},z={CZ - 11},dx=23,dy=6,dz=23"
@@ -172,6 +173,7 @@ INIT = [
     ("A.常加载", "竞技场 + 机关平台", f"tickingarea add {TICK} frost"),
     ("A.清场", "清旧 FMBE 部件", "kill @e[tag=boss_part]"),
     ("A.清场", "清旧核心/载体", "kill @e[tag=boss_core]"),
+    ("A.清场", "清旧朝向点", "kill @e[tag=boss_aim]"),
     ("A.清场", "清仆从", "kill @e[tag=minion]"),
     ("A.清场", "清冰晶", "kill @e[tag=crystal]"),
     ("A.清场", "二阶段冰地板还原",
@@ -181,6 +183,11 @@ INIT = [
      f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_core"),
     ("A.载体", "载体专用 tag",
      f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_carrier"),
+    ("A.载体", "召唤朝向点（armor_stand，前方 10 格）", f"summon armor_stand {fmt(AIM_POS[0])} {fmt(AIM_POS[1])} {fmt(AIM_POS[2])}"),
+    ("A.载体", "朝向点 tag",
+     f"tag @e[type=armor_stand,x={fmt(AIM_POS[0]-0.5)},y={fmt(AIM_POS[1]-0.5)},z={fmt(AIM_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_aim"),
+    ("A.载体", "朝向点隐身/抗性", "effect @e[tag=boss_aim] invisibility infinite 255 true"),
+    ("A.载体", "朝向点抗性", "effect @e[tag=boss_aim] resistance infinite 255 true"),
     ("A.载体", "隐身", "effect @e[tag=boss_core] invisibility infinite 255 true"),
     ("A.载体", "抗性：血由计分板管，核心不能真死", "effect @e[tag=boss_core] resistance infinite 4 true"),
     ("A.载体", "再生/生命提升，防止被连续攻击打死", "effect @e[tag=boss_core] regeneration infinite 4 true"),
@@ -242,12 +249,16 @@ MAIN = [
      "scoreboard players set hit bs 1"),
     # --- FMBE 每 tick 锚定，防重力/AI/玩家挤压 ---
 ]
+MAIN.append(("4.载体", "更新朝向点（载体前方 10 格）",
+             "execute as @e[tag=boss_aim] at @e[tag=boss_carrier] run tp @s ^ ^ ^10"))
 for name, item, pos, sc, ys in PARTS:
     dx = pos[0] - (CX + 0.5)
     dy = pos[1] - CORE_POS[1]
     dz = pos[2] - CORE_POS[2]
-    MAIN.append(("4.FMBE", f"跟随部件 {name}",
-                 f"execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_{name}] ~{fmt(dx)} ~{fmt(dy)} ~{fmt(dz)}"))
+    MAIN.append(("4.FMBE", f"转身跟随部件 {name}",
+                 f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] run tp @s ^{fmt(dx)} ^{fmt(dy)} ^{fmt(dz)}"))
+    MAIN.append(("4.FMBE", f"部件 {name} 朝向点",
+                 f"execute as @e[tag=boss_p_{name}] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]"))
 MAIN += [
     ("4.载体", "待机回中心", f"execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
     ("4.载体", "面向最近玩家", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]"),
@@ -287,7 +298,7 @@ MAIN += [
     ("8.阶段", "开冰甲", "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set sh bs 1"),
     ("8.阶段", "冰晶 1", f"execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand {CRYSTALS[0][0]} {CY} {CRYSTALS[0][2]}"),
     ("8.阶段", "冰晶 2", f"execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand {CRYSTALS[1][0]} {CY} {CRYSTALS[1][2]}"),
-    ("8.阶段", "冰晶 tag", f"execute if score ph bs matches 2 if score pa bs matches 1 run tag @e[type=armor_stand,{TAG_ARENA}] add crystal"),
+    ("8.阶段", "冰晶 tag", f"execute if score ph bs matches 2 if score pa bs matches 1 run tag @e[type=armor_stand,tag=!boss_aim,{TAG_ARENA}] add crystal"),
     ("8.阶段", "冰晶外观", "execute if score ph bs matches 2 if score pa bs matches 1 run replaceitem entity @e[tag=crystal] slot.weapon.offhand minecraft:sea_lantern"),
     ("8.阶段", "地板变冰", f"execute if score ph bs matches 2 if score pa bs matches 1 run fill {FILL_X[0]} {FLOOR_Y} {FILL_Z[0]} {FILL_X[1]} {FLOOR_Y} {FILL_Z[1]} ice 0 replace packed_ice"),
     ("8.阶段", "记住二阶段", "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set pa bs 2"),
@@ -345,6 +356,7 @@ MAIN += [
     ("13.胜利", "杀 FMBE 部件", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_part]"),
     ("13.胜利", "清冰魂", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=minion]"),
     ("13.胜利", "清冰晶", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=crystal]"),
+    ("13.胜利", "清朝向点", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_aim]"),
     ("13.胜利", "通关标题",
      'execute if score st bs matches 2 if score t bs matches 0 run titleraw @a title '
      '{"rawtext":[{"text":"§b§l霜冠陨落\\n§7试炼完成"}]}'),

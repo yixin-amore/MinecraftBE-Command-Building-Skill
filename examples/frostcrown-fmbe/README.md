@@ -20,7 +20,7 @@
 | 文件 | 作用 |
 |---|---|
 | `frostcrown-arena.bdx` | 冰窟竞技场 + 机关平台（StartPos `500 0 500`） |
-| `frostcrown-commands.bdx` | **434 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
+| `frostcrown-commands.bdx` | **455 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
 | `spec.json` | 可被 `chain_lint.py` 检查的链描述 |
 | `design.md` | 行为契约、FMBE 表、移动/命中原理、状态机、测试 |
 | `import-report.md` | 真机导入/移动/命中记录 |
@@ -29,7 +29,7 @@
 | `readbdx.py` | BDX 回读，逐块对 spec |
 | `import-info.json` | StartPos / 块数 |
 
-> 不提交 434 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
+> 不提交 455 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
 
 ## 3. 坐标与导入
 
@@ -85,16 +85,19 @@ execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~
 # 出界（x506..523,z506..523）回中心
 execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
 
-# 部件以载体为原点相对 tp；dz=-0.8 因为载体在模型南侧 0.8 格
-execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_head] ~0 ~2.9 ~-0.8
-execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_torso] ~0 ~1.7 ~-0.8
-# ...其余 12 个部件同理
+# 朝向点：隐形 armor_stand，永远在载体前方 10 格；给部件提供 yaw
+# （它被排除在冰晶 tag 之外，不会被当成二阶段冰晶）
+# 部件位置：^ 偏移随载体 yaw 旋转；dz=-0.8 因为载体在模型南侧 0.8 格
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ^0 ^2.9 ^-0.8
+execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]
+# ...其余 13 个部件同样：先 ^ 定位，再 facing @e[tag=boss_aim] 转 yaw
 ```
 
-- 部件偏移 = 原绝对坐标 − 载体坐标 `(515.5,4.5,516.3)`；运行时整只 Boss 跟着载体走。
-- 部件使用 `~` 世界轴偏移，模型不随载体 yaw 旋转；好处是稳定、不会因 `^` 轴向翻转导致左右手互换。
-  如果要让模型也转向，把偏移改成 `^` 并先在客户端校准一次左右手。
-- 实测：把 bot 放到 `515 2 520`，载体从 `z=516.3` 追到 `z=517`（诊断红石块 `AT_515_517`）；停止距离 2.5。
+- 部件偏移 = 原绝对坐标 − 载体坐标 `(515.5,4.5,516.3)`；`^` 让位置绕载体旋转。
+- 每个部件再 `facing entity @e[tag=boss_aim]`，让 **item 模型的 yaw 也跟载体一致**；只移动位置不转 yaw，模型会“平移但不转身”。
+- 朝向点 `boss_aim` 是隐形 armor_stand；二阶段冰晶 tag 明确排除了它。
+- `^` 的左右轴在客户端确认一次；如果左右手相反，把每个部件的 x 偏移取反。
+- 实测：把 bot 放到 `515 2 520`，载体从 `z=516.3` 追到 `z=517`（`AT_515_517`）；`PARTS 14 / CORES 1 / AIM 1`；攻击载体后 `HP 6000→5960`。
 - 载体用 cow 是因为 **cow 不渲染护甲**，头盔不可见；想换僵尸/劫掠兽也可以，移动/锚定命令不变，只需重测护甲渲染和碰撞箱。
 
 ## 6. 战斗
@@ -113,12 +116,12 @@ python3 ../../scripts/chain_lint.py spec.json --format markdown --write lint.md
 python3 readbdx.py frostcrown-commands.bdx
 ```
 
-`readbdx.py` 回读：434 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
+`readbdx.py` 回读：455 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
 
 真机（租赁服）：
 
 ```text
-PARTS 14 / CORES 1 / UNIQUE 14
+PARTS 14 / CORES 1 / AIM 1 / UNIQUE 14
 ST 1  HP 6000
 载体移动标记：AT_515_517
 damage @e[tag=boss_core] 10 entity_attack

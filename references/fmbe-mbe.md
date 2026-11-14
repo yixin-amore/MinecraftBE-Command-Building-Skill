@@ -98,12 +98,15 @@ execute if score st bs matches 1 as @e[tag=carrier] at @s rotated as @s if entit
 # 锁 y、出界回中心
 execute if score st bs matches 1 as @e[tag=carrier] at @s run tp @s ~ 4.5 ~
 execute if score st bs matches 1 as @e[tag=carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
-# 部件相对跟随（head 示例）
-execute as @e[tag=carrier] at @s run tp @e[tag=part_head] ~0 ~2.9 ~-0.8
+# 部件位置相对载体：^ 随载体 yaw 旋转
+# 朝向点 aim 在载体前方 10 格，再用 facing 让部件 yaw 一致
+execute as @e[tag=part_head] at @e[tag=carrier] run tp @s ^0 ^2.9 ^-0.8
+execute as @e[tag=part_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=aim]
 ```
 
 - 载体本身当受击核心：戴 1 耐久头盔，`replaceitem ... keep` + conditional 做真实命中；cow 不渲染护甲。
-- 部件偏移 = 原绝对坐标 − 载体坐标；用 `~` 世界轴稳，模型不转向；用 `^` 可转向但要校准左右手。
+- 部件偏移 = 原绝对坐标 − 载体坐标；用 `^` 让位置随 yaw 旋转，再 `facing aim` 让模型 yaw 一致。只改位置不改 yaw 会“平移不转身”。
+- 朝向点 aim 用隐形 armor_stand；记得在二阶段冰晶 tag 里排除它。
 - 待机时把载体 `tp` 回中心，避免追到出生点。
 - 完整移动版见 `examples/frostcrown-fmbe/`。
 
