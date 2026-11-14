@@ -91,22 +91,21 @@ stopsound @a mob.fox.aggro
 FMBE 部件每 tick 以载体为原点相对 `tp`：
 
 ```mcfunction
-# 面向最近玩家
-execute as @e[tag=carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]
-# 距离 >2.5 前进 0.18 格/tick；rotated as @s 让 ^ 用载体的朝向
-execute if score st bs matches 1 as @e[tag=carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
+# 移动命令自己带 facing，不依赖载体保存的 yaw；eyes 锚点不能省
+execute if score st bs matches 1 as @e[tag=carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
 # 锁 y、出界回中心
 execute if score st bs matches 1 as @e[tag=carrier] at @s run tp @s ~ 4.5 ~
 execute if score st bs matches 1 as @e[tag=carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
-# 部件位置相对载体：^ 随载体 yaw 旋转
-# 朝向点 aim 在载体前方 10 格，再用 facing 让部件 yaw 一致
-execute as @e[tag=part_head] at @e[tag=carrier] run tp @s ^0 ^2.9 ^-0.8
-execute as @e[tag=part_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=aim]
+# 部件位置：同一朝向旋转 ^ 偏移
+execute as @e[tag=part_head] at @e[tag=carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^2.9 ^-0.8
+# 部件 yaw：~0.01 强制一次位置变化，避免同点 tp 不刷新
+execute as @e[tag=part_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
 ```
 
+- **坑**：`tp @s ~ ~ ~ facing entity ...` 原地转身在真机可能不刷新 yaw；`tp @s ^ ^ ^0.18` 会沿初始 yaw 一直跑。移动/部件都改成 `execute ... facing ... eyes`。
+- `facing entity` 的 `eyes`/`feet` 锚点不能省；省略会不生效/格式错误。
 - 载体本身当受击核心：戴 1 耐久头盔，`replaceitem ... keep` + conditional 做真实命中；cow 不渲染护甲。
-- 部件偏移 = 原绝对坐标 − 载体坐标；用 `^` 让位置随 yaw 旋转，再 `facing aim` 让模型 yaw 一致。只改位置不改 yaw 会“平移不转身”。
-- 朝向点 aim 用隐形 armor_stand；记得在二阶段冰晶 tag 里排除它。
+- 部件偏移 = 原绝对坐标 − 载体坐标；`^` 随 yaw 旋转，`facing` 让 item 模型 yaw 一致。
 - 待机时把载体 `tp` 回中心，避免追到出生点。
 - 完整移动版见 `examples/frostcrown-fmbe/`。
 

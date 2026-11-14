@@ -4,11 +4,11 @@
     42,
     506
   ],
-  "command_blocks": 455,
-  "init": 117,
-  "init_a": 64,
+  "command_blocks": 448,
+  "init": 113,
+  "init_a": 60,
   "init_b": 53,
-  "main": 114,
+  "main": 111,
   "pose_idle": 112,
   "pose_cast": 112
 }

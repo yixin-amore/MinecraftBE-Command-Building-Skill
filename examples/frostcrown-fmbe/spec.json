@@ -149,7 +149,7 @@
         506
       ],
       "facing": "east",
-      "note": "A.清场 · 清旧朝向点",
+      "note": "A.清场 · 清旧朝向点（兼容 v3）",
       "next": "ia09"
     },
     {
@@ -254,14 +254,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon armor_stand 515.5 4.5 526.3",
+      "command": "effect @e[tag=boss_core] invisibility infinite 255 true",
       "pos": [
         517,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 召唤朝向点（armor_stand，前方 10 格）",
+      "note": "A.载体 · 隐身",
       "next": "ia16"
     },
     {
@@ -270,14 +270,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=armor_stand,x=515,y=4,z=525.8,dx=1,dy=1,dz=1,c=1] add boss_aim",
+      "command": "effect @e[tag=boss_core] resistance infinite 4 true",
       "pos": [
         516,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 朝向点 tag",
+      "note": "A.载体 · 抗性：血由计分板管，核心不能真死",
       "next": "ia17"
     },
     {
@@ -286,14 +286,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_aim] invisibility infinite 255 true",
+      "command": "effect @e[tag=boss_core] regeneration infinite 4 true",
       "pos": [
         515,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 朝向点隐身/抗性",
+      "note": "A.载体 · 再生/生命提升，防止被连续攻击打死",
       "next": "ia18"
     },
     {
@@ -302,14 +302,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_aim] resistance infinite 255 true",
+      "command": "effect @e[tag=boss_core] fire_resistance infinite 255 true",
       "pos": [
         514,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 朝向点抗性",
+      "note": "A.载体 · 防火",
       "next": "ia19"
     },
     {
@@ -318,14 +318,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_core] invisibility infinite 255 true",
+      "command": "effect @e[tag=boss_core] health_boost infinite 4 true",
       "pos": [
         513,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 隐身",
+      "note": "A.载体 · 生命提升",
       "next": "ia20"
     },
     {
@@ -334,14 +334,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_core] resistance infinite 4 true",
+      "command": "replaceitem entity @e[tag=boss_core] slot.armor.head 0 keep leather_helmet 1 9999",
       "pos": [
         512,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 抗性：血由计分板管，核心不能真死",
+      "note": "A.载体 · 先装满耐久；之后只有碎了才会被 keep 补上",
       "next": "ia21"
     },
     {
@@ -350,14 +350,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_core] regeneration infinite 4 true",
+      "command": "summon fox 509 20 521",
       "pos": [
         511,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 再生/生命提升，防止被连续攻击打死",
+      "note": "B.FMBE · 召唤部件 head（装配点 x=509）",
       "next": "ia22"
     },
     {
@@ -366,14 +366,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_core] fire_resistance infinite 255 true",
+      "command": "tag @e[type=fox,x=508.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         510,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 防火",
+      "note": "B.FMBE · 部件 head 打 boss_part",
       "next": "ia23"
     },
     {
@@ -382,14 +382,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "effect @e[tag=boss_core] health_boost infinite 4 true",
+      "command": "tag @e[type=fox,x=508.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_head",
       "pos": [
         509,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 生命提升",
+      "note": "B.FMBE · 部件 head 独占 tag",
       "next": "ia24"
     },
     {
@@ -398,14 +398,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_core] slot.armor.head 0 keep leather_helmet 1 9999",
+      "command": "tp @e[tag=boss_p_head] 515.5 7.4 515.5",
       "pos": [
         508,
         43,
         507
       ],
       "facing": "west",
-      "note": "A.载体 · 先装满耐久；之后只有碎了才会被 keep 补上",
+      "note": "B.FMBE · 部件 head 移到最终坐标",
       "next": "ia25"
     },
     {
@@ -414,14 +414,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 509 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_head] slot.weapon.mainhand 0 wither_skeleton_skull",
       "pos": [
         507,
         43,
         507
       ],
       "facing": "west",
-      "note": "B.FMBE · 召唤部件 head（装配点 x=509）",
+      "note": "B.FMBE · 部件 head 主手模型",
       "next": "ia26"
     },
     {
@@ -430,14 +430,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=508.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 510 20 521",
       "pos": [
         506,
         43,
         507
       ],
       "facing": "south",
-      "note": "B.FMBE · 部件 head 打 boss_part",
+      "note": "B.FMBE · 召唤部件 crown（装配点 x=510）",
       "next": "ia27"
     },
     {
@@ -446,14 +446,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=508.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_head",
+      "command": "tag @e[type=fox,x=509.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         506,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 head 独占 tag",
+      "note": "B.FMBE · 部件 crown 打 boss_part",
       "next": "ia28"
     },
     {
@@ -462,14 +462,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_head] 515.5 7.4 515.5",
+      "command": "tag @e[type=fox,x=509.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_crown",
       "pos": [
         507,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 head 移到最终坐标",
+      "note": "B.FMBE · 部件 crown 独占 tag",
       "next": "ia29"
     },
     {
@@ -478,14 +478,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_head] slot.weapon.mainhand 0 wither_skeleton_skull",
+      "command": "tp @e[tag=boss_p_crown] 515.5 8.6 515.5",
       "pos": [
         508,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 head 主手模型",
+      "note": "B.FMBE · 部件 crown 移到最终坐标",
       "next": "ia30"
     },
     {
@@ -494,14 +494,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 510 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_crown] slot.weapon.mainhand 0 gold_block",
       "pos": [
         509,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 召唤部件 crown（装配点 x=510）",
+      "note": "B.FMBE · 部件 crown 主手模型",
       "next": "ia31"
     },
     {
@@ -510,14 +510,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=509.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 511 20 521",
       "pos": [
         510,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 crown 打 boss_part",
+      "note": "B.FMBE · 召唤部件 halo（装配点 x=511）",
       "next": "ia32"
     },
     {
@@ -526,14 +526,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=509.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_crown",
+      "command": "tag @e[type=fox,x=510.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         511,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 crown 独占 tag",
+      "note": "B.FMBE · 部件 halo 打 boss_part",
       "next": "ia33"
     },
     {
@@ -542,14 +542,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_crown] 515.5 8.6 515.5",
+      "command": "tag @e[type=fox,x=510.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_halo",
       "pos": [
         512,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 crown 移到最终坐标",
+      "note": "B.FMBE · 部件 halo 独占 tag",
       "next": "ia34"
     },
     {
@@ -558,14 +558,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_crown] slot.weapon.mainhand 0 gold_block",
+      "command": "tp @e[tag=boss_p_halo] 515.5 9.4 515.5",
       "pos": [
         513,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 crown 主手模型",
+      "note": "B.FMBE · 部件 halo 移到最终坐标",
       "next": "ia35"
     },
     {
@@ -574,14 +574,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 511 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_halo] slot.weapon.mainhand 0 end_rod",
       "pos": [
         514,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 召唤部件 halo（装配点 x=511）",
+      "note": "B.FMBE · 部件 halo 主手模型",
       "next": "ia36"
     },
     {
@@ -590,14 +590,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=510.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 512 20 521",
       "pos": [
         515,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 halo 打 boss_part",
+      "note": "B.FMBE · 召唤部件 eye_l（装配点 x=512）",
       "next": "ia37"
     },
     {
@@ -606,14 +606,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=510.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_halo",
+      "command": "tag @e[type=fox,x=511.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         516,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 halo 独占 tag",
+      "note": "B.FMBE · 部件 eye_l 打 boss_part",
       "next": "ia38"
     },
     {
@@ -622,14 +622,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_halo] 515.5 9.4 515.5",
+      "command": "tag @e[type=fox,x=511.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_eye_l",
       "pos": [
         517,
         43,
         508
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 halo 移到最终坐标",
+      "note": "B.FMBE · 部件 eye_l 独占 tag",
       "next": "ia39"
     },
     {
@@ -638,14 +638,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_halo] slot.weapon.mainhand 0 end_rod",
+      "command": "tp @e[tag=boss_p_eye_l] 515 7.6 515.1",
       "pos": [
         518,
         43,
         508
       ],
       "facing": "south",
-      "note": "B.FMBE · 部件 halo 主手模型",
+      "note": "B.FMBE · 部件 eye_l 移到最终坐标",
       "next": "ia40"
     },
     {
@@ -654,14 +654,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 512 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_eye_l] slot.weapon.mainhand 0 sea_lantern",
       "pos": [
         518,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 召唤部件 eye_l（装配点 x=512）",
+      "note": "B.FMBE · 部件 eye_l 主手模型",
       "next": "ia41"
     },
     {
@@ -670,14 +670,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=511.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 513 20 521",
       "pos": [
         517,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_l 打 boss_part",
+      "note": "B.FMBE · 召唤部件 eye_r（装配点 x=513）",
       "next": "ia42"
     },
     {
@@ -686,14 +686,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=511.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_eye_l",
+      "command": "tag @e[type=fox,x=512.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         516,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_l 独占 tag",
+      "note": "B.FMBE · 部件 eye_r 打 boss_part",
       "next": "ia43"
     },
     {
@@ -702,14 +702,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_eye_l] 515 7.6 515.1",
+      "command": "tag @e[type=fox,x=512.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_eye_r",
       "pos": [
         515,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_l 移到最终坐标",
+      "note": "B.FMBE · 部件 eye_r 独占 tag",
       "next": "ia44"
     },
     {
@@ -718,14 +718,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_eye_l] slot.weapon.mainhand 0 sea_lantern",
+      "command": "tp @e[tag=boss_p_eye_r] 516 7.6 515.1",
       "pos": [
         514,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_l 主手模型",
+      "note": "B.FMBE · 部件 eye_r 移到最终坐标",
       "next": "ia45"
     },
     {
@@ -734,14 +734,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 513 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_eye_r] slot.weapon.mainhand 0 sea_lantern",
       "pos": [
         513,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 召唤部件 eye_r（装配点 x=513）",
+      "note": "B.FMBE · 部件 eye_r 主手模型",
       "next": "ia46"
     },
     {
@@ -750,14 +750,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=512.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 514 20 521",
       "pos": [
         512,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_r 打 boss_part",
+      "note": "B.FMBE · 召唤部件 torso（装配点 x=514）",
       "next": "ia47"
     },
     {
@@ -766,14 +766,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=512.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_eye_r",
+      "command": "tag @e[type=fox,x=513.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         511,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_r 独占 tag",
+      "note": "B.FMBE · 部件 torso 打 boss_part",
       "next": "ia48"
     },
     {
@@ -782,14 +782,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_eye_r] 516 7.6 515.1",
+      "command": "tag @e[type=fox,x=513.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_torso",
       "pos": [
         510,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_r 移到最终坐标",
+      "note": "B.FMBE · 部件 torso 独占 tag",
       "next": "ia49"
     },
     {
@@ -798,14 +798,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_eye_r] slot.weapon.mainhand 0 sea_lantern",
+      "command": "tp @e[tag=boss_p_torso] 515.5 6.2 515.5",
       "pos": [
         509,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 eye_r 主手模型",
+      "note": "B.FMBE · 部件 torso 移到最终坐标",
       "next": "ia50"
     },
     {
@@ -814,14 +814,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 514 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_torso] slot.weapon.mainhand 0 blue_ice",
       "pos": [
         508,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 召唤部件 torso（装配点 x=514）",
+      "note": "B.FMBE · 部件 torso 主手模型",
       "next": "ia51"
     },
     {
@@ -830,14 +830,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=513.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 515 20 521",
       "pos": [
         507,
         43,
         509
       ],
       "facing": "west",
-      "note": "B.FMBE · 部件 torso 打 boss_part",
+      "note": "B.FMBE · 召唤部件 shoulder_l（装配点 x=515）",
       "next": "ia52"
     },
     {
@@ -846,14 +846,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=513.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_torso",
+      "command": "tag @e[type=fox,x=514.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         506,
         43,
         509
       ],
       "facing": "south",
-      "note": "B.FMBE · 部件 torso 独占 tag",
+      "note": "B.FMBE · 部件 shoulder_l 打 boss_part",
       "next": "ia53"
     },
     {
@@ -862,14 +862,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_torso] 515.5 6.2 515.5",
+      "command": "tag @e[type=fox,x=514.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_shoulder_l",
       "pos": [
         506,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 torso 移到最终坐标",
+      "note": "B.FMBE · 部件 shoulder_l 独占 tag",
       "next": "ia54"
     },
     {
@@ -878,14 +878,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_torso] slot.weapon.mainhand 0 blue_ice",
+      "command": "tp @e[tag=boss_p_shoulder_l] 514.1 6.9 515.5",
       "pos": [
         507,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 torso 主手模型",
+      "note": "B.FMBE · 部件 shoulder_l 移到最终坐标",
       "next": "ia55"
     },
     {
@@ -894,14 +894,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 515 20 521",
+      "command": "replaceitem entity @e[tag=boss_p_shoulder_l] slot.weapon.mainhand 0 polished_diorite",
       "pos": [
         508,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 召唤部件 shoulder_l（装配点 x=515）",
+      "note": "B.FMBE · 部件 shoulder_l 主手模型",
       "next": "ia56"
     },
     {
@@ -910,14 +910,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=514.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
+      "command": "summon fox 516 20 521",
       "pos": [
         509,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_l 打 boss_part",
+      "note": "B.FMBE · 召唤部件 shoulder_r（装配点 x=516）",
       "next": "ia57"
     },
     {
@@ -926,14 +926,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tag @e[type=fox,x=514.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_shoulder_l",
+      "command": "tag @e[type=fox,x=515.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
       "pos": [
         510,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_l 独占 tag",
+      "note": "B.FMBE · 部件 shoulder_r 打 boss_part",
       "next": "ia58"
     },
     {
@@ -942,14 +942,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "tp @e[tag=boss_p_shoulder_l] 514.1 6.9 515.5",
+      "command": "tag @e[type=fox,x=515.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_shoulder_r",
       "pos": [
         511,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_l 移到最终坐标",
+      "note": "B.FMBE · 部件 shoulder_r 独占 tag",
       "next": "ia59"
     },
     {
@@ -958,14 +958,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "replaceitem entity @e[tag=boss_p_shoulder_l] slot.weapon.mainhand 0 polished_diorite",
+      "command": "tp @e[tag=boss_p_shoulder_r] 516.9 6.9 515.5",
       "pos": [
         512,
         43,
         510
       ],
       "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_l 主手模型",
+      "note": "B.FMBE · 部件 shoulder_r 移到最终坐标",
       "next": "ia60"
     },
     {
@@ -974,73 +974,9 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "summon fox 516 20 521",
-      "pos": [
-        513,
-        43,
-        510
-      ],
-      "facing": "east",
-      "note": "B.FMBE · 召唤部件 shoulder_r（装配点 x=516）",
-      "next": "ia61"
-    },
-    {
-      "id": "ia61",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
-      "command": "tag @e[type=fox,x=515.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_part",
-      "pos": [
-        514,
-        43,
-        510
-      ],
-      "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_r 打 boss_part",
-      "next": "ia62"
-    },
-    {
-      "id": "ia62",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
-      "command": "tag @e[type=fox,x=515.6,y=19,z=520.6,dx=0.8,dy=3,dz=0.8,c=1] add boss_p_shoulder_r",
-      "pos": [
-        515,
-        43,
-        510
-      ],
-      "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_r 独占 tag",
-      "next": "ia63"
-    },
-    {
-      "id": "ia63",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
-      "command": "tp @e[tag=boss_p_shoulder_r] 516.9 6.9 515.5",
-      "pos": [
-        516,
-        43,
-        510
-      ],
-      "facing": "east",
-      "note": "B.FMBE · 部件 shoulder_r 移到最终坐标",
-      "next": "ia64"
-    },
-    {
-      "id": "ia64",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
       "command": "replaceitem entity @e[tag=boss_p_shoulder_r] slot.weapon.mainhand 0 polished_diorite",
       "pos": [
-        517,
+        513,
         43,
         510
       ],
@@ -1996,14 +1932,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_aim] at @e[tag=boss_carrier] run tp @s ^ ^ ^10",
+      "command": "execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^2.9 ^-0.8",
       "pos": [
         512,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.载体 · 更新朝向点（载体前方 10 格）",
+      "note": "4.FMBE · 转身跟随部件 head",
       "next": "m08"
     },
     {
@@ -2012,14 +1948,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ^0 ^2.9 ^-0.8",
+      "command": "execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         513,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 head",
+      "note": "4.FMBE · 部件 head 朝向玩家",
       "next": "m09"
     },
     {
@@ -2028,14 +1964,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_crown] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^4.1 ^-0.8",
       "pos": [
         514,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 head 朝向点",
+      "note": "4.FMBE · 转身跟随部件 crown",
       "next": "m10"
     },
     {
@@ -2044,14 +1980,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_crown] at @e[tag=boss_carrier] run tp @s ^0 ^4.1 ^-0.8",
+      "command": "execute as @e[tag=boss_p_crown] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         515,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 crown",
+      "note": "4.FMBE · 部件 crown 朝向玩家",
       "next": "m11"
     },
     {
@@ -2060,14 +1996,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_crown] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_halo] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^4.9 ^-0.8",
       "pos": [
         516,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 crown 朝向点",
+      "note": "4.FMBE · 转身跟随部件 halo",
       "next": "m12"
     },
     {
@@ -2076,14 +2012,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_halo] at @e[tag=boss_carrier] run tp @s ^0 ^4.9 ^-0.8",
+      "command": "execute as @e[tag=boss_p_halo] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         517,
         42,
         506
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 halo",
+      "note": "4.FMBE · 部件 halo 朝向玩家",
       "next": "m13"
     },
     {
@@ -2092,14 +2028,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_halo] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_eye_l] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^-0.5 ^3.1 ^-1.2",
       "pos": [
         518,
         42,
         506
       ],
       "facing": "south",
-      "note": "4.FMBE · 部件 halo 朝向点",
+      "note": "4.FMBE · 转身跟随部件 eye_l",
       "next": "m14"
     },
     {
@@ -2108,14 +2044,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_eye_l] at @e[tag=boss_carrier] run tp @s ^-0.5 ^3.1 ^-1.2",
+      "command": "execute as @e[tag=boss_p_eye_l] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         518,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 eye_l",
+      "note": "4.FMBE · 部件 eye_l 朝向玩家",
       "next": "m15"
     },
     {
@@ -2124,14 +2060,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_eye_l] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_eye_r] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0.5 ^3.1 ^-1.2",
       "pos": [
         517,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 eye_l 朝向点",
+      "note": "4.FMBE · 转身跟随部件 eye_r",
       "next": "m16"
     },
     {
@@ -2140,14 +2076,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_eye_r] at @e[tag=boss_carrier] run tp @s ^0.5 ^3.1 ^-1.2",
+      "command": "execute as @e[tag=boss_p_eye_r] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         516,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 eye_r",
+      "note": "4.FMBE · 部件 eye_r 朝向玩家",
       "next": "m17"
     },
     {
@@ -2156,14 +2092,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_eye_r] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_torso] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^1.7 ^-0.8",
       "pos": [
         515,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 eye_r 朝向点",
+      "note": "4.FMBE · 转身跟随部件 torso",
       "next": "m18"
     },
     {
@@ -2172,14 +2108,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_torso] at @e[tag=boss_carrier] run tp @s ^0 ^1.7 ^-0.8",
+      "command": "execute as @e[tag=boss_p_torso] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         514,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 torso",
+      "note": "4.FMBE · 部件 torso 朝向玩家",
       "next": "m19"
     },
     {
@@ -2188,14 +2124,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_torso] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_shoulder_l] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^-1.4 ^2.4 ^-0.8",
       "pos": [
         513,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 torso 朝向点",
+      "note": "4.FMBE · 转身跟随部件 shoulder_l",
       "next": "m20"
     },
     {
@@ -2204,14 +2140,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_shoulder_l] at @e[tag=boss_carrier] run tp @s ^-1.4 ^2.4 ^-0.8",
+      "command": "execute as @e[tag=boss_p_shoulder_l] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         512,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 shoulder_l",
+      "note": "4.FMBE · 部件 shoulder_l 朝向玩家",
       "next": "m21"
     },
     {
@@ -2220,14 +2156,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_shoulder_l] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_shoulder_r] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^1.4 ^2.4 ^-0.8",
       "pos": [
         511,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 shoulder_l 朝向点",
+      "note": "4.FMBE · 转身跟随部件 shoulder_r",
       "next": "m22"
     },
     {
@@ -2236,14 +2172,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_shoulder_r] at @e[tag=boss_carrier] run tp @s ^1.4 ^2.4 ^-0.8",
+      "command": "execute as @e[tag=boss_p_shoulder_r] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         510,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 shoulder_r",
+      "note": "4.FMBE · 部件 shoulder_r 朝向玩家",
       "next": "m23"
     },
     {
@@ -2252,14 +2188,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_shoulder_r] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_arm_l] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^-2.2 ^1 ^-0.8",
       "pos": [
         509,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 shoulder_r 朝向点",
+      "note": "4.FMBE · 转身跟随部件 arm_l",
       "next": "m24"
     },
     {
@@ -2268,14 +2204,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_arm_l] at @e[tag=boss_carrier] run tp @s ^-2.2 ^1 ^-0.8",
+      "command": "execute as @e[tag=boss_p_arm_l] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         508,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 转身跟随部件 arm_l",
+      "note": "4.FMBE · 部件 arm_l 朝向玩家",
       "next": "m25"
     },
     {
@@ -2284,14 +2220,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_arm_l] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_arm_r] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^2.2 ^1 ^-0.8",
       "pos": [
         507,
         42,
         507
       ],
       "facing": "west",
-      "note": "4.FMBE · 部件 arm_l 朝向点",
+      "note": "4.FMBE · 转身跟随部件 arm_r",
       "next": "m26"
     },
     {
@@ -2300,14 +2236,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_arm_r] at @e[tag=boss_carrier] run tp @s ^2.2 ^1 ^-0.8",
+      "command": "execute as @e[tag=boss_p_arm_r] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         506,
         42,
         507
       ],
       "facing": "south",
-      "note": "4.FMBE · 转身跟随部件 arm_r",
+      "note": "4.FMBE · 部件 arm_r 朝向玩家",
       "next": "m27"
     },
     {
@@ -2316,14 +2252,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_arm_r] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_staff] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^3.3 ^1.3 ^-0.8",
       "pos": [
         506,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 arm_r 朝向点",
+      "note": "4.FMBE · 转身跟随部件 staff",
       "next": "m28"
     },
     {
@@ -2332,14 +2268,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_staff] at @e[tag=boss_carrier] run tp @s ^3.3 ^1.3 ^-0.8",
+      "command": "execute as @e[tag=boss_p_staff] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         507,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 staff",
+      "note": "4.FMBE · 部件 staff 朝向玩家",
       "next": "m29"
     },
     {
@@ -2348,14 +2284,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_staff] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_cloak] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^1.3 ^0.1",
       "pos": [
         508,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 staff 朝向点",
+      "note": "4.FMBE · 转身跟随部件 cloak",
       "next": "m30"
     },
     {
@@ -2364,14 +2300,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_cloak] at @e[tag=boss_carrier] run tp @s ^0 ^1.3 ^0.1",
+      "command": "execute as @e[tag=boss_p_cloak] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         509,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 cloak",
+      "note": "4.FMBE · 部件 cloak 朝向玩家",
       "next": "m31"
     },
     {
@@ -2380,14 +2316,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_cloak] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_wing_l] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^-2.5 ^2.3 ^-0.3",
       "pos": [
         510,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 cloak 朝向点",
+      "note": "4.FMBE · 转身跟随部件 wing_l",
       "next": "m32"
     },
     {
@@ -2396,14 +2332,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_wing_l] at @e[tag=boss_carrier] run tp @s ^-2.5 ^2.3 ^-0.3",
+      "command": "execute as @e[tag=boss_p_wing_l] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         511,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 wing_l",
+      "note": "4.FMBE · 部件 wing_l 朝向玩家",
       "next": "m33"
     },
     {
@@ -2412,14 +2348,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_wing_l] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute as @e[tag=boss_p_wing_r] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^2.5 ^2.3 ^-0.3",
       "pos": [
         512,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 wing_l 朝向点",
+      "note": "4.FMBE · 转身跟随部件 wing_r",
       "next": "m34"
     },
     {
@@ -2428,14 +2364,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_wing_r] at @e[tag=boss_carrier] run tp @s ^2.5 ^2.3 ^-0.3",
+      "command": "execute as @e[tag=boss_p_wing_r] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes",
       "pos": [
         513,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 转身跟随部件 wing_r",
+      "note": "4.FMBE · 部件 wing_r 朝向玩家",
       "next": "m35"
     },
     {
@@ -2444,14 +2380,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @e[tag=boss_p_wing_r] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]",
+      "command": "execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s 515.5 4.5 516.3",
       "pos": [
         514,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.FMBE · 部件 wing_r 朝向点",
+      "note": "4.载体 · 待机回中心",
       "next": "m36"
     },
     {
@@ -2460,14 +2396,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s 515.5 4.5 516.3",
+      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18",
       "pos": [
         515,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.载体 · 待机回中心",
+      "note": "4.载体 · 追击（直接 facing 玩家，不依赖载体 yaw）",
       "next": "m37"
     },
     {
@@ -2476,14 +2412,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]",
+      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~",
       "pos": [
         516,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.载体 · 面向最近玩家",
+      "note": "4.载体 · 锁 y=4.5",
       "next": "m38"
     },
     {
@@ -2492,14 +2428,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18",
+      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3",
       "pos": [
         517,
         42,
         508
       ],
       "facing": "east",
-      "note": "4.载体 · 追击（距 >2.5）",
+      "note": "4.载体 · 出界回中心",
       "next": "m39"
     },
     {
@@ -2508,14 +2444,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~",
+      "command": "execute if score st bs matches 0 if entity @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] run scoreboard players set st bs 1",
       "pos": [
         518,
         42,
         508
       ],
       "facing": "south",
-      "note": "4.载体 · 锁 y=4.5",
+      "note": "5.入场 · 进圈开战",
       "next": "m40"
     },
     {
@@ -2524,14 +2460,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3",
+      "command": "execute if score st bs matches 1 if score t bs matches 0 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l霜冠试炼\\n§7以霜铁之刃斩碎冰冠\"}]}",
       "pos": [
         518,
         42,
         509
       ],
       "facing": "west",
-      "note": "4.载体 · 出界回中心",
+      "note": "5.入场 · 开战标题",
       "next": "m41"
     },
     {
@@ -2540,14 +2476,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 0 if entity @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] run scoreboard players set st bs 1",
+      "command": "execute if score st bs matches 1 if score t bs matches 0 run give @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] netherite_sword 1",
       "pos": [
         517,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 进圈开战",
+      "note": "5.入场 · 发试炼之刃",
       "next": "m42"
     },
     {
@@ -2556,14 +2492,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score t bs matches 0 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l霜冠试炼\\n§7以霜铁之刃斩碎冰冠\"}]}",
+      "command": "execute if score st bs matches 1 if score t bs matches 0 run scoreboard players set @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] dmg 0",
       "pos": [
         516,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 开战标题",
+      "note": "5.入场 · 清个人伤害",
       "next": "m43"
     },
     {
@@ -2572,14 +2508,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score t bs matches 0 run give @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] netherite_sword 1",
+      "command": "execute as @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] run tag @s add fighter",
       "pos": [
         515,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 发试炼之刃",
+      "note": "5.入场 · 圈内玩家 fighter",
       "next": "m44"
     },
     {
@@ -2588,14 +2524,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score t bs matches 0 run scoreboard players set @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] dmg 0",
+      "command": "execute as @a[tag=fighter] unless entity @s[hasitem={item=netherite_sword}] run give @s netherite_sword 1",
       "pos": [
         514,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 清个人伤害",
+      "note": "5.入场 · 补刀",
       "next": "m45"
     },
     {
@@ -2604,14 +2540,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @a[x=504,y=2,z=504,dx=23,dy=6,dz=23] run tag @s add fighter",
+      "command": "execute as @a[tag=fighter] unless entity @s[x=504,y=2,z=504,dx=23,dy=6,dz=23] run tag @s remove fighter",
       "pos": [
         513,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 圈内玩家 fighter",
+      "note": "5.入场 · 离场脱战",
       "next": "m46"
     },
     {
@@ -2620,14 +2556,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @a[tag=fighter] unless entity @s[hasitem={item=netherite_sword}] run give @s netherite_sword 1",
+      "command": "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run particle minecraft:end_rod ~ ~2 ~",
       "pos": [
         512,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 补刀",
+      "note": "6.Boss · 1 Hz 冰晶粒子",
       "next": "m47"
     },
     {
@@ -2636,14 +2572,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute as @a[tag=fighter] unless entity @s[x=504,y=2,z=504,dx=23,dy=6,dz=23] run tag @s remove fighter",
+      "command": "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=4.5] 8 entity_attack",
       "pos": [
         511,
         42,
         509
       ],
       "facing": "west",
-      "note": "5.入场 · 离场脱战",
+      "note": "6.Boss · 1 Hz 近身踩踏",
       "next": "m48"
     },
     {
@@ -2652,14 +2588,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run particle minecraft:end_rod ~ ~2 ~",
+      "command": "execute if score ph bs matches 3 if score bt bs matches 0 run damage @a[tag=fighter] 4 magic",
       "pos": [
         510,
         42,
         509
       ],
       "facing": "west",
-      "note": "6.Boss · 1 Hz 冰晶粒子",
+      "note": "6.Boss · 三阶段暴雪",
       "next": "m49"
     },
     {
@@ -2668,14 +2604,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=4.5] 8 entity_attack",
+      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 run scoreboard players remove hp bs 40",
       "pos": [
         509,
         42,
         509
       ],
       "facing": "west",
-      "note": "6.Boss · 1 Hz 近身踩踏",
+      "note": "7.伤害 · 无冰甲：40",
       "next": "m50"
     },
     {
@@ -2684,14 +2620,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 3 if score bt bs matches 0 run damage @a[tag=fighter] 4 magic",
+      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:basic_smoke_particle ~ ~1 ~",
       "pos": [
         508,
         42,
         509
       ],
       "facing": "west",
-      "note": "6.Boss · 三阶段暴雪",
+      "note": "7.伤害 · 冰甲：白烟、不扣血",
       "next": "m51"
     },
     {
@@ -2700,14 +2636,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 run scoreboard players remove hp bs 40",
+      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 if score stg bs matches 1.. run scoreboard players remove hp bs 40",
       "pos": [
         507,
         42,
         509
       ],
       "facing": "west",
-      "note": "7.伤害 · 无冰甲：40",
+      "note": "7.伤害 · 破防：额外 40",
       "next": "m52"
     },
     {
@@ -2716,14 +2652,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:basic_smoke_particle ~ ~1 ~",
+      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 at @e[tag=boss_carrier] run scoreboard players add @p[tag=fighter] dmg 40",
       "pos": [
         506,
         42,
         509
       ],
       "facing": "south",
-      "note": "7.伤害 · 冰甲：白烟、不扣血",
+      "note": "7.伤害 · 个人伤害统计（最近 fighter）",
       "next": "m53"
     },
     {
@@ -2732,14 +2668,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 if score stg bs matches 1.. run scoreboard players remove hp bs 40",
+      "command": "execute if score hit bs matches 1 if score st bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:crit ~ ~1 ~ 0.4 0.4 0.4 0 8",
       "pos": [
         506,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 破防：额外 40",
+      "note": "7.伤害 · 命中粒子",
       "next": "m54"
     },
     {
@@ -2748,14 +2684,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 at @e[tag=boss_carrier] run scoreboard players add @p[tag=fighter] dmg 40",
+      "command": "scoreboard players set hit bs 0",
       "pos": [
         507,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 个人伤害统计（最近 fighter）",
+      "note": "7.伤害 · 清命中标志",
       "next": "m55"
     },
     {
@@ -2764,14 +2700,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hit bs matches 1 if score st bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:crit ~ ~1 ~ 0.4 0.4 0.4 0 8",
+      "command": "execute if score hp bs matches ..-1 run scoreboard players set hp bs 0",
       "pos": [
         508,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 命中粒子",
+      "note": "7.伤害 · 血量钳 0",
       "next": "m56"
     },
     {
@@ -2780,14 +2716,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "scoreboard players set hit bs 0",
+      "command": "execute if score stg bs matches 1.. run scoreboard players remove stg bs 1",
       "pos": [
         509,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 清命中标志",
+      "note": "7.伤害 · 破防计时",
       "next": "m57"
     },
     {
@@ -2796,14 +2732,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score hp bs matches ..-1 run scoreboard players set hp bs 0",
+      "command": "execute if score st bs matches 1 if score hp bs matches ..4000 run scoreboard players set ph bs 2",
       "pos": [
         510,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 血量钳 0",
+      "note": "8.阶段 · 二阶段",
       "next": "m58"
     },
     {
@@ -2812,14 +2748,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score stg bs matches 1.. run scoreboard players remove stg bs 1",
+      "command": "execute if score st bs matches 1 if score hp bs matches ..2000 run scoreboard players set ph bs 3",
       "pos": [
         511,
         42,
         510
       ],
       "facing": "east",
-      "note": "7.伤害 · 破防计时",
+      "note": "8.阶段 · 三阶段",
       "next": "m59"
     },
     {
@@ -2828,14 +2764,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score hp bs matches ..4000 run scoreboard players set ph bs 2",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l第二阶段\\n§7冰冠碎裂 · 寒冰护甲\"}]}",
       "pos": [
         512,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 二阶段",
+      "note": "8.阶段 · 二阶段标题",
       "next": "m60"
     },
     {
@@ -2844,14 +2780,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score hp bs matches ..2000 run scoreboard players set ph bs 3",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run playsound mob.ravager.roar @a 515 3 515 1 0.7",
       "pos": [
         513,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 三阶段",
+      "note": "8.阶段 · 二阶段吼声",
       "next": "m61"
     },
     {
@@ -2860,14 +2796,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l第二阶段\\n§7冰冠碎裂 · 寒冰护甲\"}]}",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set sh bs 1",
       "pos": [
         514,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 二阶段标题",
+      "note": "8.阶段 · 开冰甲",
       "next": "m62"
     },
     {
@@ -2876,14 +2812,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run playsound mob.ravager.roar @a 515 3 515 1 0.7",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand 507.5 2 515.5",
       "pos": [
         515,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 二阶段吼声",
+      "note": "8.阶段 · 冰晶 1",
       "next": "m63"
     },
     {
@@ -2892,14 +2828,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set sh bs 1",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand 522.5 2 515.5",
       "pos": [
         516,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 开冰甲",
+      "note": "8.阶段 · 冰晶 2",
       "next": "m64"
     },
     {
@@ -2908,14 +2844,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand 507.5 2 515.5",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run tag @e[type=armor_stand,x=504,y=1,z=504,dx=23,dy=6,dz=23] add crystal",
       "pos": [
         517,
         42,
         510
       ],
       "facing": "east",
-      "note": "8.阶段 · 冰晶 1",
+      "note": "8.阶段 · 冰晶 tag",
       "next": "m65"
     },
     {
@@ -2924,14 +2860,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run summon armor_stand 522.5 2 515.5",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run replaceitem entity @e[tag=crystal] slot.weapon.offhand minecraft:sea_lantern",
       "pos": [
         518,
         42,
         510
       ],
       "facing": "south",
-      "note": "8.阶段 · 冰晶 2",
+      "note": "8.阶段 · 冰晶外观",
       "next": "m66"
     },
     {
@@ -2940,14 +2876,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run tag @e[type=armor_stand,tag=!boss_aim,x=504,y=1,z=504,dx=23,dy=6,dz=23] add crystal",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run fill 504 1 504 526 1 526 ice 0 replace packed_ice",
       "pos": [
         518,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 冰晶 tag",
+      "note": "8.阶段 · 地板变冰",
       "next": "m67"
     },
     {
@@ -2956,14 +2892,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run replaceitem entity @e[tag=crystal] slot.weapon.offhand minecraft:sea_lantern",
+      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set pa bs 2",
       "pos": [
         517,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 冰晶外观",
+      "note": "8.阶段 · 记住二阶段",
       "next": "m68"
     },
     {
@@ -2972,14 +2908,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run fill 504 1 504 526 1 526 ice 0 replace packed_ice",
+      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run titleraw @a title {\"rawtext\":[{\"text\":\"§4§l第三阶段 · 暴雪\\n§7寒风暴雪压场 · 冰甲已碎\"}]}",
       "pos": [
         516,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 地板变冰",
+      "note": "8.阶段 · 三阶段标题",
       "next": "m69"
     },
     {
@@ -2988,14 +2924,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 2 if score pa bs matches 1 run scoreboard players set pa bs 2",
+      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run playsound mob.wither.spawn @a 515 3 515 1 1.2",
       "pos": [
         515,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 记住二阶段",
+      "note": "8.阶段 · 三阶段吼声",
       "next": "m70"
     },
     {
@@ -3004,14 +2940,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run titleraw @a title {\"rawtext\":[{\"text\":\"§4§l第三阶段 · 暴雪\\n§7寒风暴雪压场 · 冰甲已碎\"}]}",
+      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run effect @e[tag=boss_core] speed infinite 1 true",
       "pos": [
         514,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 三阶段标题",
+      "note": "8.阶段 · 三阶段加速",
       "next": "m71"
     },
     {
@@ -3020,14 +2956,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run playsound mob.wither.spawn @a 515 3 515 1 1.2",
+      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run scoreboard players set pa bs 3",
       "pos": [
         513,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 三阶段吼声",
+      "note": "8.阶段 · 记住三阶段",
       "next": "m72"
     },
     {
@@ -3036,14 +2972,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run effect @e[tag=boss_core] speed infinite 1 true",
+      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run titleraw @a title {\"rawtext\":[{\"text\":\"§b冰甲崩解\\n§e破防 3 秒 · 全力输出\"}]}",
       "pos": [
         512,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 三阶段加速",
+      "note": "9.破盾 · 冰晶清空 → 破盾标题",
       "next": "m73"
     },
     {
@@ -3052,14 +2988,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ph bs matches 3 if score pa bs matches 2 run scoreboard players set pa bs 3",
+      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run scoreboard players set stg bs 60",
       "pos": [
         511,
         42,
         511
       ],
       "facing": "west",
-      "note": "8.阶段 · 记住三阶段",
+      "note": "9.破盾 · 破防 60 tick",
       "next": "m74"
     },
     {
@@ -3068,14 +3004,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run titleraw @a title {\"rawtext\":[{\"text\":\"§b冰甲崩解\\n§e破防 3 秒 · 全力输出\"}]}",
+      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run scoreboard players set sh bs 0",
       "pos": [
         510,
         42,
         511
       ],
       "facing": "west",
-      "note": "9.破盾 · 冰晶清空 → 破盾标题",
+      "note": "9.破盾 · 关冰甲",
       "next": "m75"
     },
     {
@@ -3084,14 +3020,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run scoreboard players set stg bs 60",
+      "command": "execute if score st bs matches 1 if score ct bs matches -1 run scoreboard players remove sc bs 1",
       "pos": [
         509,
         42,
         511
       ],
       "facing": "west",
-      "note": "9.破盾 · 破防 60 tick",
+      "note": "10.技能 · 冷却",
       "next": "m76"
     },
     {
@@ -3100,14 +3036,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score sh bs matches 1.. unless entity @e[tag=crystal] run scoreboard players set sh bs 0",
+      "command": "execute if score st bs matches 1 if score ct bs matches -1 if score sc bs matches ..0 run scoreboard players set ct bs 30",
       "pos": [
         508,
         42,
         511
       ],
       "facing": "west",
-      "note": "9.破盾 · 关冰甲",
+      "note": "10.技能 · 起手 30 tick",
       "next": "m77"
     },
     {
@@ -3116,14 +3052,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score ct bs matches -1 run scoreboard players remove sc bs 1",
+      "command": "execute if score ct bs matches 30 run scoreboard players add sk bs 1",
       "pos": [
         507,
         42,
         511
       ],
       "facing": "west",
-      "note": "10.技能 · 冷却",
+      "note": "10.技能 · 切技能",
       "next": "m78"
     },
     {
@@ -3132,14 +3068,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score ct bs matches -1 if score sc bs matches ..0 run scoreboard players set ct bs 30",
+      "command": "execute if score ct bs matches 30 if score sk bs matches 3 run scoreboard players set sk bs 1",
       "pos": [
         506,
         42,
         511
       ],
       "facing": "south",
-      "note": "10.技能 · 起手 30 tick",
+      "note": "10.技能 · 技能环回",
       "next": "m79"
     },
     {
@@ -3148,14 +3084,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 run scoreboard players add sk bs 1",
+      "command": "execute if score ct bs matches 30 run scoreboard players set sc bs 80",
       "pos": [
         506,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 切技能",
+      "note": "10.技能 · 下次间隔",
       "next": "m80"
     },
     {
@@ -3164,14 +3100,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 if score sk bs matches 3 run scoreboard players set sk bs 1",
+      "command": "execute if score ct bs matches 30 if score ph bs matches 3 run scoreboard players set sc bs 50",
       "pos": [
         507,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 技能环回",
+      "note": "10.技能 · 三阶段加速",
       "next": "m81"
     },
     {
@@ -3180,14 +3116,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 run scoreboard players set sc bs 80",
+      "command": "execute if score ct bs matches 30 if score sk bs matches 1 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§9⚠ 霜环 · 1.5 秒后爆发 · 冲出冰环！\"}]}",
       "pos": [
         508,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 下次间隔",
+      "note": "10.技能 · 霜环预告",
       "next": "m82"
     },
     {
@@ -3196,14 +3132,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 if score ph bs matches 3 run scoreboard players set sc bs 50",
+      "command": "execute if score ct bs matches 30 if score sk bs matches 2 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b⚠ 冰魂降临 · 先清召唤物！\"}]}",
       "pos": [
         509,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 三阶段加速",
+      "note": "10.技能 · 冰魂预告",
       "next": "m83"
     },
     {
@@ -3212,14 +3148,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 if score sk bs matches 1 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§9⚠ 霜环 · 1.5 秒后爆发 · 冲出冰环！\"}]}",
+      "command": "execute if score ct bs matches 30 run playsound mob.wither.shoot @a 515 3 515 1 1.4",
       "pos": [
         510,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 霜环预告",
+      "note": "10.技能 · 起手音效",
       "next": "m84"
     },
     {
@@ -3228,14 +3164,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 if score sk bs matches 2 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b⚠ 冰魂降临 · 先清召唤物！\"}]}",
+      "command": "execute if score ct bs matches 1.. run scoreboard players remove ct bs 1",
       "pos": [
         511,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 冰魂预告",
+      "note": "10.技能 · 前摇倒数",
       "next": "m85"
     },
     {
@@ -3244,14 +3180,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 30 run playsound mob.wither.shoot @a 515 3 515 1 1.4",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=6.5] 18 magic",
       "pos": [
         512,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 起手音效",
+      "note": "10.技能 · 霜环结算",
       "next": "m86"
     },
     {
@@ -3260,14 +3196,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 1.. run scoreboard players remove ct bs 1",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run effect @a[tag=fighter,r=6.5] slowness 40 1 true",
       "pos": [
         513,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 前摇倒数",
+      "note": "10.技能 · 霜环减速",
       "next": "m87"
     },
     {
@@ -3276,14 +3212,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=6.5] 18 magic",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:huge_explosion_emitter ~ ~ ~",
       "pos": [
         514,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 霜环结算",
+      "note": "10.技能 · 霜环粒子",
       "next": "m88"
     },
     {
@@ -3292,14 +3228,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run effect @a[tag=fighter,r=6.5] slowness 40 1 true",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run summon stray 512.5 2 512.5",
       "pos": [
         515,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 霜环减速",
+      "note": "10.技能 · 冰魂 1",
       "next": "m89"
     },
     {
@@ -3308,14 +3244,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:huge_explosion_emitter ~ ~ ~",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run summon stray 517.5 2 517.5",
       "pos": [
         516,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 霜环粒子",
+      "note": "10.技能 · 冰魂 2",
       "next": "m90"
     },
     {
@@ -3324,14 +3260,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run summon stray 512.5 2 512.5",
+      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run tag @e[type=stray,x=504,y=1,z=504,dx=23,dy=6,dz=23] add minion",
       "pos": [
         517,
         42,
         512
       ],
       "facing": "east",
-      "note": "10.技能 · 冰魂 1",
+      "note": "10.技能 · 冰魂 tag",
       "next": "m91"
     },
     {
@@ -3340,14 +3276,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run summon stray 517.5 2 517.5",
+      "command": "execute if score ct bs matches 0 run scoreboard players set ct bs -1",
       "pos": [
         518,
         42,
         512
       ],
       "facing": "south",
-      "note": "10.技能 · 冰魂 2",
+      "note": "10.技能 · 收技能",
       "next": "m92"
     },
     {
@@ -3356,14 +3292,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 if score sk bs matches 2 run tag @e[type=stray,x=504,y=1,z=504,dx=23,dy=6,dz=23] add minion",
+      "command": "execute if score bt bs matches 0 if entity @e[tag=minion,c=3] run kill @e[tag=minion,c=1]",
       "pos": [
         518,
         42,
         513
       ],
       "facing": "west",
-      "note": "10.技能 · 冰魂 tag",
+      "note": "10.技能 · 冰魂上限",
       "next": "m93"
     },
     {
@@ -3372,14 +3308,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0 run scoreboard players set ct bs -1",
+      "command": "execute if score ct bs matches 0.. run scoreboard players set pose bs 1",
       "pos": [
         517,
         42,
         513
       ],
       "facing": "west",
-      "note": "10.技能 · 收技能",
+      "note": "11.姿态 · 施法时切 cast 姿态",
       "next": "m94"
     },
     {
@@ -3388,14 +3324,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score bt bs matches 0 if entity @e[tag=minion,c=3] run kill @e[tag=minion,c=1]",
+      "command": "execute if score ct bs matches ..-1 run scoreboard players set pose bs 0",
       "pos": [
         516,
         42,
         513
       ],
       "facing": "west",
-      "note": "10.技能 · 冰魂上限",
+      "note": "11.姿态 · 收技能回待机",
       "next": "m95"
     },
     {
@@ -3404,14 +3340,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches 0.. run scoreboard players set pose bs 1",
+      "command": "execute if score st bs matches 1 if score bt bs matches 0 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b❄ 霜冠·维丝佩拉 §8| §fHP §c\"},{\"score\":{\"name\":\"hp\",\"objective\":\"bs\"}},{\"text\":\"§8/§f6000 §8| §e阶段 \"},{\"score\":{\"name\":\"ph\",\"objective\":\"bs\"}}]}",
       "pos": [
         515,
         42,
         513
       ],
       "facing": "west",
-      "note": "11.姿态 · 施法时切 cast 姿态",
+      "note": "12.UI · 血条 A",
       "next": "m96"
     },
     {
@@ -3420,14 +3356,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score ct bs matches ..-1 run scoreboard players set pose bs 0",
+      "command": "execute if score st bs matches 1 if score bt bs matches 10 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b❄ 霜冠·维丝佩拉 §8| §fHP §c\"},{\"score\":{\"name\":\"hp\",\"objective\":\"bs\"}},{\"text\":\"§8/§f6000 §8| §e阶段 \"},{\"score\":{\"name\":\"ph\",\"objective\":\"bs\"}}]}",
       "pos": [
         514,
         42,
         513
       ],
       "facing": "west",
-      "note": "11.姿态 · 收技能回待机",
+      "note": "12.UI · 血条 B",
       "next": "m97"
     },
     {
@@ -3436,14 +3372,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score bt bs matches 0 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b❄ 霜冠·维丝佩拉 §8| §fHP §c\"},{\"score\":{\"name\":\"hp\",\"objective\":\"bs\"}},{\"text\":\"§8/§f6000 §8| §e阶段 \"},{\"score\":{\"name\":\"ph\",\"objective\":\"bs\"}}]}",
+      "command": "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set t bs 0",
       "pos": [
         513,
         42,
         513
       ],
       "facing": "west",
-      "note": "12.UI · 血条 A",
+      "note": "13.胜利 · t=0 门",
       "next": "m98"
     },
     {
@@ -3452,14 +3388,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score bt bs matches 10 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§b❄ 霜冠·维丝佩拉 §8| §fHP §c\"},{\"score\":{\"name\":\"hp\",\"objective\":\"bs\"}},{\"text\":\"§8/§f6000 §8| §e阶段 \"},{\"score\":{\"name\":\"ph\",\"objective\":\"bs\"}}]}",
+      "command": "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set st bs 2",
       "pos": [
         512,
         42,
         513
       ],
       "facing": "west",
-      "note": "12.UI · 血条 B",
+      "note": "13.胜利 · 进入胜利",
       "next": "m99"
     },
     {
@@ -3468,14 +3404,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set t bs 0",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_core]",
       "pos": [
         511,
         42,
         513
       ],
       "facing": "west",
-      "note": "13.胜利 · t=0 门",
+      "note": "13.胜利 · 杀核心/载体",
       "next": "m100"
     },
     {
@@ -3484,14 +3420,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set st bs 2",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_part]",
       "pos": [
         510,
         42,
         513
       ],
       "facing": "west",
-      "note": "13.胜利 · 进入胜利",
+      "note": "13.胜利 · 杀 FMBE 部件",
       "next": "m101"
     },
     {
@@ -3500,14 +3436,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_core]",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=minion]",
       "pos": [
         509,
         42,
         513
       ],
       "facing": "west",
-      "note": "13.胜利 · 杀核心/载体",
+      "note": "13.胜利 · 清冰魂",
       "next": "m102"
     },
     {
@@ -3516,14 +3452,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_part]",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=crystal]",
       "pos": [
         508,
         42,
         513
       ],
       "facing": "west",
-      "note": "13.胜利 · 杀 FMBE 部件",
+      "note": "13.胜利 · 清冰晶",
       "next": "m103"
     },
     {
@@ -3532,14 +3468,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=minion]",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l霜冠陨落\\n§7试炼完成\"}]}",
       "pos": [
         507,
         42,
         513
       ],
       "facing": "west",
-      "note": "13.胜利 · 清冰魂",
+      "note": "13.胜利 · 通关标题",
       "next": "m104"
     },
     {
@@ -3548,14 +3484,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=crystal]",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run playsound mob.wither.death @a",
       "pos": [
         506,
         42,
         513
       ],
       "facing": "south",
-      "note": "13.胜利 · 清冰晶",
+      "note": "13.胜利 · 死亡音效",
       "next": "m105"
     },
     {
@@ -3564,14 +3500,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_aim]",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run tp @a[tag=fighter] 515 2 530",
       "pos": [
         506,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 清朝向点",
+      "note": "13.胜利 · 传出门",
       "next": "m106"
     },
     {
@@ -3580,14 +3516,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run titleraw @a title {\"rawtext\":[{\"text\":\"§b§l霜冠陨落\\n§7试炼完成\"}]}",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run give @a[tag=fighter] netherite_ingot 3",
       "pos": [
         507,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 通关标题",
+      "note": "13.胜利 · 战利品",
       "next": "m107"
     },
     {
@@ -3596,14 +3532,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run playsound mob.wither.death @a",
+      "command": "execute if score st bs matches 2 if score t bs matches 0 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§e你的伤害 §f\"},{\"score\":{\"name\":\"*\",\"objective\":\"dmg\"}},{\"text\":\" §8| §b重开：放红石块到 §f505 43 506\"}]}",
       "pos": [
         508,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 死亡音效",
+      "note": "13.胜利 · 个人伤害",
       "next": "m108"
     },
     {
@@ -3612,14 +3548,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run tp @a[tag=fighter] 515 2 530",
+      "command": "execute if score st bs matches 1 if entity @a[tag=fighter] run scoreboard players set wn bs 0",
       "pos": [
         509,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 传出门",
+      "note": "14.团灭 · 有人重置计时",
       "next": "m109"
     },
     {
@@ -3628,14 +3564,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run give @a[tag=fighter] netherite_ingot 3",
+      "command": "execute unless entity @a[tag=fighter] if score st bs matches 1..3 run scoreboard players add wn bs 1",
       "pos": [
         510,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 战利品",
+      "note": "14.团灭 · 无人计时",
       "next": "m110"
     },
     {
@@ -3644,14 +3580,14 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 2 if score t bs matches 0 run titleraw @a actionbar {\"rawtext\":[{\"text\":\"§e你的伤害 §f\"},{\"score\":{\"name\":\"*\",\"objective\":\"dmg\"}},{\"text\":\" §8| §b重开：放红石块到 §f505 43 506\"}]}",
+      "command": "execute if score st bs matches 1 if score wn bs matches 80 run scoreboard players set st bs 3",
       "pos": [
         511,
         42,
         514
       ],
       "facing": "east",
-      "note": "13.胜利 · 个人伤害",
+      "note": "14.团灭 · 4 秒团灭",
       "next": "m111"
     },
     {
@@ -3660,57 +3596,9 @@
       "condition": "unconditional",
       "redstone": "always_active",
       "delay": 0,
-      "command": "execute if score st bs matches 1 if entity @a[tag=fighter] run scoreboard players set wn bs 0",
-      "pos": [
-        512,
-        42,
-        514
-      ],
-      "facing": "east",
-      "note": "14.团灭 · 有人重置计时",
-      "next": "m112"
-    },
-    {
-      "id": "m112",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
-      "command": "execute unless entity @a[tag=fighter] if score st bs matches 1..3 run scoreboard players add wn bs 1",
-      "pos": [
-        513,
-        42,
-        514
-      ],
-      "facing": "east",
-      "note": "14.团灭 · 无人计时",
-      "next": "m113"
-    },
-    {
-      "id": "m113",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
-      "command": "execute if score st bs matches 1 if score wn bs matches 80 run scoreboard players set st bs 3",
-      "pos": [
-        514,
-        42,
-        514
-      ],
-      "facing": "east",
-      "note": "14.团灭 · 4 秒团灭",
-      "next": "m114"
-    },
-    {
-      "id": "m114",
-      "type": "chain",
-      "condition": "unconditional",
-      "redstone": "always_active",
-      "delay": 0,
       "command": "execute if score st bs matches 3 if score wn bs matches 100 run titleraw @a title {\"rawtext\":[{\"text\":\"§4§l团灭\\n§7重新开战：放红石块到 §f505 43 506\"}]}",
       "pos": [
-        515,
+        512,
         42,
         514
       ],

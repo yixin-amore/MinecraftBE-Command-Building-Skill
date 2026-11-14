@@ -20,7 +20,7 @@
 | 文件 | 作用 |
 |---|---|
 | `frostcrown-arena.bdx` | 冰窟竞技场 + 机关平台（StartPos `500 0 500`） |
-| `frostcrown-commands.bdx` | **455 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
+| `frostcrown-commands.bdx` | **448 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
 | `spec.json` | 可被 `chain_lint.py` 检查的链描述 |
 | `design.md` | 行为契约、FMBE 表、移动/命中原理、状态机、测试 |
 | `import-report.md` | 真机导入/移动/命中记录 |
@@ -29,7 +29,7 @@
 | `readbdx.py` | BDX 回读，逐块对 spec |
 | `import-info.json` | StartPos / 块数 |
 
-> 不提交 455 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
+> 不提交 448 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
 
 ## 3. 坐标与导入
 
@@ -71,34 +71,38 @@ scoreboard players set hit bs 1
 - `hit` 在伤害结算末尾清 0，保证一次命中只扣一次。
 - 真机小链验证：`BEFORE 0 → 打一下 AFTER1 1 → 再打一下 AFTER2 2`。
 
-## 5. 移动 / 追击
+## 5. 移动 / 追击 / 转身
 
-载体是 `boss_carrier` + `boss_core` 双 tag 的隐形 cow，放在 FMBE 模型的南侧 0.8 格：
+之前的 bug：载体用 `tp @s ~ ~ ~ facing entity ...` 原地转身，真机上 yaw 没变，`tp @s ^ ^ ^0.18` 一直沿初始 yaw 往出口跑。
+修复：**移动命令自己带 `facing entity ... eyes`**，不再依赖载体保存的 yaw；部件也用同样的朝向做位置和 yaw。
 
 ```mcfunction
-# 战斗时：面向最近 fighter，距离 >2.5 就向前走 0.18 格/tick（约 3.6 格/秒）
-execute if score st bs matches 1 as @e[tag=boss_carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]
-execute if score st bs matches 1 as @e[tag=boss_carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
-# 锁回核心高度，避免 facing 的 pitch 把载体带上下
-execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~
+# 载体：直接面向最近 fighter，然后沿 ^ 前进 0.18 格/tick（约 3.6 格/秒）
+execute if score st bs matches 1 as @e[tag=boss_carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
 
-# 出界（x506..523,z506..523）回中心
-execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
+# 部件位置：以载体为原点，用同一朝向旋转 ^ 偏移
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^2.9 ^-0.8
 
-# 朝向点：隐形 armor_stand，永远在载体前方 10 格；给部件提供 yaw
-# （它被排除在冰晶 tag 之外，不会被当成二阶段冰晶）
-# 部件位置：^ 偏移随载体 yaw 旋转；dz=-0.8 因为载体在模型南侧 0.8 格
-execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ^0 ^2.9 ^-0.8
-execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~ facing entity @e[tag=boss_aim]
-# ...其余 13 个部件同样：先 ^ 定位，再 facing @e[tag=boss_aim] 转 yaw
+# 部件 yaw：~0.01 强制一次位置变化，避免同点 tp 不刷新 yaw
+execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
+# ...其余 13 个部件同样处理
 ```
 
-- 部件偏移 = 原绝对坐标 − 载体坐标 `(515.5,4.5,516.3)`；`^` 让位置绕载体旋转。
-- 每个部件再 `facing entity @e[tag=boss_aim]`，让 **item 模型的 yaw 也跟载体一致**；只移动位置不转 yaw，模型会“平移但不转身”。
-- 朝向点 `boss_aim` 是隐形 armor_stand；二阶段冰晶 tag 明确排除了它。
-- `^` 的左右轴在客户端确认一次；如果左右手相反，把每个部件的 x 偏移取反。
-- 实测：把 bot 放到 `515 2 520`，载体从 `z=516.3` 追到 `z=517`（`AT_515_517`）；`PARTS 14 / CORES 1 / AIM 1`；攻击载体后 `HP 6000→5960`。
-- 载体用 cow 是因为 **cow 不渲染护甲**，头盔不可见；想换僵尸/劫掠兽也可以，移动/锚定命令不变，只需重测护甲渲染和碰撞箱。
+- 关键：`execute ... facing entity <target> eyes` 的 **`eyes` 不能省**；没有锚点参数时命令不生效/报格式错误。
+- 载体不再需要保存 yaw；每次移动命令直接算“朝玩家”的方向。
+- 部件位置和 yaw 都直接面向玩家；整只模型会跟着载体转。
+- `^` 的左右轴需要客户端确认；如果左右手镜像，把每个部件 x 偏移取反。
+- 待机 `st=0` 回中心；出界回中心；停止距离 2.5 格。
+- 载体 cow 不渲染护甲；换僵尸/劫掠兽时移动命令不变。
+
+真机方向测试：
+
+```text
+bot 放东侧  520 2 516 → 载体标记 EAST_520_516
+bot 放北侧  515 2 510 → 载体标记 NORTH_516_512
+```
+
+说明它不再只往出口跑，会按玩家方位追。
 
 ## 6. 战斗
 
@@ -116,18 +120,18 @@ python3 ../../scripts/chain_lint.py spec.json --format markdown --write lint.md
 python3 readbdx.py frostcrown-commands.bdx
 ```
 
-`readbdx.py` 回读：455 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
+`readbdx.py` 回读：448 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
 
 真机（租赁服）：
 
 ```text
-PARTS 14 / CORES 1 / AIM 1 / UNIQUE 14
+PARTS 14 / CORES 1 / UNIQUE 14
 ST 1  HP 6000
 载体移动标记：AT_515_517
 damage @e[tag=boss_core] 10 entity_attack
 AFTER HP 5960  HIT 0
 ```
 
-结论：Boss 会追人，且扣血仍只由“载体真实被击中”触发；客户端模型显示（14 部件位置、idle/cast 姿态、二/三阶段演出）仍需在客户端目视验收。
+结论：Boss 会按玩家方位追人；扣血仍只由“载体真实被击中”触发。客户端仍需目视确认 `^` 左右轴和部件遮挡。
 
 FMBE 参考资料：[FMBE Hub](https://fmbe-hub.ora-san.org/)、[Bedrock Wiki: Display Entities](https://wiki.bedrock.dev/commands/display-entities.html)。
