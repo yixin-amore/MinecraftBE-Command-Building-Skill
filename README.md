@@ -28,6 +28,7 @@
 - [命令计算基础](references/command-foundations.md)
 - [命令数学](references/command-mathematics.md)
 - [N 叉树 / NX 树](references/nx-tree.md)
+- [坐标运算四思想](references/coordinate-arithmetic.md)（二分/NX/递归/大数圆规 + 计分板全语法）
 - [指令计算机：实体像素/栅格](references/command-computer.md)
 - [19 个社区指令文件 → 系统框架](references/command-corpus-framework.md)
 - [Java→Bedrock 方块名映射](references/block-map.md)
@@ -63,6 +64,7 @@ mcbe-command-blocks/
 │   ├── command-foundations.md       # 计算模型/内存/控制流/算法/复杂度
 │   ├── command-mathematics.md       # 整数/定点/坐标/几何/概率
 │   ├── nx-tree.md                   # N 叉树/NX：执行分叉/圆/射线/体积
+│   ├── coordinate-arithmetic.md     # 二分/NX/递归/大数圆规 + 计分板语法
 │   ├── command-computer.md         # 指令计算机：item 像素/栅格/噪声
 │   ├── command-corpus-framework.md  # 19 个社区指令语料的归类/统计框架
 │   ├── value-noise.md               # 值噪声/精度哈希/四角锚点

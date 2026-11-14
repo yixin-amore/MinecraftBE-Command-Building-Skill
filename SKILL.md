@@ -31,6 +31,7 @@ whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命�
 
 基础模型、内存布局、算法与复杂度见 `references/command-foundations.md`；  
 整数/坐标/几何/概率见 `references/command-mathematics.md`。
+二分/NX/递归/大数圆规四套坐标运算见 `references/coordinate-arithmetic.md`。
 
 ### 0.2 先问用户，再开始设计
 
@@ -465,6 +466,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/command-foundations.md` | 命令计算模型、内存、控制流、算法、复杂度、不变量 |
 | `references/command-mathematics.md` | 整数/定点、坐标/向量、几何、概率、位集、常见数学坑 |
 | `references/nx-tree.md` | N 叉树/NX：执行分叉、射线、圆/椭圆、体积扫描与成本 |
+| `references/coordinate-arithmetic.md` | 坐标运算四思想：二分（位移/位置）、NX（分叉/进制）、递归（重入/栈）、大数圆规（圆球近似）+ 计分板全语法 |
 | `references/command-computer.md` | 指令计算机：item 像素、栅格吸附、存储/显示分层、反馈风险 |
 | `references/command-corpus-framework.md` | 19 个社区指令文件的归类/统计/分层框架/反模式 |
 | `references/block-map.md` | Java→Bedrock 方块名映射；雪块 `snow` / 雪层 `snow_layer` |

@@ -1,5 +1,6 @@
 # 用 dummy 计分板做内存（基岩版）
 
+> 完整语法清单（含 operation 右操作数、matches、选择器 scores）见 `coordinate-arithmetic.md` §5。
 > 基岩版计分板**只有 `dummy` 一种准则**：分数不会自动变化，全部由命令读写。
 > 这既是限制，也是优势：状态完全可控、可预测、可测试。
 
