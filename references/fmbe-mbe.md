@@ -85,28 +85,31 @@ stopsound @a mob.fox.aggro
 
 完整 14 部件、两套姿态、真实命中检测的例子见 `examples/frostcrown-fmbe/`。
 
-## 2.6 移动载体：先保拼接，再谈转身
+## 2.6 真实生物 AI：让怪物自己走，FMBE 只跟随
 
-固定锚点的 Boss 不会追人。把“模型中心”做成一个隐形移动载体（cow/僵尸/劫掠兽），
-FMBE 部件每 tick 以载体为原点相对 `tp`。
-
-**先保拼接（推荐）**：部件用世界轴 `~` 偏移，载体负责移动：
+不要用命令 `tp` 推载体，否则怪物会像滑板一样直线跑。让原版 AI 走：
 
 ```mcfunction
-# 移动命令自己 facing 玩家，eyes 锚点不能省
-execute if score st bs matches 1 as @e[tag=carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
-# 部件跟随；不旋转，稳定不散
-execute as @e[tag=part_head] at @e[tag=carrier] run tp @s ~0 ~2.9 ~-0.8
+summon zombie 515.5 2 515.5
+effect @e[tag=boss_core] invisibility infinite 255 true
+effect @e[tag=boss_core] resistance infinite 4 true
+effect @e[tag=boss_core] fire_resistance infinite 255 true
+effect @e[tag=boss_core] weakness infinite 255 true
+effect @e[tag=boss_core] speed infinite 1 true
 ```
 
-**转身的坑**：不要直接给多高度部件用 `^` + `facing`：
+- 僵尸自己会锁定玩家；不要每 tick `tp` 它。
+- 1 耐久头盔仍可做真实命中核心；僵尸低 hitbox 在腿部，FMBE 部件在它上方。
+- FMBE 只做绑定，每 tick 以怪物为原点：
 
-- 部件高度不同，`facing` 的 pitch 不同；
-- `^` 的上轴跟着各部件 pitch 倾斜；
-- 偏移被各自局部轴放大，模型会越跑越散。
+```mcfunction
+execute as @e[tag=part_head] at @e[tag=boss_carrier] run tp @s ~0 ~5.4 ~0
+execute as @e[tag=part_torso] at @e[tag=boss_carrier] run tp @s ~0 ~4.2 ~0
+```
 
-正确转身需要：每部件一个“同高度朝向点”，或按 yaw 预先算好偏移表；不要用一个高点 aim 套所有部件。
-完整移动版见 `examples/frostcrown-fmbe/`（当前版本拼接优先，不转身）。
+- 世界轴 `~` 偏移保证拼接；模型跟随怪物走/停，但当前保持南向，不转身。
+- 不要用 `^` + 单个 facing 目标做多高度部件转身：pitch 不同会把模型拉散。
+- 完整例子见 `examples/frostcrown-fmbe/`。
 
 ## 3. FMBE 的动画链（1 条初始化 + 7 条变量/姿态）
 

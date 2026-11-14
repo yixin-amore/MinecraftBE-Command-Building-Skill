@@ -260,8 +260,7 @@ scoreboard players operation fb_state obj %= fb_two obj
 - 显示是客户端视觉，不能当方块检测；一个方块一个实体，先算性能预算。
 - 完整前置、8 条命令、变量表、MBE 尺寸/旋转、例子拆解见 `references/fmbe-mbe.md`。
 - 多部件 Boss：初始化链 >70 块要拆段；真实受击别用距离，用 1 耐久护甲 + `replaceitem ... keep` + conditional 块。
-- 移动 Boss：隐形载体追玩家，FMBE 部件以载体为原点相对 `tp`；载体本身可以当受击核心。
-- 追击：移动命令直接用 `execute ... facing entity ... eyes`，不要依赖原地 tp 保存的 yaw。
+- 移动 Boss：让隐形僵尸/怪物用**原版 AI** 追人，不要每 tick `tp` 载体；FMBE 部件以怪物为原点相对 `tp`，载体本身可以当受击核心。
 - 拼接优先：多高度部件用世界轴 `~` 跟随；不要直接对多高度部件用 `^` + 单个 facing 目标，pitch 不同会把模型拉散。完整例子见 `examples/frostcrown-fmbe/`。
 - `playanimation` 还可写实体 **render controller 变量**（`variable.glow_alpha`、`variable.profession_index` 等），改发光/变体/UV/部件 alpha；必须是对应实体、部分变量只读，详见 `references/render-controller-vars.md`。
 

@@ -43,10 +43,9 @@ TRIGGER = (PLAT_X[0], GRID_Y + 1, CZ - 9)    # 505,43,506
 ROW_LEN = 13
 ROW_GAP = 1
 BOSS = (CX + 0.5, 4.8, CZ + 0.5)
-# 一个移动载体 = 真实受击核心。cow 不渲染护甲，适合藏 1 耐久头盔。
-# 它被命令推着追玩家；FMBE 部件每 tick 以它为原点相对 tp。
-CORE_POS = (CX + 0.5, 4.5, CZ + 1.3)
-CORE_OFFSET_Z = CORE_POS[2] - (CZ + 0.5)   # 部件相对载体的 z 偏移=-0.8
+# 真实怪物载体：僵尸自己用 AI 追玩家；FMBE 部件每 tick 以它为原点相对 tp。
+# 僵尸站在地面 y=2，FMBE 部件在它上方/周围；隐形+抗性+虚弱，避免它把玩家打死。
+CORE_POS = (CX + 0.5, 2.0, CZ + 0.5)
 # 空中装配线：每个部件一个独立 x 的装配点，间隔 1 格；c=1 永远不会选错。
 STAGE_Y, STAGE_Z = 20.0, CZ + 6.0
 ARENA_SEL = f"x={CX - 11},y={CY},z={CZ - 11},dx=23,dy=6,dz=23"
@@ -177,16 +176,18 @@ INIT = [
     ("A.清场", "清冰晶", "kill @e[tag=crystal]"),
     ("A.清场", "二阶段冰地板还原",
      f"fill {FILL_X[0]} {FLOOR_Y} {FILL_Z[0]} {FILL_X[1]} {FLOOR_Y} {FILL_Z[1]} packed_ice 0 replace ice"),
-    ("A.载体", "召唤隐形载体（移动核心）", f"summon cow {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
+    ("A.载体", "召唤隐形载体（移动核心）", f"summon zombie {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
     ("A.载体", "载体 tag（movement + core）",
-     f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_core"),
+     f"tag @e[type=zombie,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_core"),
     ("A.载体", "载体专用 tag",
-     f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_carrier"),
+     f"tag @e[type=zombie,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_carrier"),
     ("A.载体", "隐身", "effect @e[tag=boss_core] invisibility infinite 255 true"),
     ("A.载体", "抗性：血由计分板管，核心不能真死", "effect @e[tag=boss_core] resistance infinite 4 true"),
     ("A.载体", "再生/生命提升，防止被连续攻击打死", "effect @e[tag=boss_core] regeneration infinite 4 true"),
     ("A.载体", "防火", "effect @e[tag=boss_core] fire_resistance infinite 255 true"),
     ("A.载体", "生命提升", "effect @e[tag=boss_core] health_boost infinite 4 true"),
+    ("A.载体", "虚弱：不让僵尸把玩家秒了", "effect @e[tag=boss_core] weakness infinite 255 true"),
+    ("A.载体", "速度：让僵尸 AI 追得上玩家", "effect @e[tag=boss_core] speed infinite 1 true"),
     ("A.载体", "先装满耐久；之后只有碎了才会被 keep 补上",
      "replaceitem entity @e[tag=boss_core] slot.armor.head 0 keep leather_helmet 1 9999"),
 
@@ -210,7 +211,7 @@ INIT += [
     ("B.FMBE", "全体减速", "effect @e[tag=boss_part] slowness infinite 255 true"),
     ("B.FMBE", "成年（狐狸幼体模型会小一圈）", "event entity @e[tag=boss_part] minecraft:ageable_grow_up"),
     ("B.FMBE", "关掉狐狸/牛叫声", "stopsound @a mob.fox.ambient"),
-    ("B.FMBE", "关掉核心牛叫声", "stopsound @a mob.cow.ambient"),
+    ("B.FMBE", "关掉载体僵尸叫声", "stopsound @a mob.zombie.ambient"),
     ("C.状态", "满血", f"scoreboard players set hp bs {HP_MAX}"),
     ("C.状态", "冰甲关闭", "scoreboard players set sh bs 0"),
     ("C.状态", "待机", "scoreboard players set st bs 0"),
@@ -247,14 +248,10 @@ for name, item, pos, sc, ys in PARTS:
     dx = pos[0] - (CX + 0.5)
     dy = pos[1] - CORE_POS[1]
     dz = pos[2] - CORE_POS[2]
-    # 世界轴相对位置：稳定拼接；载体移动时整组跟随。
+    # 世界轴相对位置：稳定拼接；僵尸 AI 移动时整组跟随。
     MAIN.append(("4.FMBE", f"跟随部件 {name}",
                  f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] run tp @s ~{fmt(dx)} ~{fmt(dy)} ~{fmt(dz)}"))
 MAIN += [
-    ("4.载体", "待机回中心", f"execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
-    ("4.载体", "追击（直接 facing 玩家，不依赖载体 yaw）", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18"),
-    ("4.载体", "锁 y=4.5", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~"),
-    ("4.载体", "出界回中心", f"execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
     ("5.入场", "进圈开战", f"execute if score st bs matches 0 if entity @a[{ARENA_SEL}] run scoreboard players set st bs 1"),
     ("5.入场", "开战标题",
      'execute if score st bs matches 1 if score t bs matches 0 run titleraw @a title '
