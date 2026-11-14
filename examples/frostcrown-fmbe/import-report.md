@@ -7,7 +7,7 @@
 | 项 | 结果 |
 |---|---|
 | 建筑 `frostcrown-arena.bdx` | 导入在 `500 0 500`，沿用 |
-| 命令方块 | **446/446**（`init_a 62` + `init_b 53` + `main 107` + `pose_idle 112` + `pose_cast 112`） |
+| 命令方块 | **432/432**（`init_a 62` + `init_b 53` + `main 93` + `pose_idle 112` + `pose_cast 112`） |
 | StartPos | `506 42 506` |
 | 触发 | `505 43 506` 与 `505 43 516` 两块红石；`init_b` 链尾自动拔掉 |
 | 部件/载体 | `PARTS 14 / CORES 1 / UNIQUE 14` |
@@ -27,7 +27,7 @@ AFTER HP 5960  HIT 0           ← 真实命中扣 40；hit 在链尾清 0
 关键结论：
 
 - **僵尸自己追**：没有任何载体移动 `tp`；原版 AI 锁定玩家后走到 `AT_520_516`。
-- **转身**：位置用 `^` + `facing feet`（僵尸/玩家同在地面，pitch=0），yaw 用 `facing eyes`；模型绕僵尸旋转。
+- **拼接**：部件用 `~` 世界轴偏移；`^` + facing 尝试会因各部件 pitch 不同散架，当前版本回退为不转身。
 - **真实命中仍成立**：载体戴 1 耐久头盔，碎后 `replaceitem ... keep` 补回，conditional 置 `hit=1` 才扣血。
 - **一次命中只扣一次**：`hit` 读回 0。
 

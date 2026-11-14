@@ -20,7 +20,7 @@
 | 文件 | 作用 |
 |---|---|
 | `frostcrown-arena.bdx` | 冰窟竞技场 + 机关平台（StartPos `500 0 500`） |
-| `frostcrown-commands.bdx` | **446 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
+| `frostcrown-commands.bdx` | **432 个命令方块**（5 条链：init_a / init_b / main / pose_idle / pose_cast） |
 | `spec.json` | 可被 `chain_lint.py` 检查的链描述 |
 | `design.md` | 行为契约、FMBE 表、移动/命中原理、状态机、测试 |
 | `import-report.md` | 真机导入/移动/命中记录 |
@@ -29,7 +29,7 @@
 | `readbdx.py` | BDX 回读，逐块对 spec |
 | `import-info.json` | StartPos / 块数 |
 
-> 不提交 446 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
+> 不提交 432 块的 `manual-build.md` / `lint.md`；运行生成器和 lint 会本地生成。
 
 ## 3. 坐标与导入
 
@@ -71,33 +71,36 @@ scoreboard players set hit bs 1
 - `hit` 在伤害结算末尾清 0，保证一次命中只扣一次。
 - 真机小链验证：`BEFORE 0 → 打一下 AFTER1 1 → 再打一下 AFTER2 2`。
 
-## 5. 僵尸 AI + 模型转身
+## 5. 僵尸 AI + 模型绑定
 
-**怪物自己动，不 tp 怪物；模型以僵尸为中心转身。**
+**怪物自己动，不 tp 怪物。**
 
 ```mcfunction
-# 僵尸自己用 AI 追人（无移动 tp）
+# 召唤一只隐形僵尸；它自己会锁定并走向玩家
 summon zombie 515.5 2 515.5
 effect @e[tag=boss_core] invisibility infinite 255 true
 effect @e[tag=boss_core] resistance infinite 4 true
+effect @e[tag=boss_core] regeneration infinite 4 true
 effect @e[tag=boss_core] fire_resistance infinite 255 true
+effect @e[tag=boss_core] health_boost infinite 4 true
 effect @e[tag=boss_core] weakness infinite 255 true
 effect @e[tag=boss_core] speed infinite 1 true
-
-# 部件位置：以僵尸为原点，面向玩家“脚”做 ^ 旋转
-# 僵尸和玩家都在地面 y=2，facing feet 的 pitch=0，^ 不会上下倾
-execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] feet run tp @s ^0 ^5.4 ^0
-
-# 部件 yaw：面向玩家“眼睛”；~0.01 强制刷新，位置下一 tick 会重新校正
-execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
-# ...其余 13 个部件同理
 ```
 
-- 位置用 `feet`，pitch 为 0，14 个部件绕僵尸水平旋转，不会因为高度不同被拉散。
-- yaw 用 `eyes`，让 item 模型的朝向跟玩家一致。
-- 僵尸 AI 负责走/停/追；FMBE 只做绑定和转身。
-- `^` 的左右轴仍需客户端确认；若左右手镜像，把每个部件 x 偏移取反。
-- 当前测试优先保证位置；如果客户端仍看到部件 pitch 倾斜，再给每个部件加同高度 aim。
+- **没有任何 `tp @e[tag=boss_carrier]` 移动命令**；僵尸的寻路/追击完全交给原版 AI。
+- `speed` 让它追得上玩家；`weakness 255` 防止它把玩家秒了；`fire_resistance` 防白天燃烧。
+- FMBE 只做“绑定”，每 tick 以僵尸为原点：
+
+```mcfunction
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ~0 ~5.4 ~0
+execute as @e[tag=boss_p_torso] at @e[tag=boss_carrier] run tp @s ~0 ~4.2 ~0
+# ...其余 12 个部件同理
+```
+
+- 僵尸脚底 y=2，部件偏移按 `原绝对 y - 2` 重算；模型在僵尸上方。
+- 世界轴 `~` 偏移保证 14 个部件不会散；僵尸走/停，模型整体跟随。
+- **当前限制**：模型保持南向，不随僵尸 yaw 转身；先保证拼接和 AI 追击。
+- 实测：bot 放东侧 `520 2 516`，僵尸自己走到 `AT_520_516`，`PARTS 14 / CORES 1`。
 
 ## 6. 战斗
 
@@ -115,7 +118,7 @@ python3 ../../scripts/chain_lint.py spec.json --format markdown --write lint.md
 python3 readbdx.py frostcrown-commands.bdx
 ```
 
-`readbdx.py` 回读：446 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
+`readbdx.py` 回读：432 个命令方块，5 个链头，坐标/朝向/模式/延迟/条件/命令文本全部与 spec 一致。
 
 真机（租赁服）：
 
@@ -127,6 +130,6 @@ damage @e[tag=boss_core] 10 entity_attack
 AFTER HP 5960  HIT 0
 ```
 
-结论：僵尸用自己的 AI 追玩家，模型以它为中心移动并转向玩家；扣血仍只由“僵尸真实被击中”触发。客户端仍需目视确认 14 部件遮挡和 `^` 左右轴。
+结论：僵尸用自己的 AI 追玩家，模型以它为中心整体跟随；扣血仍只由“僵尸真实被击中”触发。客户端仍需目视确认 14 部件遮挡。
 
 FMBE 参考资料：[FMBE Hub](https://fmbe-hub.ora-san.org/)、[Bedrock Wiki: Display Entities](https://wiki.bedrock.dev/commands/display-entities.html)。
