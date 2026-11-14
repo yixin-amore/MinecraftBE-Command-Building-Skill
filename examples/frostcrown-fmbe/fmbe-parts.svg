@@ -57,9 +57,8 @@
 
   <!-- core markers -->
   <circle cx="490" cy="355" r="8" fill="#ff4d6d" opacity="0.9"/>
-  <circle cx="490" cy="250" r="8" fill="#ff4d6d" opacity="0.9"/>
-  <text x="505" y="360" fill="#ffb3c1" font-family="sans-serif" font-size="11">cow core（胸）</text>
-  <text x="505" y="255" fill="#ffb3c1" font-family="sans-serif" font-size="11">cow core（头）</text>
+  <text x="505" y="360" fill="#ffb3c1" font-family="sans-serif" font-size="11">moving cow carrier / core</text>
+
 
   <!-- side labels -->
   <rect x="40" y="90" width="230" height="155" rx="12" fill="#0c2230" stroke="#1f4b5e"/>
@@ -76,5 +75,5 @@
   <text x="726" y="185" fill="#9fc8d8" font-family="sans-serif" font-size="12">8 条 playanimation / 部件</text>
   <text x="726" y="215" fill="#ffd166" font-family="sans-serif" font-size="12">pose 0 / 1 两条链</text>
 
-  <text x="490" y="590" text-anchor="middle" fill="#5f8292" font-family="sans-serif" font-size="12">14 parts · 2 cores · 436 command blocks · 5 chains</text>
+  <text x="490" y="590" text-anchor="middle" fill="#5f8292" font-family="sans-serif" font-size="12">14 parts · 1 moving carrier · 434 command blocks · 5 chains</text>
 </svg>

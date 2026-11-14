@@ -1,4 +1,4 @@
-# 导入报告 · 霜冠·维丝佩拉 v2（FMBE）
+# 导入报告 · 霜冠·维丝佩拉 v3（FMBE 移动版）
 
 服务器：`28890143` · 2026-11-14 · 逐块导入（`tp → setblock → CommandBlockUpdate`）
 
@@ -7,38 +7,37 @@
 | 项 | 结果 |
 |---|---|
 | 建筑 `frostcrown-arena.bdx` | 导入在 `500 0 500`，沿用 |
-| 命令方块 | **436/436**（`init_a 63` + `init_b 53` + `main 96` + `pose_idle 112` + `pose_cast 112`） |
+| 命令方块 | **434/434**（`init_a 59` + `init_b 53` + `main 98` + `pose_idle 112` + `pose_cast 112`） |
 | StartPos | `506 42 506` |
 | 触发 | `505 43 506` 与 `505 43 516` 两块红石；`init_b` 链尾自动拔掉 |
-| 结果 | `PARTS 14 / CORES 2 / UNIQUE 14` |
+| 部件/载体 | `PARTS 14 / CORES 1 / UNIQUE 14` |
 
-> 为什么拆两条 init：v1 的 115 块单链在真机会吞掉中间几条 `tag` 命令，导致
-> 14 只部件都在、但只有 9 个唯一 tag。拆成 63/53 两条后复查为 **14/14/2**。
+> 115 块单条 init 链在真机会吞掉中间几条 `tag` 命令；拆成 59/53 两条后复查 14/14/1。
 
 ## 2. 实测
 
 ```text
-HP_OK
-ST_IDLE
-HEAD_OK
-PARTS 14 / CORES 2 / UNIQUE 14
-ST 1  HP 6000                  ← 机器人走进 515 2 515
-damage @e[tag=boss_core_body] 10 entity_attack
+PARTS 14 / CORES 1 / UNIQUE 14
+ST 1  HP 6000                  ← bot 走进 515 2 520，载体开始追
+载体移动标记：AT_515_517       ← 从 z=516.3 追到 z=517（停在 2.5 格）
+damage @e[tag=boss_core] 10 entity_attack
 AFTER HP 5960  HIT 0           ← 真实命中扣 40；hit 在链尾清 0
 ```
 
 关键结论：
 
-- **FMBE 14 部件全部注册**，2 个隐形核心就位。
-- **真实命中成立**：头盔碎 → 下一 tick `replaceitem ... keep` 补回 → conditional 块置 `hit=1` → 扣 40。
+- **Boss 会动**：载体面向最近 fighter 并以 0.18 格/tick 前进；14 个 FMBE 部件相对 `tp` 跟随。
+- **真实命中仍成立**：载体戴 1 耐久头盔，碎后 `replaceitem ... keep` 补回，conditional 置 `hit=1` 才扣血。
 - **一次命中只扣一次**：`hit` 读回 0。
-- **复位/状态机**：`st=0`、`hp=6000`；进圈 `st=1`。
+- **待机不追人**：`st=0` 时载体回中心。
+- **边界保护**：载体出 `x506..523,z506..523` 会回中心，避免追出冰窟。
 
 ## 3. 未验收
 
 无头机器人不能看客户端 FMBE 模型。需要在客户端确认：
 
 - 14 个部件是否拼成完整冰霜女王（位置/缩放/遮挡）；
+- 移动时模型朝向（当前用 `~` 世界轴偏移，模型保持南向）；
 - `idle` 与 `cast` 两套姿态；
 - 二阶段冰晶/冰地板、三阶段暴雪、胜利/团灭演出。
 

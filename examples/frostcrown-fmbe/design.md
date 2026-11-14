@@ -1,15 +1,15 @@
 # 设计：霜冠·维丝佩拉 v2（FMBE 真实命中版）
 
-> 网易 1.21.130 · 14 部件 FMBE + 2 个隐形 cow 核心 + 1 耐久头盔命中检测。
-> 436 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
+> 网易 1.21.130 · 14 部件 FMBE + 1 个会追人的隐形 cow 载体 + 1 耐久头盔命中检测。
+> 434 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
 
 ## 1. 行为契约
 
 | 项 | 内容 |
 |---|---|
-| 谁触发 | 玩家走进冰窟（体积选择器 `x=504,y=2,z=504,dx=23,dy=6,dz=23`）→ `st 0→1`；复位由红石块 `505 43 506` 触发 `init` |
-| 起始 | `st=0`：14 个 FMBE 部件待机、2 个隐形核心戴 1 耐久头盔、血条不显示 |
-| 中间 | `st=1`：三阶段、两技能、冰甲破盾、真实命中、个人伤害 |
+| 谁触发 | 玩家走进冰窟（体积选择器 `x=504,y=2,z=504,dx=23,dy=6,dz=23`）→ `st 0→1`；复位由红石块 `505 43 506` + `505 43 516` 触发两条 `init` |
+| 起始 | `st=0`：14 个 FMBE 部件待机、隐形载体回中心、血条不显示 |
+| 中间 | `st=1`：载体追最近 fighter，FMBE 相对跟随；三阶段、两技能、冰甲破盾、真实命中、个人伤害 |
 | 结束 | `st=2` 胜利（核心/部件消失、传出、战利品）／`st=3` 团灭（4 秒无 fighter） |
 | 失败 | 团灭只播标题；重放红石块复位 |
 | 重置 | `init` 清旧部件/核心/冰晶/仆从、重召 FMBE、重设全部分、清触发红石块 |
@@ -22,7 +22,7 @@
 v1 是一只 `ravager`；只有粒子/发光，没有模型拼接和动画。v2 改成：
 
 - 14 只 **fox** 部件（主手方块物品模型）；
-- 两只隐形 **cow** 核心（胸口 + 头部），只做受击体积；
+- 1 只隐形 **cow** 载体（同时是真实受击核心）；
 - 两套 `playanimation` 姿态：`idle` 与 `cast`。
 
 ### 2.2 v1：扣血是“手持武器靠近”
@@ -57,15 +57,38 @@ BEFORE 0
 再打一下 → AFTER2 2
 ```
 
-### 2.3 为什么两个核心
+### 2.3 载体：一个会追人的受击核心
 
-FMBE 部件有碰撞箱，会挡住核心。把两个隐形 cow 核心放在 **FMBE 部件的南侧**（玩家进门方向）：
+FMBE 部件有碰撞箱，会挡住核心。v3 不再放两个固定核心，而是让**载体本身**当核心：
 
-- 胸口核心 `515.5 5.0 516.4`
-- 头部核心 `515.5 7.2 516.2`
+- 隐形 cow `boss_carrier` + `boss_core`；
+- 位置 `515.5 4.5 516.3`（模型中心南侧 0.8 格）；
+- cow 不渲染护甲，所以 1 耐久皮革头盔不可见；
+- 每 tick 面向最近 fighter，距离 >2.5 时沿 `^ ^ ^0.18` 前进；
+- 14 个部件以载体为原点相对 `tp`，偏移 = 原绝对坐标 − 载体坐标；
+- 出界/待机回中心；y 锁 4.5，避免 `facing` 的 pitch 让载体上下漂。
 
-任意一个头盔碎都置 `hit=1`；`replaceitem @e[tag=boss_core]` 一次补两只，成功次数>0 即可。
-两个核心都每 tick `tp` 锚定，防止被推走/掉落。
+这样“模型中心”和“真实受击核心”是同一个移动实体，模型追人时核心也追人。
+
+### 2.4 移动命令
+
+```mcfunction
+# 待机回中心
+execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s 515.5 4.5 516.3
+# 面向最近 fighter
+execute if score st bs matches 1 as @e[tag=boss_carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]
+# 距离 >2.5 前进 0.18 格/tick
+execute if score st bs matches 1 as @e[tag=boss_carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
+# 锁 y；出界回中心
+execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~
+execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
+# 部件相对跟随（head 示例）
+execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_head] ~0 ~2.9 ~-0.8
+```
+
+- 部件用 `~` 世界轴偏移，模型保持南向，不随载体 yaw 旋转；稳定，不会左右手互换。
+- 想旋转模型就把偏移改 `^` 并先校准；`^` 的左右轴在客户端确认。
+- 载体换僵尸/劫掠兽也能走同一套命令，但要重测护甲渲染、碰撞箱和 AI。
 
 ## 3. FMBE 部件
 
@@ -86,9 +109,10 @@ FMBE 部件有碰撞箱，会挡住核心。把两个隐形 cow 核心放在 **F
 | wing_l | white_stained_glass | 513.0 6.8 516.0 | 0.70 / 1.2 |
 | wing_r | white_stained_glass | 518.0 6.8 516.0 | 0.70 / 1.2 |
 
+- 表内是初始化时的绝对坐标；运行时部件位置 = 载体 `(515.5,4.5,516.3)` + 表内坐标差。
 - 每个部件用 **0.4×0.4×0.4 独占体积**打 `boss_part` + `boss_p_<name>`，不靠 `r=0.6`（会重叠）。
 - 每个部件 `invisibility/resistance/slowness`；`event ... ageable_grow_up` 保证成年。
-- 每 tick `tp` 回锚点，防重力/AI/玩家挤压。
+- 每 tick 以载体为原点 `tp`，防重力/AI/玩家挤压；载体移动时整组相对跟随。
 - 8 条 `playanimation` 链的顺序不能乱，第一条必须是 `controller.animation.fox.move`。
 
 ## 4. 动画
@@ -126,22 +150,22 @@ pose=1：14 部件 × 8 条 cast playanimation
 | `pose` | `bs` | 0/1 | 0 | FMBE 姿态 |
 | `dmg` | `dmg` | 0..∞ | 0 | 每玩家伤害 |
 | `fighter` | tag | — | — | 战斗中玩家 |
-| `boss_core` / `boss_core_body` / `boss_core_head` | tag | — | — | 两个核心 |
+| `boss_core` / `boss_carrier` | tag | — | — | 移动载体（受击核心） |
 | `boss_part` / `boss_p_<name>` | tag | — | — | FMBE 部件 |
 
 ## 6. 链与布局
 
 | 链 | 类型 | 块数 | 坐标 |
 |---|---|---:|---|
-| `init_a` | impulse + chain | 63 | y=43，`506,43,506` 起蛇形 |
+| `init_a` | impulse + chain | 59 | y=43，`506,43,506` 起蛇形 |
 | `init_b` | impulse + chain | 53 | y=43，`506,43,516` 起蛇形 |
-| `main` | repeat + chain | 96 | y=42，`506,42,506` 起蛇形 |
+| `main` | repeat + chain | 98 | y=42，`506,42,506` 起蛇形 |
 | `pose_idle` | repeat + chain | 112 | y=44，`506,44,506` 起 |
 | `pose_cast` | repeat + chain | 112 | y=44，`506,44,518` 起 |
-| **合计** | | **436** | 包围盒 13×3×21 |
+| **合计** | | **434** | 包围盒 13×3×21 |
 
 - 5 个链头：`ia01`/`ib01`（Needs Redstone）、`m01`/`pi01`/`pc01`（Always Active）。
-- `m06` 是唯一的 conditional 块，紧贴 `m05`；`i` 链拆成 63/53 两段，避免长链吞 tag 命令。
+- `m06` 是唯一的 conditional 块，紧贴 `m05`；`i` 链拆成 59/53 两段，避免长链吞 tag 命令。
 - `init_b` 链尾拔掉 `505 43 506` 和 `505 43 516` 两块触发红石。
 
 ## 7. 战斗数值
@@ -167,9 +191,10 @@ pose=1：14 部件 × 8 条 cast playanimation
 
 ## 9. 验证
 
-- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，436 blocks。
-- `readbdx.py`：436 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
+- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，434 blocks。
+- `readbdx.py`：434 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
 - 真机命中链：`BEFORE 0 → AFTER1 1 → AFTER2 2`（conditional 块确实读到 replaceitem 成功）。
-- 真机完整导入：436/436 块写入；触发后 `HP_OK / ST_IDLE / HEAD_OK`（无 `NO_PARTS/NO_CORES`；复查 `PARTS 14 / CORES 2 / UNIQUE 14`）；
-  进圈 `ST=1 / HP=6000`；对 `boss_core_body` 实体攻击一次后 `HP=5960`。
-- **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、二/三阶段演出（无头 bot 看不到模型）。
+- 真机导入后：`PARTS 14 / CORES 1 / UNIQUE 14`；进圈 `ST=1 / HP=6000`。
+- 移动验证：bot 放到 `515 2 520`，载体从 `z=516.3` 追到 `z=517`（诊断红石块 `AT_515_517`），停止距离 2.5。
+- 命中验证：对 `boss_core` 实体攻击一次后 `HP=5960`，`hit` 在事务末尾清 0。
+- **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、移动时的模型朝向、二/三阶段演出（无头 bot 看不到模型）。

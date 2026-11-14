@@ -43,10 +43,10 @@ TRIGGER = (PLAT_X[0], GRID_Y + 1, CZ - 9)    # 505,43,506
 ROW_LEN = 13
 ROW_GAP = 1
 BOSS = (CX + 0.5, 4.8, CZ + 0.5)
-# 两个 cow 核心：胸口 + 头部，且都比 FMBE 部件更靠近南侧玩家。
-# 任意一只的头盔碎了=真实命中；两只都戴 1 耐久头盔。
-CORE_BODY = (CX + 0.5, 5.0, CZ + 1.4)
-CORE_HEAD = (CX + 0.5, 7.2, CZ + 1.2)
+# 一个移动载体 = 真实受击核心。cow 不渲染护甲，适合藏 1 耐久头盔。
+# 它被命令推着追玩家；FMBE 部件每 tick 以它为原点相对 tp。
+CORE_POS = (CX + 0.5, 4.5, CZ + 1.3)
+CORE_OFFSET_Z = CORE_POS[2] - (CZ + 0.5)   # 部件相对载体的 z 偏移=-0.8
 # 空中装配线：每个部件一个独立 x 的装配点，间隔 1 格；c=1 永远不会选错。
 STAGE_Y, STAGE_Z = 20.0, CZ + 6.0
 ARENA_SEL = f"x={CX - 11},y={CY},z={CZ - 11},dx=23,dy=6,dz=23"
@@ -171,28 +171,22 @@ INIT = [
     ("A.计分板", "FMBE 姿态（0=待机，1=施法）", "scoreboard objectives add pose dummy"),
     ("A.常加载", "竞技场 + 机关平台", f"tickingarea add {TICK} frost"),
     ("A.清场", "清旧 FMBE 部件", "kill @e[tag=boss_part]"),
-    ("A.清场", "清旧核心", "kill @e[tag=boss_core]"),
+    ("A.清场", "清旧核心/载体", "kill @e[tag=boss_core]"),
     ("A.清场", "清仆从", "kill @e[tag=minion]"),
     ("A.清场", "清冰晶", "kill @e[tag=crystal]"),
     ("A.清场", "二阶段冰地板还原",
      f"fill {FILL_X[0]} {FLOOR_Y} {FILL_Z[0]} {FILL_X[1]} {FLOOR_Y} {FILL_Z[1]} packed_ice 0 replace ice"),
-    ("A.核心", "召唤胸口核心", f"summon cow {CORE_BODY[0]} {CORE_BODY[1]} {CORE_BODY[2]}"),
-    ("A.核心", "胸口核心 tag",
-     f"tag @e[type=cow,x={CORE_BODY[0]-0.5},y={CORE_BODY[1]-0.5},z={CORE_BODY[2]-0.5},dx=1,dy=1,dz=1,c=1] add boss_core"),
-    ("A.核心", "胸口核心专用 tag",
-     f"tag @e[type=cow,x={CORE_BODY[0]-0.5},y={CORE_BODY[1]-0.5},z={CORE_BODY[2]-0.5},dx=1,dy=1,dz=1,c=1] add boss_core_body"),
-    ("A.核心", "召唤头部核心", f"summon cow {CORE_HEAD[0]} {CORE_HEAD[1]} {CORE_HEAD[2]}"),
-    ("A.核心", "头部核心 tag",
-     f"tag @e[type=cow,x={CORE_HEAD[0]-0.5},y={CORE_HEAD[1]-0.5},z={CORE_HEAD[2]-0.5},dx=1,dy=1,dz=1,c=1] add boss_core"),
-    ("A.核心", "头部核心专用 tag",
-     f"tag @e[type=cow,x={CORE_HEAD[0]-0.5},y={CORE_HEAD[1]-0.5},z={CORE_HEAD[2]-0.5},dx=1,dy=1,dz=1,c=1] add boss_core_head"),
-    ("A.核心", "隐身", "effect @e[tag=boss_core] invisibility infinite 255 true"),
-    ("A.核心", "抗性：血由计分板管，核心不能真死", "effect @e[tag=boss_core] resistance infinite 4 true"),
-    ("A.核心", "再生/生命提升，防止被连续攻击打死", "effect @e[tag=boss_core] regeneration infinite 4 true"),
-    ("A.核心", "防摔/防火", "effect @e[tag=boss_core] fire_resistance infinite 255 true"),
-    ("A.核心", "减速，配合每 tick 锚定", "effect @e[tag=boss_core] slowness infinite 255 true"),
-    ("A.核心", "生命提升", "effect @e[tag=boss_core] health_boost infinite 4 true"),
-    ("A.核心", "先装满耐久；之后只有碎了才会被 keep 补上",
+    ("A.载体", "召唤隐形载体（移动核心）", f"summon cow {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
+    ("A.载体", "载体 tag（movement + core）",
+     f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_core"),
+    ("A.载体", "载体专用 tag",
+     f"tag @e[type=cow,x={fmt(CORE_POS[0]-0.5)},y={fmt(CORE_POS[1]-0.5)},z={fmt(CORE_POS[2]-0.5)},dx=1,dy=1,dz=1,c=1] add boss_carrier"),
+    ("A.载体", "隐身", "effect @e[tag=boss_core] invisibility infinite 255 true"),
+    ("A.载体", "抗性：血由计分板管，核心不能真死", "effect @e[tag=boss_core] resistance infinite 4 true"),
+    ("A.载体", "再生/生命提升，防止被连续攻击打死", "effect @e[tag=boss_core] regeneration infinite 4 true"),
+    ("A.载体", "防火", "effect @e[tag=boss_core] fire_resistance infinite 255 true"),
+    ("A.载体", "生命提升", "effect @e[tag=boss_core] health_boost infinite 4 true"),
+    ("A.载体", "先装满耐久；之后只有碎了才会被 keep 补上",
      "replaceitem entity @e[tag=boss_core] slot.armor.head 0 keep leather_helmet 1 9999"),
 
 ]
@@ -249,10 +243,17 @@ MAIN = [
     # --- FMBE 每 tick 锚定，防重力/AI/玩家挤压 ---
 ]
 for name, item, pos, sc, ys in PARTS:
-    MAIN.append(("4.FMBE", f"锚定部件 {name}", f"tp @e[tag=boss_p_{name}] {fmt(pos[0])} {fmt(pos[1])} {fmt(pos[2])}"))
+    dx = pos[0] - (CX + 0.5)
+    dy = pos[1] - CORE_POS[1]
+    dz = pos[2] - CORE_POS[2]
+    MAIN.append(("4.FMBE", f"跟随部件 {name}",
+                 f"execute as @e[tag=boss_carrier] at @s run tp @e[tag=boss_p_{name}] ~{fmt(dx)} ~{fmt(dy)} ~{fmt(dz)}"))
 MAIN += [
-    ("4.FMBE", "锚定胸口核心", f"tp @e[tag=boss_core_body] {CORE_BODY[0]} {CORE_BODY[1]} {CORE_BODY[2]}"),
-    ("4.FMBE", "锚定头部核心", f"tp @e[tag=boss_core_head] {CORE_HEAD[0]} {CORE_HEAD[1]} {CORE_HEAD[2]}"),
+    ("4.载体", "待机回中心", f"execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
+    ("4.载体", "面向最近玩家", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]"),
+    ("4.载体", "追击（距 >2.5）", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18"),
+    ("4.载体", "锁 y=4.5", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s run tp @s ~ 4.5 ~"),
+    ("4.载体", "出界回中心", f"execute if score st bs matches 1 as @e[tag=boss_carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
     ("5.入场", "进圈开战", f"execute if score st bs matches 0 if entity @a[{ARENA_SEL}] run scoreboard players set st bs 1"),
     ("5.入场", "开战标题",
      'execute if score st bs matches 1 if score t bs matches 0 run titleraw @a title '
@@ -264,16 +265,15 @@ MAIN += [
     ("5.入场", "圈内玩家 fighter", f"execute as @a[{ARENA_SEL}] run tag @s add fighter"),
     ("5.入场", "补刀", "execute as @a[tag=fighter] unless entity @s[hasitem={item=netherite_sword}] run give @s netherite_sword 1"),
     ("5.入场", "离场脱战", f"execute as @a[tag=fighter] unless entity @s[{ARENA_SEL}] run tag @s remove fighter"),
-    ("6.Boss", "胸口核心面向最近玩家", f"execute as @e[tag=boss_core_body] at @s if entity @a[tag=fighter,c=1] run tp @s {CORE_BODY[0]} {CORE_BODY[1]} {CORE_BODY[2]} facing entity @a[tag=fighter,c=1]"),
-    ("6.Boss", "1 Hz 冰晶粒子", "execute if score bt bs matches 0 as @e[tag=boss_core_body] at @s run particle minecraft:end_rod ~ ~2 ~"),
-    ("6.Boss", "1 Hz 近身踩踏", "execute if score bt bs matches 0 as @e[tag=boss_core_body] at @s run damage @a[tag=fighter,r=4.5] 8 entity_attack"),
+    ("6.Boss", "1 Hz 冰晶粒子", "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run particle minecraft:end_rod ~ ~2 ~"),
+    ("6.Boss", "1 Hz 近身踩踏", "execute if score bt bs matches 0 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=4.5] 8 entity_attack"),
     ("6.Boss", "三阶段暴雪", "execute if score ph bs matches 3 if score bt bs matches 0 run damage @a[tag=fighter] 4 magic"),
     # --- 命中结算：hit 只由头盔碎裂事件产生 ---
     ("7.伤害", "无冰甲：40", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 run scoreboard players remove hp bs 40"),
-    ("7.伤害", "冰甲：白烟、不扣血", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches 1 as @e[tag=boss_core_body] at @s run particle minecraft:basic_smoke_particle ~ ~1 ~"),
+    ("7.伤害", "冰甲：白烟、不扣血", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:basic_smoke_particle ~ ~1 ~"),
     ("7.伤害", "破防：额外 40", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 if score stg bs matches 1.. run scoreboard players remove hp bs 40"),
-    ("7.伤害", "个人伤害统计（最近 fighter）", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 at @e[tag=boss_core_body] run scoreboard players add @p[tag=fighter] dmg 40"),
-    ("7.伤害", "命中粒子", "execute if score hit bs matches 1 if score st bs matches 1 as @e[tag=boss_core_body] at @s run particle minecraft:crit ~ ~1 ~ 0.4 0.4 0.4 0 8"),
+    ("7.伤害", "个人伤害统计（最近 fighter）", "execute if score hit bs matches 1 if score st bs matches 1 if score sh bs matches ..0 at @e[tag=boss_carrier] run scoreboard players add @p[tag=fighter] dmg 40"),
+    ("7.伤害", "命中粒子", "execute if score hit bs matches 1 if score st bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:crit ~ ~1 ~ 0.4 0.4 0.4 0 8"),
     ("7.伤害", "清命中标志", "scoreboard players set hit bs 0"),
     ("7.伤害", "血量钳 0", "execute if score hp bs matches ..-1 run scoreboard players set hp bs 0"),
     ("7.伤害", "破防计时", "execute if score stg bs matches 1.. run scoreboard players remove stg bs 1"),
@@ -318,9 +318,9 @@ MAIN += [
      '{"rawtext":[{"text":"§b⚠ 冰魂降临 · 先清召唤物！"}]}'),
     ("10.技能", "起手音效", f"execute if score ct bs matches 30 run playsound mob.wither.shoot @a {CX} {CY+1} {CZ} 1 1.4"),
     ("10.技能", "前摇倒数", "execute if score ct bs matches 1.. run scoreboard players remove ct bs 1"),
-    ("10.技能", "霜环结算", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_core_body] at @s run damage @a[tag=fighter,r=6.5] 18 magic"),
-    ("10.技能", "霜环减速", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_core_body] at @s run effect @a[tag=fighter,r=6.5] slowness 40 1 true"),
-    ("10.技能", "霜环粒子", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_core_body] at @s run particle minecraft:huge_explosion_emitter ~ ~ ~"),
+    ("10.技能", "霜环结算", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run damage @a[tag=fighter,r=6.5] 18 magic"),
+    ("10.技能", "霜环减速", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run effect @a[tag=fighter,r=6.5] slowness 40 1 true"),
+    ("10.技能", "霜环粒子", "execute if score ct bs matches 0 if score sk bs matches 1 as @e[tag=boss_carrier] at @s run particle minecraft:huge_explosion_emitter ~ ~ ~"),
     ("10.技能", "冰魂 1", f"execute if score ct bs matches 0 if score sk bs matches 2 run summon stray {STRAYS[0][0]} {STRAYS[0][1]} {STRAYS[0][2]}"),
     ("10.技能", "冰魂 2", f"execute if score ct bs matches 0 if score sk bs matches 2 run summon stray {STRAYS[1][0]} {STRAYS[1][1]} {STRAYS[1][2]}"),
     ("10.技能", "冰魂 tag", f"execute if score ct bs matches 0 if score sk bs matches 2 run tag @e[type=stray,{TAG_ARENA}] add minion"),
@@ -341,7 +341,7 @@ MAIN += [
     # --- 胜利 ---
     ("13.胜利", "t=0 门", "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set t bs 0"),
     ("13.胜利", "进入胜利", "execute if score st bs matches 1 if score hp bs matches ..0 run scoreboard players set st bs 2"),
-    ("13.胜利", "杀核心", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_core]"),
+    ("13.胜利", "杀核心/载体", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_core]"),
     ("13.胜利", "杀 FMBE 部件", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=boss_part]"),
     ("13.胜利", "清冰魂", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=minion]"),
     ("13.胜利", "清冰晶", "execute if score st bs matches 2 if score t bs matches 0 run kill @e[tag=crystal]"),

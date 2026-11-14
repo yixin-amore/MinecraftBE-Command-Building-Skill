@@ -81,9 +81,31 @@ stopsound @a mob.fox.aggro
 2. 初始化链超过 ~70 块就拆段；每段一个 impulse 头，触发红石可以并排。
 3. 由最后一段统一清掉所有触发红石，避免重复触发。
 4. 初始化后先跑一次计数（`execute as @e[tag=...] run scoreboard add`），再开战。
-5. 多部件 FMBE 的碰撞箱会挡住真实受击核心；核心要放在模型前方，或用胸口+头部两个核心。
+5. 多部件 FMBE 的碰撞箱会挡住真实受击核心；核心要放在模型前方。移动 Boss 可直接让隐形载体当核心，部件相对跟随。
 
 完整 14 部件、两套姿态、真实命中检测的例子见 `examples/frostcrown-fmbe/`。
+
+## 2.6 移动载体：让整只 FMBE 跟着玩家走
+
+固定锚点的 Boss 不会追人。把“模型中心”做成一个隐形移动载体（cow/僵尸/劫掠兽），
+FMBE 部件每 tick 以载体为原点相对 `tp`：
+
+```mcfunction
+# 面向最近玩家
+execute as @e[tag=carrier] at @s if entity @a[tag=fighter,r=24] run tp @s ~ ~ ~ facing entity @a[tag=fighter,c=1]
+# 距离 >2.5 前进 0.18 格/tick；rotated as @s 让 ^ 用载体的朝向
+execute if score st bs matches 1 as @e[tag=carrier] at @s rotated as @s if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
+# 锁 y、出界回中心
+execute if score st bs matches 1 as @e[tag=carrier] at @s run tp @s ~ 4.5 ~
+execute if score st bs matches 1 as @e[tag=carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
+# 部件相对跟随（head 示例）
+execute as @e[tag=carrier] at @s run tp @e[tag=part_head] ~0 ~2.9 ~-0.8
+```
+
+- 载体本身当受击核心：戴 1 耐久头盔，`replaceitem ... keep` + conditional 做真实命中；cow 不渲染护甲。
+- 部件偏移 = 原绝对坐标 − 载体坐标；用 `~` 世界轴稳，模型不转向；用 `^` 可转向但要校准左右手。
+- 待机时把载体 `tp` 回中心，避免追到出生点。
+- 完整移动版见 `examples/frostcrown-fmbe/`。
 
 ## 3. FMBE 的动画链（1 条初始化 + 7 条变量/姿态）
 
