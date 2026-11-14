@@ -1,7 +1,7 @@
 # 设计：霜冠·维丝佩拉 v2（FMBE 真实命中版）
 
 > 网易 1.21.130 · 14 部件 FMBE + 1 个会追人的隐形 cow 载体 + 1 耐久头盔命中检测。
-> 448 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
+> 434 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
 
 ## 1. 行为契约
 
@@ -70,26 +70,23 @@ FMBE 部件有碰撞箱，会挡住核心。v3 不再放两个固定核心，而
 
 这样“模型中心”和“真实受击核心”是同一个移动实体，模型追人时核心也追人。
 
-### 2.4 移动 / 转身命令
+### 2.4 移动命令与转身限制
 
-**根因**：`tp @s ~ ~ ~ facing entity ...` 原地转身在真机上没有刷新 yaw；`tp @s ^ ^ ^0.18` 于是永远沿初始 yaw 往出口跑。
-
-修复：移动命令直接用 `execute ... facing entity ... eyes`，不依赖载体保存的 yaw：
+**移动**：命令自己 `facing` 玩家，避免依赖载体保存的 yaw：
 
 ```mcfunction
 execute if score st bs matches 1 as @e[tag=boss_carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
-# 部件位置：同一朝向旋转 ^ 偏移
-execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^2.9 ^-0.8
-# 部件 yaw：~0.01 强制刷新
-execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
 ```
 
-- `execute ... facing entity` 必须带 `eyes`/`feet` 锚点；省略会不生效。
-- `^` 偏移随朝向旋转；`tp ... facing ... eyes` 让 item 模型 yaw 一致。
-- `~0.01` 是为了避免同点 tp 不刷新 yaw；下一 tick 位置会被重新校正。
-- 左右轴客户端确认；镜像就取反 x。
+**拼接**：部件用世界轴相对偏移：
 
-## 3. FMBE 部件## 3. FMBE 部件
+```mcfunction
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ~0 ~2.9 ~-0.8
+```
+
+**转身限制**：尝试 `^` + `facing` 会让模型散开——部件高度不同，facing 的 pitch 不同，`^` 上轴各自倾斜。当前版本保证拼接和追击，模型保持南向。正确转身需要每部件同高度朝向点或 yaw 预计算。
+
+## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件
 
 | 部件 | 主手物品 | 坐标 | scale / yscale |
 |---|---|---|---|
@@ -158,10 +155,10 @@ pose=1：14 部件 × 8 条 cast playanimation
 |---|---|---:|---|
 | `init_a` | impulse + chain | 60 | y=43，`506,43,506` 起蛇形 |
 | `init_b` | impulse + chain | 53 | y=43，`506,43,516` 起蛇形 |
-| `main` | repeat + chain | 111 | y=42，`506,42,506` 起蛇形 |
+| `main` | repeat + chain | 97 | y=42，`506,42,506` 起蛇形 |
 | `pose_idle` | repeat + chain | 112 | y=44，`506,44,506` 起 |
 | `pose_cast` | repeat + chain | 112 | y=44，`506,44,518` 起 |
-| **合计** | | **448** | 包围盒 13×3×21 |
+| **合计** | | **434** | 包围盒 13×3×21 |
 
 - 5 个链头：`ia01`/`ib01`（Needs Redstone）、`m01`/`pi01`/`pc01`（Always Active）。
 - `m06` 是唯一的 conditional 块，紧贴 `m05`；`i` 链拆成 59/53 两段，避免长链吞 tag 命令。
@@ -190,11 +187,12 @@ pose=1：14 部件 × 8 条 cast playanimation
 
 ## 9. 验证
 
-- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，448 blocks。
-- `readbdx.py`：448 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
+- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，434 blocks。
+- `readbdx.py`：434 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
 - 真机命中链：`BEFORE 0 → AFTER1 1 → AFTER2 2`（conditional 块确实读到 replaceitem 成功）。
 - 真机导入后：`PARTS 14 / CORES 1 / UNIQUE 14`；进圈 `ST=1 / HP=6000`。
 - 方向验证：bot 东侧 `520 2 516` → `EAST_520_516`；bot 北侧 `515 2 510` → `NORTH_516_512`，不再只往出口跑。
+- 拼接：部件用 `~` 世界轴偏移；模型不转身，避免 `^` 散架。
 - 命中验证：对 `boss_core` 实体攻击一次后 `HP=5960`，`hit` 在事务末尾清 0。
-- **模型转身**：位置用 `^` + `facing ... eyes`、yaw 用 `tp ... facing ... eyes`；客户端需确认左右轴和遮挡。
+- **未做**：模型转身；当前优先保证拼接和追击，`^` 方案会因各部件 pitch 不同散架。
 - **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、移动时的模型朝向、二/三阶段演出（无头 bot 看不到模型）。

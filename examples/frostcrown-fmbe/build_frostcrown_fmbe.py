@@ -247,12 +247,9 @@ for name, item, pos, sc, ys in PARTS:
     dx = pos[0] - (CX + 0.5)
     dy = pos[1] - CORE_POS[1]
     dz = pos[2] - CORE_POS[2]
-    # 位置：以载体为原点，朝向“最近 fighter”做 ^ 旋转
-    MAIN.append(("4.FMBE", f"转身跟随部件 {name}",
-                 f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^{fmt(dx)} ^{fmt(dy)} ^{fmt(dz)}"))
-    # yaw：直接 facing 玩家；加 ~0.01 强制产生一次位置变化，避免同点 tp 不刷 yaw
-    MAIN.append(("4.FMBE", f"部件 {name} 朝向玩家",
-                 f"execute as @e[tag=boss_p_{name}] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes"))
+    # 世界轴相对位置：稳定拼接；载体移动时整组跟随。
+    MAIN.append(("4.FMBE", f"跟随部件 {name}",
+                 f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] run tp @s ~{fmt(dx)} ~{fmt(dy)} ~{fmt(dz)}"))
 MAIN += [
     ("4.载体", "待机回中心", f"execute if score st bs matches 0 as @e[tag=boss_carrier] at @s run tp @s {fmt(CORE_POS[0])} {fmt(CORE_POS[1])} {fmt(CORE_POS[2])}"),
     ("4.载体", "追击（直接 facing 玩家，不依赖载体 yaw）", "execute if score st bs matches 1 as @e[tag=boss_carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18"),

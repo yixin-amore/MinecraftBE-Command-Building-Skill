@@ -48,7 +48,7 @@
   <text x="420" y="160" fill="#9ff5e2" font-family="sans-serif" font-size="11">eye_l / eye_r</text>
 
   <!-- crown -->
-  <path d="M448 174 L458 132 L478 158 L490 118 L502 158 L522 132 L532 174 Z" fill="#f5c542" stroke="#fff2b0" stroke-width="2"/>
+  <path d="M434 174 L458 132 L478 158 L490 118 L502 158 L522 132 L532 174 Z" fill="#f5c542" stroke="#fff2b0" stroke-width="2"/>
   <text x="535" y="135" fill="#ffe28a" font-family="sans-serif" font-size="12">crown</text>
 
   <!-- halo -->
@@ -75,5 +75,5 @@
   <text x="726" y="185" fill="#9fc8d8" font-family="sans-serif" font-size="12">8 条 playanimation / 部件</text>
   <text x="726" y="215" fill="#ffd166" font-family="sans-serif" font-size="12">pose 0 / 1 两条链</text>
 
-  <text x="490" y="590" text-anchor="middle" fill="#5f8292" font-family="sans-serif" font-size="12">14 parts · 1 moving carrier · 448 command blocks · 5 chains</text>
+  <text x="490" y="590" text-anchor="middle" fill="#5f8292" font-family="sans-serif" font-size="12">14 parts · 1 moving carrier · 434 command blocks · 5 chains</text>
 </svg>

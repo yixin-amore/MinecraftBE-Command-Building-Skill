@@ -85,29 +85,28 @@ stopsound @a mob.fox.aggro
 
 完整 14 部件、两套姿态、真实命中检测的例子见 `examples/frostcrown-fmbe/`。
 
-## 2.6 移动载体：让整只 FMBE 跟着玩家走
+## 2.6 移动载体：先保拼接，再谈转身
 
 固定锚点的 Boss 不会追人。把“模型中心”做成一个隐形移动载体（cow/僵尸/劫掠兽），
-FMBE 部件每 tick 以载体为原点相对 `tp`：
+FMBE 部件每 tick 以载体为原点相对 `tp`。
+
+**先保拼接（推荐）**：部件用世界轴 `~` 偏移，载体负责移动：
 
 ```mcfunction
-# 移动命令自己带 facing，不依赖载体保存的 yaw；eyes 锚点不能省
+# 移动命令自己 facing 玩家，eyes 锚点不能省
 execute if score st bs matches 1 as @e[tag=carrier] at @s facing entity @a[tag=fighter,c=1] eyes if entity @a[tag=fighter,r=24] unless entity @a[tag=fighter,r=2.5] run tp @s ^ ^ ^0.18
-# 锁 y、出界回中心
-execute if score st bs matches 1 as @e[tag=carrier] at @s run tp @s ~ 4.5 ~
-execute if score st bs matches 1 as @e[tag=carrier] at @s unless entity @s[x=506,y=2,z=506,dx=18,dy=8,dz=18] run tp @s 515.5 4.5 516.3
-# 部件位置：同一朝向旋转 ^ 偏移
-execute as @e[tag=part_head] at @e[tag=carrier] facing entity @a[tag=fighter,c=1] eyes run tp @s ^0 ^2.9 ^-0.8
-# 部件 yaw：~0.01 强制一次位置变化，避免同点 tp 不刷新
-execute as @e[tag=part_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
+# 部件跟随；不旋转，稳定不散
+execute as @e[tag=part_head] at @e[tag=carrier] run tp @s ~0 ~2.9 ~-0.8
 ```
 
-- **坑**：`tp @s ~ ~ ~ facing entity ...` 原地转身在真机可能不刷新 yaw；`tp @s ^ ^ ^0.18` 会沿初始 yaw 一直跑。移动/部件都改成 `execute ... facing ... eyes`。
-- `facing entity` 的 `eyes`/`feet` 锚点不能省；省略会不生效/格式错误。
-- 载体本身当受击核心：戴 1 耐久头盔，`replaceitem ... keep` + conditional 做真实命中；cow 不渲染护甲。
-- 部件偏移 = 原绝对坐标 − 载体坐标；`^` 随 yaw 旋转，`facing` 让 item 模型 yaw 一致。
-- 待机时把载体 `tp` 回中心，避免追到出生点。
-- 完整移动版见 `examples/frostcrown-fmbe/`。
+**转身的坑**：不要直接给多高度部件用 `^` + `facing`：
+
+- 部件高度不同，`facing` 的 pitch 不同；
+- `^` 的上轴跟着各部件 pitch 倾斜；
+- 偏移被各自局部轴放大，模型会越跑越散。
+
+正确转身需要：每部件一个“同高度朝向点”，或按 yaw 预先算好偏移表；不要用一个高点 aim 套所有部件。
+完整移动版见 `examples/frostcrown-fmbe/`（当前版本拼接优先，不转身）。
 
 ## 3. FMBE 的动画链（1 条初始化 + 7 条变量/姿态）
 

@@ -7,7 +7,7 @@
 | 项 | 结果 |
 |---|---|
 | 建筑 `frostcrown-arena.bdx` | 导入在 `500 0 500`，沿用 |
-| 命令方块 | **448/448**（`init_a 60` + `init_b 53` + `main 111` + `pose_idle 112` + `pose_cast 112`） |
+| 命令方块 | **434/434**（`init_a 60` + `init_b 53` + `main 97` + `pose_idle 112` + `pose_cast 112`） |
 | StartPos | `506 42 506` |
 | 触发 | `505 43 506` 与 `505 43 516` 两块红石；`init_b` 链尾自动拔掉 |
 | 部件/载体 | `PARTS 14 / CORES 1 / UNIQUE 14` |
@@ -27,7 +27,7 @@ AFTER HP 5960  HIT 0           ← 真实命中扣 40；hit 在链尾清 0
 关键结论：
 
 - **Boss 会按方位追**：移动命令直接 `facing entity ... eyes`，不再依赖载体保存的 yaw；东/北两方向实测 `EAST_520_516` / `NORTH_516_512`。
-- **模型转身**：部件位置用 `^` + `facing ... eyes`，yaw 用 `tp ... facing ... eyes`。
+- **拼接**：部件用 `~` 世界轴偏移；`^` + facing 尝试会因各部件 pitch 不同散架，当前版本回退为不转身。
 - **真实命中仍成立**：载体戴 1 耐久头盔，碎后 `replaceitem ... keep` 补回，conditional 置 `hit=1` 才扣血。
 - **一次命中只扣一次**：`hit` 读回 0。
 - **待机不追人**：`st=0` 时载体回中心。

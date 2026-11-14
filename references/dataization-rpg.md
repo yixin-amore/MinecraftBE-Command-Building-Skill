@@ -314,7 +314,7 @@ scoreboard players set hit bs 1
 - 多核心（FMBE 模型挡住一个 hitbox）：`@e[tag=hit_core]` 一次补全部，任意一个补成功即 `hit=1`；伤害仍只结算一次。
 - FMBE 部件有碰撞箱，会把核心挡在后面；把真实受击核心放在模型**前方**，或用移动载体/胸口+头部多核心。
 - `keep` 是网易/旧版扩展；国际版标准 `replaceitem` 没有这个位置参数，不能直接移植。
-- 完整可跑例子见 `examples/frostcrown-fmbe/`（14 部件 FMBE + 1 移动载体 + 448 块）。
+- 完整可跑例子见 `examples/frostcrown-fmbe/`（14 部件 FMBE + 1 移动载体 + 434 块）。
 
 ### 随机词条装备
 
