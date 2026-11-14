@@ -85,9 +85,9 @@ stopsound @a mob.fox.aggro
 
 完整 14 部件、两套姿态、真实命中检测的例子见 `examples/frostcrown-fmbe/`。
 
-## 2.6 真实生物 AI：让怪物自己走，FMBE 只跟随
+## 2.6 真实生物 AI + 模型转身
 
-不要用命令 `tp` 推载体，否则怪物会像滑板一样直线跑。让原版 AI 走：
+不要用命令 `tp` 推载体；让原版 AI 走：
 
 ```mcfunction
 summon zombie 515.5 2 515.5
@@ -98,17 +98,20 @@ effect @e[tag=boss_core] weakness infinite 255 true
 effect @e[tag=boss_core] speed infinite 1 true
 ```
 
-- 僵尸自己会锁定玩家；不要每 tick `tp` 它。
-- 1 耐久头盔仍可做真实命中核心；僵尸低 hitbox 在腿部，FMBE 部件在它上方。
-- FMBE 只做绑定，每 tick 以怪物为原点：
+模型绑定与转身：
 
 ```mcfunction
-execute as @e[tag=part_head] at @e[tag=boss_carrier] run tp @s ~0 ~5.4 ~0
-execute as @e[tag=part_torso] at @e[tag=boss_carrier] run tp @s ~0 ~4.2 ~0
+# 位置：以僵尸为原点，facing 玩家脚；同在地面 y=2，pitch=0，^ 水平旋转
+execute as @e[tag=part_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] feet run tp @s ^0 ^5.4 ^0
+# yaw：facing 玩家眼睛；~0.01 强制刷新
+execute as @e[tag=part_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
 ```
 
-- 世界轴 `~` 偏移保证拼接；模型跟随怪物走/停，但当前保持南向，不转身。
-- 不要用 `^` + 单个 facing 目标做多高度部件转身：pitch 不同会把模型拉散。
+- 位置用 `feet` 保证 pitch=0；14 个部件高度不同也不会被上下轴拉散。
+- yaw 用 `eyes` 让 item 模型转向玩家；下一 tick 位置会重新校正。
+- 僵尸低 hitbox 在腿部；1 耐久头盔做真实命中核心。
+- `^` 左右轴客户端确认；若镜像就取反 x。
+- 如果客户端仍看到 pitch 倾斜，给每个部件加同高度 aim。
 - 完整例子见 `examples/frostcrown-fmbe/`。
 
 ## 3. FMBE 的动画链（1 条初始化 + 7 条变量/姿态）

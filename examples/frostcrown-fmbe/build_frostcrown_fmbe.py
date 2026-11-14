@@ -248,9 +248,12 @@ for name, item, pos, sc, ys in PARTS:
     dx = pos[0] - (CX + 0.5)
     dy = pos[1] - CORE_POS[1]
     dz = pos[2] - CORE_POS[2]
-    # 世界轴相对位置：稳定拼接；僵尸 AI 移动时整组跟随。
-    MAIN.append(("4.FMBE", f"跟随部件 {name}",
-                 f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] run tp @s ~{fmt(dx)} ~{fmt(dy)} ~{fmt(dz)}"))
+    # 位置：以僵尸为原点，朝向玩家“脚”旋转；僵尸和玩家都在地面 y=2，pitch=0，^ 不会上下倾。
+    MAIN.append(("4.FMBE", f"转身跟随部件 {name}",
+                 f"execute as @e[tag=boss_p_{name}] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] feet run tp @s ^{fmt(dx)} ^{fmt(dy)} ^{fmt(dz)}"))
+    # yaw：朝向玩家“眼睛”；~0.01 强制刷新，位置下一 tick 会被重新校正。
+    MAIN.append(("4.FMBE", f"部件 {name} 朝向玩家",
+                 f"execute as @e[tag=boss_p_{name}] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes"))
 MAIN += [
     ("5.入场", "进圈开战", f"execute if score st bs matches 0 if entity @a[{ARENA_SEL}] run scoreboard players set st bs 1"),
     ("5.入场", "开战标题",

@@ -1,7 +1,7 @@
 # 设计：霜冠·维丝佩拉 v2（FMBE 真实命中版）
 
 > 网易 1.21.130 · 14 部件 FMBE + 1 只自带 AI 的隐形僵尸 + 1 耐久头盔命中检测。
-> 432 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
+> 446 个命令方块，5 条链：`init_a` / `init_b`（impulse）/ `main`（repeat）/ `pose_idle` / `pose_cast`（repeat，delay 2）。
 
 ## 1. 行为契约
 
@@ -70,20 +70,21 @@ BEFORE 0
 
 没有任何 `tp @e[tag=boss_carrier]` 移动命令；边界也不硬拉，让 AI 自己走。
 
-### 2.4 模型绑定
+### 2.4 模型绑定与转身
 
 ```mcfunction
-# 僵尸脚底 y=2；部件偏移 = 原绝对坐标 - (515.5,2,515.5)
-execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] run tp @s ~0 ~5.4 ~0
-execute as @e[tag=boss_p_torso] at @e[tag=boss_carrier] run tp @s ~0 ~4.2 ~0
-# ...其余 12 个部件同理
+# 位置：以僵尸为原点，facing 玩家脚 → pitch=0，^ 水平旋转
+execute as @e[tag=boss_p_head] at @e[tag=boss_carrier] facing entity @a[tag=fighter,c=1] feet run tp @s ^0 ^5.4 ^0
+# yaw：facing 玩家眼睛；~0.01 强制刷新
+execute as @e[tag=boss_p_head] at @s run tp @s ~ ~ ~0.01 facing entity @a[tag=fighter,c=1] eyes
 ```
 
-- 世界轴 `~` 偏移保证拼接，不散架；僵尸走/停，整组跟随。
-- 当前模型保持南向，不随僵尸 yaw 转身；先保证 AI 追击和拼接。
-- 僵尸低 hitbox 在 y2..3.8，模型部件在 y3.5..9.4；玩家打僵尸腿/身体即可触发核心。
+- 僵尸脚底 y2，玩家脚底 y2，所以位置旋转的 pitch=0；14 个部件不会因高度不同而散。
+- yaw 用 eyes，item 模型转向玩家；位置下一 tick 重新校正。
+- 僵尸 AI 负责移动；`^` 左右轴客户端确认。
+- 若部件仍有 pitch 倾斜，下一步给每部件加同高度 aim。
 
-## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件
+## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件## 3. FMBE 部件
 
 | 部件 | 主手物品 | 坐标 | scale / yscale |
 |---|---|---|---|
@@ -152,10 +153,10 @@ pose=1：14 部件 × 8 条 cast playanimation
 |---|---|---:|---|
 | `init_a` | impulse + chain | 62 | y=43，`506,43,506` 起蛇形 |
 | `init_b` | impulse + chain | 53 | y=43，`506,43,516` 起蛇形 |
-| `main` | repeat + chain | 93 | y=42，`506,42,506` 起蛇形 |
+| `main` | repeat + chain | 107 | y=42，`506,42,506` 起蛇形 |
 | `pose_idle` | repeat + chain | 112 | y=44，`506,44,506` 起 |
 | `pose_cast` | repeat + chain | 112 | y=44，`506,44,518` 起 |
-| **合计** | | **432** | 包围盒 13×3×21 |
+| **合计** | | **446** | 包围盒 13×3×21 |
 
 - 5 个链头：`ia01`/`ib01`（Needs Redstone）、`m01`/`pi01`/`pc01`（Always Active）。
 - `m06` 是唯一的 conditional 块，紧贴 `m05`；init 拆成 62/53 两段，避免长链吞 tag 命令。
@@ -184,12 +185,12 @@ pose=1：14 部件 × 8 条 cast playanimation
 
 ## 9. 验证
 
-- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，432 blocks。
-- `readbdx.py`：432 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
+- `chain_lint.py`：**0 error**，1 warning（`LONG_CHAIN 111`），5 heads，446 blocks。
+- `readbdx.py`：446 个命令方块，5 头，坐标/朝向/模式/延迟/条件/命令文本/自定义名全部与 spec 一致。
 - 真机命中链：`BEFORE 0 → AFTER1 1 → AFTER2 2`（conditional 块确实读到 replaceitem 成功）。
 - 真机导入后：`PARTS 14 / CORES 1 / UNIQUE 14`；进圈 `ST=1 / HP=6000`。
 - AI 验证：bot 东侧 `520 2 516`；僵尸自己走到 `AT_520_516`，没有命令 tp。
-- 拼接：部件用 `~` 世界轴偏移；模型不转身。
+- 转身：位置 `^` + `facing feet`，yaw `facing eyes`；客户端确认左右轴。
 - 命中验证：对 `boss_core` 实体攻击一次后 `HP=5960`，`hit` 在事务末尾清 0。
-- **未做**：模型转身；当前僵尸 AI 追人 + 部件跟随，模型保持南向。
+- **待客户端验收**：转身后的左右轴与部件遮挡。
 - **待客户端目视验收**：14 部件拼装位置、idle/cast 姿态、移动时的模型朝向、二/三阶段演出（无头 bot 看不到模型）。
