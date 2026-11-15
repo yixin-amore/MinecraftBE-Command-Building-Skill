@@ -1,0 +1,55 @@
+{
+  "name": "parliament-631",
+  "voxels": 303020,
+  "fills": 5129,
+  "start": [
+    210,
+    0,
+    250
+  ],
+  "center": [
+    300,
+    0,
+    300
+  ],
+  "facade_z": 326,
+  "dome": 113,
+  "palette": {
+    "calcite": 56442,
+    "water": 2896,
+    "dark_oak_log": 18,
+    "polished_deepslate": 243,
+    "grass_block": 1458,
+    "stone_bricks": 26420,
+    "polished_diorite": 19496,
+    "blackstone": 6218,
+    "deepslate_tiles": 51179,
+    "tuff": 20109,
+    "quartz_block": 675,
+    "sea_lantern": 25,
+    "smooth_quartz": 44536,
+    "red_terracotta": 69109,
+    "blue_stained_glass": 1566,
+    "black_stained_glass": 815,
+    "gold_block": 472,
+    "oxidized_copper": 949,
+    "purple_stained_glass": 52,
+    "dark_oak_planks": 42,
+    "dark_oak_leaves": 300
+  },
+  "courtyards": [
+    [
+      18,
+      46,
+      42,
+      70
+    ],
+    [
+      134,
+      162,
+      42,
+      70
+    ]
+  ],
+  "height": 113
+}

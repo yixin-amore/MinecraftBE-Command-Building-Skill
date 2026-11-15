@@ -115,6 +115,7 @@ mcbe-command-blocks/
     ├── fmbe-player/
     ├── noise-terrain/               # 值噪声 32×32 地形机（429 方块，可复现）
     ├── frostcrown-fmbe/             # 14 部件 FMBE 僵尸 AI Boss + 真实命中（432 方块，可复现）
+    ├── parliament-631/              # 631/内院/石族混色国会大厦（303,020 方块，可复现）
     ├── bdx-generator/
     └── build-pipeline/
 ```
