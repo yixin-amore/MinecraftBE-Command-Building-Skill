@@ -1,0 +1,204 @@
+{
+ "meta": {
+  "name": "DSL 示例世界",
+  "spawn": [
+   8,
+   -59,
+   8
+  ],
+  "gametype": "creative"
+ },
+ "objectives": [
+  {
+   "name": "demo_tick",
+   "criteria": "dummy",
+   "display": "全局时钟"
+  },
+  {
+   "name": "demo_ready",
+   "criteria": "dummy",
+   "display": "已建档"
+  },
+  {
+   "name": "demo_hp",
+   "criteria": "dummy",
+   "display": "血量镜像"
+  },
+  {
+   "name": "demo_cd",
+   "criteria": "dummy",
+   "display": "冷却"
+  },
+  {
+   "name": "demo_fire",
+   "criteria": "dummy",
+   "display": "触发标记"
+  },
+  {
+   "name": "demo_burst",
+   "criteria": "dummy",
+   "display": "连发余量"
+  },
+  {
+   "name": "demo_cap",
+   "criteria": "dummy",
+   "display": "弹匣容量"
+  },
+  {
+   "name": "demo_dmg",
+   "criteria": "dummy",
+   "display": "单发伤害"
+  },
+  {
+   "name": "demo_bullet",
+   "criteria": "dummy",
+   "display": "子弹标记"
+  },
+  {
+   "name": "demo_recoil",
+   "criteria": "dummy",
+   "display": "弹道射程"
+  }
+ ],
+ "chains": [
+  {
+   "id": "init",
+   "kind": "impulse",
+   "button": true,
+   "cmds": [
+    "scoreboard objectives add demo_tick dummy \"全局时钟\"",
+    "scoreboard objectives add demo_ready dummy \"已建档\"",
+    "scoreboard objectives add demo_hp dummy \"血量镜像\"",
+    "scoreboard objectives add demo_cd dummy \"冷却\"",
+    "scoreboard objectives add demo_fire dummy \"触发标记\"",
+    "scoreboard objectives add demo_burst dummy \"连发余量\"",
+    "scoreboard objectives add demo_cap dummy \"弹匣容量\"",
+    "scoreboard objectives add demo_dmg dummy \"单发伤害\"",
+    "scoreboard objectives add demo_bullet dummy \"子弹标记\"",
+    "scoreboard objectives add demo_recoil dummy \"弹道射程\"",
+    "gamerule commandblockoutput false",
+    "gamerule sendcommandfeedback false",
+    "gamerule showcoordinates true",
+    "tickingarea add ~-2 ~-2 ~-2 ~66 ~6 ~66 demo true",
+    "tellraw @a {\"rawtext\":[{\"text\":\"§b▸ 试作型系统已加载\"}]}"
+   ]
+  },
+  {
+   "id": "clock",
+   "kind": "loop",
+   "cmds": [
+    "scoreboard players add @a demo_tick 1",
+    "scoreboard players remove @a demo_cd 1",
+    "scoreboard players operation @a demo_cd > sys_zero sys",
+    "execute as @a run scoreboard players operation @s demo_hp = @s health",
+    "execute as @a run scoreboard players operation @s demo_hp *= sys_five tmp",
+    "execute as @a if entity @s[scores={demo_ready=0..}] run scoreboard players set @s demo_ready 1",
+    "execute as @a unless score @s demo_ready matches 0.. run scoreboard players set @s demo_ready 0"
+   ]
+  },
+  {
+   "id": "state",
+   "kind": "gated",
+   "gate": "execute if entity @a[hasitem={item=fishing_rod,location=slot.weapon.mainhand}]",
+   "cmds": [
+    "{RESET}",
+    "execute as @a[hasitem={item=fishing_rod,location=slot.weapon.mainhand}] run scoreboard players set @s demo_cap 8",
+    "execute as @a[hasitem={item=fishing_rod,location=slot.weapon.mainhand}] run scoreboard players set @s demo_dmg 6"
+   ]
+  },
+  {
+   "id": "trigger",
+   "kind": "gated",
+   "gate": "execute if entity @e[type=fishing_hook]",
+   "cmds": [
+    "{RESET}",
+    "execute as @e[type=fishing_hook] at @s run scoreboard players set @s demo_burst 3",
+    "execute as @e[type=fishing_hook] at @s run scoreboard players set @s demo_fire 1",
+    "kill @e[type=fishing_hook]"
+   ]
+  },
+  {
+   "id": "shot",
+   "kind": "gated",
+   "gate": "execute if entity @a[scores={demo_fire=1}]",
+   "cmds": [
+    "{RESET}",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run summon xp_orb ^^^1.45 facing ^^^1000",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run particle minecraft:basic_flame_particle ~ ~1 ~",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run playsound random.explode @a[r=48] ~~~ 1.0 0.55 100",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run playsound mob.ghast.fireball @a[r=32] ~~~ 0.85 0.85",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run playsound random.break @a[r=32] ~~~ 0.6 1.95",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run scoreboard players remove @s demo_burst 1",
+    "execute as @a[scores={demo_fire=1}] at @s unless score @s demo_cd matches 1.. run scoreboard players set @s demo_cd 6",
+    "execute as @a[scores={demo_burst=..0}] run scoreboard players set @s demo_fire 0"
+   ]
+  },
+  {
+   "id": "bullet",
+   "kind": "gated",
+   "gate": "execute if entity @e[scores={demo_bullet=1},type=xp_orb]",
+   "cmds": [
+    "{RESET}",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^12 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 12",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^11 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 11",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^10 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 10",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^9 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 9",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^8 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 8",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^7 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 7",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^6 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^5 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 5",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^4 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 4",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^3 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 3",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^2 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 2",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ~~-498.5~ positioned ^^^1 if block ^ ^ ^ air run scoreboard players set @s demo_recoil 1",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^1 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^1 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^1 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^2 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^2 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^2 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^3 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^3 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^3 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^4 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^4 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^4 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^5 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^5 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^5 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^6 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^6 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^6 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^7 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^7 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^7 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^8 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^8 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^8 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^9 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^9 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^9 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^10 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^10 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^10 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^11 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^11 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^11 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^12 positioned ~~-499.5~ run damage @e[c=1,r=1.2,type=!player] 6 entity_attack entity @p",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^12 positioned ~~-499.5~ run particle minecraft:basic_crit_particle ~ ~1 ~",
+    "execute as @e[scores={demo_bullet=1},type=xp_orb] at @s positioned ^^^12 positioned ~~-499.5~ run playsound mob.irongolem.hit @a[r=20] ~~~ 0.8 1.6",
+    "kill @e[scores={demo_bullet=1},type=xp_orb]"
+   ]
+  },
+  {
+   "id": "p_supply",
+   "kind": "impulse",
+   "button": true,
+   "cmds": [
+    "execute as @a at @s run scoreboard players set @s demo_cap 8",
+    "execute as @a at @s run playsound random.click @s ~~~ 1 1.4",
+    "execute as @a at @s run titleraw @s actionbar {\"rawtext\": [{\"text\": \"§a▸ 已补满\"}]}"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "name": "拔刀剑指令世界",
+    "spawn": [
+      8,
+      -59,
+      7
+    ],
+    "gametype": "creative"
+  },
+  "objectives": [
+    {
+      "name": "blade",
+      "criteria": "dummy",
+      "display": "持刀"
+    },
+    {
+      "name": "combo",
+      "criteria": "dummy",
+      "display": "连招"
+    },
+    {
+      "name": "combo_t",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "atk_cd",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "energy",
+      "criteria": "dummy",
+      "display": "能量"
+    },
+    {
+      "name": "energy_t",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "slash",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "slash_t",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "burst_cd",
+      "criteria": "dummy",
+      "display": "技能冷却"
+    },
+    {
+      "name": "skill",
+      "criteria": "dummy",
+      "display": ""
+    },
+    {
+      "name": "sys",
+      "criteria": "dummy",
+      "display": ""
+    }
+  ],
+  "chains": [
+    {
+      "id": "init",
+      "kind": "impulse",
+      "button": true,
+      "cmds": [
+        "scoreboard objectives add blade dummy \"持刀\"",
+        "scoreboard objectives add combo dummy \"连招\"",
+        "scoreboard objectives add combo_t dummy",
+        "scoreboard objectives add atk_cd dummy",
+        "scoreboard objectives add energy dummy \"能量\"",
+        "scoreboard objectives add energy_t dummy",
+        "scoreboard objectives add slash dummy",
+        "scoreboard objectives add slash_t dummy",
+        "scoreboard objectives add burst_cd dummy \"技能冷却\"",
+        "scoreboard objectives add skill dummy",
+        "scoreboard objectives add sys dummy",
+        "scoreboard players set four sys 4",
+        "scoreboard players set five sys 5",
+        "scoreboard players set eight sys 8",
+        "scoreboard players set twelve sys 12",
+        "scoreboard players set twenty sys 20",
+        "scoreboard players set hundred sys 100",
+        "gamerule commandblocksenabled true",
+        "gamerule commandblockoutput true",
+        "gamerule sendcommandfeedback true",
+        "gamerule dodaylightcycle false",
+        "gamerule doweathercycle false",
+        "gamerule keepinventory true",
+        "gamerule showcoordinates true",
+        "gamerule mobgriefing false",
+        "hud @a hide health",
+        "hud @a hide hunger",
+        "hud @a hide armor",
+        "hud @a hide status_effects",
+        "hud @a hide item_text",
+        "effect @a saturation 1 255 true",
+        "setworldspawn 8 -59 7",
+        "time set midnight",
+        "gamerule doMobSpawning false",
+        "give @a iron_sword 1",
+        "give @a blaze_rod 1",
+        "give @a feather 1",
+        "give @a nether_star 1",
+        "summon zombie 8 -60 15",
+        "summon zombie 5 -60 15",
+        "summon zombie 11 -60 15",
+        "tellraw @a {\"rawtext\":[{\"text\":\"§b§l拔刀剑 §r§f已就绪\\n§7主手 §f铁剑 §7= 拔刀（自动连斩）\\n§7主手 §6烈焰棒§7= 拔刀斩 §8(40能量)\\n§7主手 §f羽毛§7= 疾风连斩 §8(60能量)\\n§7主手 §e下界之星§7= 奥义·月华 §8(100能量)\"}]}"
+      ]
+    },
+    {
+      "id": "tick",
+      "kind": "repeat",
+      "button": false,
+      "segments": [
+        {
+          "cmds": [
+            "scoreboard players add #tick sys 1",
+            "scoreboard players add @a blade 0",
+            "scoreboard players add @a combo 0",
+            "scoreboard players add @a combo_t 0",
+            "scoreboard players add @a atk_cd 0",
+            "scoreboard players add @a energy 0",
+            "scoreboard players add @a energy_t 0",
+            "scoreboard players add @a slash 0",
+            "scoreboard players add @a slash_t 0",
+            "scoreboard players add @a burst_cd 0",
+            "scoreboard players add @a skill 0",
+            "execute as @a run scoreboard players set @s blade 0",
+            "execute as @a[hasitem={item=iron_sword,location=slot.weapon.mainhand}] run scoreboard players set @s blade 1",
+            "execute as @a[scores={blade=1,atk_cd=0}] at @s if entity @e[r=3.2,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] run scoreboard players set @s atk_cd 8",
+            "scoreboard players remove @a[scores={combo_t=1..}] combo_t 1",
+            "execute as @a[scores={combo_t=0}] unless score @s atk_cd matches 8 run scoreboard players set @s combo 0",
+            "execute as @a[scores={energy=101..}] run scoreboard players set @s energy 100",
+            "execute as @a run scoreboard players operation @s energy_t = @s energy",
+            "execute as @a run scoreboard players operation @s energy_t /= five sys"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[scores={atk_cd=8}]",
+          "cmds": [
+            "execute as @a[scores={atk_cd=8}] run scoreboard players operation @s slash = @s combo",
+            "execute as @a[scores={atk_cd=8}] run scoreboard players set @s slash_t 4",
+            "execute as @a[scores={atk_cd=8}] run scoreboard players add @s energy 8",
+            "execute as @a[scores={atk_cd=8}] run scoreboard players add @s combo 1",
+            "execute as @a[scores={atk_cd=8,combo=5..}] run scoreboard players set @s combo 1",
+            "execute as @a[scores={atk_cd=8}] run scoreboard players set @s combo_t 12",
+            "execute as @a[scores={atk_cd=8}] run playsound random.orb @s ~~~ 1 1.6",
+            "execute as @a[scores={atk_cd=8,combo=1}] at @s run damage @e[r=3.5,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 3 entity_attack entity @s",
+            "execute as @a[scores={atk_cd=8,combo=2}] at @s run damage @e[r=3.5,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 3 entity_attack entity @s",
+            "execute as @a[scores={atk_cd=8,combo=3}] at @s run damage @e[r=3.5,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 4 entity_attack entity @s",
+            "execute as @a[scores={atk_cd=8,combo=4}] at @s run damage @e[r=3.5,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 7 entity_attack entity @s"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[scores={slash=1,slash_t=1..}]",
+          "cmds": [
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^1.2^0.9^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^0.8^1.05^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^0.4^1.15^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^0^1.2^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^-0.4^1.15^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^-0.8^1.05^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=1,slash_t=1..}] at @s positioned ^-1.2^0.9^3 run particle minecraft:balloon_gas_particle ~~~"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[scores={slash=2,slash_t=1..}]",
+          "cmds": [
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^0.9^0.2^2.5 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^0.6^0.6^2.8 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^0.3^1.0^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^0^1.5^3.2 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^-0.3^2.0^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^-0.6^2.4^2.8 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=2,slash_t=1..}] at @s positioned ^-0.9^2.8^2.5 run particle minecraft:balloon_gas_particle ~~~"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[scores={slash=3,slash_t=1..}]",
+          "cmds": [
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^0.9^3.0^2.5 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^0.6^2.6^2.8 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^0.3^2.2^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^0^1.8^3.2 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^-0.3^1.3^3 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^-0.6^0.9^2.8 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=3,slash_t=1..}] at @s positioned ^-0.9^0.5^2.5 run particle minecraft:balloon_gas_particle ~~~"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[scores={slash=4,slash_t=1..}]",
+          "cmds": [
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^0^1.2^1.5 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^1.1^1.2^1.1 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^1.5^1.2^0 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^1.1^1.2^-1.1 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^0^1.2^-1.5 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^-1.1^1.2^-1.1 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^-1.5^1.2^0 run particle minecraft:balloon_gas_particle ~~~",
+            "execute as @a[scores={slash=4,slash_t=1..}] at @s positioned ^-1.1^1.2^1.1 run particle minecraft:balloon_gas_particle ~~~"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[hasitem={item=blaze_rod,location=slot.weapon.mainhand},scores={energy=40..,burst_cd=0}]",
+          "cmds": [
+            "execute as @a[hasitem={item=blaze_rod,location=slot.weapon.mainhand},scores={energy=40..,burst_cd=0}] run scoreboard players set @s skill 1",
+            "execute as @a[hasitem={item=blaze_rod,location=slot.weapon.mainhand},scores={energy=40..,burst_cd=0}] run scoreboard players set @s burst_cd 40",
+            "execute as @a[scores={skill=1,burst_cd=40,energy=40..}] at @s run particle minecraft:huge_explosion_emitter ^^1^3",
+            "execute as @a[scores={skill=1,burst_cd=40,energy=40..}] run playsound random.explode @s ~~~ 1 1",
+            "execute as @a[scores={skill=1,burst_cd=40,energy=40..}] run scoreboard players remove @s energy 40",
+            "execute as @a[scores={skill=1,burst_cd=40,energy=40..}] at @s run damage @e[r=5,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 14 entity_attack entity @s"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[hasitem={item=feather,location=slot.weapon.mainhand},scores={energy=60..,burst_cd=0}]",
+          "cmds": [
+            "execute as @a[hasitem={item=feather,location=slot.weapon.mainhand},scores={energy=60..,burst_cd=0}] run scoreboard players set @s skill 2",
+            "execute as @a[hasitem={item=feather,location=slot.weapon.mainhand},scores={energy=60..,burst_cd=0}] run scoreboard players set @s burst_cd 60",
+            "execute as @a[scores={skill=2,burst_cd=60,energy=60..}] at @s run particle minecraft:endrod ^^1^3",
+            "execute as @a[scores={skill=2,burst_cd=60,energy=60..}] run playsound mob.enderdragon.flap @s ~~~ 1 1",
+            "execute as @a[scores={skill=2,burst_cd=60,energy=60..}] run scoreboard players remove @s energy 60",
+            "execute as @a[scores={skill=2,burst_cd=60,energy=60..}] at @s run damage @e[r=4,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 6 entity_attack entity @s"
+          ]
+        },
+        {
+          "gate": "execute if entity @a[hasitem={item=nether_star,location=slot.weapon.mainhand},scores={energy=100..,burst_cd=0}]",
+          "cmds": [
+            "execute as @a[hasitem={item=nether_star,location=slot.weapon.mainhand},scores={energy=100..,burst_cd=0}] run scoreboard players set @s skill 3",
+            "execute as @a[hasitem={item=nether_star,location=slot.weapon.mainhand},scores={energy=100..,burst_cd=0}] run scoreboard players set @s burst_cd 100",
+            "execute as @a[scores={skill=3,burst_cd=100,energy=100..}] at @s run particle minecraft:sonic_explosion ^^1^3",
+            "execute as @a[scores={skill=3,burst_cd=100,energy=100..}] run playsound random.totem @s ~~~ 1 1",
+            "execute as @a[scores={skill=3,burst_cd=100,energy=100..}] run scoreboard players remove @s energy 100",
+            "execute as @a[scores={skill=3,burst_cd=100,energy=100..}] at @s run damage @e[r=8,type=!item,type=!player,type=!fishing_hook,type=!xp_orb,type=!boat,type=!arrow] 30 entity_attack entity @s"
+          ]
+        },
+        {
+          "cmds": [
+            "scoreboard players remove @a[scores={atk_cd=1..}] atk_cd 1",
+            "scoreboard players remove @a[scores={slash_t=1..}] slash_t 1",
+            "scoreboard players remove @a[scores={burst_cd=1..}] burst_cd 1"
+          ]
+        },
+        {
+          "gate": "execute if score #tick sys matches 20..",
+          "cmds": [
+            "scoreboard players set #tick sys 0",
+            "execute as @a run titleraw @s actionbar {\"rawtext\":[{\"text\":\"§8⚔ §f连招 §e\"},{\"score\":{\"objective\":\"combo\",\"name\":\"@s\"}},{\"text\":\"§8/4   §b⚡ §f\"},{\"score\":{\"objective\":\"energy\",\"name\":\"@s\"}},{\"text\":\"§8/100\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy=100}]\"},{\"text\":\" §e§l满\"}]}},{\"text\":\"\\n§8▏\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=1..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=2..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=3..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=4..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=5..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=6..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=7..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=8..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=9..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=10..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=11..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=12..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=13..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=14..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=15..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=16..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=17..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=18..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=19..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={energy_t=20..}]\"},{\"text\":\"§b\"}]}},{\"text\":\"ࡇ\"},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={atk_cd=8}]\"},{\"text\":\"\\n§e✦ 命中\"}]}},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={burst_cd=1..}]\"},{\"text\":\"  §7冷却 §f\"}]}},{\"translate\":\"%%2\",\"with\":{\"rawtext\":[{\"selector\":\"@s[scores={burst_cd=1..}]\"},{\"score\":{\"objective\":\"burst_cd\",\"name\":\"@s\"}}]}}]}"
+          ]
+        }
+      ]
+    }
+  ],
+  "panels": [
+    {
+      "label": "能量拉满",
+      "cmds": [
+        "scoreboard players set @p energy 100",
+        "tellraw @p {\"rawtext\":[{\"text\":\"§b⚡ 能量已充满\"}]}"
+      ]
+    },
+    {
+      "label": "补一把刀",
+      "cmds": [
+        "give @p iron_sword 1",
+        "tellraw @p {\"rawtext\":[{\"text\":\"§f已获得 §7铁剑\"}]}"
+      ]
+    },
+    {
+      "label": "清空靶场",
+      "cmds": [
+        "kill @e[type=zombie]",
+        "summon zombie 8 -60 15",
+        "summon zombie 5 -60 15",
+        "summon zombie 11 -60 15",
+        "tellraw @p {\"rawtext\":[{\"text\":\"§7靶场已重置\"}]}"
+      ]
+    },
+    {
+      "label": "重置自身",
+      "cmds": [
+        "scoreboard players reset @p combo",
+        "scoreboard players reset @p combo_t",
+        "scoreboard players reset @p atk_cd",
+        "scoreboard players reset @p energy",
+        "scoreboard players reset @p energy_t",
+        "scoreboard players reset @p burst_cd",
+        "scoreboard players reset @p slash",
+        "scoreboard players reset @p slash_t",
+        "scoreboard players reset @p skill",
+        "tellraw @p {\"rawtext\":[{\"text\":\"§c连招与能量已重置\"}]}"
+      ]
+    }
+  ]
+}

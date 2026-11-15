@@ -13,7 +13,8 @@
 
 - **命令**：命令方块链、计分板状态机、FMBE 显示、菜单、技能、系统逻辑。
 - **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光。
-- **输出**：只生成 **BDX**。不做 MCWorld，不做行为包。
+- **输出**：命令系统默认 `.mcworld` / `.mcstructure`（语言优先链）；BDX 作为服务器/建筑辅助线。
+- **工作模式**：Python DSL → spec → cbc 链布局 → 结构文件；不再直接让 AI 写整段命令字符串。
 
 ## 先学模型，不是背例子
 
@@ -36,19 +37,33 @@
 - [完整值噪声地形机](references/value-noise-terrain-machine.md)
 - [提问、期待效果与联想创新](references/intake-and-reasoning.md)
 
+## 语言优先层（命令系统）
+
+```text
+corpus_search → dsl.py → spec.json → cbc.py → build_cbworld
+```
+
+- `scripts/dsl.py`：结构化选择器 / execute 上下文 / 动作
+- `scripts/cbc.py`：三段式断链、条件块、链宽/链深
+- `scripts/build_cbworld.py` / `mcworld_to_structure.py`：世界与结构文件
+- 语法结构检查：可选，本地 oracle，不随包分发
+- `references/mct-playbook.md` + `references/mct/`：DSL/链布局/UI/调试全表
+
+命令系统优先这条链；建筑、BDX、FMBE、真机回读是辅助层。
+
 ## 快速开始
 
 ```bash
 # 1. 安装到用户级技能目录
 git clone https://github.com/yixin-amore/MinecraftBE-Command-Building-Skill.git
-mkdir -p ~/.dsh/skills
-cp -R MinecraftBE-Command-Building-Skill ~/.dsh/skills/mcbe-command-blocks
+mkdir -p "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills"
+cp -R MinecraftBE-Command-Building-Skill "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills/mcbe-command-blocks"
 
 # 2. 依赖（BDX 生成需要 brotli）
 python3 -m pip install brotli
 
 # 3. 验证
-cd ~/.dsh/skills/mcbe-command-blocks
+cd "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills/mcbe-command-blocks"
 python3 scripts/chain_lint.py examples/arena-countdown/spec.json
 python3 scripts/bdxgen.py --spec examples/bdx-generator/demo.json /tmp/demo.bdx
 python3 scripts/buildgen.py examples/build-pipeline/plan.json /tmp/build.bdx
@@ -135,14 +150,14 @@ DSH 启动时会扫描 `<workspace>/.dsh/skills`，目录里必须有 `SKILL.md`
 ### 用户级
 
 ```bash
-mkdir -p ~/.dsh/skills
-cp -R MinecraftBE-Command-Building-Skill ~/.dsh/skills/mcbe-command-blocks
+mkdir -p "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills"
+cp -R MinecraftBE-Command-Building-Skill "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills/mcbe-command-blocks"
 ```
 
 或软链接：
 
 ```bash
-ln -sfn "$PWD/MinecraftBE-Command-Building-Skill" ~/.dsh/skills/mcbe-command-blocks
+ln -sfn "$PWD/MinecraftBE-Command-Building-Skill" "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills/mcbe-command-blocks"
 ```
 
 ### 环境
@@ -160,7 +175,7 @@ python3 -m pip install brotli
 ## 2. 验证
 
 ```bash
-cd ~/.dsh/skills/mcbe-command-blocks
+cd "${DSH_PROFILE_DIR:-$HOME/.dsh/profiles/desktop}/skills/mcbe-command-blocks"
 test -f SKILL.md && echo SKILL_OK
 
 python3 scripts/chain_lint.py examples/arena-countdown/spec.json

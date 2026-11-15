@@ -2,3 +2,10 @@ __pycache__/
 *.pyc
 .DS_Store
 *.log
+# local-only derived syntax / collaborator raw material
+syntax/
+references/22-syntax-foundation.md
+references/mct/refs/
+scripts/extract_syntax.py
+scripts/syntax_guard.py
+scripts/syntax_lookup.py

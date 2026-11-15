@@ -1,10 +1,68 @@
 ---
 name: mcbe-command-blocks
-description: "设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、命令计算模型/数学/N 叉树、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
+description: "语言优先（DSL→spec→cbc）+ 设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、命令计算模型/数学/N 叉树、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
 whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、BDX 生成或地图小游戏机制时。"
 ---
 
 # MCBE 命令与命令方块链
+
+> **当前主模式**：命令系统优先走「Python DSL → spec → cbc → 结构文件」；建筑/BDX/FMBE/回读经验保留为辅助与验收层。
+> 详细流程见 `references/mct-playbook.md` 与 `references/mct/`。
+
+## 0.0 语言优先工作流（命令系统默认）
+
+```text
+需求
+  ↓
+corpus_search        找同类实现/命名
+  ↓
+dsl.py               结构化选择器 / execute 上下文 / 动作
+  ↓
+spec.json            链、计分项、条件、布局
+  ↓
+cbc.py               三段式断链 / 条件块 / 宽度 / 链头
+  ↓
+build_cbworld        .mcworld
+  → mcworld_to_structure
+  ↓
+真机回读             实体 / 计分 / 链 / 位置
+```
+
+### 默认命令
+
+```bash
+python3 scripts/corpus_search.py '拔刀剑' --category weapon --limit 5
+python3 scripts/example_dsl.py --dump-spec demo.json
+python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name X
+```
+
+### 任务路由
+
+| 任务 | 先查 | 生成 |
+|---|---|---|
+| 武器/拔刀剑/鱼竿枪 | `corpus_search weapon` | `dsl.py` + `build_cbworld.py` |
+| 数据化/属性/T显 | `corpus_search data` | `dsl.py` + `cbc.py` |
+| 菜单/公告/进度 | `corpus_search ui` | `Ctx` + `titleraw/tellraw` |
+| 商店/开箱/经济 | `corpus_search economy` | inventory/scoreboard/structure |
+| 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
+| FMBE/展示体 | `references/24-fmbe-model-ir.md` | `scripts/fmbe_matrix.py` |
+| NXS/递归几何 | `references/23-nxs.md` | NXS IR |
+| BDX/服务器 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（本地验证） |
+
+### 三层资料
+
+| 层 | 路径 | 用途 |
+|---|---|---|
+| 语料 | `work/command-corpus/`（2,517 文件 / 1,644 训练记录；可用 `CMD_CORPUS` 指定） | 意图/命名检索；不照抄旧字符串 |
+| 语言优先参考 | `references/mct-playbook.md` + `references/mct/` | DSL / cbc / 链布局 / UI / 调试全表 |
+
+### 边界
+
+- FMBE/NXS 目前有 IR/矩阵/参考，**还不是完整编译器**；不要声称已全自动。
+- BDX 命令方块桥已本地验证 99/99，但**网易租赁服真机导入未验证**；先测试区。
+- 本 skill 后半的建筑/BDX 章节保留；命令系统优先 0.0。
+
+
 
 > **只适用于 Minecraft 基岩版（Bedrock Edition）**。Java 版的 `data`、NBT、`attribute`、`bossbar`、`team`、`item`、`forceload` 等在这里**不存在**。
 > 目标版本：**网易我的世界 1.21.130（协议 898）**。命令边界以网易开发者文档 + 游戏内 `/help` 为准；

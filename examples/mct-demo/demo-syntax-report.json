@@ -1,0 +1,41 @@
+{
+ "version": "netease-vanilla-1.21.50.07-Bk2sRATg.cpack",
+ "total": 87,
+ "ok": 84,
+ "fail": 3,
+ "bad": [
+  {
+   "chain": "init",
+   "cmd": "gamerule commandblockoutput false",
+   "reasons": [
+    {
+     "start": 9,
+     "end": 27,
+     "reason": "找不到含义 -> commandblockoutput"
+    }
+   ]
+  },
+  {
+   "chain": "init",
+   "cmd": "gamerule sendcommandfeedback false",
+   "reasons": [
+    {
+     "start": 9,
+     "end": 28,
+     "reason": "找不到含义 -> sendcommandfeedback"
+    }
+   ]
+  },
+  {
+   "chain": "init",
+   "cmd": "gamerule showcoordinates true",
+   "reasons": [
+    {
+     "start": 9,
+     "end": 24,
+     "reason": "找不到含义 -> showcoordinates"
+    }
+   ]
+  }
+ ]
+}
