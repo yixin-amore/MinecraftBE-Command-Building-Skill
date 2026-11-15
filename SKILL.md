@@ -380,6 +380,7 @@ scoreboard players operation fb_state obj %= fb_two obj
 - **模仿**：至少改 3 个约束（场地/功能/尺度/母题/材质），保留结构逻辑，不复制坐标。
 - **建造顺序**：场地→体块→屋顶→立面→材质→内部→内饰/灯光→环境→截图→导出。
 - **构图三把尺**：631（60/30/10 主次）、黄金比例（0.382/0.618 停顿点）、视觉重量（实体/深色/粗线更重；远处小重量有杠杆）。焦点 10% 区域放 50% 细节。
+- **立面进深**：至少四层（背墙→凹进→前凸→剪影）；不要一堵白墙贴玻璃。
 - 完整方法见 `references/building-corpus-learning.md` 和 `references/building-design.md`；模板 `assets/building-brief.template.md`。
 
 ### 4.13 内饰设计
