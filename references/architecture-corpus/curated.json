@@ -1,0 +1,995 @@
+[
+ {
+  "name": "圣彼得堡修道院.schematic",
+  "format": "schematic",
+  "size": [
+   149,
+   155,
+   296
+  ],
+  "blocks": 451242,
+  "density": 0.066,
+  "verticality": 0.524,
+  "top": [
+   [
+    "dirt",
+    254600
+   ],
+   [
+    "stone",
+    115304
+   ],
+   [
+    "water",
+    38017
+   ],
+   [
+    "stonebrick",
+    11222
+   ],
+   [
+    "grass_block",
+    8637
+   ],
+   [
+    "gravel",
+    5637
+   ],
+   [
+    "stone_brick_stairs",
+    4934
+   ],
+   [
+    "oak_planks",
+    4033
+   ],
+   [
+    "stone_slab",
+    2495
+   ],
+   [
+    "dark_oak_stairs",
+    2274
+   ],
+   [
+    "double_stone_slab",
+    978
+   ],
+   [
+    "sand",
+    798
+   ],
+   [
+    "id_126",
+    764
+   ],
+   [
+    "cobblestone_wall",
+    475
+   ],
+   [
+    "oak_log",
+    300
+   ]
+  ],
+  "families": {
+   "nature": 301254,
+   "stone": 119386,
+   "brick": 16158,
+   "other": 9944,
+   "wood": 4403,
+   "dark": 97
+  },
+  "palette_count": 26
+ },
+ {
+  "name": "欧洲城堡.schematic",
+  "format": "schematic",
+  "size": [
+   154,
+   127,
+   175
+  ],
+  "blocks": 422573,
+  "density": 0.1235,
+  "verticality": 0.726,
+  "top": [
+   [
+    "wool",
+    202912
+   ],
+   [
+    "hardened_clay",
+    76639
+   ],
+   [
+    "stone",
+    40443
+   ],
+   [
+    "oak_planks",
+    22766
+   ],
+   [
+    "stained_hardened_clay",
+    18933
+   ],
+   [
+    "jungle_stairs",
+    15601
+   ],
+   [
+    "id_126",
+    8278
+   ],
+   [
+    "id_99",
+    3462
+   ],
+   [
+    "concrete_powder",
+    3455
+   ],
+   [
+    "oak_leaves",
+    2896
+   ],
+   [
+    "prismarine",
+    2695
+   ],
+   [
+    "grass_block",
+    2581
+   ],
+   [
+    "spruce_fence",
+    2257
+   ],
+   [
+    "bone_block",
+    2108
+   ],
+   [
+    "stained_glass",
+    1970
+   ]
+  ],
+  "families": {
+   "stone": 347632,
+   "other": 35703,
+   "wood": 27269,
+   "nature": 7473,
+   "glass": 2482,
+   "brick": 2014
+  },
+  "palette_count": 74
+ },
+ {
+  "name": "Jar9城堡.schematic",
+  "format": "schematic",
+  "size": [
+   289,
+   132,
+   260
+  ],
+  "blocks": 421807,
+  "density": 0.0425,
+  "verticality": 0.457,
+  "top": [
+   [
+    "stonebrick",
+    170528
+   ],
+   [
+    "oak_log",
+    38578
+   ],
+   [
+    "stone_slab",
+    35610
+   ],
+   [
+    "stone_brick_stairs",
+    35295
+   ],
+   [
+    "sandstone",
+    20431
+   ],
+   [
+    "cobblestone",
+    19838
+   ],
+   [
+    "oak_planks",
+    16003
+   ],
+   [
+    "log2",
+    14342
+   ],
+   [
+    "quartz_block",
+    14199
+   ],
+   [
+    "stone_stairs",
+    8623
+   ],
+   [
+    "double_stone_slab",
+    4778
+   ],
+   [
+    "sandstone_stairs",
+    4249
+   ],
+   [
+    "quartz_stairs",
+    3958
+   ],
+   [
+    "oak_leaves",
+    3587
+   ],
+   [
+    "id_97",
+    3330
+   ]
+  ],
+  "families": {
+   "brick": 210192,
+   "stone": 116319,
+   "wood": 71944,
+   "other": 15457,
+   "nature": 7320,
+   "glass": 358,
+   "dark": 217
+  },
+  "palette_count": 73
+ },
+ {
+  "name": "大城堡.schematic",
+  "format": "schematic",
+  "size": [
+   123,
+   91,
+   153
+  ],
+  "blocks": 372268,
+  "density": 0.2174,
+  "verticality": 0.595,
+  "top": [
+   [
+    "stone",
+    226386
+   ],
+   [
+    "dirt",
+    50150
+   ],
+   [
+    "oak_planks",
+    21427
+   ],
+   [
+    "cobblestone",
+    15437
+   ],
+   [
+    "stonebrick",
+    12637
+   ],
+   [
+    "grass_block",
+    8556
+   ],
+   [
+    "id_126",
+    6990
+   ],
+   [
+    "snow_layer",
+    6866
+   ],
+   [
+    "oak_log",
+    4168
+   ],
+   [
+    "stone_slab",
+    2379
+   ],
+   [
+    "id_166",
+    2203
+   ],
+   [
+    "oak_leaves",
+    1924
+   ],
+   [
+    "stone_brick_stairs",
+    1450
+   ],
+   [
+    "id_125",
+    1082
+   ],
+   [
+    "gravel",
+    1017
+   ]
+  ],
+  "families": {
+   "stone": 246547,
+   "nature": 67651,
+   "wood": 26833,
+   "other": 16351,
+   "brick": 14258,
+   "glass": 628
+  },
+  "palette_count": 90
+ },
+ {
+  "name": "萨图斯大教堂.schematic",
+  "format": "schematic",
+  "size": [
+   151,
+   82,
+   108
+  ],
+  "blocks": 307387,
+  "density": 0.2299,
+  "verticality": 0.543,
+  "top": [
+   [
+    "water",
+    231800
+   ],
+   [
+    "dirt",
+    14991
+   ],
+   [
+    "stone",
+    14542
+   ],
+   [
+    "sand",
+    14229
+   ],
+   [
+    "diamond_block",
+    6409
+   ],
+   [
+    "snow",
+    5916
+   ],
+   [
+    "grass_block",
+    4330
+   ],
+   [
+    "iron_block",
+    2710
+   ],
+   [
+    "id_91",
+    2498
+   ],
+   [
+    "id_31",
+    1952
+   ],
+   [
+    "stone_slab",
+    1298
+   ],
+   [
+    "ice",
+    1248
+   ],
+   [
+    "id_121",
+    1006
+   ],
+   [
+    "wool",
+    780
+   ],
+   [
+    "clay",
+    617
+   ]
+  ],
+  "families": {
+   "nature": 258639,
+   "other": 29793,
+   "stone": 17739,
+   "wood": 942,
+   "glass": 274
+  },
+  "palette_count": 28
+ },
+ {
+  "name": "卡斯蒂略城堡.schematic",
+  "format": "schem",
+  "size": [
+   142,
+   117,
+   116
+  ],
+  "blocks": 93395,
+  "density": 0.0485,
+  "verticality": 0.824,
+  "top": [
+   [
+    "stone",
+    48488
+   ],
+   [
+    "gray_concrete",
+    11247
+   ],
+   [
+    "grass_block[snowy=false]",
+    4955
+   ],
+   [
+    "dirt",
+    4645
+   ],
+   [
+    "stone_bricks",
+    4200
+   ],
+   [
+    "polished_andesite",
+    3465
+   ],
+   [
+    "andesite",
+    2057
+   ],
+   [
+    "white_terracotta",
+    1556
+   ],
+   [
+    "smooth_stone",
+    1454
+   ],
+   [
+    "gold_block",
+    908
+   ],
+   [
+    "bone_block[axis=y]",
+    678
+   ],
+   [
+    "acacia_log[axis=y]",
+    600
+   ],
+   [
+    "stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
+    441
+   ],
+   [
+    "stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false]",
+    435
+   ],
+   [
+    "coal_ore",
+    431
+   ]
+  ],
+  "families": {
+   "stone": 69798,
+   "nature": 10249,
+   "brick": 7311,
+   "other": 3387,
+   "wood": 2620,
+   "glass": 30
+  },
+  "palette_count": 186
+ },
+ {
+  "name": "蒙德大教堂.schematic",
+  "format": "schematic",
+  "size": [
+   74,
+   58,
+   169
+  ],
+  "blocks": 69548,
+  "density": 0.0959,
+  "verticality": 0.343,
+  "top": [
+   [
+    "stone",
+    16682
+   ],
+   [
+    "stained_glass",
+    14287
+   ],
+   [
+    "wool",
+    12522
+   ],
+   [
+    "stonebrick",
+    6345
+   ],
+   [
+    "stained_hardened_clay",
+    4768
+   ],
+   [
+    "id_171",
+    3356
+   ],
+   [
+    "grass_block",
+    2658
+   ],
+   [
+    "stained_glass_pane",
+    2259
+   ],
+   [
+    "stone_brick_stairs",
+    2182
+   ],
+   [
+    "stone_slab",
+    1046
+   ],
+   [
+    "dirt",
+    527
+   ],
+   [
+    "iron_bars",
+    481
+   ],
+   [
+    "id_197",
+    444
+   ],
+   [
+    "nether_brick",
+    409
+   ],
+   [
+    "nether_brick_stairs",
+    349
+   ]
+  ],
+  "families": {
+   "stone": 35516,
+   "glass": 16546,
+   "brick": 9417,
+   "other": 4668,
+   "nature": 3185,
+   "wood": 216
+  },
+  "palette_count": 31
+ },
+ {
+  "name": "Tolbooth_Kirk",
+  "format": "litematic",
+  "size": [
+   149,
+   189,
+   72
+  ],
+  "blocks": 68555,
+  "density": 0.0338,
+  "verticality": 1.268,
+  "top": [
+   [
+    "grass_block",
+    8956
+   ],
+   [
+    "dirt",
+    15
+   ],
+   [
+    "polished_deepslate_stairs",
+    2560
+   ],
+   [
+    "polished_andesite",
+    11266
+   ],
+   [
+    "tuff",
+    2493
+   ],
+   [
+    "dead_horn_coral_block",
+    1760
+   ],
+   [
+    "gravel",
+    1417
+   ],
+   [
+    "polished_deepslate",
+    4007
+   ],
+   [
+    "andesite",
+    5316
+   ],
+   [
+    "stone",
+    2972
+   ],
+   [
+    "dark_oak_shelf",
+    378
+   ],
+   [
+    "cobblestone",
+    932
+   ],
+   [
+    "smooth_stone",
+    1582
+   ],
+   [
+    "andesite_wall",
+    955
+   ],
+   [
+    "anvil",
+    1133
+   ]
+  ],
+  "families": {
+   "stone": 24097,
+   "dark": 22714,
+   "nature": 8975,
+   "other": 8458,
+   "brick": 3293,
+   "wood": 1018
+  },
+  "palette_count": 71
+ },
+ {
+  "name": "城堡主城.schematic",
+  "format": "schematic",
+  "size": [
+   79,
+   96,
+   133
+  ],
+  "blocks": 63226,
+  "density": 0.0627,
+  "verticality": 0.722,
+  "top": [
+   [
+    "stonebrick",
+    19957
+   ],
+   [
+    "oak_planks",
+    16428
+   ],
+   [
+    "cobblestone",
+    9044
+   ],
+   [
+    "stone_slab",
+    4214
+   ],
+   [
+    "stone_stairs",
+    3348
+   ],
+   [
+    "oak_log",
+    3043
+   ],
+   [
+    "cobblestone_wall",
+    1544
+   ],
+   [
+    "id_126",
+    1462
+   ],
+   [
+    "glowstone",
+    915
+   ],
+   [
+    "stone_brick_stairs",
+    704
+   ],
+   [
+    "oak_fence",
+    538
+   ],
+   [
+    "spruce_stairs",
+    510
+   ],
+   [
+    "oak_stairs",
+    259
+   ],
+   [
+    "stone",
+    246
+   ],
+   [
+    "wool",
+    185
+   ]
+  ],
+  "families": {
+   "brick": 20661,
+   "wood": 20009,
+   "stone": 19677,
+   "other": 2442,
+   "nature": 437
+  },
+  "palette_count": 30
+ },
+ {
+  "name": "幻想堡垒.schematic",
+  "format": "schematic",
+  "size": [
+   131,
+   70,
+   95
+  ],
+  "blocks": 54735,
+  "density": 0.0628,
+  "verticality": 0.534,
+  "top": [
+   [
+    "stonebrick",
+    22519
+   ],
+   [
+    "double_stone_slab",
+    8221
+   ],
+   [
+    "sandstone_stairs",
+    4683
+   ],
+   [
+    "sandstone",
+    3642
+   ],
+   [
+    "stone_slab",
+    2879
+   ],
+   [
+    "stone",
+    2416
+   ],
+   [
+    "grass_block",
+    2270
+   ],
+   [
+    "cobblestone",
+    2242
+   ],
+   [
+    "id_126",
+    1382
+   ],
+   [
+    "oak_planks",
+    911
+   ],
+   [
+    "dirt",
+    741
+   ],
+   [
+    "stone_brick_stairs",
+    605
+   ],
+   [
+    "ladder",
+    497
+   ],
+   [
+    "spruce_fence",
+    470
+   ],
+   [
+    "oak_log",
+    359
+   ]
+  ],
+  "families": {
+   "stone": 24323,
+   "brick": 23124,
+   "nature": 3011,
+   "other": 2516,
+   "wood": 1761
+  },
+  "palette_count": 23
+ },
+ {
+  "name": "塔楼.schematic",
+  "format": "schematic",
+  "size": [
+   64,
+   185,
+   64
+  ],
+  "blocks": 52625,
+  "density": 0.0694,
+  "verticality": 2.891,
+  "top": [
+   [
+    "stonebrick",
+    28690
+   ],
+   [
+    "double_stone_slab",
+    9068
+   ],
+   [
+    "stone_slab",
+    3692
+   ],
+   [
+    "water",
+    3639
+   ],
+   [
+    "stone_brick_stairs",
+    3543
+   ],
+   [
+    "oak_planks",
+    817
+   ],
+   [
+    "id_11",
+    501
+   ],
+   [
+    "ladder",
+    466
+   ],
+   [
+    "id_47",
+    396
+   ],
+   [
+    "iron_bars",
+    376
+   ],
+   [
+    "oak_fence",
+    374
+   ],
+   [
+    "vine",
+    256
+   ],
+   [
+    "glass",
+    168
+   ],
+   [
+    "glowstone",
+    108
+   ],
+   [
+    "nether_brick_fence",
+    99
+   ]
+  ],
+  "families": {
+   "brick": 32332,
+   "stone": 12868,
+   "nature": 3895,
+   "other": 2171,
+   "wood": 1191,
+   "glass": 168
+  },
+  "palette_count": 33
+ },
+ {
+  "name": "冰冷的城堡.schematic",
+  "format": "schematic",
+  "size": [
+   65,
+   76,
+   76
+  ],
+  "blocks": 36312,
+  "density": 0.0967,
+  "verticality": 1.0,
+  "top": [
+   [
+    "stone",
+    28790
+   ],
+   [
+    "snow_layer",
+    2142
+   ],
+   [
+    "gravel",
+    1766
+   ],
+   [
+    "double_stone_slab",
+    910
+   ],
+   [
+    "stained_glass_pane",
+    425
+   ],
+   [
+    "stained_glass",
+    336
+   ],
+   [
+    "snow",
+    317
+   ],
+   [
+    "concrete",
+    298
+   ],
+   [
+    "oak_planks",
+    292
+   ],
+   [
+    "dirt",
+    254
+   ],
+   [
+    "id_16",
+    251
+   ],
+   [
+    "quartz_block",
+    217
+   ],
+   [
+    "quartz_stairs",
+    137
+   ],
+   [
+    "dark_oak_fence",
+    114
+   ],
+   [
+    "grass_block",
+    30
+   ]
+  ],
+  "families": {
+   "stone": 30354,
+   "nature": 2743,
+   "other": 2048,
+   "glass": 761,
+   "wood": 406
+  },
+  "palette_count": 25
+ }
+]

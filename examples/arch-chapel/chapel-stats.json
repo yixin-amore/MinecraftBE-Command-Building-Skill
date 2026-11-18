@@ -1,0 +1,26 @@
+{
+ "voxels": 29807,
+ "types": {
+  "stone_bricks": 13538,
+  "deepslate_tiles": 5419,
+  "grass_block": 4554,
+  "polished_deepslate": 4300,
+  "deepslate_bricks": 739,
+  "water": 552,
+  "blue_stained_glass": 276,
+  "oxidized_copper": 255,
+  "calcite": 91,
+  "purple_stained_glass": 46,
+  "gold_block": 29,
+  "dark_oak_planks": 7,
+  "lantern": 1
+ },
+ "bounds": [
+  0,
+  0,
+  0,
+  60,
+  73,
+  80
+ ]
+}

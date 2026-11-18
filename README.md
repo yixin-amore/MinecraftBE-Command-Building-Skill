@@ -16,8 +16,8 @@
 ## 范围
 
 - **命令**：命令方块链、计分板状态机、FMBE 显示、菜单、技能、系统逻辑。
-- **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光。
-- **输出**：命令系统默认 `.mcworld` / `.mcstructure`（语言优先链）；BDX 作为服务器/建筑辅助线。
+- **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光；静态建筑走 ArchSpec/ArchBuilder，**不用命令方块逐块搭建**。
+- **输出**：命令系统默认 `.mcworld` / `.mcstructure`；静态建筑默认 `schematic / BDX / mcstructure / fill 批`（先做投放资格测试）。BDX 同时用于本地验证。
 - **工作模式**：Python DSL → spec → cbc 链布局 → 结构文件；不再直接让 AI 写整段命令字符串。
 
 ## 先学模型，不是背例子
@@ -40,6 +40,15 @@
 - [值噪声 / 精度哈希](references/value-noise.md)
 - [完整值噪声地形机](references/value-noise-terrain-machine.md)
 - [提问、期待效果与联想创新](references/intake-and-reasoning.md)
+
+## 命令语法表
+
+`references/command-syntax.json` 是纯事实表：命令名、合法参数格式、共享 token 词表、版本差异。  
+查询：
+
+```bash
+python3 scripts/command_syntax.py execute --version netease-vanilla
+```
 
 ## 语言优先层（命令系统）
 

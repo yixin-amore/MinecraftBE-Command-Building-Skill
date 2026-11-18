@@ -1,13 +1,57 @@
 ---
 name: mcbe-command-blocks
-description: "语言优先（DSL→spec→cbc）+ 设计、编写与调试 Minecraft 基岩版（MCBE / Bedrock Edition，网易中国版 1.21.130）命令与命令方块链。覆盖基岩版指令语法、execute 子命令、目标选择器、dummy 计分板状态机、impulse/repeat/chain 命令方块、条件链、tick 延迟、C-tick 红石时序、BDX 打包、命令计算模型/数学/N 叉树、数据化 RPG（属性/伤害/T显）、FMBE/MBE 显示实体（playanimation + Molang）、杂项地图系统（菜单/商店/开箱/反作弊/小游戏），以及倒计时、商店、门锁、波次、队列等地图逻辑。Use for Bedrock command blocks, chain design, BDX generation, and Bedrock command syntax. Do NOT use for Java Edition datapacks or Java-only syntax (data/NBT, attribute, bossbar, team, item components)."
-whenToUse: "当用户要求网易版/基岩版/MCBE 指令、命令方块、命令方块链、计分板逻辑、BDX 生成或地图小游戏机制时。"
+description: "Minecraft 基岩版（网易 1.21.130）命令 + 建筑双栈。建筑：场地与体量（631/黄金比例）、四层立面、屋顶塔尖、材质板、内饰动线、灯光、奇观、地形；brief→ArchSpec/ArchBuilder→体素→预览→schematic/BDX/mcstructure/fill 批。命令：DSL→spec→cbc、execute/选择器、dummy 计分板状态机、impulse/repeat/chain、条件链、C-tick、BDX、FMBE/MBE、数据化 RPG、菜单/商店/门锁/波次等地图逻辑。Use for Minecraft building/architecture (cathedral, castle, lobby, interior, terrain, landmark, schematic/BDX/fill) AND Bedrock command blocks/command systems. 静态建筑不要用命令方块逐块搭建；命令栈只做动态机关/交互/演出。Do NOT use for Java Edition datapacks or Java-only syntax."
+whenToUse: "当用户要求网易/基岩版/MCBE 指令、命令方块链、计分板逻辑、BDX，或设计/建造/改造 Minecraft 建筑（教堂、城堡、主城、大厅、内饰、地形、地标）、按参考图/结构复刻、导出 schematic/BDX/mcstructure/fill 时。"
 ---
 
 # MCBE 命令与命令方块链
 
-> **当前主模式**：命令系统优先走「Python DSL → spec → cbc → 结构文件」；建筑/BDX/FMBE/回读经验保留为辅助与验收层。
-> 详细流程见 `references/mct-playbook.md` 与 `references/mct/`。
+> **双栈，不是主从**：
+> - 命令系统：`DSL → spec → cbc → 结构文件`；只负责动态机关、交互、演出。
+> - 静态建筑：`brief → ArchSpec/ArchBuilder → 体素 → 预览 → schematic/BDX/mcstructure/fill`。
+>
+> **硬规则：静态建筑不要用命令方块逐块搭，也不要用 `setblock`/`fill` 命令链做几何作者层。** 命令方块是动态层；`fill` 只作为体素生成后的投放通道。
+
+## 0.0.1 建筑任务入口（与命令系统并列）
+
+先判断任务：
+
+| 任务 | 默认栈 | 产物 |
+|---|---|---|
+| 静态建筑 / 内饰 / 地形 / 地标 | **ArchSpec / ArchBuilder** | brief + spec + front/top/iso + `.bdx` / `.mcstructure` / `.schematic` + report |
+| 大体积投放 | 体素 / BDX / `fill` 批（先做投放资格测试） | fill 清单 + 回读点 |
+| 可复用模块 | schematic / AuroraBuild | `.schematic` + 放置坐标 |
+| 动态机关 / 门 / 演出 / HUD | 命令栈（0.0） | `spec.json` + `cbc.py` + `.mcworld` / BDX |
+| 交互建筑的“动”部分 | 建筑栈做体量，命令栈只做触发 | 两者分开交付 |
+
+**禁止**：
+
+- 用 `setblock` / `fill` 命令链手工设计/逐块搭静态建筑（`fill` 仅可用于已生成体素的投放）；
+- 用命令方块、FMBE、`playanimation` 当建筑主结构；
+- 用 `cbc.py` 排建筑体量。
+
+**建筑 6 问**：场地 / 风格 / 尺度 / 功能 / 主焦点 / 硬约束（版本·性能·高度·投放方式）。
+
+**最小交付**：
+
+```text
+brief（场地/体量/焦点/材质）
+→ spec（ArchSpec 或 builder 参数）
+→ front/top/iso 三视图
+→ report（bounds/blocks/issues=0）
+→ 投放清单（BDX / mcstructure / schematic / fill 批 + 回读点）
+```
+
+如果用户明确要求“用命令方块建静态建筑”，先说明代价（链数、tickingarea、64×64×100、每 tick 预算），再建议建筑栈；只有小体量互动装饰才允许命令方块。
+
+**提示模板**：
+
+```text
+用建筑栈做：<类型>，场地 <W×D>，风格 <...>，功能 <...>，
+主焦点 <...>，硬约束 <高度/材质/性能/版本>，
+输出 brief + spec + front/top/iso + report + 投放清单。
+不要用命令方块逐块搭静态体量。
+```
 
 ## 0.0 语言优先工作流（命令系统默认）
 
@@ -31,6 +75,7 @@ build_cbworld        .mcworld
 ### 默认命令
 
 ```bash
+python3 scripts/command_syntax.py execute --version netease-vanilla
 python3 scripts/corpus_search.py '拔刀剑' --category weapon --limit 5
 python3 scripts/example_dsl.py --dump-spec demo.json
 python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name X
@@ -40,14 +85,16 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 
 | 任务 | 先查 | 生成 |
 |---|---|---|
+| 命令格式/参数 | `references/command-syntax.json` | `scripts/command_syntax.py` |
 | 武器/拔刀剑/鱼竿枪 | `corpus_search weapon` | `dsl.py` + `build_cbworld.py` |
 | 数据化/属性/T显 | `corpus_search data` | `dsl.py` + `cbc.py` |
-| 菜单/公告/进度 | `corpus_search ui` | `Ctx` + `titleraw/tellraw` |
+| 菜单/公告/HUD | `references/30-command-ui-design.md` + `references/31-command-ui-modern.md` | `Tellraw/Title` + 动作栏/副标题 |
 | 商店/开箱/经济 | `corpus_search economy` | inventory/scoreboard/structure |
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
 | FMBE/展示体 | `references/24-fmbe-model-ir.md` | `scripts/fmbe_matrix.py` |
 | NXS/递归几何 | `references/23-nxs.md` | NXS IR |
 | BDX/服务器 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（本地验证） |
+| 建筑参考/风格 | `references/29-architecture-corpus.md` | `scripts/arch_style.py` |
 
 ### 三层资料
 
@@ -442,6 +489,23 @@ scoreboard players operation fb_state obj %= fb_two obj
 - **石族/虚空间**：3–5 族石料混色，下重上轻；长翼挖内院/回廊，别做实心盒子。
 - 完整方法见 `references/building-corpus-learning.md` 和 `references/building-design.md`；模板 `assets/building-brief.template.md`。
 
+### 4.12.1 建筑编译器（本地 MVP）
+
+```bash
+python3 scripts/arch_pipeline.py --builder examples/arch-chapel/build_chapel.py --outdir examples/arch-chapel/out --start 900,0,900
+```
+
+```text
+ArchBuilder → arch_compile → .bdx
+  → arch_preview（front/top/iso）
+  → arch_readback（count/bounds）
+  → report.json
+```
+
+- `references/28-arch-compiler.md`
+- 当前只验证到小礼拜堂；城堡模块还没接。
+- 不提交 GitHub，先跑通编译链。
+
 ### 4.13 内饰设计
 
 室内不是“把家具摆满”，先定功能/动线/焦点/层高：
@@ -518,6 +582,8 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 - [ ] 时序：红石 10 Hz vs Always Active 20 Hz 说清楚。
 - [ ] 存在重置路径，且重置链本身不会被旧状态卡住。
 - [ ] 已运行 linter，0 error。
+- [ ] 静态建筑没有用 `setblock`/`fill` 命令链做几何作者层；`fill` 只用于投放。
+- [ ] 建筑任务已输出 front/top/iso + report，而不是只给命令链。
 
 ## 7. 参考文件导航
 
@@ -540,6 +606,9 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/execute-and-selectors.md` | 写 `execute`、选择器、条件表达式 |
 | `references/scoreboard-memory.md` | 用 dummy 计分板存状态、做数学、编码 |
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
+| `references/30-command-ui-design.md` | UI 设计库：24 版式/配色/符号/文案（旧 execute 示例） |
+| `references/31-command-ui-modern.md` | 网易 1.21.130 现代 UI 模板/%%2/%%9/HUD 互斥 |
+| `references/command-syntax.json` | 命令合法格式 + 共享 token 词表（纯语法事实） |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |
 | `references/dataization-rpg.md` | 数据化 RPG：属性分层、伤害事务、T显/血条、等级/经验、装备/怪物、性能与旧语法升级 |
