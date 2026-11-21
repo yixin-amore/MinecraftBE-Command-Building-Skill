@@ -50,6 +50,13 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## NXS 编译器
+
+- `scripts/nxs_ir.py`：Shape / CSG / NxsRaster / 自适应点阵
+- `scripts/nxs_compile.py`：点阵 → 命令 → 预算
+- `scripts/nxs_read.py`：JSON 回读
+- `references/36-nxs-compiler.md`
+
 ## 建筑组件库
 
 `scripts/arch_compile.py` 支持 8 个语义组件：

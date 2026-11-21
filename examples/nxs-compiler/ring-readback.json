@@ -1,0 +1,12 @@
+{
+ "points": 36,
+ "commands": 36,
+ "materials": [
+  "minecraft:balloon_gas_particle"
+ ],
+ "kinds": [
+  "particle"
+ ],
+ "issues": [],
+ "ok": true
+}

@@ -1,0 +1,314 @@
+{
+ "raster": {
+  "width": 16.0,
+  "height": 1,
+  "depth": 16.0,
+  "levels": 3,
+  "axes": "2d",
+  "emit": "particle",
+  "material": "minecraft:balloon_gas_particle",
+  "origin": [
+   0,
+   0,
+   0
+  ]
+ },
+ "selector": {
+  "and": [
+   {
+    "cyl": [
+     [
+      0,
+      0,
+      0
+     ],
+     8.0,
+     0.5,
+     "y"
+    ]
+   },
+   {
+    "not": {
+     "cyl": [
+      [
+       0,
+       0,
+       0
+      ],
+      4.96,
+      0.5,
+      "y"
+     ]
+    }
+   }
+  ]
+ },
+ "condition": null,
+ "points": [
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": -3.0,
+   "y": 0,
+   "z": -7.0,
+   "size": 2.0
+  },
+  {
+   "x": -1.0,
+   "y": 0,
+   "z": -7.0,
+   "size": 2.0
+  },
+  {
+   "x": -3.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": -1.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": -7.0,
+   "y": 0,
+   "z": -3.0,
+   "size": 2.0
+  },
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": -3.0,
+   "size": 2.0
+  },
+  {
+   "x": -7.0,
+   "y": 0,
+   "z": -1.0,
+   "size": 2.0
+  },
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": -1.0,
+   "size": 2.0
+  },
+  {
+   "x": 1.0,
+   "y": 0,
+   "z": -7.0,
+   "size": 2.0
+  },
+  {
+   "x": 3.0,
+   "y": 0,
+   "z": -7.0,
+   "size": 2.0
+  },
+  {
+   "x": 1.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": 3.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": -5.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": -3.0,
+   "size": 2.0
+  },
+  {
+   "x": 7.0,
+   "y": 0,
+   "z": -3.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": -1.0,
+   "size": 2.0
+  },
+  {
+   "x": 7.0,
+   "y": 0,
+   "z": -1.0,
+   "size": 2.0
+  },
+  {
+   "x": -7.0,
+   "y": 0,
+   "z": 1.0,
+   "size": 2.0
+  },
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": 1.0,
+   "size": 2.0
+  },
+  {
+   "x": -7.0,
+   "y": 0,
+   "z": 3.0,
+   "size": 2.0
+  },
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": 3.0,
+   "size": 2.0
+  },
+  {
+   "x": -5.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  },
+  {
+   "x": -3.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  },
+  {
+   "x": -1.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  },
+  {
+   "x": -3.0,
+   "y": 0,
+   "z": 7.0,
+   "size": 2.0
+  },
+  {
+   "x": -1.0,
+   "y": 0,
+   "z": 7.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": 1.0,
+   "size": 2.0
+  },
+  {
+   "x": 7.0,
+   "y": 0,
+   "z": 1.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": 3.0,
+   "size": 2.0
+  },
+  {
+   "x": 7.0,
+   "y": 0,
+   "z": 3.0,
+   "size": 2.0
+  },
+  {
+   "x": 1.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  },
+  {
+   "x": 3.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  },
+  {
+   "x": 1.0,
+   "y": 0,
+   "z": 7.0,
+   "size": 2.0
+  },
+  {
+   "x": 3.0,
+   "y": 0,
+   "z": 7.0,
+   "size": 2.0
+  },
+  {
+   "x": 5.0,
+   "y": 0,
+   "z": 5.0,
+   "size": 2.0
+  }
+ ],
+ "commands": [
+  "particle minecraft:balloon_gas_particle -5.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle -3.000 0.000 -7.000",
+  "particle minecraft:balloon_gas_particle -1.000 0.000 -7.000",
+  "particle minecraft:balloon_gas_particle -3.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle -1.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle -7.000 0.000 -3.000",
+  "particle minecraft:balloon_gas_particle -5.000 0.000 -3.000",
+  "particle minecraft:balloon_gas_particle -7.000 0.000 -1.000",
+  "particle minecraft:balloon_gas_particle -5.000 0.000 -1.000",
+  "particle minecraft:balloon_gas_particle 1.000 0.000 -7.000",
+  "particle minecraft:balloon_gas_particle 3.000 0.000 -7.000",
+  "particle minecraft:balloon_gas_particle 1.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle 3.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 -5.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 -3.000",
+  "particle minecraft:balloon_gas_particle 7.000 0.000 -3.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 -1.000",
+  "particle minecraft:balloon_gas_particle 7.000 0.000 -1.000",
+  "particle minecraft:balloon_gas_particle -7.000 0.000 1.000",
+  "particle minecraft:balloon_gas_particle -5.000 0.000 1.000",
+  "particle minecraft:balloon_gas_particle -7.000 0.000 3.000",
+  "particle minecraft:balloon_gas_particle -5.000 0.000 3.000",
+  "particle minecraft:balloon_gas_particle -5.000 0.000 5.000",
+  "particle minecraft:balloon_gas_particle -3.000 0.000 5.000",
+  "particle minecraft:balloon_gas_particle -1.000 0.000 5.000",
+  "particle minecraft:balloon_gas_particle -3.000 0.000 7.000",
+  "particle minecraft:balloon_gas_particle -1.000 0.000 7.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 1.000",
+  "particle minecraft:balloon_gas_particle 7.000 0.000 1.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 3.000",
+  "particle minecraft:balloon_gas_particle 7.000 0.000 3.000",
+  "particle minecraft:balloon_gas_particle 1.000 0.000 5.000",
+  "particle minecraft:balloon_gas_particle 3.000 0.000 5.000",
+  "particle minecraft:balloon_gas_particle 1.000 0.000 7.000",
+  "particle minecraft:balloon_gas_particle 3.000 0.000 7.000",
+  "particle minecraft:balloon_gas_particle 5.000 0.000 5.000"
+ ],
+ "budget": {
+  "points": 36,
+  "commands": 36,
+  "chars": 2124,
+  "cb": 36,
+  "ticks": 2,
+  "max_chars": 32500,
+  "max_cb": 80,
+  "issues": [],
+  "ok": true
+ }
+}
