@@ -50,6 +50,17 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## 建筑组件库
+
+`scripts/arch_compile.py` 支持 8 个语义组件：
+
+```text
+curtain_wall / gatehouse / keep / cloister
+bay / portal / flying_buttress / dormer
+```
+
+`examples/arch-castle/` 是用它们拼出的 134,935 方块测试。
+
 ## FMBE 编译器
 
 - `scripts/fmbe_ir.py`：FmbeModel / Animation / BoneGroup / 校验

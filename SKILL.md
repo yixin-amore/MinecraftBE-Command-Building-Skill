@@ -96,6 +96,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | NXS/递归几何 | `references/23-nxs.md` | `NxsRaster`（点阵 + CSG） |
 | BDX/文件 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（文件回读） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
+| 建筑组件 | `references/35-architecture-components.md` | `scripts/arch_compile.py` |
 | 山水/园林 | `references/33-architecture-typology.md` §8 | `Site` + `Water/Rock/Plant` 模块 |
 
 ### 三层资料
@@ -506,6 +507,7 @@ ArchBuilder → arch_compile → .bdx
 ```
 
 - `references/28-arch-compiler.md`
+- `references/35-architecture-components.md`（8 个组件：幕墙/门楼/主堡/回廊/开间/门廊/飞扶壁/老虎窗）
 
 ### 4.13 内饰设计
 
@@ -612,6 +614,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/32-ui-sound-design.md` | UI 通道/标题顺序 + 音效分层/旋律目录/音量预算 |
 | `references/33-architecture-typology.md` | 建筑类型卡：日/韩/中/古典/哥特/中世纪/庄园，场地/序列/剖面/结构 |
 | `references/34-fmbe-compiler.md` | FMBE IR / 校验 / pose+setup / BDX / 回读 |
+| `references/35-architecture-components.md` | 8 个建筑组件：幕墙/门楼/主堡/回廊/开间/门廊/飞扶壁/老虎窗 |
 | `references/command-syntax.json` | 命令合法格式 + 共享 token 词表（纯语法事实） |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |

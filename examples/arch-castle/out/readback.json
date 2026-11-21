@@ -1,0 +1,28 @@
+{
+ "blocks": 134935,
+ "types": {
+  "stone_bricks": 86141,
+  "deepslate_bricks": 18717,
+  "grass": 14108,
+  "polished_deepslate": 9388,
+  "deepslate_tiles": 4385,
+  "water": 952,
+  "oxidized_copper": 581,
+  "blue_stained_glass": 238,
+  "calcite": 199,
+  "dark_oak_planks": 84,
+  "gold_block": 64,
+  "iron_bars": 30,
+  "purple_stained_glass": 25,
+  "blackstone": 22,
+  "lantern": 1
+ },
+ "bounds": [
+  0,
+  0,
+  0,
+  120,
+  103,
+  131
+ ]
+}

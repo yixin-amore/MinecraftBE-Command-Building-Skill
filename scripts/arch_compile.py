@@ -34,10 +34,30 @@ class Palette:
         if role in self.__dict__: return getattr(self,role)
         return role
 
+@dataclass
+class ComponentPort:
+    name: str
+    pos: tuple
+    normal: str = ''
+    width: int = 0
+
+@dataclass
+class ComponentResult:
+    component: str
+    bbox: tuple
+    ports: list = field(default_factory=list)
+    openings: list = field(default_factory=list)
+    blocks: int = 0
+    def to_dict(self):
+        return {'component':self.component,'bbox':list(self.bbox),
+                'ports':[{'name':p.name,'pos':list(p.pos),'normal':p.normal,'width':p.width} for p in self.ports],
+                'openings':list(self.openings),'blocks':self.blocks}
+
 class ArchBuilder:
     def __init__(self, width, depth, palette=None, ground=0):
         self.w=width; self.d=depth; self.p=palette or Palette(); self.ground=ground
         self.V={}
+        self.parts=[]
     # ---------- low level ----------
     def put(self,x,y,z,b): self.V[(int(x),int(y),int(z))]=self.p.get(b)
     def box(self,x0,x1,y0,y1,z0,z1,b):
@@ -137,6 +157,161 @@ class ArchBuilder:
         for dx in (-r,r):
             for dz in (-r,r): self.pinnacle(cx+dx,cz+dz,y1+1,6)
         self.spire(cx,cz,r-1,y1+1,spire_y)
+
+    # ---------- semantic components ----------
+    def _bbox(self,x0,x1,y0,y1,z0,z1):
+        x0,x1=sorted((int(x0),int(x1))); y0,y1=sorted((int(y0),int(y1))); z0,z1=sorted((int(z0),int(z1)))
+        return (x0,y0,z0,x1,y1,z1)
+    def _record(self,name,bbox,ports=(),openings=(),blocks=0):
+        r=ComponentResult(name,bbox,list(ports),list(openings),blocks)
+        self.parts.append(r); return r
+    def _crenel_line_x(self,x0,x1,z,y,role='trim',step=3):
+        for x in range(x0,x1+1,step): self.box(x,x,y,y+2,z,z,role)
+    def _crenel_line_z(self,z0,z1,x,y,role='trim',step=3):
+        for z in range(z0,z1+1,step): self.box(x,x,y,y+2,z,z,role)
+    def curtain_wall(self,x0,z0,x1,z1,y0=2,height=26,thickness=4,
+                     gate_center=None,gate_width=0,crenel=True,buttresses=True,
+                     arrow_slits=True,role='stone'):
+        """Castle curtain wall. gate cuts the south wall (z1)."""
+        x0,x1=sorted((int(x0),int(x1))); z0,z1=sorted((int(z0),int(z1)))
+        t=max(1,int(thickness)); y1=y0+height
+        segments=[]
+        segments.append((x0,x1,z0,z0+t-1))
+        if gate_width and gate_center is not None:
+            gl=gate_center-gate_width//2; gr=gate_center+gate_width//2
+            if gl>x0: segments.append((x0,gl-1,z1-t+1,z1))
+            if gr<x1: segments.append((gr+1,x1,z1-t+1,z1))
+        else:
+            segments.append((x0,x1,z1-t+1,z1))
+        segments += [(x0,x0+t-1,z0,z1),(x1-t+1,x1,z0,z1)]
+        for (a,b,c,d) in segments:
+            self.box(a,b,y0,y1,c,d,role)
+            if crenel:
+                if c==d or b-a>=d-c:
+                    self._crenel_line_x(a,b,c,y1+1)
+                    if c!=d: self._crenel_line_x(a,b,d,y1+1)
+                else:
+                    self._crenel_line_z(c,d,a,y1+1)
+                    if a!=b: self._crenel_line_z(c,d,b,y1+1)
+        if buttresses:
+            for x in range(x0+6,x1,12):
+                self.buttress(x,z0,y0,y1-2,0,-1,'dark'); self.buttress(x,z1,y0,y1-2,0,1,'dark')
+            for z in range(z0+6,z1,12):
+                self.buttress(x0,z,y0,y1-2,-1,0,'dark'); self.buttress(x1,z,y0,y1-2,1,0,'dark')
+        if arrow_slits:
+            for x in range(x0+10,x1,14):
+                for z in (z0,z1):
+                    self.carve(x,x,y0+10,y0+12,z,z); self.put(x,y0+10,z,'blackstone'); self.put(x,y0+11,z,'blackstone')
+        ports=[ComponentPort('corner_nw',(x0,y0,z0),'N',0),
+               ComponentPort('corner_ne',(x1,y0,z0),'N',0),
+               ComponentPort('corner_sw',(x0,y0,z1),'S',0),
+               ComponentPort('corner_se',(x1,y0,z1),'S',0)]
+        if gate_width and gate_center is not None:
+            ports += [ComponentPort('gate_l',(gate_center-gate_width//2,y0,z1),'S',gate_width),
+                      ComponentPort('gate_r',(gate_center+gate_width//2,y0,z1),'S',gate_width)]
+        return self._record('curtain_wall',self._bbox(x0,x1,y0,y1,z0,z1),ports,
+                            [('gate',gate_center,z1,gate_width)] if gate_width else [])
+    def gatehouse(self,cx,cz,width=30,depth=16,y0=2,height=56,passage_width=8,
+                  tower_radius=7,role='stone'):
+        x0=cx-width//2; x1=cx+width//2; z0=cz-depth//2; z1=cz+depth//2
+        for tx in (x0+tower_radius,x1-tower_radius):
+            self.tower(tx,cz,tower_radius,y0,height,height+18,role)
+        # gate passage and pointed arch frame
+        gl=cx-passage_width//2; gr=cx+passage_width//2
+        self.carve(gl,gr,y0,y0+18,z0,z1); self.box(gl,gr,y0,y0,z0,z1,'trim')
+        for y in range(y0,y0+19):
+            self.box(gl,gl,y,y,z1,z1,'trim'); self.box(gr,gr,y,y,z1,z1,'trim')
+        for k in range(5): self.box(gl+k,gr-k,y0+19+k,y0+19+k,z1,z1,'trim')
+        # portcullis
+        for x in range(gl+2,gr,3):
+            for y in range(y0+1,y0+16):
+                if y%3: self.box(x,x,y,y,z1-1,z1-1,'iron')
+        # bridge / steps
+        self.box(gl,gr,y0-1,y0-1,z1,z1+10,'stone')
+        for i in range(4): self.box(gl-i,gr+i,y0-1,y0-1,z1+i+1,z1+i+1,'trim')
+        return self._record('gatehouse',self._bbox(x0,x1,y0,height+18,z0,z1+10),
+            [ComponentPort('gate',(cx,y0,z1),'S',passage_width),
+             ComponentPort('wall_l',(x0,y0,cz),'W',width),
+             ComponentPort('wall_r',(x1,y0,cz),'E',width)])
+    def keep(self,cx,cz,size=30,y0=2,height=78,spire=22,turrets=True,role='stone'):
+        x0=cx-size//2; x1=cx+size//2; z0=cz-size//2; z1=cz+size//2
+        self.walls(x0,x1,z0,z1,y0,height,role,2); self.floor(x0+2,x1-2,z0+2,z1-2,y0,'trim')
+        self.crenellate(x0,x1,z0,z1,height+1,'trim',3)
+        for y in (y0+12,y0+28,y0+44):
+            for x in (cx-4,cx+4): self.lancet_z(z1,x,y,7,1)
+        self.rose_z(z1,cx,y0+30,6)
+        if turrets:
+            for tx,tz in ((x0,z0),(x1,z0),(x0,z1),(x1,z1)):
+                self.box(tx-3,tx+3,y0,height+6,tz-3,tz+3,'dark')
+                self.pinnacle(tx,tz,height+7,10)
+        self.spire(cx,cz,size//4,height+1,height+spire,'roof')
+        return self._record('keep',self._bbox(x0,x1,y0,height+spire,z0,z1),
+            [ComponentPort('entry',(cx,y0,z1),'S',6)],
+            [('entry',cx,z1,6)])
+    def cloister(self,x0,z0,x1,z1,y0=2,bay=5,height=7,role='stone'):
+        x0,x1=sorted((int(x0),int(x1))); z0,z1=sorted((int(z0),int(z1)))
+        # columns around a void
+        for x in range(x0,x1+1,bay):
+            for z in (z0,z1):
+                self.box(x,x,y0,y0+height,z,z,'trim'); self.box(x-1,x+1,y0+height+1,y0+height+1,z-1,z+1,'light')
+        for z in range(z0,z1+1,bay):
+            for x in (x0,x1):
+                self.box(x,x,y0,y0+height,z,z,'trim'); self.box(x-1,x+1,y0+height+1,y0+height+1,z-1,z+1,'light')
+        # low roof strips
+        self.box(x0,x1,y0+height+2,y0+height+2,z0,z0+1,'roof')
+        self.box(x0,x1,y0+height+2,y0+height+2,z1-1,z1,'roof')
+        self.box(x0,x0+1,y0+height+2,y0+height+2,z0,z1,'roof')
+        self.box(x1-1,x1,y0+height+2,y0+height+2,z0,z1,'roof')
+        self.box(x0+2,x1-2,y0,y0,z0+2,z1-2,'grass')
+        return self._record('cloister',self._bbox(x0,x1,y0,y0+height+2,z0,z1),
+            [ComponentPort('garth',(x0+2,y0,z0+2),'S',0)],
+            [('garth',(x0+2,z0+2,x1-2,z1-2))])
+    def bay_z(self,z,cx,y0,width=6,height=18,window=True,buttress=True,gable=False,role='stone'):
+        x0=cx-width//2; x1=cx+width//2
+        self.box(x0,x1,y0,y0+height,z,z+1,role)
+        if window:
+            self.carve(cx-1,cx+1,y0+5,y0+height-3,z-1,z+2)
+            self.lancet_z(z,cx,y0+5,height-8,2)
+        if buttress:
+            self.box(x0-1,x0-1,y0,y0+height,z-1,z+1,'dark')
+            self.box(x1+1,x1+1,y0,y0+height,z-1,z+1,'dark')
+            self.pinnacle(x0-1,z,y0+height+1,6); self.pinnacle(x1+1,z,y0+height+1,6)
+        if gable:
+            for k in range(width//2+1):
+                self.box(cx-k,cx+k,y0+height+k,y0+height+k,z,z+1,'trim')
+        return self._record('bay',self._bbox(x0-1,x1+1,y0,y0+height+width//2,z-1,z+1))
+    def portal_z(self,z,cx,y0=2,width=6,height=12,order=3,steps=3,role='stone'):
+        x0=cx-width//2; x1=cx+width//2
+        self.carve(x0,x1,y0,y0+height-1,z-2,z)
+        for y in range(y0,y0+height):
+            self.box(x0,x0,y,y,z-1,z,'light'); self.box(x1,x1,y,y,z-1,z,'light')
+        for k in range(order):
+            for yy in range(y0,y0+height-k):
+                self.box(x0-k,x0-k,yy,yy,z,z,'trim'); self.box(x1+k,x1+k,yy,yy,z,z,'trim')
+            for kk in range(k+1): self.box(x0-kk,x1+kk,y0+height-k+kk,y0+height-k+kk,z,z,'trim')
+        self.box(x0+2,x1-2,y0,y0+height-3,z-1,z-1,'wood')
+        for i in range(steps): self.box(x0-i,x1+i,y0-1,y0-1,z+i+1,z+i+1,'trim')
+        return self._record('portal',self._bbox(x0-order,x1+order,y0-1,y0+height+order,z,z+steps),
+            [ComponentPort('door',(cx,y0,z),'S',width)])
+    def flying_buttress(self,x,z,y0,y1,dirx,role='stone'):
+        bx=x+dirx*6
+        self.box(x,x,y0,y1-2,z-1,z+1,'dark'); self.box(bx,bx,y0,y0+4,z-1,z+1,'dark')
+        for k in range(7): self.put(x+dirx*k,y0+4+round(3*math.sin(math.pi*k/6)),z,role)
+        self.pinnacle(bx,z,y0+9,8)
+        return self._record('flying_buttress',self._bbox(min(x,bx),max(x,bx),y0,y1,z-1,z+1))
+    def gable_face(self,x0,x1,z,y0,ridge,role='stone'):
+        for y in range(y0,ridge+1):
+            half=max(0,round((ridge-y)*((x1-x0)/2)/max(1,ridge-y0)))
+            self.box((x0+x1)//2-half,(x0+x1)//2+half,y,y,z,z,role)
+        return self._record('gable',self._bbox(x0,x1,y0,ridge,z,z))
+
+    def dormer_z(self,x,z,y0,width=3,role='stone'):
+        x0=x-width//2; x1=x+width//2
+        self.box(x0,x1,y0,y0+4,z,z+3,role)
+        self.carve(x0+1,x1-1,y0+1,y0+3,z+3,z+3); self.box(x0+1,x1-1,y0+1,y0+3,z+3,z+3,'glass')
+        for k in range(width//2+1): self.box(x-k,x+k,y0+5+k,y0+5+k,z,z+3,'roof')
+        return self._record('dormer',self._bbox(x0,x1,y0,y0+5+width//2,z,z+3))
+
     # ---------- export ----------
     def stats(self):
         return {'voxels':len(self.V),'types':dict(Counter(self.V.values()).most_common()),'bounds':[

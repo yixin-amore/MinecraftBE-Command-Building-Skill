@@ -1,0 +1,333 @@
+[
+ {
+  "component": "curtain_wall",
+  "bbox": [
+   12,
+   2,
+   12,
+   108,
+   28,
+   108
+  ],
+  "ports": [
+   {
+    "name": "corner_nw",
+    "pos": [
+     12,
+     2,
+     12
+    ],
+    "normal": "N",
+    "width": 0
+   },
+   {
+    "name": "corner_ne",
+    "pos": [
+     108,
+     2,
+     12
+    ],
+    "normal": "N",
+    "width": 0
+   },
+   {
+    "name": "corner_sw",
+    "pos": [
+     12,
+     2,
+     108
+    ],
+    "normal": "S",
+    "width": 0
+   },
+   {
+    "name": "corner_se",
+    "pos": [
+     108,
+     2,
+     108
+    ],
+    "normal": "S",
+    "width": 0
+   },
+   {
+    "name": "gate_l",
+    "pos": [
+     47,
+     2,
+     108
+    ],
+    "normal": "S",
+    "width": 26
+   },
+   {
+    "name": "gate_r",
+    "pos": [
+     73,
+     2,
+     108
+    ],
+    "normal": "S",
+    "width": 26
+   }
+  ],
+  "openings": [
+   [
+    "gate",
+    60,
+    108,
+    26
+   ]
+  ],
+  "blocks": 0
+ },
+ {
+  "component": "gatehouse",
+  "bbox": [
+   42,
+   2,
+   99,
+   78,
+   76,
+   127
+  ],
+  "ports": [
+   {
+    "name": "gate",
+    "pos": [
+     60,
+     2,
+     117
+    ],
+    "normal": "S",
+    "width": 10
+   },
+   {
+    "name": "wall_l",
+    "pos": [
+     42,
+     2,
+     108
+    ],
+    "normal": "W",
+    "width": 36
+   },
+   {
+    "name": "wall_r",
+    "pos": [
+     78,
+     2,
+     108
+    ],
+    "normal": "E",
+    "width": 36
+   }
+  ],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "keep",
+  "bbox": [
+   46,
+   2,
+   26,
+   74,
+   102,
+   54
+  ],
+  "ports": [
+   {
+    "name": "entry",
+    "pos": [
+     60,
+     2,
+     54
+    ],
+    "normal": "S",
+    "width": 6
+   }
+  ],
+  "openings": [
+   [
+    "entry",
+    60,
+    54,
+    6
+   ]
+  ],
+  "blocks": 0
+ },
+ {
+  "component": "cloister",
+  "bbox": [
+   20,
+   2,
+   62,
+   44,
+   11,
+   86
+  ],
+  "ports": [
+   {
+    "name": "garth",
+    "pos": [
+     22,
+     2,
+     64
+    ],
+    "normal": "S",
+    "width": 0
+   }
+  ],
+  "openings": [
+   [
+    "garth",
+    [
+     22,
+     64,
+     42,
+     84
+    ]
+   ]
+  ],
+  "blocks": 0
+ },
+ {
+  "component": "gable",
+  "bbox": [
+   72,
+   31,
+   58,
+   98,
+   40,
+   58
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "gable",
+  "bbox": [
+   72,
+   31,
+   86,
+   98,
+   40,
+   86
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "dormer",
+  "bbox": [
+   77,
+   41,
+   70,
+   79,
+   47,
+   73
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "dormer",
+  "bbox": [
+   87,
+   41,
+   70,
+   89,
+   47,
+   73
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "bay",
+  "bbox": [
+   24,
+   2,
+   107,
+   32,
+   23,
+   109
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "flying_buttress",
+  "bbox": [
+   98,
+   2,
+   63,
+   104,
+   36,
+   65
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "flying_buttress",
+  "bbox": [
+   98,
+   2,
+   73,
+   104,
+   36,
+   75
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "flying_buttress",
+  "bbox": [
+   98,
+   2,
+   83,
+   104,
+   36,
+   85
+  ],
+  "ports": [],
+  "openings": [],
+  "blocks": 0
+ },
+ {
+  "component": "portal",
+  "bbox": [
+   52,
+   1,
+   128,
+   68,
+   19,
+   131
+  ],
+  "ports": [
+   {
+    "name": "door",
+    "pos": [
+     60,
+     2,
+     128
+    ],
+    "normal": "S",
+    "width": 10
+   }
+  ],
+  "openings": [],
+  "blocks": 0
+ }
+]

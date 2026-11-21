@@ -21,7 +21,7 @@ scripts/arch_pipeline.py  一条龙
 scripts/arch_spec.py      631/质心/层数/材质比
 ```
 
-ArchBuilder 当前模块：
+ArchBuilder 当前模块（基础原语 + 组件库见 `35-architecture-components.md`）：
 
 ```text
 site / walls / floor / crenellate / buttress
