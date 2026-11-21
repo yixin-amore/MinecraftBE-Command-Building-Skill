@@ -155,9 +155,19 @@ group 自身 members
 
 动画 `group_id=body` 会同时驱动 `base` + `head`。
 
-`group_switches` 会输出每个分组动画的成员列表，供外部触发/切换选择。
+`group_switches` 会输出每个分组动画的成员列表和 `switch_commands`：
 
-当前是**独立时间轴选择**，不是运行时权重混合。
+```text
+scoreboard players set @e[scores={fmbe_group=<g>}] fmbe_anim <n>
+```
+
+时间轴命令会加门：
+
+```text
+execute if score @e[scores={fmbe_group=<g>},c=1] fmbe_anim matches <n> run <命令>
+```
+
+先切换 `fmbe_anim`，再触发对应时间轴；当前不是运行时权重混合。
 
 ### FK / BoneGroup
 
@@ -179,9 +189,56 @@ block offset
 
 编译、setup、pose、timeline 都使用解析后的绝对位置。
 
-这是**层级偏移/旋转（basic FK）**，不是每帧骨骼旋转动画；
+### FmbeBoneAnimation
 
-逐帧 group 变换仍需要后续的 `FmbeBoneAnimation`。
+`FmbeBoneAnimation` 给某个 group 加逐帧局部变换：
+
+```python
+FmbeBoneAnimation(
+  group_id="head_group",
+  duration=20,
+  keyframes=[
+    GroupKeyframe(tick=0,  offset=(0,0,0), rotation=(0,0,0), scale=1),
+    GroupKeyframe(tick=10, offset=(0,.5,0), rotation=(0,90,0), scale=1),
+  ],
+  interp="linear", step=1,
+)
+```
+
+编译时：
+
+```text
+group local matrix = T(offset) · Rz · Ry · Rx · S
+group world matrix = parent world · local
+block world point  = group world · block local offset
+delta              = animated point - static point
+```
+
+然后把 `delta` 烘进该 block 的 `v.xpos/ypos/zpos`，把 group 旋转加到 `v.xrot/yrot/zrot`。
+
+这是**逐帧 group 位移/旋转烘焙**，不是把 FMBE 原生变量直接绑定到骨骼；
+
+父链支持多级 group，但旋转以 X→Y→Z 欧拉顺序烘焙。
+
+### 动画过渡
+
+`FmbeTransition` 做两个已命名动画的交叉淡化：
+
+```python
+FmbeTransition(from_anim="turn", to_anim="sway", duration=10, name="turn_to_sway")
+```
+
+编译时：
+
+```text
+同 tick 采样 from / to
+u = tick / duration
+vars = (1-u) * from_vars + u * to_vars
+```
+
+输出一条独立时间轴，带 `transition` 标记。
+
+它只做**变量线性混合**，不做曲线缓动、事件混合或权重图。
 
 ## 当前边界
 

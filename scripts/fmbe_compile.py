@@ -8,8 +8,9 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent; sys.path.insert(0,HERE)
 from bdxgen import Block, write_bdx
 import bdx_read
-from fmbe_ir import (FmbeModel, FmbeBlock, FmbeAnimation, FmbeCarrier,
-                     FmbeExport, DEFAULT_VARS, VAR_NAMES)
+from fmbe_ir import (FmbeModel, FmbeBlock, FmbeAnimation, FmbeBoneAnimation,
+                     FmbeTransition, FmbeCarrier, FmbeExport, DEFAULT_VARS, VAR_NAMES)
+import fmbe_bone as B
 
 @dataclass
 class FmbeCompileResult:
@@ -70,6 +71,77 @@ def sample_animation(model, anim):
                         'command':model.export.command(merged)})
     return out
 
+def _attr_at(kfs, getter, default, tick, interp):
+    vals=[(kf.tick,float(getter(kf))) for kf in kfs]
+    if not vals: return default
+    if tick <= vals[0][0]: return vals[0][1]
+    if tick >= vals[-1][0]: return vals[-1][1]
+    if interp == 'step':
+        return max((v for t,v in vals if t<=tick), default=vals[0][1])
+    for (t0,v0),(t1,v1) in zip(vals,vals[1:]):
+        if t0 <= tick <= t1:
+            if t1 == t0: return v1
+            u=(tick-t0)/(t1-t0); return v0+(v1-v0)*u
+    return vals[-1][1]
+
+def _bone_pose(model, ba, tick):
+    off=[_attr_at(ba.keyframes, lambda k:k.offset[i], 0.0, tick, ba.interp) for i in range(3)]
+    rot=[_attr_at(ba.keyframes, lambda k:k.rotation[i], 0.0, tick, ba.interp) for i in range(3)]
+    sc=_attr_at(ba.keyframes, lambda k:k.scale, 1.0, tick, ba.interp)
+    return {ba.group_id:(tuple(off),tuple(rot),sc)}
+
+def sample_bone_animation(model, ba):
+    groups={g.id:g for g in model.groups}
+    step=max(1,int(ba.step)); ticks=list(range(0,ba.duration+1,step))
+    if ticks[-1]!=ba.duration: ticks.append(ba.duration)
+    out=[]
+    for tick in ticks:
+        pose=_bone_pose(model,ba,tick); cache={}
+        for b in model.bone_targets(ba):
+            M=B.world(groups,b.group,pose,cache)
+            animated=B.point(M,b.offset) if b.group else tuple(float(x) for x in b.offset)
+            base=model.resolve_offset(b)
+            delta=[animated[i]-base[i] for i in range(3)]
+            vals=dict(DEFAULT_VARS); vals.update(b.vars)
+            for i,k in enumerate(('xpos','ypos','zpos')): vals[k]+=delta[i]
+            # root group rotation is baked as additive block rotation
+            root_rot=pose.get(ba.group_id,((0,0,0),None,1))[1]
+            for i,k in enumerate(('xrot','yrot','zrot')): vals[k]+=root_rot[i]
+            merged=b.merged(vals)
+            out.append({'tick':tick,'block':b.id,'vars':vals,
+                        'command':model.export.command(merged),'bone':ba.group_id})
+    return out
+
+def _all_animations(model):
+    d={}
+    for a in model.animations: d[a.name or a.block_id or a.group_id]=('anim',a)
+    for b in model.bone_animations: d[b.name or b.group_id]=('bone',b)
+    return d
+
+def sample_transition(model, tr):
+    anims=_all_animations(model)
+    if tr.from_anim not in anims or tr.to_anim not in anims:
+        return []
+    def frames(name):
+        kind,a=anims[name]
+        return sample_animation(model,a) if kind=='anim' else sample_bone_animation(model,a)
+    fa=frames(tr.from_anim); fb=frames(tr.to_anim)
+    bya={(x['tick'],x['block']):x for x in fa}; byb={(x['tick'],x['block']):x for x in fb}
+    out=[]
+    for tick in range(0,tr.duration+1):
+        u=tick/max(1,tr.duration); keys=set(k for k in bya if k[0]==tick)|set(k for k in byb if k[0]==tick)
+        for _,block in sorted(keys):
+            a=bya.get((tick,block)); b=byb.get((tick,block))
+            if a and b:
+                vals=dict(a['vars'])
+                for k,v in b['vars'].items():
+                    if k in vals: vals[k]=(1-u)*vals[k]+u*v
+                cmd=model.export.command(model.block(block).merged(vals))
+            else:
+                src=a or b; vals=dict(src['vars']); cmd=src['command']
+            out.append({'tick':tick,'block':block,'vars':vals,'command':cmd,'transition':tr.name})
+    return out
+
 def setup_commands(model, carrier=None):
     if not carrier or not carrier.enabled: return []
     out=['scoreboard objectives add fmbe_group dummy',
@@ -108,6 +180,32 @@ def compile_model(model, bdx_path=None, write_setup=True):
                                            'switch_commands':[
                                                'scoreboard players set @e[scores={fmbe_group=%d}] fmbe_anim %d'%(gi,ai)
                                            ]})
+    # Bone-group animations: bake group transforms into per-part playanimation vars.
+    for ba in model.bone_animations:
+        frames=sample_bone_animation(model,ba)
+        result.frames.extend(frames)
+        frames_sorted=sorted(frames,key=lambda x:(x['tick'],x['block']))
+        result.timelines.append({'animation':ba.name or ba.group_id,'group':ba.group_id,
+                                 'loop':ba.loop,'frames':frames_sorted,'kind':'bone'})
+        if ba.group_id:
+            gi=_group_index(model,ba.group_id); ai=len(result.group_switches)+1
+            result.group_switches.append({'animation':ba.name or ba.group_id,'group':ba.group_id,
+                'group_index':gi,'animation_index':ai,'members':[b.id for b in model.bone_targets(ba)],
+                'switch_commands':['scoreboard players set @e[scores={fmbe_group=%d}] fmbe_anim %d'%(gi,ai)]})
+    # Crossfades: sample both animations at the same ticks and lerp vars.
+    for tr in model.transitions:
+        frames=sample_transition(model,tr)
+        result.frames.extend(frames)
+        if frames:
+            group=next((x['group'] for x in result.timelines if x['animation']==tr.from_anim),None)
+            result.timelines.append({'animation':tr.name or ('%s->%s'%(tr.from_anim,tr.to_anim)),
+                                     'group':group,'loop':False,
+                                     'frames':sorted(frames,key=lambda x:(x['tick'],x['block'])),'kind':'transition'})
+            if group:
+                gi=_group_index(model,group); ai=len(result.group_switches)+1
+                result.group_switches.append({'animation':tr.name or ('%s->%s'%(tr.from_anim,tr.to_anim)),
+                    'group':group,'group_index':gi,'animation_index':ai,
+                    'members':[],'switch_commands':['scoreboard players set @e[scores={fmbe_group=%d}] fmbe_anim %d'%(gi,ai)]})
     if bdx_path:
         blocks=[]
         # One always-active repeat block per part, at the resolved part origin.

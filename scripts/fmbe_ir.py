@@ -74,6 +74,30 @@ class FmbeBoneGroup:
     rotation: Tuple[float,float,float] = (0,0,0)   # x,y,z degrees
 
 @dataclass
+class GroupKeyframe:
+    tick: int
+    offset: Tuple[float,float,float] = (0,0,0)
+    rotation: Tuple[float,float,float] = (0,0,0)
+    scale: float = 1.0
+
+@dataclass
+class FmbeBoneAnimation:
+    group_id: str
+    duration: int = 1
+    keyframes: List[GroupKeyframe] = field(default_factory=list)
+    interp: str = 'linear'
+    step: int = 1
+    name: str = ''
+    loop: bool = False
+
+@dataclass
+class FmbeTransition:
+    from_anim: str
+    to_anim: str
+    duration: int = 1
+    name: str = ''
+
+@dataclass
 class FmbeCarrier:
     enabled: bool = True
     entity: str = 'fox'
@@ -88,6 +112,8 @@ class FmbeModel:
     export: FmbeExport = field(default_factory=FmbeExport)
     carrier: Optional[FmbeCarrier] = None
     origin: Tuple[int,int,int] = (0,0,0)
+    bone_animations: List['FmbeBoneAnimation'] = field(default_factory=list)
+    transitions: List['FmbeTransition'] = field(default_factory=list)
 
     def block(self, bid):
         for b in self.blocks:
@@ -141,6 +167,16 @@ class FmbeModel:
             return [self.block(m) for m in self.group_members_deep(anim.group_id) if self.block(m)]
         b=self.block(anim.block_id) if anim.block_id else None
         return [b] if b else []
+
+    def animation_names(self):
+        d={a.name or a.block_id or a.group_id: a for a in self.animations}
+        for b in self.bone_animations:
+            d[b.name or b.group_id]=b
+        return d
+
+    def bone_targets(self, ba):
+        g=self.group(ba.group_id)
+        return [self.block(m) for m in (self.group_members_deep(ba.group_id) if g else []) if self.block(m)]
 
     def validate(self):
         issues=[]; warnings=[]
@@ -204,8 +240,27 @@ class FmbeModel:
                     if k in ROTATE_KEYS: issues.append('%s: keyframe uses %s (not supported)'%(a.name,k))
                     if k not in VAR_NAMES: issues.append('%s: keyframe unknown var %s'%(a.name,k))
             if a.keyframes and ticks != sorted(ticks): issues.append('%s: keyframes not sorted'%a.name)
+        names=self.animation_names()
+        for ba in self.bone_animations:
+            if ba.group_id not in by_group: issues.append('bone animation: unknown group '+ba.group_id)
+            if ba.duration <= 0: issues.append('bone animation %s duration <= 0'%ba.name)
+            if ba.interp not in ('linear','step'): issues.append('bone animation %s: unsupported interp %s'%(ba.name,ba.interp))
+            if ba.step < 1: issues.append('bone animation %s: step < 1'%ba.name)
+            if not self.bone_targets(ba): warnings.append('bone animation %s has no targets'%ba.name)
+            ticks=[]
+            for kf in ba.keyframes:
+                if kf.tick < 0 or kf.tick > ba.duration: issues.append('%s: group keyframe tick %s outside 0..%s'%(ba.name,kf.tick,ba.duration))
+                if kf.tick in ticks: issues.append('%s: duplicate group keyframe tick %s'%(ba.name,kf.tick))
+                ticks.append(kf.tick)
+                if not math.isfinite(float(kf.scale)) or float(kf.scale) <= 0: issues.append('%s: group scale must be > 0'%ba.name)
+            if ba.keyframes and ticks != sorted(ticks): issues.append('%s: group keyframes not sorted'%ba.name)
+        for tr in self.transitions:
+            if tr.from_anim not in names: issues.append('transition: unknown animation '+tr.from_anim)
+            if tr.to_anim not in names: issues.append('transition: unknown animation '+tr.to_anim)
+            if tr.duration <= 0: issues.append('transition %s: duration <= 0'%tr.name)
         return {'ok':not issues,'issues':issues,'warnings':warnings,
-                'blocks':len(self.blocks),'animations':len(self.animations),'groups':len(self.groups)}
+                'blocks':len(self.blocks),'animations':len(self.animations),
+                'bone_animations':len(self.bone_animations),'groups':len(self.groups)}
 
     def require_valid(self):
         r=self.validate()
@@ -229,13 +284,22 @@ class FmbeModel:
                 interp=str(a.get('interp','linear')), step=int(a.get('step',1))))
         groups=[FmbeBoneGroup(str(g['id']),list(g.get('members',[])),g.get('parent'),
                 tuple(g.get('offset',[0,0,0])),tuple(g.get('rotation',[0,0,0]))) for g in d.get('groups',[])]
+        bones=[]
+        for a in d.get('bone_animations',[]):
+            bones.append(FmbeBoneAnimation(str(a['group_id']),int(a.get('duration',1)),
+                [GroupKeyframe(int(k['tick']),tuple(k.get('offset',[0,0,0])),
+                               tuple(k.get('rotation',[0,0,0])),float(k.get('scale',1)))
+                 for k in a.get('keyframes',[])],
+                str(a.get('interp','linear')),int(a.get('step',1)),str(a.get('name','')),bool(a.get('loop',False))))
+        transitions=[FmbeTransition(str(t['from']),str(t['to']),int(t.get('duration',1)),str(t.get('name',''))) for t in d.get('transitions',[])]
         carrier=None
         if d.get('carrier') is not None:
             c=d['carrier']; carrier=FmbeCarrier(bool(c.get('enabled',True)),str(c.get('entity','fox')),str(c.get('display_score','fmbe_display')))
         exp=d.get('export',{})
-        return cls(str(d.get('name','model')),blocks,anims,groups,
-                   FmbeExport(exp.get('prefix',FmbeExport.prefix),exp.get('suffix',FmbeExport.suffix)) if exp else FmbeExport(),
-                   carrier,tuple(d.get('origin',[0,0,0])))
+        return cls(name=str(d.get('name','model')),blocks=blocks,animations=anims,groups=groups,
+                   export=FmbeExport(exp.get('prefix',FmbeExport.prefix),exp.get('suffix',FmbeExport.suffix)) if exp else FmbeExport(),
+                   carrier=carrier,origin=tuple(d.get('origin',[0,0,0])),
+                   bone_animations=bones,transitions=transitions)
 
 def _num(v):
     if isinstance(v, bool): return int(v)
