@@ -55,6 +55,9 @@ python3 scripts/command_syntax.py execute --version netease-vanilla
 - `scripts/nxs_ir.py`：Shape / CSG / NxsRaster / 自适应点阵
 - `scripts/nxs_compile.py`：点阵 → 命令 → 预算
 - `scripts/nxs_read.py`：JSON 回读
+- `scripts/nxs_schedule.py`：每材料 1 函数 CB
+- `scripts/nxs_template.py`：cell → execute 模板
+- `scripts/nxs_import.py`：PNG/SVG → Shape
 - `references/36-nxs-compiler.md`
 
 ## 建筑组件库

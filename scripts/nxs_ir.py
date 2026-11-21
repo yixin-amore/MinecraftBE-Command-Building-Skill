@@ -148,6 +148,23 @@ def _closest_on_segment(p,a,b):
     return _add(a,_mul(ab,t))
 
 @dataclass
+class BitmapMask(Shape):
+    """2D bitmap mask: rows[z][x] booleans, extruded in Y."""
+    rows: List[List[bool]] = field(default_factory=list)
+    cell: float = 1.0
+    x0: float = 0
+    z0: float = 0
+    y0: float = 0
+    y1: float = 0.5
+    def contains(self,p):
+        if not (self.y0<=p[1]<=self.y1): return False
+        ix=int((p[0]-self.x0)/self.cell); iz=int((p[2]-self.z0)/self.cell)
+        return 0<=iz<len(self.rows) and 0<=ix<len(self.rows[iz]) and self.rows[iz][ix]
+    def bounds(self):
+        h=len(self.rows); w=max((len(r) for r in self.rows),default=0)
+        return (self.x0,self.y0,self.z0),(self.x0+w*self.cell,self.y1,self.z0+h*self.cell)
+
+@dataclass
 class Union(Shape):
     a: Shape; b: Shape
     def contains(self,p): return self.a.contains(p) or self.b.contains(p)

@@ -57,7 +57,7 @@ setblock <x> <y> <z> <block>
 fill <x0> <y0> <z0> <x1> <y1> <z1> <block>
 ```
 
-当前是**绝对坐标命令表**，不是单条 NXS 模板。  
+当前是**绝对坐标命令表**，不是单条 NXS 模板。
 这样可以先验证几何、预算、回读，再把同一 cell 表降成 `execute` 链。
 
 ## if / unless
@@ -68,7 +68,7 @@ fill <x0> <y0> <z0> <x1> <y1> <z1> <block>
 {"if":["x=-2","dx=4","y=-0.25","dy=0.5","z=-2","dz=4"],"unless":[]}
 ```
 
-`Subtract` 会变成 `if A` + `unless B`。  
+`Subtract` 会变成 `if A` + `unless B`。
 复杂 `Union`、任意 CSG 仍返回 `None`，不假装一条选择器能表达所有并集。
 
 ## 预算
@@ -84,7 +84,7 @@ max_cb      80
 issues      > 上限则拒绝
 ```
 
-`cb` 是**当前绝对命令模式**的估计，不是“每材料 1 CB”的压缩值；  
+`cb` 是**当前绝对命令模式**的估计，不是“每材料 1 CB”的压缩值；
 压缩调度仍需要单独的 scheduler。
 
 示例：
@@ -98,6 +98,91 @@ cb       36
 ticks    2
 ok       true
 ```
+
+## 调度：每材料 1 CB
+
+`nxs_schedule.py` 按材料分组，把命令写进 Bedrock function：
+
+```bash
+python3 scripts/nxs_schedule.py examples/nxs-compiler/ring.json
+```
+
+输出：
+
+```text
+materials       1
+absolute_cb    36
+scheduled_cb    1
+chunks          1
+```
+
+每个材料：
+
+```text
+function nxs_<i>_0
+```
+
+一个 `function` 命令方块调用它，所以 CB 数 = 材料数（+ 分块数），不是点数。
+
+前提是目标环境启用函数；纯命令方块环境仍要走绝对命令/链。
+
+## 单 cell 模板
+
+`nxs_template.py` 把每个 cell 编译成一条 `execute` 模板：
+
+```text
+execute positioned <x> <y> <z>
+  if entity @s[<include>] unless entity @s[<exclude>]
+  run particle ...
+```
+
+当前是**每个 cell 一条模板**，不是一条命令画完整张图。
+一条 `execute` 只有一个 `run`，要画 N 个点必须有 N 个执行体/调度，不能违反这个事实。
+
+## 反向预算
+
+```bash
+python3 scripts/nxs_compile.py   --shape circle --size 16 --recommend-cb 80
+```
+
+输出：
+
+```text
+recommended: 3
+levels 1..3  CB <= 80
+levels 4+    CB > 80
+```
+
+这是给 80 CB 约束反推 `levels`，不是自动压缩形状。
+
+## PNG / SVG 导入
+
+```python
+from nxs_import import from_png, from_svg
+shape = from_png("creeper.png", threshold=128)
+shape = from_svg("plan.svg")
+```
+
+PNG 会变成 `BitmapMask`，SVG 支持：
+
+```text
+rect / circle / ellipse / polygon
+```
+
+SVG 路径 `path` 只做基础 M/L/Z，复杂 arc/Bezier 暂不解析。
+
+## Benchmark
+
+`examples/nxs-compiler/bench.py`：
+
+| Shape | 点数 | 命令 | 绝对 CB | 调度 CB |
+|---|---:|---:|---:|---:|
+| 2D circle | 40 | 40 | 40 | 1 |
+| 3D cube | 64 | 64 | 64 | 1 |
+| creeper 位图 | 69 | 69 | 69 | 1 |
+| SVG 组合 | 16 | 16 | 16 | 1 |
+
+调度 CB 依赖函数；绝对 CB 是纯命令模式的估计。
 
 ## 回读
 
@@ -117,11 +202,3 @@ budget.issues
 - 自适应只在根 bounds 内；超薄/极细形状可能需要提高 levels；
 - `Union` 的 `if/unless` 选择器尚未完整编译；
 - `fill` 模式按 cell 输出，不是 greedy 合并。
-
-## 下一步
-
-1. `cell table → NXS execute 模板`；
-2. `1 材料 1 CB + cell 调度`；
-3. 预算求解器：给定 80 CB 反推 levels/采样；
-4. PNG/SVG → Shape 导入；
-5. 2D circle / 3D cube / creeper 三个 benchmark。

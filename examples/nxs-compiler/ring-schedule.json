@@ -1,0 +1,54 @@
+{
+ "functions": {
+  "nxs_0_0": [
+   "particle minecraft:balloon_gas_particle -5.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle -3.000 0.000 -7.000",
+   "particle minecraft:balloon_gas_particle -1.000 0.000 -7.000",
+   "particle minecraft:balloon_gas_particle -3.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle -1.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle -7.000 0.000 -3.000",
+   "particle minecraft:balloon_gas_particle -5.000 0.000 -3.000",
+   "particle minecraft:balloon_gas_particle -7.000 0.000 -1.000",
+   "particle minecraft:balloon_gas_particle -5.000 0.000 -1.000",
+   "particle minecraft:balloon_gas_particle 1.000 0.000 -7.000",
+   "particle minecraft:balloon_gas_particle 3.000 0.000 -7.000",
+   "particle minecraft:balloon_gas_particle 1.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle 3.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 -5.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 -3.000",
+   "particle minecraft:balloon_gas_particle 7.000 0.000 -3.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 -1.000",
+   "particle minecraft:balloon_gas_particle 7.000 0.000 -1.000",
+   "particle minecraft:balloon_gas_particle -7.000 0.000 1.000",
+   "particle minecraft:balloon_gas_particle -5.000 0.000 1.000",
+   "particle minecraft:balloon_gas_particle -7.000 0.000 3.000",
+   "particle minecraft:balloon_gas_particle -5.000 0.000 3.000",
+   "particle minecraft:balloon_gas_particle -5.000 0.000 5.000",
+   "particle minecraft:balloon_gas_particle -3.000 0.000 5.000",
+   "particle minecraft:balloon_gas_particle -1.000 0.000 5.000",
+   "particle minecraft:balloon_gas_particle -3.000 0.000 7.000",
+   "particle minecraft:balloon_gas_particle -1.000 0.000 7.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 1.000",
+   "particle minecraft:balloon_gas_particle 7.000 0.000 1.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 3.000",
+   "particle minecraft:balloon_gas_particle 7.000 0.000 3.000",
+   "particle minecraft:balloon_gas_particle 1.000 0.000 5.000",
+   "particle minecraft:balloon_gas_particle 3.000 0.000 5.000",
+   "particle minecraft:balloon_gas_particle 1.000 0.000 7.000",
+   "particle minecraft:balloon_gas_particle 3.000 0.000 7.000",
+   "particle minecraft:balloon_gas_particle 5.000 0.000 5.000"
+  ]
+ },
+ "command_blocks": [
+  {
+   "command": "function nxs_0_0",
+   "material": "minecraft:balloon_gas_particle",
+   "commands": 36
+  }
+ ],
+ "materials": 1,
+ "absolute_cb": 36,
+ "scheduled_cb": 1,
+ "chunks": 1,
+ "issues": []
+}

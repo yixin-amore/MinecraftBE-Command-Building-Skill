@@ -1,0 +1,110 @@
+[
+ {
+  "name": "circle",
+  "axes": "2d",
+  "levels": 3,
+  "points": 40,
+  "commands": 40,
+  "chars": 2360,
+  "absolute_cb": 40,
+  "ticks": 2,
+  "budget_ok": true,
+  "scheduled_cb": 1,
+  "chunks": 1
+ },
+ {
+  "name": "cube",
+  "axes": "3d",
+  "levels": 3,
+  "points": 64,
+  "commands": 64,
+  "chars": 3808,
+  "absolute_cb": 64,
+  "ticks": 4,
+  "budget_ok": true,
+  "scheduled_cb": 1,
+  "chunks": 1
+ },
+ {
+  "name": "creeper",
+  "axes": "2d",
+  "levels": 4,
+  "points": 69,
+  "commands": 69,
+  "chars": 4040,
+  "absolute_cb": 69,
+  "ticks": 4,
+  "budget_ok": true,
+  "scheduled_cb": 1,
+  "chunks": 1
+ },
+ {
+  "name": "svg",
+  "axes": "2d",
+  "levels": 3,
+  "points": 16,
+  "commands": 16,
+  "chars": 952,
+  "absolute_cb": 16,
+  "ticks": 1,
+  "budget_ok": true,
+  "scheduled_cb": 1,
+  "chunks": 1
+ },
+ {
+  "recommend_circle": {
+   "recommended": 3,
+   "max_cb": 80,
+   "rows": [
+    {
+     "levels": 1,
+     "points": 4,
+     "cb": 4,
+     "ok": true
+    },
+    {
+     "levels": 2,
+     "points": 12,
+     "cb": 12,
+     "ok": true
+    },
+    {
+     "levels": 3,
+     "points": 40,
+     "cb": 40,
+     "ok": true
+    },
+    {
+     "levels": 4,
+     "points": 112,
+     "cb": 112,
+     "ok": false
+    },
+    {
+     "levels": 5,
+     "points": 320,
+     "cb": 320,
+     "ok": false
+    },
+    {
+     "levels": 6,
+     "points": 1032,
+     "cb": 1032,
+     "ok": false
+    },
+    {
+     "levels": 7,
+     "points": 3652,
+     "cb": 3652,
+     "ok": false
+    },
+    {
+     "levels": 8,
+     "points": 4096,
+     "cb": 4096,
+     "ok": false
+    }
+   ]
+  }
+ }
+]

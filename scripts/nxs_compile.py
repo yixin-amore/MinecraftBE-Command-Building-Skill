@@ -108,16 +108,30 @@ def build_shape(kind,size):
     if kind=='torus': return Torus(c,s/2,s/5,'y')
     raise SystemExit('unknown shape '+kind)
 
+def recommend_levels(shape, width=16, height=16, depth=16, axes='3d', max_cb=80, max_levels=8):
+    """Largest level whose absolute command count fits max_cb."""
+    best=None; rows=[]
+    for lv in range(1,max_levels+1):
+        r=NxsRaster(width=width,height=height,depth=depth,levels=lv,shape=shape,axes=axes)
+        art=compile_raster(r); b=art['budget']
+        rows.append({'levels':lv,'points':b['points'],'cb':b['cb'],'ok':b['ok']})
+        if b['cb']<=max_cb: best=lv
+    return {'recommended':best,'max_cb':max_cb,'rows':rows}
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--shape',default='circle')
     ap.add_argument('--size',type=float,default=16); ap.add_argument('--levels',type=int,default=3)
     ap.add_argument('--emit',default='particle',choices=['particle','setblock','fill'])
     ap.add_argument('--material',default='minecraft:balloon_gas_particle')
     ap.add_argument('--out',default=None); ap.add_argument('--axes',default=None)
+    ap.add_argument('--recommend-cb',type=int,default=None)
     a=ap.parse_args(); shape=build_shape(a.shape,a.size)
     axes=a.axes or ('2d' if a.shape in ('circle','ring','square','cross') else '3d')
     r=NxsRaster(width=a.size,height=1 if axes=='2d' else a.size,depth=a.size,levels=a.levels,
                shape=shape,material=a.material,emit=a.emit,axes=axes)
+    if a.recommend_cb:
+        rec=recommend_levels(shape,a.size,a.size,a.size,axes,a.recommend_cb)
+        print(json.dumps({'recommend':rec},ensure_ascii=False,indent=1)); return
     art=compile_raster(r)
     print(json.dumps({'shape':a.shape,'axes':axes,'points':art['budget']['points'],
                       'commands':art['budget']['commands'],'chars':art['budget']['chars'],
