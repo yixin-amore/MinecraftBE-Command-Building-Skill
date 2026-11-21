@@ -48,29 +48,6 @@ ComponentResult(
 - 还没有自动吸附、净空求解、碰撞图；
 - 调用方需要保证组件不互相穿插。
 
-## 示例
-
-`examples/arch-castle/` 用 8 个组件拼出：
-
-```text
-curtain_wall + gatehouse + keep + cloister
-+ bay + portal + flying_buttress + dormer
-```
-
-结果：
-
-```text
-20 个组件实例
-143,167 体素
-BDX 143,167 方块
-回读 143,167 / issues []
-```
-
-预览：
-
-- `examples/arch-castle/out/building-front.png`
-- `examples/arch-castle/out/building-top.png`
-- `examples/arch-castle/out/building-iso.png`
 
 ## 当前边界
 
