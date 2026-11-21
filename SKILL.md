@@ -490,7 +490,7 @@ scoreboard players operation fb_state obj %= fb_two obj
 - **石族/虚空间**：3–5 族石料混色，下重上轻；长翼挖内院/回廊，别做实心盒子。
 - 完整方法见 `references/building-corpus-learning.md` 和 `references/building-design.md`；模板 `assets/building-brief.template.md`。
 
-### 4.12.1 建筑编译器（本地 MVP）
+### 4.12.1 建筑编译器
 
 ```bash
 python3 scripts/arch_pipeline.py --builder examples/arch-chapel/build_chapel.py --outdir examples/arch-chapel/out --start 900,0,900
@@ -504,8 +504,6 @@ ArchBuilder → arch_compile → .bdx
 ```
 
 - `references/28-arch-compiler.md`
-- 当前只验证到小礼拜堂；城堡模块还没接。
-- 不提交 GitHub，先跑通编译链。
 
 ### 4.13 内饰设计
 

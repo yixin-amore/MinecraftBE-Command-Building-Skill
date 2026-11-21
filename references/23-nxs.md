@@ -94,9 +94,3 @@ NxsShape(
 | 用途 | 法阵、符文、轨道、3D 线框 | Boss、武器、展示体 |
 
 两者可以叠加：NXS 画法阵/轨道，FMBE 放主体。
-
-## 5. 当前状态
-
-- 这两份已归入语料 `nxs` 类，不再当普通 math。
-- 还没有 `nxs_ir.py` 编译器；先把模式和 IR 固定。
-- 下一步：实现 2D circle / 3D cube 两个最小 shape，生成命令后用 CHelper 校验。

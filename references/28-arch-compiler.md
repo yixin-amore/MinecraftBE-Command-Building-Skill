@@ -56,10 +56,3 @@ python3 scripts/arch_pipeline.py \
   --outdir examples/arch-chapel/out \
   --start 900,0,900
 ```
-
-## 还没做
-
-- ArchSpec → 模块自动展开（目前 builder 仍是手写 Python）
-- 建筑约束还不完整：立面进深、轮廓、焦点密度
-- 没有服务器导入；BDX 只做本地回读
-- 没有 castle 模块：curtain wall / gatehouse / keep / flying buttress / cloister

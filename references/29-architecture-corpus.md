@@ -11,7 +11,7 @@
 - `.bdx`（普通方块）
 
 工具：`work/architecture-corpus/fast_index.py` / `build_index.py`
-参考摘要：`references/architecture-corpus/curated.json`（本地完整索引在 `work/architecture-corpus/`，不随包分发）
+参考摘要：`references/architecture-corpus/curated.json`
 
 ## 两个真正的 golden reference
 
@@ -66,9 +66,3 @@ palette: wool / hardened_clay / stone / oak / stained clay
 5. **内院**：围合出空腔，回廊柱廊可见
 6. **材质**：深色基座 + 浅色墙 + 深色石板顶 + 少量铜/金
 7. **拒绝**：同一种锥顶复制、整面平墙、只有四个角塔
-
-## 下一步
-
-- 以 Tolbooth 为 **主塔/长厅** 参考
-- 以 Europe 为 **内院/回廊** 参考
-- 重新做城堡：单主塔 + 长厅 + 门楼 + 内院，不再做对称六塔

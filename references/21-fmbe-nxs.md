@@ -35,5 +35,3 @@ FMBE 的 13 变量/矩阵/导出细节见 `references/24-fmbe-model-ir.md`；NXS
 - 递归角度序列、镜像、跟随目标
 - `rotated`/`positioned`/`facing` 的顺序
 - 最终 particle 名称
-
-先把 2D circle / 3D cube 做成 `NxsShape` 两个最小类型，再接完整形状库。

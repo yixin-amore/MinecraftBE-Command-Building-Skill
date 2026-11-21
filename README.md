@@ -65,7 +65,6 @@ corpus_search → dsl.py → spec.json → cbc.py → build_cbworld
 - `scripts/dsl.py`：结构化选择器 / execute 上下文 / 动作
 - `scripts/cbc.py`：三段式断链、条件块、链宽/链深
 - `scripts/build_cbworld.py` / `mcworld_to_structure.py`：世界与结构文件
-- 语法结构检查：可选，本地 oracle，不随包分发
 - `references/mct-playbook.md` + `references/mct/`：DSL/链布局/UI/调试全表
 
 命令系统优先这条链；建筑、BDX、FMBE、真机回读是辅助层。

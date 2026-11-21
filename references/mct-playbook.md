@@ -6,17 +6,16 @@ agent_created: true
 
 # mct · 基岩版命令方块系统
 
-> **Fusion 试运行（本地）**：本副本以协作者 mct 的「编程语言 → 指令」为主线，补入 `references/20-corpus-patterns.md`（1,644 条语料的模式统计/语法断层/检索路由）、`scripts/corpus_search.py`、`scripts/analyze_corpus.py`、`references/21-fmbe-nxs.md`、`references/23-nxs.md`（binaryTree2D/3D 的 NXS 递归坐标架）、`references/24-fmbe-model-ir.md`（APK 逆向蒸馏的 FMBE 13 变量/矩阵/导出/动画），、`references/25-bdx-bridge.md` / `scripts/cbjson_to_bdx.py`（cb.json → BDX 本地桥），以及 **`syntax/syntax-base.json` / `references/22-syntax-foundation.md`**（CHelper 蒸馏的命令格式/token 语法基座）。
 
 ## 0.0 语料 → DSL 工作流（优先看）
 
 ```text
-0. syntax_lookup.py 查命令格式/token（根基）
+0. command_syntax.py 查命令格式/token
 1. corpus_search.py 先找同类实现与命名
 2. 只提取意图/结构，不照抄旧字符串
 3. 用 dsl.py 写结构化动作
 4. cbc.py 排链 / 条件块 / 宽度
-5. syntax_guard.py 结构检查 + CHelper 本地 oracle 完整复核
+5. lint / syntax 结构检查
 6. build_cbworld / mcworld_to_structure
    可选：dump_cbworld → cbjson_to_bdx（本地验证；真机未验）
 7. 真机回读；FMBE 走方块矩阵层，NXS 走变换栈
@@ -39,24 +38,24 @@ agent_created: true
 
 | 任务 | 先检索 | 再用 |
 |---|---|---|
-| 武器/拔刀剑/鱼竿枪 | `weapon` | `dsl.py` + `build_cbworld.py` + CHelper |
+| 武器/拔刀剑/鱼竿枪 | `weapon` | `dsl.py` + `build_cbworld.py` |
 | 数据化/属性/T显 | `data` | `cbc.py` + score actions |
 | 菜单/公告/进度条 | `ui` | `Ctx` + `titleraw/tellraw` |
 | 商店/开箱/经济 | `economy` | `inventory`/`scoreboard`/`structure` |
 | 传送/圆规/二分 | `teleport`/`math` | `positioned/rotated/facing` |
 | FMBE/展示体 | `fmbe` | `references/24-fmbe-model-ir.md` + `scripts/fmbe_matrix.py` |
-| NXS/递归几何 | `nxs` | `references/23-nxs.md` + `syntax_guard` |
+| NXS/递归几何 | `nxs` | `references/23-nxs.md` |
 | 防护/管理 | `protection` | `scoreboard`/`tag` 审计 + 回读 |
 
 ```bash
-python3 scripts/syntax_lookup.py execute --version netease-vanilla
+python3 scripts/command_syntax.py execute --version netease-vanilla
 python3 scripts/corpus_search.py '拔刀剑' --category weapon --limit 5
 python3 scripts/analyze_corpus.py          # 重新生成 20-corpus-patterns.md
-python3 scripts/syntax_guard.py spec.json    # 命令头/旧 execute 检查
+python3 scripts/lint_commands.py spec.json    # 命令/JSON/白名单检查
 node auxiliary/chelper_check.mjs spec.json   # 完整语法 oracle
 ```
 
-> 语法基座：`syntax/syntax-base.json` + `references/22-syntax-foundation.md`；语料字段见 `../command-corpus/README.md`；FMBE/NXS 缺口见 `references/21-fmbe-nxs.md`。
+> 语法表：`references/command-syntax.json`；FMBE/NXS 见 `references/21-fmbe-nxs.md`。
 
 
 
@@ -2045,4 +2044,3 @@ FMBE（`14-fmbe.md`）、SMBE（`17-stretch.md`）都是这么处理的：
 
 **收尾清单**（每次维护都过一遍）：内容归位 → 编号连续 → 交叉引用没断 →
 行数符合预期 → 两边 md5 一致 → 记忆追加一条 → 改了结构就同步索引表。
-

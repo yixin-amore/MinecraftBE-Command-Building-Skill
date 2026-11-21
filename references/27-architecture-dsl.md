@@ -135,13 +135,3 @@ gradient_y / noise / checkerboard / stripes
 ```
 
 但**不能共用同一个编译器**。
-
-## 5. 最小落地顺序
-
-1. `arch_spec.py`：Mass / Facade / Courtyard / Palette + 校验
-2. `arch_compile.py`：先把 Mass/Bay/Wall/Roof 转体素
-3. 用一座小教堂做 golden test
-4. 再 port 国会大厦
-5. 预览 + BDX + 真机回读
-
-> 不要先做“全风格生成”。先把 **631 / 黄金 / 四层立面 / 内院** 四个约束跑通。
