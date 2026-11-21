@@ -39,12 +39,13 @@ class FmbeBlock:
     item: str = 'minecraft:stone'
     offset: Tuple[float,float,float] = (0,0,0)
     vars: Dict[str,float] = field(default_factory=dict)
+    group: Optional[str] = None
     def __post_init__(self):
         if not self.name: self.name = self.id
         self.vars = {k: _num(v) for k,v in self.vars.items() if k in VAR_NAMES}
     def merged(self, extra=None):
         d = dict(DEFAULT_VARS); d.update(self.vars); d.update(extra or {})
-        return FmbeBlock(self.id, self.name, self.item, self.offset, d)
+        return FmbeBlock(self.id, self.name, self.item, self.offset, d, self.group)
     def vertices(self): return M.vertices(self)
     def matrix4Rows(self): return M.matrix_rows(self)
 
@@ -55,15 +56,22 @@ class Keyframe:
 
 @dataclass
 class FmbeAnimation:
-    block_id: str
-    duration: int
+    block_id: Optional[str] = None
+    duration: int = 1
     keyframes: List[Keyframe] = field(default_factory=list)
     loop: bool = False
+    group_id: Optional[str] = None
+    name: str = ''
+    interp: str = 'linear'          # linear | step
+    step: int = 1                   # sample every N ticks
 
 @dataclass
 class FmbeBoneGroup:
     id: str
     members: List[str] = field(default_factory=list)
+    parent: Optional[str] = None
+    offset: Tuple[float,float,float] = (0,0,0)
+    rotation: Tuple[float,float,float] = (0,0,0)   # x,y,z degrees
 
 @dataclass
 class FmbeCarrier:
@@ -85,6 +93,54 @@ class FmbeModel:
         for b in self.blocks:
             if b.id == bid: return b
         return None
+
+    def group(self, gid):
+        for g in self.groups:
+            if g.id == gid: return g
+        return None
+
+    def resolve_offset(self, block):
+        """Block offset relative to its bone group, then parent groups."""
+        off=list(map(float, block.offset))
+        gid=block.group
+        seen=set()
+        while gid:
+            if gid in seen: break
+            seen.add(gid); g=self.group(gid)
+            if not g: break
+            # rotate child offset by group rotation (x,y,z), then translate
+            off=list(M.rotx(tuple(off), g.rotation[0]))
+            off=list(M.roty(tuple(off), g.rotation[1]))
+            off=list(M.rotz(tuple(off), g.rotation[2]))
+            for i in range(3): off[i]+=float(g.offset[i])
+            gid=g.parent
+        return tuple(off)
+
+    def resolved_position(self, block):
+        p=self.resolve_offset(block)
+        return (int(round(self.origin[0]+p[0])), int(round(self.origin[1]+p[1])), int(round(self.origin[2]+p[2])))
+
+    def group_members_deep(self, gid):
+        """Members of gid plus descendants, in group declaration order."""
+        out=[]; seen=set()
+        def add(g):
+            if not g or g.id in seen: return
+            seen.add(g.id)
+            out.extend(g.members)
+            for child in self.groups:
+                if child.parent == g.id: add(child)
+        add(self.group(gid))
+        # de-dup preserving order
+        res=[]; used=set()
+        for m in out:
+            if m not in used: used.add(m); res.append(m)
+        return res
+
+    def animation_targets(self, anim):
+        if anim.group_id:
+            return [self.block(m) for m in self.group_members_deep(anim.group_id) if self.block(m)]
+        b=self.block(anim.block_id) if anim.block_id else None
+        return [b] if b else []
 
     def validate(self):
         issues=[]; warnings=[]
@@ -109,29 +165,45 @@ class FmbeModel:
                 flat=[c for p in vs for c in p]
                 if not all(math.isfinite(float(c)) for c in flat): issues.append(b.id+': non-finite vertex')
             except Exception as e: issues.append('%s: vertices failed: %s'%(b.id,e))
-        # unique part origins (BDX command blocks must not overlap)
-        seen={}
+        gids=[g.id for g in self.groups]
+        for gid in set(gids):
+            if gids.count(gid)>1: issues.append('duplicate group id: '+gid)
+        by_group={g.id:g for g in self.groups}
         for b in self.blocks:
-            if b.offset in seen: issues.append('duplicate part offset: %s / %s'%(seen[b.offset],b.id))
-            seen[b.offset]=b.id
-        for a in self.animations:
-            if a.block_id not in ids: issues.append('animation for unknown block: '+a.block_id)
-            if a.duration <= 0: issues.append('animation %s duration <= 0'%a.block_id)
-            ticks=[]
-            for kf in a.keyframes:
-                if kf.tick < 0 or kf.tick > a.duration: issues.append('%s: keyframe tick %s outside 0..%s'%(a.block_id,kf.tick,a.duration))
-                if kf.tick in ticks: issues.append('%s: duplicate keyframe tick %s'%(a.block_id,kf.tick))
-                ticks.append(kf.tick)
-                for k in kf.vars:
-                    if k in ROTATE_KEYS: issues.append('%s: keyframe uses %s (not supported)'%(a.block_id,k))
-                    if k not in VAR_NAMES: issues.append('%s: keyframe unknown var %s'%(a.block_id,k))
-            if a.keyframes and ticks != sorted(ticks): issues.append('%s: keyframes not sorted'%a.block_id)
+            if b.group and b.group not in by_group: issues.append('%s: unknown group %s'%(b.id,b.group))
         for g in self.groups:
-            if g.id in [x.id for x in self.groups] and [x.id for x in self.groups].count(g.id)>1:
-                issues.append('duplicate group id: '+g.id)
-            if not g.members: warnings.append('group %s has no members'%g.id)
+            if g.parent and g.parent not in by_group: issues.append('group %s: unknown parent %s'%(g.id,g.parent))
             for m in g.members:
                 if m not in ids: issues.append('group %s: unknown member %s'%(g.id,m))
+            # cycle check
+            seen=set(); cur=g
+            while cur and cur.parent:
+                if cur.id in seen: issues.append('group cycle at '+cur.id); break
+                seen.add(cur.id); cur=by_group.get(cur.parent)
+        # resolved part origins must not overlap
+        seen={}
+        for b in self.blocks:
+            p=tuple(round(x,4) for x in self.resolve_offset(b))
+            if p in seen: issues.append('resolved offset collision: %s / %s'%(seen[p],b.id))
+            seen[p]=b.id
+        for a in self.animations:
+            targets=self.animation_targets(a)
+            if a.group_id and not self.group(a.group_id): issues.append('animation: unknown group '+a.group_id)
+            if not a.group_id and a.block_id not in ids: issues.append('animation for unknown block: '+str(a.block_id))
+            if a.group_id and a.block_id: issues.append('animation %s: set block_id or group_id, not both'%a.name)
+            if a.duration <= 0: issues.append('animation %s duration <= 0'%a.name)
+            if a.interp not in ('linear','step'): issues.append('animation %s: unsupported interp %s'%(a.name,a.interp))
+            if a.step < 1: issues.append('animation %s: step < 1'%a.name)
+            if not targets: warnings.append('animation %s has no targets'%a.name)
+            ticks=[]
+            for kf in a.keyframes:
+                if kf.tick < 0 or kf.tick > a.duration: issues.append('%s: keyframe tick %s outside 0..%s'%(a.name,kf.tick,a.duration))
+                if kf.tick in ticks: issues.append('%s: duplicate keyframe tick %s'%(a.name,kf.tick))
+                ticks.append(kf.tick)
+                for k in kf.vars:
+                    if k in ROTATE_KEYS: issues.append('%s: keyframe uses %s (not supported)'%(a.name,k))
+                    if k not in VAR_NAMES: issues.append('%s: keyframe unknown var %s'%(a.name,k))
+            if a.keyframes and ticks != sorted(ticks): issues.append('%s: keyframes not sorted'%a.name)
         return {'ok':not issues,'issues':issues,'warnings':warnings,
                 'blocks':len(self.blocks),'animations':len(self.animations),'groups':len(self.groups)}
 
@@ -146,13 +218,17 @@ class FmbeModel:
         for x in d.get('blocks',[]):
             blocks.append(FmbeBlock(
                 id=str(x['id']), name=str(x.get('name','')), item=str(x.get('item','minecraft:stone')),
-                offset=tuple(x.get('offset',[0,0,0])), vars=dict(x.get('vars',{}))))
+                offset=tuple(x.get('offset',[0,0,0])), vars=dict(x.get('vars',{})),
+                group=x.get('group')))
         anims=[]
         for a in d.get('animations',[]):
-            anims.append(FmbeAnimation(str(a['block_id']), int(a['duration']),
-                [Keyframe(int(k['tick']),dict(k.get('vars',{}))) for k in a.get('keyframes',[])],
-                bool(a.get('loop',False))))
-        groups=[FmbeBoneGroup(str(g['id']),list(g.get('members',[]))) for g in d.get('groups',[])]
+            anims.append(FmbeAnimation(
+                block_id=a.get('block_id'), duration=int(a.get('duration',1)),
+                keyframes=[Keyframe(int(k['tick']),dict(k.get('vars',{}))) for k in a.get('keyframes',[])],
+                loop=bool(a.get('loop',False)), group_id=a.get('group_id'), name=str(a.get('name','')),
+                interp=str(a.get('interp','linear')), step=int(a.get('step',1))))
+        groups=[FmbeBoneGroup(str(g['id']),list(g.get('members',[])),g.get('parent'),
+                tuple(g.get('offset',[0,0,0])),tuple(g.get('rotation',[0,0,0]))) for g in d.get('groups',[])]
         carrier=None
         if d.get('carrier') is not None:
             c=d['carrier']; carrier=FmbeCarrier(bool(c.get('enabled',True)),str(c.get('entity','fox')),str(c.get('display_score','fmbe_display')))

@@ -1,17 +1,21 @@
 {
   "name": "fmbe-demo",
   "origin": [0, 0, 0],
+  "groups": [
+    {"id": "body", "members": ["base"], "offset": [0, 0, 0]},
+    {"id": "head_group", "members": ["head"], "parent": "body", "offset": [0, 2, 0], "rotation": [0, 0, 0]}
+  ],
   "blocks": [
-    {"id": "base", "name": "base", "item": "minecraft:stone", "offset": [0, 0, 0], "vars": {"scale": 1}},
-    {"id": "head", "name": "head", "item": "minecraft:gold_block", "offset": [0, 2, 0], "vars": {"scale": 0.5, "xrot": 15}}
+    {"id": "base", "name": "base", "item": "minecraft:stone", "group": "body", "offset": [0, 0, 0], "vars": {"scale": 1}},
+    {"id": "head", "name": "head", "item": "minecraft:gold_block", "group": "head_group", "offset": [0, 0, 0], "vars": {"scale": 0.5, "xrot": 15}}
   ],
   "animations": [
-    {"block_id": "head", "duration": 20, "keyframes": [
-      {"tick": 0, "vars": {"yrot": 0}},
-      {"tick": 10, "vars": {"yrot": 90}},
-      {"tick": 20, "vars": {"yrot": 180}}
-    ]}
+    {"name": "turn", "group_id": "body", "duration": 20, "step": 1,
+     "keyframes": [
+       {"tick": 0, "vars": {"yrot": 0}},
+       {"tick": 10, "vars": {"yrot": 90}},
+       {"tick": 20, "vars": {"yrot": 180}}
+     ]}
   ],
-  "groups": [{"id": "body", "members": ["base", "head"]}],
   "carrier": {"enabled": true, "entity": "fox", "display_score": "fmbe_display"}
 }
