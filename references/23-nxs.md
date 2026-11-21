@@ -1,4 +1,4 @@
-# 23 · NXS：递归坐标架几何（binaryTree 2D/3D）
+# 23 · NXS：递归坐标架 / 点阵光栅（NxsRaster）
 
 > 作者：NeilGreentot。样本：`binaryTree2D.txt` / `binaryTree3D.txt`。
 > **NXS 不是 FMBE**：FMBE 是实体部件模型；NXS 是**用 execute 的坐标架/旋转递归画几何**。
@@ -79,8 +79,8 @@ NxsShape(
 - `rot0/rot1` 初始朝向已设置
 - 每层角度合法、不出现 0 次递归
 - `positioned` 的 `^`/`~` 与 `facing` 顺序正确
-- `particle` 名称走 CHelper 白名单
-- 最终命令用 CHelper 过语法
+- `particle` 名称走命令白名单
+- 最终命令用 `command_syntax.py` / lint 过语法
 
 **不在 DSL 里手写 1024/2048 魔法数**：它们是“把方向变成射线”的哨兵值，应该封装成 `NxsOp.ray(times)`。
 
@@ -94,3 +94,151 @@ NxsShape(
 | 用途 | 法阵、符文、轨道、3D 线框 | Boss、武器、展示体 |
 
 两者可以叠加：NXS 画法阵/轨道，FMBE 放主体。
+
+## 5. 广义 NXS：点阵 + CSG 掩码
+
+NXS 不只画圆/树。它的通用形式是：
+
+```text
+坐标架 → dyadic 点阵 → 选择器掩码 → 终端输出
+```
+
+### 5.1 dyadic 点阵
+
+参考命令反复做：
+
+```text
+positioned ^^^1
+positioned ^^^0.5
+positioned ^^^0.25
+positioned ^^^0.125
+```
+
+这是沿局部轴的**二分采样**。每轴 4 个采样点：
+
+```text
+1, 1/2, 1/4, 1/8
+```
+
+- 2D（forward × right）：`4 × 4 = 16` 点
+- 3D（forward × right × up）：`4 × 4 × 4 = 64` 点
+- 层数越多，分辨率越高；但点阵、掩码和命令长度都会增长
+
+`rotated as @e[name=nx]` 只是取坐标架；把 `nx` 换成船/盔甲架/玩家，几何不变。
+
+### 5.2 `if` / `unless` 是点集运算
+
+```text
+if entity @s[...]      → 保留落在该体积内的点（交集）
+unless entity @s[...]  → 扣掉落在该体积内的点（差集）
+```
+
+多个 `unless` 连用 = 减去多个区域的并集。
+
+所以苦力怕脸、圆、正方形、十字、圆环都可以由同一套点阵 + 不同掩码得到。
+
+`@s` 在这里是**探针**：`positioned` 把命令源移到点阵格点，选择器的 `x/y/z/dx/dy/dz/r/rm` 相对命令源；`y=~-4.52` 是在补偿“眼睛 → 脚”的高度差。因此它判断的是“当前格点是否落在目标体积内”，不是“玩家在不在”。
+
+选择器能表达的是**长方体、球、距离区间、实体类型/分数等**；不是任意位图查表。
+
+任意 CSG 形状可以；任意高分辨率像素画需要大量掩码或更高层点阵，受命令长度限制。
+
+### 5.3 每种材料 1 CB
+
+一个命令方块一次只执行一条命令，一条 `execute` 链末尾只有一个 `run`：
+
+```text
+一个材料 CB
+→ 一个 execute 链
+→ 一个 run particle / setblock / fill
+→ 一次只输出一个点
+```
+
+所以“每种材料 1 CB”成立，但它压缩的是 **CB 数量**，不是构建时间。
+
+两种驱动方式：
+
+| 方式 | 行为 |
+|---|---|
+| 共享 cell 计数器 | 所有材料 CB 看同一个格点；同一格通常只有一种材料命中，实际约 1 块/tick |
+| 每材料独立 cell 计数器 | 每种材料遍历自己的点；最多 80 块/tick，但计数器和掩码复杂度高 |
+
+如果允许 `function`，一个材料 CB 可以调用一个函数，函数内放多条 `setblock`；这时 CB 数仍是每材料 1 个，但函数命令数和 10,000 条/次上限会成为新约束。
+
+### 5.4 80 CB 建筑比赛的边界
+
+```text
+材料数 ≤ 80
+每种材料 1 CB
+→ CB 预算刚好用满
+```
+
+但还要算：
+
+- 一个 CB 一次一个 `run`；
+- 32,500 字符/命令，掩码不能无限长；
+- 共享计数器时约 20 格/秒，大模型要按 `cells / 20` 估时间；
+- 每 tick 80 个 `setblock` 可能造成方块更新压力；
+- 实心体用 `fill` 比 NXS 点阵更划算。
+
+推荐混合：
+
+```text
+大块实心 → greedy fill
+表面/镂空/曲线 → NXS 点阵 + 掩码
+材料选择 → 每材料 1 CB 或 function
+```
+
+### 5.5 billboard：转到玩家视角
+
+参考里的：
+
+```text
+rotated as @s rotated ~90 45
+positioned ^^^10000
+facing entity @s eyes
+positioned ^^^20000
+...
+positioned ^^^28284.27124
+```
+
+是在构造**面向玩家视角的屏幕基座**：
+
+- `10000` / `20000` 是用大距离构造方向向量，减少小角度舍入；
+- `28284.27124 = 20000 × √2`，是对角线归一化；
+- `facing entity @s eyes` 把方向重新指回玩家；
+- 最终把点阵投到玩家面前的平面上。
+
+因此：
+
+- 世界固定建筑：可以删掉 billboard，直接用世界轴/建筑朝向；
+- 粒子画 / 屏幕 UI / 玩家面前展示：保留，并封装成 `billboard=True`。
+
+### 5.6 `NxsRaster` IR
+
+```python
+NxsRaster(
+  frame="nx",                  # 坐标架实体
+  origin="eyes+3",
+  levels=4,                    # 1, 1/2, 1/4, 1/8
+  axes=["forward", "right"],   # 2D；3D 再加 up
+  masks=[                      # CSG 掩码
+    Sphere(center, r),
+    Box(x, y, z, dx, dy, dz),
+    Ring(center, r_outer, r_inner),
+  ],
+  material="minecraft:...",
+  emit="particle" | "setblock" | "fill",
+  billboard=True,
+)
+```
+
+编译器要做：
+
+1. 生成 dyadic 点阵；
+2. 把 `masks` 编译成 `if` / `unless` 链；
+3. 每种材料生成一个 CB，或生成一个 function；
+4. 校验命令长度、CB 数、每 tick 输出、掩码互斥；
+5. `billboard` 单独生成，不污染几何。
+
+`NxsRaster` 的产物不是“圆/树”，而是**任意 CSG 体素图**：粒子线框、法阵、角色脸、地形切片、建筑表面都能用同一套 IR。

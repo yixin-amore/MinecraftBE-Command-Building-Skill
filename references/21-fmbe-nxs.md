@@ -29,7 +29,7 @@ FMBEModel
 `binaryTree2D.txt` / `binaryTree3D.txt` 就是 NXS 样本（作者 NeilGreentot）。
 它不是 FMBE：NXS 是 execute 坐标架/旋转递归画几何；详见 `references/23-nxs.md`。
 
-FMBE 的 13 变量/矩阵/导出细节见 `references/24-fmbe-model-ir.md`；NXS 适配层需要从样本抽出：
+FMBE 的 13 变量/矩阵/导出细节见 `references/24-fmbe-model-ir.md`；NXS 已泛化为点阵 + CSG 的 `NxsRaster`，细节见 `references/23-nxs.md` §5。
 
 - 锚点实体（`name=tree`）/初始朝向
 - 递归角度序列、镜像、跟随目标
