@@ -19,7 +19,7 @@ whenToUse: "当用户要求网易/基岩版/MCBE 指令、命令方块链、计�
 | 任务 | 默认栈 | 产物 |
 |---|---|---|
 | 静态建筑 / 内饰 / 地形 / 地标 | **ArchSpec / ArchBuilder** | brief + spec + front/top/iso + `.bdx` / `.mcstructure` / `.schematic` + report |
-| 大体积投放 | 体素 / BDX / `fill` 批（先做投放资格测试） | fill 清单 + 回读点 |
+| 大体积投放 | 体素 / BDX / `fill` 批（按使用方导入规范拆分） | fill 清单 + 文件回读点 |
 | 可复用模块 | schematic / AuroraBuild | `.schematic` + 放置坐标 |
 | 动态机关 / 门 / 演出 / HUD | 命令栈（0.0） | `spec.json` + `cbc.py` + `.mcworld` / BDX |
 | 交互建筑的“动”部分 | 建筑栈做体量，命令栈只做触发 | 两者分开交付 |
@@ -39,7 +39,7 @@ brief（场地/体量/焦点/材质）
 → spec（ArchSpec 或 builder 参数）
 → front/top/iso 三视图
 → report（bounds/blocks/issues=0）
-→ 投放清单（BDX / mcstructure / schematic / fill 批 + 回读点）
+→ 文件清单（BDX / mcstructure / schematic / fill 批 + 回读点）
 ```
 
 如果用户明确要求“用命令方块建静态建筑”，先说明代价（链数、tickingarea、64×64×100、每 tick 预算），再建议建筑栈；只有小体量互动装饰才允许命令方块。
@@ -49,7 +49,7 @@ brief（场地/体量/焦点/材质）
 ```text
 用建筑栈做：<类型>，场地 <W×D>，风格 <...>，功能 <...>，
 主焦点 <...>，硬约束 <高度/材质/性能/版本>，
-输出 brief + spec + front/top/iso + report + 投放清单。
+输出 brief + spec + front/top/iso + report + 可导入文件清单。
 不要用命令方块逐块搭静态体量。
 ```
 
@@ -94,7 +94,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
 | FMBE/展示体 | `references/24-fmbe-model-ir.md` | `scripts/fmbe_matrix.py` |
 | NXS/递归几何 | `references/23-nxs.md` | `NxsRaster`（点阵 + CSG） |
-| BDX/服务器 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（本地验证） |
+| BDX/文件 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（文件回读） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
 | 山水/园林 | `references/33-architecture-typology.md` §8 | `Site` + `Water/Rock/Plant` 模块 |
 
@@ -108,7 +108,8 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 ### 边界
 
 - FMBE/NXS 目前有 IR/矩阵/参考，**还不是完整编译器**；不要声称已全自动。
-- BDX 命令方块桥已本地验证 99/99，但**网易租赁服真机导入未验证**；先测试区。
+- **交付边界**：本 skill 只负责生成 `.bdx` / `.mcstructure` / `.schematic` / fill 清单；导入由使用方负责，导入失败不计入 skill 缺陷。
+- BDX 命令方块桥已文件回读 99/99；文件格式、命令文本、条件位、红石位已核对。
 - 本 skill 后半的建筑/BDX 章节保留；命令系统优先 0.0。
 
 

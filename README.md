@@ -17,7 +17,7 @@
 
 - **命令**：命令方块链、计分板状态机、FMBE 显示、菜单、技能、系统逻辑。
 - **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光；静态建筑走 ArchSpec/ArchBuilder，**不用命令方块逐块搭建**。
-- **输出**：命令系统默认 `.mcworld` / `.mcstructure`；静态建筑默认 `schematic / BDX / mcstructure / fill 批`（先做投放资格测试）。BDX 同时用于本地验证。
+- **输出**：命令系统默认 `.mcworld` / `.mcstructure`；静态建筑默认 `schematic / BDX / mcstructure / fill 批`；本 skill 只生成文件，导入由使用方负责。BDX 同时用于本地回读。
 - **工作模式**：Python DSL → spec → cbc 链布局 → 结构文件；不再直接让 AI 写整段命令字符串。
 
 ## 先学模型，不是背例子
@@ -288,7 +288,7 @@ python3 scripts/buildgen.py plan.json out.bdx
 - `bdxgen.py` 也可直接写 `BuildBlock` / `Block`。
 - 大建筑会展开成很多方块；脚本有 2,000,000 块上限，超了拆 plan。
 
-## 6. 导入 BDX
+## 6. 使用 BDX（导入由使用方负责）
 
 用任意 BDX 导入器导入 `out.bdx`。导入后确认：
 
