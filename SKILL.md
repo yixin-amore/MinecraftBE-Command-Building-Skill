@@ -1,7 +1,7 @@
 ---
 name: mcbe-command-blocks
-description: "Minecraft 基岩版（网易 1.21.130）命令 + 建筑双栈。建筑：场地与体量（631/黄金比例）、四层立面、屋顶塔尖、材质板、内饰动线、灯光、奇观、地形；brief→ArchSpec/ArchBuilder→体素→预览→schematic/BDX/mcstructure/fill 批。命令：DSL→spec→cbc、execute/选择器、dummy 计分板状态机、impulse/repeat/chain、条件链、C-tick、BDX、FMBE/MBE、数据化 RPG、菜单/商店/门锁/波次等地图逻辑。Use for Minecraft building/architecture (cathedral, castle, lobby, interior, terrain, landmark, schematic/BDX/fill) AND Bedrock command blocks/command systems. 静态建筑不要用命令方块逐块搭建；命令栈只做动态机关/交互/演出。Do NOT use for Java Edition datapacks or Java-only syntax."
-whenToUse: "当用户要求网易/基岩版/MCBE 指令、命令方块链、计分板逻辑、BDX，或设计/建造/改造 Minecraft 建筑（教堂、城堡、主城、大厅、内饰、地形、地标）、按参考图/结构复刻、导出 schematic/BDX/mcstructure/fill 时。"
+description: "Minecraft 基岩版（网易 1.21.130）命令 + 建筑双栈。建筑：场地与体量（631/黄金比例）、四层立面、屋顶塔尖、材质板、内饰动线、灯光、奇观、地形；brief→ArchSpec/ArchBuilder→体素→预览→schematic/BDX/mcstructure/fill 批。命令：DSL→spec→cbc、execute/选择器、dummy 计分板状态机、impulse/repeat/chain、条件链、C-tick、BDX、FMBE/MBE、数据化 RPG、菜单/商店/门锁/波次等地图逻辑；UI/音效：24 版式、动效、分层音效与旋律目录。Use for Minecraft building/architecture (cathedral, castle, lobby, interior, terrain, landmark, schematic/BDX/fill) AND Bedrock command blocks/command systems. 静态建筑不要用命令方块逐块搭建；命令栈只做动态机关/交互/演出。Do NOT use for Java Edition datapacks or Java-only syntax."
+whenToUse: "当用户要求网易/基岩版/MCBE 指令、命令方块链、计分板逻辑、BDX，或设计/建造/改造 Minecraft 建筑（教堂、城堡、主城、大厅、内饰、地形、地标）、按参考图/结构复刻、导出 schematic/BDX/mcstructure/fill，或设计游戏内 UI/菜单/HUD/音效时。"
 ---
 
 # MCBE 命令与命令方块链
@@ -88,8 +88,9 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | 命令格式/参数 | `references/command-syntax.json` | `scripts/command_syntax.py` |
 | 武器/拔刀剑/鱼竿枪 | `corpus_search weapon` | `dsl.py` + `build_cbworld.py` |
 | 数据化/属性/T显 | `corpus_search data` | `dsl.py` + `cbc.py` |
-| 菜单/公告/HUD | `references/30-command-ui-design.md` + `references/31-command-ui-modern.md` | `Tellraw/Title` + 动作栏/副标题 |
+| 菜单/公告/HUD | `references/30-command-ui-design.md` + `31-command-ui-modern.md` + `32-ui-sound-design.md` | `Tellraw/Title` + 动作栏/副标题 |
 | 商店/开箱/经济 | `corpus_search economy` | inventory/scoreboard/structure |
+| 音效/打击感/旋律 | `references/32-ui-sound-design.md` §6–§7 | `playsound` + 白名单 + 时间轴 |
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
 | FMBE/展示体 | `references/24-fmbe-model-ir.md` | `scripts/fmbe_matrix.py` |
 | NXS/递归几何 | `references/23-nxs.md` | NXS IR |
@@ -608,6 +609,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/text-ui-and-effects.md` | 标题、actionbar、tellraw、音效、粒子、camerashake、playanimation |
 | `references/30-command-ui-design.md` | UI 设计库：24 版式/配色/符号/文案（旧 execute 示例） |
 | `references/31-command-ui-modern.md` | 网易 1.21.130 现代 UI 模板/%%2/%%9/HUD 互斥 |
+| `references/32-ui-sound-design.md` | UI 通道/标题顺序 + 音效分层/旋律目录/音量预算 |
 | `references/command-syntax.json` | 命令合法格式 + 共享 token 词表（纯语法事实） |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |

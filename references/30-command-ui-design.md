@@ -3,6 +3,7 @@
 > 来源：用户提供 `mc-command-ui-design-skill-v3.md`。
 > 本文件保留版式/配色/符号/文案设计；示例命令已改为网易 1.21.130 的新 `execute ... run` 语法。
 > 旧版坐标式 execute 的迁移规则见 `references/31-command-ui-modern.md`。
+> 通道调度、标题顺序、音效分层与旋律配方见 `references/32-ui-sound-design.md`。
 
 # Minecraft 基岩版命令 UI 设计 Skill
 

@@ -2,6 +2,7 @@
 
 > 设计规范/版式/配色看 `references/30-command-ui-design.md`。
 > 本文件给出新 `execute` 模板、迁移规则和 DSL 写法。
+> 示例保留扩展色；网易 1.21.130 先按 `references/32-ui-sound-design.md` 的降级表换成标准 16 色。
 
 ## 1. 坐标式 execute → 新语法
 
@@ -60,6 +61,8 @@ execute as @a[scores={menu=1..6},rxm=88] at @s run titleraw @s actionbar {"rawte
 命中：列表 `[selector, text]`，取第 2 个 → 显示 `§d`。  
 不命中：selector 被丢弃，列表只剩 `[text]`，第 2 个不存在 → 不显示。
 
+**每个 `%%2` 后面都加一个 `{"text":""}` 兜底**，避免不同版本参数列表行为差异。
+
 ## 4. 八档条：`%%9`
 
 ```mcfunction
@@ -107,6 +110,30 @@ menu=21..35     二级菜单
 雪球菜单=181..186
 ```
 
+## 5.1 通道互斥与标题顺序
+
+同刻 `title` / `subtitle` / `actionbar` 只有一个生效，后发覆盖先发：
+
+```text
+常驻 HUD → actionbar，每 tick 刷新
+一次性横幅 → title + subtitle，期间 HUD 让位
+聊天记录 → tellraw
+```
+
+横幅必须按这个顺序发：
+
+```mcfunction
+execute as @a at @s run title @s times 3 22 8
+execute as @a at @s run titleraw @s subtitle {"rawtext":[{"text":"§7副标题"}]}
+execute as @a at @s run titleraw @s title {"rawtext":[{"text":"§e§l主标题"}]}
+```
+
+先发 `title` 会让 subtitle 错位/不显示。带横幅时，HUD 加：
+
+```mcfunction
+execute as @a unless score @s sd_ban matches 1.. at @s run titleraw @s actionbar ...
+```
+
 ## 6. DSL 写法
 
 ```python
@@ -136,3 +163,11 @@ As(P("@a", scores={"金币奖励": "1.."})).at("@s").run(
 - [ ] HUD 与菜单互斥
 - [ ] 奖励分数结算后清零
 - [ ] 调试条件 `name=tm` 已删
+
+## 8. 音效联动
+
+UI 事件 → 音效映射、三层叠加、音量预算、旋律 `pitch=2^(n/12)`、40 个旋律配方，见 `references/32-ui-sound-design.md` §6–§7。
+
+- 选中 `random.click`，确认 `random.orb`，取消 `random.pop`，错误 `note.bass`。
+- 同刻总量 ≲ 2.0；战斗声 `@a ~ ~ ~`，UI 声 `@s`。
+- `playsound` 名字写错不报错，只用 `scripts/lint_commands.py` 的 `SOUNDS` 白名单。

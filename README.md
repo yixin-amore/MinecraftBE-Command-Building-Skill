@@ -50,6 +50,12 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## UI + 音效
+
+- `references/30-command-ui-design.md`：24 种版式 / 配色 / 符号
+- `references/31-command-ui-modern.md`：网易 1.21.130 新 execute 模板
+- `references/32-ui-sound-design.md`：通道调度、标题顺序、音效分层、旋律目录
+
 ## 语言优先层（命令系统）
 
 ```text
