@@ -16,8 +16,9 @@ def schedule(artifact, function_prefix='nxs_'):
     for i,(mat,cmds) in enumerate(sorted(by_mat.items())):
         name=function_prefix+str(i)
         # Bedrock function limit: keep chunks under 10k; here we also cap 1k for latency.
-        for ci in range(0,len(cmds),1000): funcs[name+'_'+str(ci//1000)]=cmds[ci:ci+1000]; chunks+=1
-        blocks.append({'command':'function '+name+'_0','material':mat,'commands':len(cmds)})
+        for ci in range(0,len(cmds),1000):
+            fn=name+'_'+str(ci//1000); funcs[fn]=cmds[ci:ci+1000]; chunks+=1
+            blocks.append({'command':'function '+fn,'material':mat,'commands':len(cmds[ci:ci+1000])})
     out={'functions':funcs,'command_blocks':blocks,'materials':len(by_mat),
          'absolute_cb':len(commands),'scheduled_cb':len(blocks),'chunks':chunks,
          'issues':[] if len(blocks)<=80 else ['scheduled CB %d > 80'%len(blocks)]}
