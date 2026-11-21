@@ -93,7 +93,7 @@ issues      > 上限则拒绝
 ring 16×16, levels=3
 points   36
 commands 36
-chars    2,124
+chars    3,276
 cb       36
 ticks    2
 ok       true

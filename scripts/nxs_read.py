@@ -9,8 +9,8 @@ def main():
     cmds=d.get('commands',[]); pts=d.get('points',[])
     parsed=[]
     for c in cmds:
-        m=re.match(r'^(particle|setblock|fill)\s+(\S+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)',c)
-        parsed.append({'kind':m.group(1),'material':m.group(2),'pos':[float(m.group(i)) for i in (3,4,5)]} if m else {'error':c})
+        m=re.match(r'^(?:execute positioned .*? run )?(particle|setblock|fill)\s+(\S+)',c)
+        parsed.append({'kind':m.group(1),'material':m.group(2),'pos':[]} if m else {'error':c})
     issues=[]
     if len(cmds)!=len(pts): issues.append('commands %d != points %d'%(len(cmds),len(pts)))
     if any('error' in p for p in parsed): issues.append('unparsed command')

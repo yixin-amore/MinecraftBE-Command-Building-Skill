@@ -50,6 +50,12 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## 坐标策略
+
+默认使用相对坐标（`~` / `^`）；绝对坐标只用于 `ANCHOR`。
+
+见 `references/38-relative-coordinates.md`。
+
 ## NXS Program
 
 - `scripts/nxs_program.py`：Frame / Spiral / Radial / Path / Orbit / Array

@@ -65,13 +65,21 @@ def if_unless_clauses(shape):
         return {'if':(a or {}).get('if',[]),'unless':(b or {}).get('if',[])} if a and b else None
     return None
 
-def compile_commands(raster: NxsRaster):
+def compile_commands(raster: NxsRaster, relative=True):
     cells=raster.sample()
     cmds=[]; points=[]
     mat=raster.material
     for (x,y,z,size) in cells:
         wx=raster.origin[0]+x; wy=raster.origin[1]+y; wz=raster.origin[2]+z
-        if raster.emit=='setblock':
+        if relative:
+            if raster.emit=='setblock':
+                cmds.append('execute positioned ~%.3f ~%.3f ~%.3f run setblock ~ ~ ~ %s'%(wx,wy,wz,mat))
+            elif raster.emit=='fill':
+                h=size/2
+                cmds.append('execute positioned ~%.3f ~%.3f ~%.3f run fill ~%.3f ~%.3f ~%.3f ~%.3f ~%.3f ~%.3f %s'%(wx,wy,wz,-h,-h,-h,h,h,h,mat))
+            else:
+                cmds.append('execute positioned ~%.3f ~%.3f ~%.3f run particle %s ^ ^ ^'%(wx,wy,wz,mat))
+        elif raster.emit=='setblock':
             cmds.append('setblock %.3f %.3f %.3f %s'%(wx,wy,wz,mat))
         elif raster.emit=='fill':
             h=size/2
@@ -81,8 +89,8 @@ def compile_commands(raster: NxsRaster):
         points.append({'x':wx,'y':wy,'z':wz,'size':size})
     return cells,points,cmds
 
-def compile_raster(raster: NxsRaster):
-    cells,points,cmds=compile_commands(raster)
+def compile_raster(raster: NxsRaster, coords='relative'):
+    cells,points,cmds=compile_commands(raster, coords=='relative')
     chars=sum(len(c)+1 for c in cmds)
     cb=len(cmds)
     ticks=max(0,math.ceil(len(cmds)/20))
@@ -113,7 +121,7 @@ def recommend_levels(shape, width=16, height=16, depth=16, axes='3d', max_cb=80,
     best=None; rows=[]
     for lv in range(1,max_levels+1):
         r=NxsRaster(width=width,height=height,depth=depth,levels=lv,shape=shape,axes=axes)
-        art=compile_raster(r); b=art['budget']
+        art=compile_raster(r, 'relative'); b=art['budget']
         rows.append({'levels':lv,'points':b['points'],'cb':b['cb'],'ok':b['ok']})
         if b['cb']<=max_cb: best=lv
     return {'recommended':best,'max_cb':max_cb,'rows':rows}
@@ -124,6 +132,7 @@ def main():
     ap.add_argument('--emit',default='particle',choices=['particle','setblock','fill'])
     ap.add_argument('--material',default='minecraft:balloon_gas_particle')
     ap.add_argument('--out',default=None); ap.add_argument('--axes',default=None)
+    ap.add_argument('--absolute',action='store_true')
     ap.add_argument('--recommend-cb',type=int,default=None)
     a=ap.parse_args(); shape=build_shape(a.shape,a.size)
     axes=a.axes or ('2d' if a.shape in ('circle','ring','square','cross') else '3d')
@@ -132,7 +141,7 @@ def main():
     if a.recommend_cb:
         rec=recommend_levels(shape,a.size,a.size,a.size,axes,a.recommend_cb)
         print(json.dumps({'recommend':rec},ensure_ascii=False,indent=1)); return
-    art=compile_raster(r)
+    art=compile_raster(r, 'absolute' if a.absolute else 'relative')
     print(json.dumps({'shape':a.shape,'axes':axes,'points':art['budget']['points'],
                       'commands':art['budget']['commands'],'chars':art['budget']['chars'],
                       'budget':art['budget']},ensure_ascii=False,indent=1))

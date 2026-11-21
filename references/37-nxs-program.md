@@ -70,23 +70,24 @@ examples/nxs-program/out/report.json
 
 ## 输出
 
-- `commands()`：绝对坐标命令
+- `commands()`：默认相对坐标
+- `absolute_commands()`：显式绝对坐标
 - `templates()`：`execute positioned/rotated` 模板
-- `relative_commands()`：嵌套 `execute`，不再用绝对坐标
+- `relative_commands()`：相对坐标源
 - `lower_tree()`：Branch 的递归树 + 其他 op 的展开子节点
 - `timeline()`：按 `tick` 分组，给 Orbit 等运动用
 - `to_dict()`：instances + commands + templates + relative + tree + timeline + budget
 
 示例：
 
-```text
-particle minecraft:end_rod 5.0 20.0 0.0
+```mcfunction
+execute positioned ~5 ~20 ~0 rotated 90 0 run particle minecraft:end_rod ^ ^ ^
 ```
 
-模板：
+绝对模式显式调用：
 
-```text
-execute positioned 5 20 0 rotated 90 0 run particle minecraft:end_rod ^ ^ ^
+```python
+program.absolute_commands()
 ```
 
 ## 递归 execute lowering
@@ -94,7 +95,7 @@ execute positioned 5 20 0 rotated 90 0 run particle minecraft:end_rod ^ ^ ^
 `relative_commands()` 输出：
 
 ```mcfunction
-execute positioned 0 0 0 rotated 0 0 run execute positioned ^4 ^2 ^0 rotated 90 0 run particle ... ^ ^ ^
+execute positioned ~4 ~2 ~0 rotated 90 0 run particle ... ^ ^ ^
 ```
 
 `BranchOp.tree()` / `lower_tree()` 保留：

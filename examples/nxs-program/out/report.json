@@ -3,30 +3,30 @@
   "name": "spiral-stair",
   "instances": 24,
   "commands": 24,
-  "chars": 1224
+  "chars": 2519
  },
  {
   "name": "rose-tracery",
   "instances": 112,
   "commands": 112,
-  "chars": 5647
+  "chars": 11565
  },
  {
   "name": "orbiting-laser",
   "instances": 72,
   "commands": 72,
-  "chars": 3359
+  "chars": 7150
  },
  {
   "name": "branch-tree",
   "instances": 7,
   "commands": 7,
-  "chars": 323
+  "chars": 699
  },
  {
   "name": "curve-query",
   "instances": 53,
   "commands": 53,
-  "chars": 2473
+  "chars": 5275
  }
 ]

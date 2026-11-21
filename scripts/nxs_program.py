@@ -269,7 +269,7 @@ class NxsProgram:
         out=[]
         for op in self.ops: out.extend(op.instances())
         return out
-    def commands(self):
+    def absolute_commands(self):
         out=[]
         for x in self.instances():
             p=x.frame.origin
@@ -278,6 +278,8 @@ class NxsProgram:
             elif x.kind=='entity': out.append('summon %s %.3f %.3f %.3f'%(x.material,*p))
             else: out.append('particle %s %.3f %.3f %.3f'%(x.material,*p))
         return out
+    def commands(self, relative=True):
+        return self.relative_commands() if relative else self.absolute_commands()
     def templates(self):
         out=[]
         for x in self.instances():
@@ -290,11 +292,14 @@ class NxsProgram:
             out.append(base+cmd)
         return out
     def relative_commands(self):
+        """Default: coords are program-local offsets from the command source."""
         out=[]
         for x in self.instances():
             p=x.frame.origin
-            emit=('setblock ~ ~ ~ %s'%x.material) if x.kind in ('block','setblock') else ('particle %s ^ ^ ^'%x.material)
-            out.append('execute positioned 0 0 0 rotated 0 0 run execute positioned ^%.3f ^%.3f ^%.3f rotated %.3f %.3f run %s'%(p[0],p[1],p[2],x.frame.yaw,x.frame.pitch,emit))
+            if x.kind in ('block','setblock'): emit='setblock ~ ~ ~ %s'%x.material
+            elif x.kind=='entity': emit='summon %s ~ ~ ~'%x.material
+            else: emit='particle %s ^ ^ ^'%x.material
+            out.append('execute positioned ~%.3f ~%.3f ~%.3f rotated %.3f %.3f run %s'%(p[0],p[1],p[2],x.frame.yaw,x.frame.pitch,emit))
         return out
     def timeline(self):
         ticks={}
@@ -312,7 +317,8 @@ class NxsProgram:
     def to_dict(self):
         cmds=self.commands()
         return {'name':self.name,'instances':[x.to_dict() for x in self.instances()],
-                'commands':cmds,'templates':self.templates(),'relative':self.relative_commands(),
+                'commands':cmds,'absolute_commands':self.absolute_commands(),
+                'templates':self.templates(),'relative':self.relative_commands(),
                 'lower_tree':self.lower_tree(),'timeline':self.timeline(),
                 'budget':{'instances':len(cmds),'commands':len(cmds),'chars':sum(len(c)+1 for c in cmds)}}
 

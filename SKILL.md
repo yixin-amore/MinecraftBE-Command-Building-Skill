@@ -12,6 +12,37 @@ whenToUse: "当用户要求网易/基岩版/MCBE 指令、命令方块链、计�
 >
 > **硬规则：静态建筑不要用命令方块逐块搭，也不要用 `setblock`/`fill` 命令链做几何作者层。** 命令方块是动态层；`fill` 只作为体素生成后的投放通道。
 
+## 0.0.0 坐标策略：默认相对（硬规则）
+
+> **所有新生成命令默认使用相对坐标。** 绝对坐标只用于世界锚点、固定结构原点、传送点，并显式标注 `ANCHOR`。
+
+```text
+默认：~ ~ ~ / ^ ^ ^ + execute as/at/positioned
+例外：ANCHOR: <x y z>
+```
+
+写命令前先确定：
+
+1. 执行者是谁：玩家 / 实体 / 命令方块 / execute 源；
+2. 需要世界轴 `~` 还是局部朝向 `^`；
+3. 选择器是否也用相对坐标；
+4. 多命令是否共享同一个 `execute positioned` 源；
+5. 绝对坐标是否只是锚点/BDX 放置点。
+
+禁止：
+
+```mcfunction
+setblock 100 64 100 minecraft:stone
+```
+
+默认：
+
+```mcfunction
+execute as @p at @s run setblock ~ ~-1 ~ minecraft:stone
+```
+
+完整规则、示例、反例见 `references/38-relative-coordinates.md`。
+
 ## 0.0.1 建筑任务入口（与命令系统并列）
 
 先判断任务：
@@ -614,6 +645,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/32-ui-sound-design.md` | UI 通道/标题顺序 + 音效分层/旋律目录/音量预算 |
 | `references/33-architecture-typology.md` | 建筑类型卡：日/韩/中/古典/哥特/中世纪/庄园，场地/序列/剖面/结构 |
 | `references/34-fmbe-compiler.md` | FMBE IR / 校验 / pose+setup / BDX / 回读 |
+| `references/38-relative-coordinates.md` | 默认相对坐标 / `~` vs `^` / 锚点例外 / 选择器相对 |
 | `references/35-architecture-components.md` | 8 个建筑组件：幕墙/门楼/主堡/回廊/开间/门廊/飞扶壁/老虎窗 |
 | `references/36-nxs-compiler.md` | NxsRaster / Shape / CSG / 自适应点阵 / 预算 / 回读 |
 | `references/37-nxs-program.md` | NxsFrame / Program / Spiral / Radial / Path / Orbit / Array |

@@ -101,6 +101,15 @@
   }
  ],
  "commands": [
+  "execute positioned ~0.000 ~0.000 ~4.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.792 ~-0.201 ~2.762 rotated -16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~1.088 ~-0.289 ~1.741 rotated -32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.000 ~-0.289 ~2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~-0.792 ~-0.201 ~2.762 rotated 16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.000 ~-0.289 ~2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~-1.088 ~-0.289 ~1.741 rotated 32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log"
+ ],
+ "absolute_commands": [
   "setblock 0.000 0.000 4.000 minecraft:oak_log",
   "setblock 0.792 -0.201 2.762 minecraft:oak_log",
   "setblock 1.088 -0.289 1.741 minecraft:oak_log",
@@ -119,13 +128,13 @@
   "execute positioned -1.088 -0.289 1.741 rotated 32.000 -8.000 run setblock -1.088 -0.289 1.741 minecraft:oak_log"
  ],
  "relative": [
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^4.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.792 ^-0.201 ^2.762 rotated -16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.088 ^-0.289 ^1.741 rotated -32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^-0.289 ^2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.792 ^-0.201 ^2.762 rotated 16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^-0.289 ^2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
-  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.088 ^-0.289 ^1.741 rotated 32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log"
+  "execute positioned ~0.000 ~0.000 ~4.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.792 ~-0.201 ~2.762 rotated -16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~1.088 ~-0.289 ~1.741 rotated -32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.000 ~-0.289 ~2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~-0.792 ~-0.201 ~2.762 rotated 16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~0.000 ~-0.289 ~2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned ~-1.088 ~-0.289 ~1.741 rotated 32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log"
  ],
  "lower_tree": {
   "name": "branch-tree",
@@ -504,6 +513,6 @@
  "budget": {
   "instances": 7,
   "commands": 7,
-  "chars": 323
+  "chars": 699
  }
 }
