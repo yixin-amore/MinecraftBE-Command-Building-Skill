@@ -1,0 +1,509 @@
+{
+ "name": "branch-tree",
+ "instances": [
+  {
+   "pos": [
+    0.0,
+    0.0,
+    4.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.7919018411665362,
+    -0.20089864438308086,
+    2.761689918988388
+   ],
+   "yaw": -16.0,
+   "pitch": -4.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    1.0881467452639935,
+    -0.2885893421507917,
+    1.7413988091096049
+   ],
+   "yaw": -32.0,
+   "pitch": -8.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    -0.2885893421507917,
+    2.0534198673425204
+   ],
+   "yaw": 0.0,
+   "pitch": -8.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -0.7919018411665362,
+    -0.20089864438308086,
+    2.761689918988388
+   ],
+   "yaw": 16.0,
+   "pitch": -4.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    -0.2885893421507917,
+    2.0534198673425204
+   ],
+   "yaw": 0.0,
+   "pitch": -8.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -1.0881467452639935,
+    -0.2885893421507917,
+    1.7413988091096049
+   ],
+   "yaw": 32.0,
+   "pitch": -8.0,
+   "scale": 1.0,
+   "material": "minecraft:oak_log",
+   "kind": "block",
+   "label": "branch",
+   "tick": 0
+  }
+ ],
+ "commands": [
+  "setblock 0.000 0.000 4.000 minecraft:oak_log",
+  "setblock 0.792 -0.201 2.762 minecraft:oak_log",
+  "setblock 1.088 -0.289 1.741 minecraft:oak_log",
+  "setblock 0.000 -0.289 2.053 minecraft:oak_log",
+  "setblock -0.792 -0.201 2.762 minecraft:oak_log",
+  "setblock 0.000 -0.289 2.053 minecraft:oak_log",
+  "setblock -1.088 -0.289 1.741 minecraft:oak_log"
+ ],
+ "templates": [
+  "execute positioned 0.000 0.000 4.000 rotated 0.000 0.000 run setblock 0.000 0.000 4.000 minecraft:oak_log",
+  "execute positioned 0.792 -0.201 2.762 rotated -16.000 -4.000 run setblock 0.792 -0.201 2.762 minecraft:oak_log",
+  "execute positioned 1.088 -0.289 1.741 rotated -32.000 -8.000 run setblock 1.088 -0.289 1.741 minecraft:oak_log",
+  "execute positioned 0.000 -0.289 2.053 rotated 0.000 -8.000 run setblock 0.000 -0.289 2.053 minecraft:oak_log",
+  "execute positioned -0.792 -0.201 2.762 rotated 16.000 -4.000 run setblock -0.792 -0.201 2.762 minecraft:oak_log",
+  "execute positioned 0.000 -0.289 2.053 rotated 0.000 -8.000 run setblock 0.000 -0.289 2.053 minecraft:oak_log",
+  "execute positioned -1.088 -0.289 1.741 rotated 32.000 -8.000 run setblock -1.088 -0.289 1.741 minecraft:oak_log"
+ ],
+ "relative": [
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^4.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.792 ^-0.201 ^2.762 rotated -16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.088 ^-0.289 ^1.741 rotated -32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^-0.289 ^2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.792 ^-0.201 ^2.762 rotated 16.000 -4.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^-0.289 ^2.053 rotated 0.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.088 ^-0.289 ^1.741 rotated 32.000 -8.000 run setblock ~ ~ ~ minecraft:oak_log"
+ ],
+ "lower_tree": {
+  "name": "branch-tree",
+  "root": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "roll": 0.0,
+   "scale": 1.0
+  },
+  "ops": [
+   {
+    "op": "branch",
+    "tree": {
+     "frame": {
+      "origin": [
+       0,
+       0,
+       0
+      ],
+      "yaw": 0.0,
+      "pitch": 0.0,
+      "roll": 0.0,
+      "scale": 1.0
+     },
+     "children": [
+      {
+       "frame": {
+        "origin": [
+         0,
+         0,
+         0
+        ],
+        "yaw": -16.0,
+        "pitch": -4.0,
+        "roll": 0.0,
+        "scale": 1.0
+       },
+       "children": [
+        {
+         "frame": {
+          "origin": [
+           0,
+           0,
+           0
+          ],
+          "yaw": -32.0,
+          "pitch": -8.0,
+          "roll": 0.0,
+          "scale": 1.0
+         },
+         "children": [
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": -48.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          },
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": -16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          }
+         ],
+         "emit": {
+          "pos": [
+           1.0881467452639935,
+           -0.2885893421507917,
+           1.7413988091096049
+          ],
+          "material": "minecraft:oak_log",
+          "kind": "block",
+          "label": "branch"
+         }
+        },
+        {
+         "frame": {
+          "origin": [
+           0,
+           0,
+           0
+          ],
+          "yaw": 0.0,
+          "pitch": -8.0,
+          "roll": 0.0,
+          "scale": 1.0
+         },
+         "children": [
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": -16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          },
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": 16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          }
+         ],
+         "emit": {
+          "pos": [
+           0.0,
+           -0.2885893421507917,
+           2.0534198673425204
+          ],
+          "material": "minecraft:oak_log",
+          "kind": "block",
+          "label": "branch"
+         }
+        }
+       ],
+       "emit": {
+        "pos": [
+         0.7919018411665362,
+         -0.20089864438308086,
+         2.761689918988388
+        ],
+        "material": "minecraft:oak_log",
+        "kind": "block",
+        "label": "branch"
+       }
+      },
+      {
+       "frame": {
+        "origin": [
+         0,
+         0,
+         0
+        ],
+        "yaw": 16.0,
+        "pitch": -4.0,
+        "roll": 0.0,
+        "scale": 1.0
+       },
+       "children": [
+        {
+         "frame": {
+          "origin": [
+           0,
+           0,
+           0
+          ],
+          "yaw": 0.0,
+          "pitch": -8.0,
+          "roll": 0.0,
+          "scale": 1.0
+         },
+         "children": [
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": -16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          },
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": 16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          }
+         ],
+         "emit": {
+          "pos": [
+           0.0,
+           -0.2885893421507917,
+           2.0534198673425204
+          ],
+          "material": "minecraft:oak_log",
+          "kind": "block",
+          "label": "branch"
+         }
+        },
+        {
+         "frame": {
+          "origin": [
+           0,
+           0,
+           0
+          ],
+          "yaw": 32.0,
+          "pitch": -8.0,
+          "roll": 0.0,
+          "scale": 1.0
+         },
+         "children": [
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": 16.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          },
+          {
+           "frame": {
+            "origin": [
+             0,
+             0,
+             0
+            ],
+            "yaw": 48.0,
+            "pitch": -12.0,
+            "roll": 0.0,
+            "scale": 1.0
+           },
+           "children": []
+          }
+         ],
+         "emit": {
+          "pos": [
+           -1.0881467452639935,
+           -0.2885893421507917,
+           1.7413988091096049
+          ],
+          "material": "minecraft:oak_log",
+          "kind": "block",
+          "label": "branch"
+         }
+        }
+       ],
+       "emit": {
+        "pos": [
+         -0.7919018411665362,
+         -0.20089864438308086,
+         2.761689918988388
+        ],
+        "material": "minecraft:oak_log",
+        "kind": "block",
+        "label": "branch"
+       }
+      }
+     ],
+     "emit": {
+      "pos": [
+       0.0,
+       0.0,
+       4.0
+      ],
+      "material": "minecraft:oak_log",
+      "kind": "block",
+      "label": "branch"
+     }
+    }
+   }
+  ],
+  "children": []
+ },
+ "timeline": {
+  "0": [
+   {
+    "pos": [
+     0.0,
+     0.0,
+     4.0
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.7919018411665362,
+     -0.20089864438308086,
+     2.761689918988388
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.0881467452639935,
+     -0.2885893421507917,
+     1.7413988091096049
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     -0.2885893421507917,
+     2.0534198673425204
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -0.7919018411665362,
+     -0.20089864438308086,
+     2.761689918988388
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     -0.2885893421507917,
+     2.0534198673425204
+    ],
+    "label": "branch",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.0881467452639935,
+     -0.2885893421507917,
+     1.7413988091096049
+    ],
+    "label": "branch",
+    "kind": "block"
+   }
+  ]
+ },
+ "budget": {
+  "instances": 7,
+  "commands": 7,
+  "chars": 323
+ }
+}

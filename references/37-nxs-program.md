@@ -37,6 +37,11 @@ rotated(dyaw, dpitch, droll)
 | `PathOp` | 折线/梁/拱线/激光 |
 | `OrbitOp` | 环绕轨道/弹幕/灯环 |
 | `ArrayOp` | 阵列/垛口/柱网 |
+| `BezierOp` | 三次/二次 Bezier 曲线 |
+| `ArcOp` | 平面圆弧/拱线 |
+| `RayOp` | 射线采样/激光 |
+| `BranchOp` | 递归分叉树 |
+| `QueryOp` | 体积命中过滤 |
 
 ## 三个非图像 demo
 
@@ -49,6 +54,8 @@ python3 examples/nxs-program/demo.py
 | spiral-stair | 24 | 半径 4、1 圈、上升 6 |
 | rose-tracery | 112 | 双环 + 8 根辐条 |
 | orbiting-laser | 72 | 24 轨道点 + 2 条穿过圆心的光束 |
+| branch-tree | 7 | 深度 3、二分支递归树 |
+| curve-query | 53 | 半圆弧 + Bezier + 射线 + 体积过滤 |
 
 产物：
 
@@ -56,6 +63,8 @@ python3 examples/nxs-program/demo.py
 examples/nxs-program/out/spiral.json
 examples/nxs-program/out/rose.json
 examples/nxs-program/out/orbit.json
+examples/nxs-program/out/branch.json
+examples/nxs-program/out/curve.json
 examples/nxs-program/out/report.json
 ```
 
@@ -63,7 +72,10 @@ examples/nxs-program/out/report.json
 
 - `commands()`：绝对坐标命令
 - `templates()`：`execute positioned/rotated` 模板
-- `to_dict()`：instances + commands + templates + budget
+- `relative_commands()`：嵌套 `execute`，不再用绝对坐标
+- `lower_tree()`：Branch 的递归树 + 其他 op 的展开子节点
+- `timeline()`：按 `tick` 分组，给 Orbit 等运动用
+- `to_dict()`：instances + commands + templates + relative + tree + timeline + budget
 
 示例：
 
@@ -75,6 +87,41 @@ particle minecraft:end_rod 5.0 20.0 0.0
 
 ```text
 execute positioned 5 20 0 rotated 90 0 run particle minecraft:end_rod ^ ^ ^
+```
+
+## 递归 execute lowering
+
+`relative_commands()` 输出：
+
+```mcfunction
+execute positioned 0 0 0 rotated 0 0 run execute positioned ^4 ^2 ^0 rotated 90 0 run particle ... ^ ^ ^
+```
+
+`BranchOp.tree()` / `lower_tree()` 保留：
+
+```text
+root frame
+→ emit
+→ child frame
+   → emit
+   → child frame ...
+```
+
+这不是把整棵树压成一条命令；每个执行体仍然一个 `run`，但坐标架层级是递归的。
+
+## ArchBuilder 拼装
+
+```python
+from nxs_arch import apply_program
+apply_program(program, builder)
+```
+
+`examples/nxs-program/arch_demo.py` 把螺旋楼梯写进 ArchBuilder：
+
+```text
+NXS spiral 40 点
+→ ArchBuilder 体素
+→ BDX
 ```
 
 ## 预算
@@ -91,11 +138,12 @@ chars
 
 ## 边界
 
-- 目前是 IR + 绝对命令/模板，不是完整 `execute` 递归 lowering。
-- `PathOp` 是线性采样，还没有 Bezier/arc 专用采样器。
-- `OrbitOp` 是离散环绕，不是连续运动。
-- 还没有 Branch/Query op；递归树/射线命中仍在 `NxsRaster` 之外。
-- 建筑用法（螺旋楼梯、玫瑰窗、飞扶壁弧线）已有 demo，但还没有和 `ArchBuilder` 自动拼装。
+- `relative_commands()` 是嵌套 execute，但每个实例仍是一个执行体。
+- `lower_tree()` 已经是递归结构，但还没有自动降成多个 CB/函数调度。
+- `QueryOp` / `RayOp` 用 Python 几何求值；还没有转成 `execute if entity` 的真机查询链。
+- `OrbitOp.tick_step` 只生成 tick 元数据，没有自动 loop/调度器。
+- `ArchBuilder` 拼装是单向写入；还没有把 ArchBuilder 反编译成 NxsProgram。
+- Bezier/Arc 是采样器，不是解析曲线；预算仍按采样点算。
 
 ## 和 NxsRaster 的分工
 

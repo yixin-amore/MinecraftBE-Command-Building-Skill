@@ -16,5 +16,17 @@
   "instances": 72,
   "commands": 72,
   "chars": 3359
+ },
+ {
+  "name": "branch-tree",
+  "instances": 7,
+  "commands": 7,
+  "chars": 323
+ },
+ {
+  "name": "curve-query",
+  "instances": 53,
+  "commands": 53,
+  "chars": 2473
  }
 ]

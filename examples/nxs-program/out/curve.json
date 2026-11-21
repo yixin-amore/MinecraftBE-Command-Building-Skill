@@ -1,0 +1,2263 @@
+{
+ "name": "curve-query",
+ "instances": [
+  {
+   "pos": [
+    6.0,
+    0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.944115676217985,
+    0,
+    0.8169998945774796
+   ],
+   "yaw": 97.82608695652173,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.777503724086796,
+    0,
+    1.6187806269421456
+   ],
+   "yaw": 105.65217391304348,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.503267809032718,
+    0,
+    2.390406539077449
+   ],
+   "yaw": 113.47826086956522,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.126516427278931,
+    0,
+    3.1175037002126014
+   ],
+   "yaw": 121.30434782608695,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    4.654267744226519,
+    0,
+    3.786527665956317
+   ],
+   "yaw": 129.1304347826087,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    4.095318859311924,
+    0,
+    4.385015785668745
+   ],
+   "yaw": 136.95652173913044,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    3.4600819326892025,
+    0,
+    4.901819358062652
+   ],
+   "yaw": 144.7826086956522,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    2.7603902263869133,
+    0,
+    5.3273113104142515
+   ],
+   "yaw": 152.6086956521739,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    2.0092776730259163,
+    0,
+    5.653565532712923
+   ],
+   "yaw": 160.43478260869566,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    1.2207360783158026,
+    0,
+    5.874504526093937
+   ],
+   "yaw": 168.26086956521738,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.409454480188026,
+    0,
+    5.986012615143235
+   ],
+   "yaw": 176.08695652173913,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -0.4094544801880266,
+    0,
+    5.986012615143235
+   ],
+   "yaw": 183.91304347826087,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -1.2207360783158032,
+    0,
+    5.874504526093937
+   ],
+   "yaw": 191.73913043478262,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -2.0092776730259168,
+    0,
+    5.653565532712923
+   ],
+   "yaw": 199.56521739130437,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -2.7603902263869124,
+    0,
+    5.3273113104142515
+   ],
+   "yaw": 207.3913043478261,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -3.4600819326892025,
+    0,
+    4.901819358062653
+   ],
+   "yaw": 215.2173913043478,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -4.095318859311924,
+    0,
+    4.385015785668745
+   ],
+   "yaw": 223.04347826086956,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -4.6542677442265195,
+    0,
+    3.786527665956316
+   ],
+   "yaw": 230.8695652173913,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -5.12651642727893,
+    0,
+    3.1175037002126036
+   ],
+   "yaw": 238.69565217391303,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -5.503267809032718,
+    0,
+    2.3904065390774485
+   ],
+   "yaw": 246.52173913043478,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -5.777503724086795,
+    0,
+    1.6187806269421456
+   ],
+   "yaw": 254.34782608695653,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -5.944115676217985,
+    0,
+    0.8169998945774799
+   ],
+   "yaw": 262.17391304347825,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    -6.0,
+    0,
+    7.347880794884119e-16
+   ],
+   "yaw": 270.0,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:gold_block",
+   "kind": "block",
+   "label": "arc",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.40239993424837683,
+    0.9981096408317582,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.8260047669926851,
+    1.9054820415879017,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    1.269335086709953,
+    2.722117202268431,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    1.7309114818772087,
+    3.4480151228733456,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    2.20925454097148,
+    4.083175803402646,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    2.7028848524697953,
+    4.6275992438563325,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    3.2103230048491826,
+    5.081285444234404,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    3.7300895865866686,
+    5.444234404536862,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    4.260705186159284,
+    5.716446124763706,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    4.800690392044054,
+    5.897920604914935,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.3485657927180075,
+    5.9886578449905485,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    5.902851976658173,
+    5.9886578449905485,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    6.462069532341578,
+    5.897920604914933,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    7.024739048245253,
+    5.716446124763705,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    7.589381112846223,
+    5.444234404536862,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    8.154516314621517,
+    5.081285444234405,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    8.718665242048163,
+    4.627599243856333,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    9.28034848360319,
+    4.083175803402646,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    9.838086627763623,
+    3.448015122873346,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    10.390400263006493,
+    2.7221172022684312,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    10.935809977808828,
+    1.9054820415879028,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    11.472836360647655,
+    0.9981096408317573,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    12.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "bezier",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    4.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "ray",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    5.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "ray",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    6.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "ray",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    7.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "ray",
+   "tick": 0
+  },
+  {
+   "pos": [
+    0.0,
+    0.0,
+    8.0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "scale": 1.0,
+   "material": "minecraft:end_rod",
+   "kind": "particle",
+   "label": "ray",
+   "tick": 0
+  }
+ ],
+ "commands": [
+  "setblock 6.000 0.000 0.000 minecraft:gold_block",
+  "setblock 5.944 0.000 0.817 minecraft:gold_block",
+  "setblock 5.778 0.000 1.619 minecraft:gold_block",
+  "setblock 5.503 0.000 2.390 minecraft:gold_block",
+  "setblock 5.127 0.000 3.118 minecraft:gold_block",
+  "setblock 4.654 0.000 3.787 minecraft:gold_block",
+  "setblock 4.095 0.000 4.385 minecraft:gold_block",
+  "setblock 3.460 0.000 4.902 minecraft:gold_block",
+  "setblock 2.760 0.000 5.327 minecraft:gold_block",
+  "setblock 2.009 0.000 5.654 minecraft:gold_block",
+  "setblock 1.221 0.000 5.875 minecraft:gold_block",
+  "setblock 0.409 0.000 5.986 minecraft:gold_block",
+  "setblock -0.409 0.000 5.986 minecraft:gold_block",
+  "setblock -1.221 0.000 5.875 minecraft:gold_block",
+  "setblock -2.009 0.000 5.654 minecraft:gold_block",
+  "setblock -2.760 0.000 5.327 minecraft:gold_block",
+  "setblock -3.460 0.000 4.902 minecraft:gold_block",
+  "setblock -4.095 0.000 4.385 minecraft:gold_block",
+  "setblock -4.654 0.000 3.787 minecraft:gold_block",
+  "setblock -5.127 0.000 3.118 minecraft:gold_block",
+  "setblock -5.503 0.000 2.390 minecraft:gold_block",
+  "setblock -5.778 0.000 1.619 minecraft:gold_block",
+  "setblock -5.944 0.000 0.817 minecraft:gold_block",
+  "setblock -6.000 0.000 0.000 minecraft:gold_block",
+  "particle minecraft:end_rod 0.000 0.000 0.000",
+  "particle minecraft:end_rod 0.402 0.998 0.000",
+  "particle minecraft:end_rod 0.826 1.905 0.000",
+  "particle minecraft:end_rod 1.269 2.722 0.000",
+  "particle minecraft:end_rod 1.731 3.448 0.000",
+  "particle minecraft:end_rod 2.209 4.083 0.000",
+  "particle minecraft:end_rod 2.703 4.628 0.000",
+  "particle minecraft:end_rod 3.210 5.081 0.000",
+  "particle minecraft:end_rod 3.730 5.444 0.000",
+  "particle minecraft:end_rod 4.261 5.716 0.000",
+  "particle minecraft:end_rod 4.801 5.898 0.000",
+  "particle minecraft:end_rod 5.349 5.989 0.000",
+  "particle minecraft:end_rod 5.903 5.989 0.000",
+  "particle minecraft:end_rod 6.462 5.898 0.000",
+  "particle minecraft:end_rod 7.025 5.716 0.000",
+  "particle minecraft:end_rod 7.589 5.444 0.000",
+  "particle minecraft:end_rod 8.155 5.081 0.000",
+  "particle minecraft:end_rod 8.719 4.628 0.000",
+  "particle minecraft:end_rod 9.280 4.083 0.000",
+  "particle minecraft:end_rod 9.838 3.448 0.000",
+  "particle minecraft:end_rod 10.390 2.722 0.000",
+  "particle minecraft:end_rod 10.936 1.905 0.000",
+  "particle minecraft:end_rod 11.473 0.998 0.000",
+  "particle minecraft:end_rod 12.000 0.000 0.000",
+  "particle minecraft:end_rod 0.000 0.000 4.000",
+  "particle minecraft:end_rod 0.000 0.000 5.000",
+  "particle minecraft:end_rod 0.000 0.000 6.000",
+  "particle minecraft:end_rod 0.000 0.000 7.000",
+  "particle minecraft:end_rod 0.000 0.000 8.000"
+ ],
+ "templates": [
+  "execute positioned 6.000 0.000 0.000 rotated 90.000 0.000 run setblock 6.000 0.000 0.000 minecraft:gold_block",
+  "execute positioned 5.944 0.000 0.817 rotated 97.826 0.000 run setblock 5.944 0.000 0.817 minecraft:gold_block",
+  "execute positioned 5.778 0.000 1.619 rotated 105.652 0.000 run setblock 5.778 0.000 1.619 minecraft:gold_block",
+  "execute positioned 5.503 0.000 2.390 rotated 113.478 0.000 run setblock 5.503 0.000 2.390 minecraft:gold_block",
+  "execute positioned 5.127 0.000 3.118 rotated 121.304 0.000 run setblock 5.127 0.000 3.118 minecraft:gold_block",
+  "execute positioned 4.654 0.000 3.787 rotated 129.130 0.000 run setblock 4.654 0.000 3.787 minecraft:gold_block",
+  "execute positioned 4.095 0.000 4.385 rotated 136.957 0.000 run setblock 4.095 0.000 4.385 minecraft:gold_block",
+  "execute positioned 3.460 0.000 4.902 rotated 144.783 0.000 run setblock 3.460 0.000 4.902 minecraft:gold_block",
+  "execute positioned 2.760 0.000 5.327 rotated 152.609 0.000 run setblock 2.760 0.000 5.327 minecraft:gold_block",
+  "execute positioned 2.009 0.000 5.654 rotated 160.435 0.000 run setblock 2.009 0.000 5.654 minecraft:gold_block",
+  "execute positioned 1.221 0.000 5.875 rotated 168.261 0.000 run setblock 1.221 0.000 5.875 minecraft:gold_block",
+  "execute positioned 0.409 0.000 5.986 rotated 176.087 0.000 run setblock 0.409 0.000 5.986 minecraft:gold_block",
+  "execute positioned -0.409 0.000 5.986 rotated 183.913 0.000 run setblock -0.409 0.000 5.986 minecraft:gold_block",
+  "execute positioned -1.221 0.000 5.875 rotated 191.739 0.000 run setblock -1.221 0.000 5.875 minecraft:gold_block",
+  "execute positioned -2.009 0.000 5.654 rotated 199.565 0.000 run setblock -2.009 0.000 5.654 minecraft:gold_block",
+  "execute positioned -2.760 0.000 5.327 rotated 207.391 0.000 run setblock -2.760 0.000 5.327 minecraft:gold_block",
+  "execute positioned -3.460 0.000 4.902 rotated 215.217 0.000 run setblock -3.460 0.000 4.902 minecraft:gold_block",
+  "execute positioned -4.095 0.000 4.385 rotated 223.043 0.000 run setblock -4.095 0.000 4.385 minecraft:gold_block",
+  "execute positioned -4.654 0.000 3.787 rotated 230.870 0.000 run setblock -4.654 0.000 3.787 minecraft:gold_block",
+  "execute positioned -5.127 0.000 3.118 rotated 238.696 0.000 run setblock -5.127 0.000 3.118 minecraft:gold_block",
+  "execute positioned -5.503 0.000 2.390 rotated 246.522 0.000 run setblock -5.503 0.000 2.390 minecraft:gold_block",
+  "execute positioned -5.778 0.000 1.619 rotated 254.348 0.000 run setblock -5.778 0.000 1.619 minecraft:gold_block",
+  "execute positioned -5.944 0.000 0.817 rotated 262.174 0.000 run setblock -5.944 0.000 0.817 minecraft:gold_block",
+  "execute positioned -6.000 0.000 0.000 rotated 270.000 0.000 run setblock -6.000 0.000 0.000 minecraft:gold_block",
+  "execute positioned 0.000 0.000 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.402 0.998 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.826 1.905 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 1.269 2.722 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 1.731 3.448 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 2.209 4.083 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 2.703 4.628 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 3.210 5.081 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 3.730 5.444 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 4.261 5.716 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 4.801 5.898 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 5.349 5.989 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 5.903 5.989 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 6.462 5.898 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 7.025 5.716 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 7.589 5.444 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 8.155 5.081 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 8.719 4.628 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 9.280 4.083 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 9.838 3.448 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 10.390 2.722 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 10.936 1.905 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 11.473 0.998 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 12.000 0.000 0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.000 0.000 4.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.000 0.000 5.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.000 0.000 6.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.000 0.000 7.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0.000 0.000 8.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^"
+ ],
+ "relative": [
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^6.000 ^0.000 ^0.000 rotated 90.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.944 ^0.000 ^0.817 rotated 97.826 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.778 ^0.000 ^1.619 rotated 105.652 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.503 ^0.000 ^2.390 rotated 113.478 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.127 ^0.000 ^3.118 rotated 121.304 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.654 ^0.000 ^3.787 rotated 129.130 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.095 ^0.000 ^4.385 rotated 136.957 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.460 ^0.000 ^4.902 rotated 144.783 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.760 ^0.000 ^5.327 rotated 152.609 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.009 ^0.000 ^5.654 rotated 160.435 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.221 ^0.000 ^5.875 rotated 168.261 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.409 ^0.000 ^5.986 rotated 176.087 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.409 ^0.000 ^5.986 rotated 183.913 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.221 ^0.000 ^5.875 rotated 191.739 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.009 ^0.000 ^5.654 rotated 199.565 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.760 ^0.000 ^5.327 rotated 207.391 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.460 ^0.000 ^4.902 rotated 215.217 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.095 ^0.000 ^4.385 rotated 223.043 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.654 ^0.000 ^3.787 rotated 230.870 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.127 ^0.000 ^3.118 rotated 238.696 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.503 ^0.000 ^2.390 rotated 246.522 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.778 ^0.000 ^1.619 rotated 254.348 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.944 ^0.000 ^0.817 rotated 262.174 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-6.000 ^0.000 ^0.000 rotated 270.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.402 ^0.998 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.826 ^1.905 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.269 ^2.722 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.731 ^3.448 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.209 ^4.083 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.703 ^4.628 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.210 ^5.081 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.730 ^5.444 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.261 ^5.716 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.801 ^5.898 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.349 ^5.989 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.903 ^5.989 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^6.462 ^5.898 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^7.025 ^5.716 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^7.589 ^5.444 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^8.155 ^5.081 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^8.719 ^4.628 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^9.280 ^4.083 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^9.838 ^3.448 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^10.390 ^2.722 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^10.936 ^1.905 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^11.473 ^0.998 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^12.000 ^0.000 ^0.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^4.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^5.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^6.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^7.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^8.000 rotated 0.000 0.000 run particle minecraft:end_rod ^ ^ ^"
+ ],
+ "lower_tree": {
+  "name": "curve-query",
+  "root": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "roll": 0.0,
+   "scale": 1.0
+  },
+  "ops": [],
+  "children": [
+   {
+    "frame": {
+     "origin": [
+      6.0,
+      0,
+      0.0
+     ],
+     "yaw": 90.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.944115676217985,
+      0,
+      0.8169998945774796
+     ],
+     "yaw": 97.82608695652173,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.777503724086796,
+      0,
+      1.6187806269421456
+     ],
+     "yaw": 105.65217391304348,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.503267809032718,
+      0,
+      2.390406539077449
+     ],
+     "yaw": 113.47826086956522,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.126516427278931,
+      0,
+      3.1175037002126014
+     ],
+     "yaw": 121.30434782608695,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.654267744226519,
+      0,
+      3.786527665956317
+     ],
+     "yaw": 129.1304347826087,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.095318859311924,
+      0,
+      4.385015785668745
+     ],
+     "yaw": 136.95652173913044,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.4600819326892025,
+      0,
+      4.901819358062652
+     ],
+     "yaw": 144.7826086956522,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.7603902263869133,
+      0,
+      5.3273113104142515
+     ],
+     "yaw": 152.6086956521739,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.0092776730259163,
+      0,
+      5.653565532712923
+     ],
+     "yaw": 160.43478260869566,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.2207360783158026,
+      0,
+      5.874504526093937
+     ],
+     "yaw": 168.26086956521738,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.409454480188026,
+      0,
+      5.986012615143235
+     ],
+     "yaw": 176.08695652173913,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -0.4094544801880266,
+      0,
+      5.986012615143235
+     ],
+     "yaw": 183.91304347826087,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.2207360783158032,
+      0,
+      5.874504526093937
+     ],
+     "yaw": 191.73913043478262,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.0092776730259168,
+      0,
+      5.653565532712923
+     ],
+     "yaw": 199.56521739130437,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.7603902263869124,
+      0,
+      5.3273113104142515
+     ],
+     "yaw": 207.3913043478261,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.4600819326892025,
+      0,
+      4.901819358062653
+     ],
+     "yaw": 215.2173913043478,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.095318859311924,
+      0,
+      4.385015785668745
+     ],
+     "yaw": 223.04347826086956,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.6542677442265195,
+      0,
+      3.786527665956316
+     ],
+     "yaw": 230.8695652173913,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.12651642727893,
+      0,
+      3.1175037002126036
+     ],
+     "yaw": 238.69565217391303,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.503267809032718,
+      0,
+      2.3904065390774485
+     ],
+     "yaw": 246.52173913043478,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.777503724086795,
+      0,
+      1.6187806269421456
+     ],
+     "yaw": 254.34782608695653,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.944115676217985,
+      0,
+      0.8169998945774799
+     ],
+     "yaw": 262.17391304347825,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -6.0,
+      0,
+      7.347880794884119e-16
+     ],
+     "yaw": 270.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "arc",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.40239993424837683,
+      0.9981096408317582,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.8260047669926851,
+      1.9054820415879017,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.269335086709953,
+      2.722117202268431,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.7309114818772087,
+      3.4480151228733456,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.20925454097148,
+      4.083175803402646,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.7028848524697953,
+      4.6275992438563325,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.2103230048491826,
+      5.081285444234404,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.7300895865866686,
+      5.444234404536862,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.260705186159284,
+      5.716446124763706,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.800690392044054,
+      5.897920604914935,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.3485657927180075,
+      5.9886578449905485,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.902851976658173,
+      5.9886578449905485,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      6.462069532341578,
+      5.897920604914933,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      7.024739048245253,
+      5.716446124763705,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      7.589381112846223,
+      5.444234404536862,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      8.154516314621517,
+      5.081285444234405,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      8.718665242048163,
+      4.627599243856333,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      9.28034848360319,
+      4.083175803402646,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      9.838086627763623,
+      3.448015122873346,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      10.390400263006493,
+      2.7221172022684312,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      10.935809977808828,
+      1.9054820415879028,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      11.472836360647655,
+      0.9981096408317573,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      12.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "bezier",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      4.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "ray",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      5.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "ray",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      6.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "ray",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      7.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "ray",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      8.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "particle minecraft:end_rod ^ ^ ^",
+    "label": "ray",
+    "tick": 0
+   }
+  ]
+ },
+ "timeline": {
+  "0": [
+   {
+    "pos": [
+     6.0,
+     0,
+     0.0
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.944115676217985,
+     0,
+     0.8169998945774796
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.777503724086796,
+     0,
+     1.6187806269421456
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.503267809032718,
+     0,
+     2.390406539077449
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.126516427278931,
+     0,
+     3.1175037002126014
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.654267744226519,
+     0,
+     3.786527665956317
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.095318859311924,
+     0,
+     4.385015785668745
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.4600819326892025,
+     0,
+     4.901819358062652
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.7603902263869133,
+     0,
+     5.3273113104142515
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.0092776730259163,
+     0,
+     5.653565532712923
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.2207360783158026,
+     0,
+     5.874504526093937
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.409454480188026,
+     0,
+     5.986012615143235
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -0.4094544801880266,
+     0,
+     5.986012615143235
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.2207360783158032,
+     0,
+     5.874504526093937
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.0092776730259168,
+     0,
+     5.653565532712923
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.7603902263869124,
+     0,
+     5.3273113104142515
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.4600819326892025,
+     0,
+     4.901819358062653
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.095318859311924,
+     0,
+     4.385015785668745
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.6542677442265195,
+     0,
+     3.786527665956316
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.12651642727893,
+     0,
+     3.1175037002126036
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.503267809032718,
+     0,
+     2.3904065390774485
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.777503724086795,
+     0,
+     1.6187806269421456
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.944115676217985,
+     0,
+     0.8169998945774799
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -6.0,
+     0,
+     7.347880794884119e-16
+    ],
+    "label": "arc",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.40239993424837683,
+     0.9981096408317582,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.8260047669926851,
+     1.9054820415879017,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     1.269335086709953,
+     2.722117202268431,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     1.7309114818772087,
+     3.4480151228733456,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     2.20925454097148,
+     4.083175803402646,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     2.7028848524697953,
+     4.6275992438563325,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     3.2103230048491826,
+     5.081285444234404,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     3.7300895865866686,
+     5.444234404536862,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     4.260705186159284,
+     5.716446124763706,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     4.800690392044054,
+     5.897920604914935,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     5.3485657927180075,
+     5.9886578449905485,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     5.902851976658173,
+     5.9886578449905485,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     6.462069532341578,
+     5.897920604914933,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     7.024739048245253,
+     5.716446124763705,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     7.589381112846223,
+     5.444234404536862,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     8.154516314621517,
+     5.081285444234405,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     8.718665242048163,
+     4.627599243856333,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     9.28034848360319,
+     4.083175803402646,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     9.838086627763623,
+     3.448015122873346,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     10.390400263006493,
+     2.7221172022684312,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     10.935809977808828,
+     1.9054820415879028,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     11.472836360647655,
+     0.9981096408317573,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     12.0,
+     0.0,
+     0.0
+    ],
+    "label": "bezier",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     4.0
+    ],
+    "label": "ray",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     5.0
+    ],
+    "label": "ray",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     6.0
+    ],
+    "label": "ray",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     7.0
+    ],
+    "label": "ray",
+    "kind": "particle"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     8.0
+    ],
+    "label": "ray",
+    "kind": "particle"
+   }
+  ]
+ },
+ "budget": {
+  "instances": 53,
+  "commands": 53,
+  "chars": 2473
+ }
+}

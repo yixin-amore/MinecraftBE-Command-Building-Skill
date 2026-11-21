@@ -12,7 +12,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -25,7 +26,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -38,7 +40,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -51,7 +54,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -64,7 +68,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -77,7 +82,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -90,7 +96,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -103,7 +110,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -116,7 +124,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -129,7 +138,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -142,7 +152,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -155,7 +166,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -168,7 +180,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -181,7 +194,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -194,7 +208,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -207,7 +222,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -220,7 +236,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -233,7 +250,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -246,7 +264,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -259,7 +278,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -272,7 +292,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -285,7 +306,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -298,7 +320,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -311,7 +334,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -324,7 +348,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -337,7 +362,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -350,7 +376,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -363,7 +390,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -376,7 +404,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -389,7 +418,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -402,7 +432,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -415,7 +446,8 @@
    "scale": 1.0,
    "material": "minecraft:blue_stained_glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -428,7 +460,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -441,7 +474,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -454,7 +488,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -467,7 +502,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -480,7 +516,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -493,7 +530,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -506,7 +544,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -519,7 +558,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -532,7 +572,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -545,7 +586,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -558,7 +600,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -571,7 +614,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -584,7 +628,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -597,7 +642,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -610,7 +656,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -623,7 +670,8 @@
    "scale": 1.0,
    "material": "minecraft:glass",
    "kind": "block",
-   "label": "radial"
+   "label": "radial",
+   "tick": 0
   },
   {
    "pos": [
@@ -636,7 +684,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -649,7 +698,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -662,7 +712,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -675,7 +726,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -688,7 +740,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -701,7 +754,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -714,7 +768,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -727,7 +782,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -740,7 +796,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -753,7 +810,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -766,7 +824,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -779,7 +838,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -792,7 +852,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -805,7 +866,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -818,7 +880,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -831,7 +894,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -844,7 +908,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -857,7 +922,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -870,7 +936,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -883,7 +950,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -896,7 +964,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -909,7 +978,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -922,7 +992,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -935,7 +1006,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -948,7 +1020,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -961,7 +1034,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -974,7 +1048,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -987,7 +1062,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1000,7 +1076,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1013,7 +1090,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1026,7 +1104,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1039,7 +1118,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1052,7 +1132,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1065,7 +1146,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1078,7 +1160,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1091,7 +1174,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1104,7 +1188,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1117,7 +1202,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1130,7 +1216,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1143,7 +1230,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1156,7 +1244,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1169,7 +1258,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1182,7 +1272,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1195,7 +1286,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1208,7 +1300,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1221,7 +1314,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1234,7 +1328,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1247,7 +1342,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1260,7 +1356,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1273,7 +1370,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1286,7 +1384,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1299,7 +1398,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1312,7 +1412,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1325,7 +1426,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1338,7 +1440,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1351,7 +1454,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1364,7 +1468,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1377,7 +1482,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1390,7 +1496,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1403,7 +1510,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1416,7 +1524,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1429,7 +1538,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1442,7 +1552,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   },
   {
    "pos": [
@@ -1455,7 +1566,8 @@
    "scale": 1.0,
    "material": "minecraft:gold_block",
    "kind": "block",
-   "label": "path"
+   "label": "path",
+   "tick": 0
   }
  ],
  "commands": [
@@ -1686,6 +1798,2941 @@
   "execute positioned 3.637 0.000 -3.637 rotated 0.000 0.000 run setblock 3.637 0.000 -3.637 minecraft:gold_block",
   "execute positioned 4.243 0.000 -4.243 rotated 0.000 0.000 run setblock 4.243 0.000 -4.243 minecraft:gold_block"
  ],
+ "relative": [
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^6.000 ^0.000 ^0.000 rotated 90.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.885 ^0.000 ^1.171 rotated 101.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.543 ^0.000 ^2.296 rotated 112.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.989 ^0.000 ^3.333 rotated 123.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.243 ^0.000 ^4.243 rotated 135.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.333 ^0.000 ^4.989 rotated 146.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.296 ^0.000 ^5.543 rotated 157.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.171 ^0.000 ^5.885 rotated 168.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^6.000 rotated 180.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.171 ^0.000 ^5.885 rotated 191.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.296 ^0.000 ^5.543 rotated 202.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.333 ^0.000 ^4.989 rotated 213.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.243 ^0.000 ^4.243 rotated 225.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.989 ^0.000 ^3.333 rotated 236.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.543 ^0.000 ^2.296 rotated 247.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.885 ^0.000 ^1.171 rotated 258.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-6.000 ^0.000 ^0.000 rotated 270.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.885 ^0.000 ^-1.171 rotated 281.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.543 ^0.000 ^-2.296 rotated 292.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.989 ^0.000 ^-3.333 rotated 303.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.243 ^0.000 ^-4.243 rotated 315.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.333 ^0.000 ^-4.989 rotated 326.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.296 ^0.000 ^-5.543 rotated 337.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.171 ^0.000 ^-5.885 rotated 348.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-6.000 rotated 360.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.171 ^0.000 ^-5.885 rotated 371.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.296 ^0.000 ^-5.543 rotated 382.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.333 ^0.000 ^-4.989 rotated 393.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.243 ^0.000 ^-4.243 rotated 405.000 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.989 ^0.000 ^-3.333 rotated 416.250 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.543 ^0.000 ^-2.296 rotated 427.500 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.885 ^0.000 ^-1.171 rotated 438.750 0.000 run setblock ~ ~ ~ minecraft:blue_stained_glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.000 ^0.000 ^0.000 rotated 90.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.772 ^0.000 ^1.148 rotated 112.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.121 ^0.000 ^2.121 rotated 135.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.148 ^0.000 ^2.772 rotated 157.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^3.000 rotated 180.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.148 ^0.000 ^2.772 rotated 202.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.121 ^0.000 ^2.121 rotated 225.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.772 ^0.000 ^1.148 rotated 247.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.000 ^0.000 ^0.000 rotated 270.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.772 ^0.000 ^-1.148 rotated 292.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.121 ^0.000 ^-2.121 rotated 315.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.148 ^0.000 ^-2.772 rotated 337.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-3.000 rotated 360.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.148 ^0.000 ^-2.772 rotated 382.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.121 ^0.000 ^-2.121 rotated 405.000 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.772 ^0.000 ^-1.148 rotated 427.500 0.000 run setblock ~ ~ ~ minecraft:glass",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.857 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.714 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.571 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.429 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.286 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^5.143 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^6.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.606 ^0.000 ^0.606 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.212 ^0.000 ^1.212 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.818 ^0.000 ^1.818 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.424 ^0.000 ^2.424 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.030 ^0.000 ^3.030 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.637 ^0.000 ^3.637 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.243 ^0.000 ^4.243 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.857 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^1.714 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^2.571 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^3.429 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^4.286 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^5.143 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^6.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.606 ^0.000 ^0.606 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.212 ^0.000 ^1.212 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.818 ^0.000 ^1.818 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.424 ^0.000 ^2.424 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.030 ^0.000 ^3.030 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.637 ^0.000 ^3.637 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.243 ^0.000 ^4.243 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.857 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.714 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.571 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.429 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.286 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-5.143 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-6.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.606 ^0.000 ^-0.606 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.212 ^0.000 ^-1.212 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-1.818 ^0.000 ^-1.818 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-2.424 ^0.000 ^-2.424 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.030 ^0.000 ^-3.030 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-3.637 ^0.000 ^-3.637 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-4.243 ^0.000 ^-4.243 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-0.857 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-1.714 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-2.571 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-3.429 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-4.286 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-5.143 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^-0.000 ^0.000 ^-6.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.000 ^0.000 ^0.000 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^0.606 ^0.000 ^-0.606 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.212 ^0.000 ^-1.212 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^1.818 ^0.000 ^-1.818 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^2.424 ^0.000 ^-2.424 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.030 ^0.000 ^-3.030 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^3.637 ^0.000 ^-3.637 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block",
+  "execute positioned 0 0 0 rotated 0 0 run execute positioned ^4.243 ^0.000 ^-4.243 rotated 0.000 0.000 run setblock ~ ~ ~ minecraft:gold_block"
+ ],
+ "lower_tree": {
+  "name": "rose-tracery",
+  "root": {
+   "origin": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0.0,
+   "pitch": 0.0,
+   "roll": 0.0,
+   "scale": 1.0
+  },
+  "ops": [],
+  "children": [
+   {
+    "frame": {
+     "origin": [
+      6.0,
+      0,
+      0.0
+     ],
+     "yaw": 90.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.884711682419383,
+      0,
+      1.1705419320967696
+     ],
+     "yaw": 101.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.54327719506772,
+      0,
+      2.2961005941905386
+     ],
+     "yaw": 112.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.988817673815271,
+      0,
+      3.333421398117613
+     ],
+     "yaw": 123.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.242640687119286,
+      0,
+      4.242640687119285
+     ],
+     "yaw": 135.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.333421398117614,
+      0,
+      4.988817673815271
+     ],
+     "yaw": 146.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.296100594190539,
+      0,
+      5.54327719506772
+     ],
+     "yaw": 157.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.17054193209677,
+      0,
+      5.884711682419383
+     ],
+     "yaw": 168.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.6739403974420594e-16,
+      0,
+      6.0
+     ],
+     "yaw": 180.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.1705419320967692,
+      0,
+      5.884711682419383
+     ],
+     "yaw": 191.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.2961005941905386,
+      0,
+      5.54327719506772
+     ],
+     "yaw": 202.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.3334213981176117,
+      0,
+      4.988817673815272
+     ],
+     "yaw": 213.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.242640687119285,
+      0,
+      4.242640687119286
+     ],
+     "yaw": 225.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.988817673815272,
+      0,
+      3.333421398117613
+     ],
+     "yaw": 236.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.54327719506772,
+      0,
+      2.2961005941905395
+     ],
+     "yaw": 247.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.884711682419383,
+      0,
+      1.1705419320967716
+     ],
+     "yaw": 258.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -6.0,
+      0,
+      7.347880794884119e-16
+     ],
+     "yaw": 270.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.884711682419383,
+      0,
+      -1.17054193209677
+     ],
+     "yaw": 281.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.543277195067721,
+      0,
+      -2.296100594190538
+     ],
+     "yaw": 292.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.988817673815273,
+      0,
+      -3.3334213981176117
+     ],
+     "yaw": 303.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.242640687119286,
+      0,
+      -4.242640687119285
+     ],
+     "yaw": 315.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.333421398117613,
+      0,
+      -4.988817673815271
+     ],
+     "yaw": 326.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.296100594190542,
+      0,
+      -5.543277195067719
+     ],
+     "yaw": 337.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.170541932096772,
+      0,
+      -5.884711682419382
+     ],
+     "yaw": 348.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.102182119232618e-15,
+      0,
+      -6.0
+     ],
+     "yaw": 360.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.1705419320967698,
+      0,
+      -5.884711682419383
+     ],
+     "yaw": 371.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.29610059419054,
+      0,
+      -5.54327719506772
+     ],
+     "yaw": 382.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.3334213981176113,
+      0,
+      -4.988817673815273
+     ],
+     "yaw": 393.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.242640687119284,
+      0,
+      -4.242640687119286
+     ],
+     "yaw": 405.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.988817673815271,
+      0,
+      -3.333421398117613
+     ],
+     "yaw": 416.25,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.543277195067719,
+      0,
+      -2.296100594190542
+     ],
+     "yaw": 427.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.884711682419382,
+      0,
+      -1.1705419320967723
+     ],
+     "yaw": 438.75,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:blue_stained_glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.0,
+      0,
+      0.0
+     ],
+     "yaw": 90.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.77163859753386,
+      0,
+      1.1480502970952693
+     ],
+     "yaw": 112.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.121320343559643,
+      0,
+      2.1213203435596424
+     ],
+     "yaw": 135.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.1480502970952695,
+      0,
+      2.77163859753386
+     ],
+     "yaw": 157.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.8369701987210297e-16,
+      0,
+      3.0
+     ],
+     "yaw": 180.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.1480502970952693,
+      0,
+      2.77163859753386
+     ],
+     "yaw": 202.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.1213203435596424,
+      0,
+      2.121320343559643
+     ],
+     "yaw": 225.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.77163859753386,
+      0,
+      1.1480502970952697
+     ],
+     "yaw": 247.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.0,
+      0,
+      3.6739403974420594e-16
+     ],
+     "yaw": 270.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.7716385975338604,
+      0,
+      -1.148050297095269
+     ],
+     "yaw": 292.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.121320343559643,
+      0,
+      -2.1213203435596424
+     ],
+     "yaw": 315.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.148050297095271,
+      0,
+      -2.7716385975338595
+     ],
+     "yaw": 337.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.51091059616309e-16,
+      0,
+      -3.0
+     ],
+     "yaw": 360.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.14805029709527,
+      0,
+      -2.77163859753386
+     ],
+     "yaw": 382.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.121320343559642,
+      0,
+      -2.121320343559643
+     ],
+     "yaw": 405.0,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.7716385975338595,
+      0,
+      -1.148050297095271
+     ],
+     "yaw": 427.5,
+     "pitch": 0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:glass",
+    "label": "radial",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.8571428571428571,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.7142857142857142,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.571428571428571,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.4285714285714284,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.285714285714286,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.142857142857142,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      6.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.6060915267313265,
+      0.0,
+      0.6060915267313264
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.212183053462653,
+      0.0,
+      1.2121830534626528
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.8182745801939795,
+      0.0,
+      1.818274580193979
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.424366106925306,
+      0.0,
+      2.4243661069253055
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.0304576336566327,
+      0.0,
+      3.0304576336566322
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.636549160387959,
+      0.0,
+      3.636549160387958
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.242640687119286,
+      0.0,
+      4.242640687119285
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      5.248486282060085e-17,
+      0.0,
+      0.8571428571428571
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.049697256412017e-16,
+      0.0,
+      1.7142857142857142
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.5745458846180255e-16,
+      0.0,
+      2.571428571428571
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.099394512824034e-16,
+      0.0,
+      3.4285714285714284
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.6242431410300426e-16,
+      0.0,
+      4.285714285714286
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.149091769236051e-16,
+      0.0,
+      5.142857142857142
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.6739403974420594e-16,
+      0.0,
+      6.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -0.6060915267313264,
+      0.0,
+      0.6060915267313265
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.2121830534626528,
+      0.0,
+      1.212183053462653
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.818274580193979,
+      0.0,
+      1.8182745801939795
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.4243661069253055,
+      0.0,
+      2.424366106925306
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.0304576336566322,
+      0.0,
+      3.0304576336566327
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.636549160387958,
+      0.0,
+      3.636549160387959
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.242640687119285,
+      0.0,
+      4.242640687119286
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -0.8571428571428571,
+      0.0,
+      1.049697256412017e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.7142857142857142,
+      0.0,
+      2.099394512824034e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.571428571428571,
+      0.0,
+      3.149091769236051e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.4285714285714284,
+      0.0,
+      4.198789025648068e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.285714285714286,
+      0.0,
+      5.248486282060085e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -5.142857142857142,
+      0.0,
+      6.298183538472102e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -6.0,
+      0.0,
+      7.347880794884119e-16
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -0.6060915267313265,
+      0.0,
+      -0.6060915267313264
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.212183053462653,
+      0.0,
+      -1.2121830534626528
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.8182745801939795,
+      0.0,
+      -1.818274580193979
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -2.424366106925306,
+      0.0,
+      -2.4243661069253055
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.0304576336566327,
+      0.0,
+      -3.0304576336566322
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.636549160387959,
+      0.0,
+      -3.636549160387958
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.242640687119286,
+      0.0,
+      -4.242640687119285
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.5745458846180255e-16,
+      0.0,
+      -0.8571428571428571
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -3.149091769236051e-16,
+      0.0,
+      -1.7142857142857142
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -4.723637653854076e-16,
+      0.0,
+      -2.571428571428571
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -6.298183538472102e-16,
+      0.0,
+      -3.4285714285714284
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -7.872729423090128e-16,
+      0.0,
+      -4.285714285714286
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -9.447275307708152e-16,
+      0.0,
+      -5.142857142857142
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      -1.102182119232618e-15,
+      0.0,
+      -6.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      0.6060915267313263,
+      0.0,
+      -0.6060915267313265
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.2121830534626525,
+      0.0,
+      -1.212183053462653
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      1.8182745801939788,
+      0.0,
+      -1.8182745801939795
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      2.424366106925305,
+      0.0,
+      -2.424366106925306
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.0304576336566313,
+      0.0,
+      -3.0304576336566327
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      3.6365491603879576,
+      0.0,
+      -3.636549160387959
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   },
+   {
+    "frame": {
+     "origin": [
+      4.242640687119284,
+      0.0,
+      -4.242640687119286
+     ],
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "roll": 0.0,
+     "scale": 1.0
+    },
+    "command": "setblock ~ ~ ~ minecraft:gold_block",
+    "label": "path",
+    "tick": 0
+   }
+  ]
+ },
+ "timeline": {
+  "0": [
+   {
+    "pos": [
+     6.0,
+     0,
+     0.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.884711682419383,
+     0,
+     1.1705419320967696
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.54327719506772,
+     0,
+     2.2961005941905386
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.988817673815271,
+     0,
+     3.333421398117613
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.242640687119286,
+     0,
+     4.242640687119285
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.333421398117614,
+     0,
+     4.988817673815271
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.296100594190539,
+     0,
+     5.54327719506772
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.17054193209677,
+     0,
+     5.884711682419383
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.6739403974420594e-16,
+     0,
+     6.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.1705419320967692,
+     0,
+     5.884711682419383
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.2961005941905386,
+     0,
+     5.54327719506772
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.3334213981176117,
+     0,
+     4.988817673815272
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.242640687119285,
+     0,
+     4.242640687119286
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.988817673815272,
+     0,
+     3.333421398117613
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.54327719506772,
+     0,
+     2.2961005941905395
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.884711682419383,
+     0,
+     1.1705419320967716
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -6.0,
+     0,
+     7.347880794884119e-16
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.884711682419383,
+     0,
+     -1.17054193209677
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.543277195067721,
+     0,
+     -2.296100594190538
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.988817673815273,
+     0,
+     -3.3334213981176117
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.242640687119286,
+     0,
+     -4.242640687119285
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.333421398117613,
+     0,
+     -4.988817673815271
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.296100594190542,
+     0,
+     -5.543277195067719
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.170541932096772,
+     0,
+     -5.884711682419382
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.102182119232618e-15,
+     0,
+     -6.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.1705419320967698,
+     0,
+     -5.884711682419383
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.29610059419054,
+     0,
+     -5.54327719506772
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.3334213981176113,
+     0,
+     -4.988817673815273
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.242640687119284,
+     0,
+     -4.242640687119286
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.988817673815271,
+     0,
+     -3.333421398117613
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.543277195067719,
+     0,
+     -2.296100594190542
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.884711682419382,
+     0,
+     -1.1705419320967723
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.0,
+     0,
+     0.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.77163859753386,
+     0,
+     1.1480502970952693
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.121320343559643,
+     0,
+     2.1213203435596424
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.1480502970952695,
+     0,
+     2.77163859753386
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.8369701987210297e-16,
+     0,
+     3.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.1480502970952693,
+     0,
+     2.77163859753386
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.1213203435596424,
+     0,
+     2.121320343559643
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.77163859753386,
+     0,
+     1.1480502970952697
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.0,
+     0,
+     3.6739403974420594e-16
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.7716385975338604,
+     0,
+     -1.148050297095269
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.121320343559643,
+     0,
+     -2.1213203435596424
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.148050297095271,
+     0,
+     -2.7716385975338595
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.51091059616309e-16,
+     0,
+     -3.0
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.14805029709527,
+     0,
+     -2.77163859753386
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.121320343559642,
+     0,
+     -2.121320343559643
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.7716385975338595,
+     0,
+     -1.148050297095271
+    ],
+    "label": "radial",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.8571428571428571,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.7142857142857142,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.571428571428571,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.4285714285714284,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.285714285714286,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.142857142857142,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     6.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.6060915267313265,
+     0.0,
+     0.6060915267313264
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.212183053462653,
+     0.0,
+     1.2121830534626528
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.8182745801939795,
+     0.0,
+     1.818274580193979
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.424366106925306,
+     0.0,
+     2.4243661069253055
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.0304576336566327,
+     0.0,
+     3.0304576336566322
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.636549160387959,
+     0.0,
+     3.636549160387958
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.242640687119286,
+     0.0,
+     4.242640687119285
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     5.248486282060085e-17,
+     0.0,
+     0.8571428571428571
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.049697256412017e-16,
+     0.0,
+     1.7142857142857142
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.5745458846180255e-16,
+     0.0,
+     2.571428571428571
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.099394512824034e-16,
+     0.0,
+     3.4285714285714284
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.6242431410300426e-16,
+     0.0,
+     4.285714285714286
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.149091769236051e-16,
+     0.0,
+     5.142857142857142
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.6739403974420594e-16,
+     0.0,
+     6.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -0.6060915267313264,
+     0.0,
+     0.6060915267313265
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.2121830534626528,
+     0.0,
+     1.212183053462653
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.818274580193979,
+     0.0,
+     1.8182745801939795
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.4243661069253055,
+     0.0,
+     2.424366106925306
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.0304576336566322,
+     0.0,
+     3.0304576336566327
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.636549160387958,
+     0.0,
+     3.636549160387959
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.242640687119285,
+     0.0,
+     4.242640687119286
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -0.8571428571428571,
+     0.0,
+     1.049697256412017e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.7142857142857142,
+     0.0,
+     2.099394512824034e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.571428571428571,
+     0.0,
+     3.149091769236051e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.4285714285714284,
+     0.0,
+     4.198789025648068e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.285714285714286,
+     0.0,
+     5.248486282060085e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -5.142857142857142,
+     0.0,
+     6.298183538472102e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -6.0,
+     0.0,
+     7.347880794884119e-16
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -0.6060915267313265,
+     0.0,
+     -0.6060915267313264
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.212183053462653,
+     0.0,
+     -1.2121830534626528
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.8182745801939795,
+     0.0,
+     -1.818274580193979
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -2.424366106925306,
+     0.0,
+     -2.4243661069253055
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.0304576336566327,
+     0.0,
+     -3.0304576336566322
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.636549160387959,
+     0.0,
+     -3.636549160387958
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.242640687119286,
+     0.0,
+     -4.242640687119285
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.5745458846180255e-16,
+     0.0,
+     -0.8571428571428571
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -3.149091769236051e-16,
+     0.0,
+     -1.7142857142857142
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -4.723637653854076e-16,
+     0.0,
+     -2.571428571428571
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -6.298183538472102e-16,
+     0.0,
+     -3.4285714285714284
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -7.872729423090128e-16,
+     0.0,
+     -4.285714285714286
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -9.447275307708152e-16,
+     0.0,
+     -5.142857142857142
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     -1.102182119232618e-15,
+     0.0,
+     -6.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     0.6060915267313263,
+     0.0,
+     -0.6060915267313265
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.2121830534626525,
+     0.0,
+     -1.212183053462653
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     1.8182745801939788,
+     0.0,
+     -1.8182745801939795
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     2.424366106925305,
+     0.0,
+     -2.424366106925306
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.0304576336566313,
+     0.0,
+     -3.0304576336566327
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     3.6365491603879576,
+     0.0,
+     -3.636549160387959
+    ],
+    "label": "path",
+    "kind": "block"
+   },
+   {
+    "pos": [
+     4.242640687119284,
+     0.0,
+     -4.242640687119286
+    ],
+    "label": "path",
+    "kind": "block"
+   }
+  ]
+ },
  "budget": {
   "instances": 112,
   "commands": 112,
