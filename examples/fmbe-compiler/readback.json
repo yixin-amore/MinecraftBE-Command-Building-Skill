@@ -1,0 +1,18 @@
+{
+ "total": 12,
+ "command_blocks": 12,
+ "commands": [
+  "summon fox 0 0 0",
+  "execute positioned 0 0 0 run replaceitem entity @e[type=fox,r=0.5,c=1] slot.weapon.mainhand 0 minecraft:stone",
+  "execute positioned 0 0 0 run scoreboard players set @e[type=fox,r=0.5,c=1] fmbe_display 1",
+  "effect @e[type=fox,scores={fmbe_display=1}] invisibility 999999 1 true",
+  "effect @e[type=fox,scores={fmbe_display=1}] resistance 999999 255 true",
+  "summon fox 0 2 0",
+  "execute positioned 0 2 0 run replaceitem entity @e[type=fox,r=0.5,c=1] slot.weapon.mainhand 0 minecraft:gold_block",
+  "execute positioned 0 2 0 run scoreboard players set @e[type=fox,r=0.5,c=1] fmbe_display 1",
+  "effect @e[type=fox,scores={fmbe_display=1}] invisibility 999999 1 true",
+  "effect @e[type=fox,scores={fmbe_display=1}] resistance 999999 255 true",
+  "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0; v.ypos=0; v.zpos=0; v.xrot=0; v.yrot=0; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" base",
+  "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0; v.ypos=0; v.zpos=0; v.xrot=15; v.yrot=0; v.zrot=0; v.scale=0.5; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" head"
+ ]
+}

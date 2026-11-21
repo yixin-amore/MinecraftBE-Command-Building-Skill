@@ -50,6 +50,13 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## FMBE 编译器
+
+- `scripts/fmbe_ir.py`：FmbeModel / Animation / BoneGroup / 校验
+- `scripts/fmbe_compile.py`：IR → pose/setup/frames → BDX
+- `scripts/bdx_read.py`：BDX 命令方块回读
+- `references/34-fmbe-compiler.md`
+
 ## 建筑类型学
 
 - `references/33-architecture-typology.md`：日式/韩式/中式/古典/哥特/中世纪/庄园的类型卡 + 7 类山水园林

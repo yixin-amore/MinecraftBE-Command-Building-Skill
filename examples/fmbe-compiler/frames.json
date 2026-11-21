@@ -1,0 +1,26 @@
+[
+ {
+  "tick": 0,
+  "block": "head",
+  "vars": {
+   "yrot": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0; v.ypos=0; v.zpos=0; v.xrot=15; v.yrot=0; v.zrot=0; v.scale=0.5; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" head"
+ },
+ {
+  "tick": 10,
+  "block": "head",
+  "vars": {
+   "yrot": 90
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0; v.ypos=0; v.zpos=0; v.xrot=15; v.yrot=90; v.zrot=0; v.scale=0.5; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" head"
+ },
+ {
+  "tick": 20,
+  "block": "head",
+  "vars": {
+   "yrot": 180
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0; v.ypos=0; v.zpos=0; v.xrot=15; v.yrot=180; v.zrot=0; v.scale=0.5; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" head"
+ }
+]

@@ -1,0 +1,96 @@
+# 34 · FMBE 编译器：IR → 校验 → 命令 → BDX
+
+## 链路
+
+```text
+FmbeModel / FmbeAnimation
+→ FmbeModel.validate()
+→ pose / setup / frame commands
+→ BDX command blocks
+→ bdx_read 回读
+```
+
+## 入口
+
+```bash
+python3 scripts/fmbe_compile.py model.json \
+  --out out/fmbe.bdx \
+  --frames-out out/frames.json
+```
+
+产物：
+
+- `out/fmbe.bdx`：部件 repeat 块 + 载体 setup 链
+- `out/frames.json`：动画关键帧命令
+- 终端 JSON：validation / 命令数 / 回读计数
+
+## IR
+
+```python
+FmbeModel(
+  name="boss",
+  blocks=[FmbeBlock(id, name, item, offset, vars)],
+  animations=[FmbeAnimation(block_id, duration, keyframes)],
+  groups=[FmbeBoneGroup(id, members)],
+  export=FmbeExport(prefix, suffix),
+  carrier=FmbeCarrier(enabled, entity, display_score),
+  origin=(x,y,z),
+)
+```
+
+`vars` 只接受 13 个 FMBE 变量：
+
+```text
+xpos/ypos/zpos
+xrot/yrot/zrot
+scale
+extend_scale
+extend_xrot/extend_yrot
+xbasepos/ybasepos/zbasepos
+```
+
+不接受 `rotatex/rotatey/rotatez`（AIEX-FMBE 这一代没有）。
+
+## 校验
+
+`FmbeModel.validate()` 检查：
+
+- block id 唯一
+- 变量名合法、值为有限数
+- `scale` / `extend_scale` > 0
+- 8 顶点有限（矩阵可算）
+- 部件 offset 不重叠（BDX 命令方块不能叠）
+- 动画 block 存在
+- keyframe tick 在 `0..duration`，不重复、有序
+- bone group 成员存在
+
+有 issue 时 `compile_model` 拒绝生成。
+
+## Lowering
+
+- **pose command**：每个部件一条 `playanimation`，13 变量串来自 `FmbeExport.command()`。
+- **setup chain**：`summon fox` → `replaceitem` → `scoreboard` → `effect invisibility/resistance`。
+- **frame command**：动画 keyframe 合并到 block 基础 vars，生成对应 `playanimation`。
+- **BDX**：
+  - 每个部件一个 `repeat` 命令方块，位置 = `origin + offset`；
+  - setup 链放在 `origin.z - 4`，第一块 impulse，后续 chain；
+  - 无命令方块接触/重叠。
+
+## 回读
+
+```bash
+python3 scripts/bdx_read.py out/fmbe.bdx --json out/readback.json
+```
+
+回读检查：
+
+```text
+command_blocks 数 = parts + setup
+command 文本 / mode / conditional / needs_redstone / facing
+```
+
+## 当前边界
+
+- 动画 `frames.json` 是**命令表**，尚未编译成带 delay 的自动播放链。
+- 载体生命周期只覆盖 spawn/replaceitem/score/隐身/抗性；复杂的分组/动画切换仍由使用方编排。
+- `playanimation` 的实体选择沿用部件位置；多部件不共享同一坐标。

@@ -92,7 +92,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | 商店/开箱/经济 | `corpus_search economy` | inventory/scoreboard/structure |
 | 音效/打击感/旋律 | `references/32-ui-sound-design.md` §6–§7 | `playsound` + 白名单 + 时间轴 |
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
-| FMBE/展示体 | `references/24-fmbe-model-ir.md` | `scripts/fmbe_matrix.py` |
+| FMBE/展示体 | `references/24-fmbe-model-ir.md` + `34-fmbe-compiler.md` | `scripts/fmbe_compile.py` |
 | NXS/递归几何 | `references/23-nxs.md` | `NxsRaster`（点阵 + CSG） |
 | BDX/文件 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（文件回读） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
@@ -611,6 +611,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/31-command-ui-modern.md` | 网易 1.21.130 现代 UI 模板/%%2/%%9/HUD 互斥 |
 | `references/32-ui-sound-design.md` | UI 通道/标题顺序 + 音效分层/旋律目录/音量预算 |
 | `references/33-architecture-typology.md` | 建筑类型卡：日/韩/中/古典/哥特/中世纪/庄园，场地/序列/剖面/结构 |
+| `references/34-fmbe-compiler.md` | FMBE IR / 校验 / pose+setup / BDX / 回读 |
 | `references/command-syntax.json` | 命令合法格式 + 共享 token 词表（纯语法事实） |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |
