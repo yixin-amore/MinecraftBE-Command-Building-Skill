@@ -53,6 +53,9 @@ def if_unless_clauses(shape):
         return ['x=%g'%(x-sx/2),'dx=%g'%sx,'y=%g'%(y-sy/2),'dy=%g'%sy,'z=%g'%(z-sz/2),'dz=%g'%sz]
     if isinstance(shape, Box): return {'if':box_clauses(shape),'unless':[]}
     if isinstance(shape, Sphere): return {'if':['r=%g'%shape.radius,'x=%g'%shape.center[0],'y=%g'%shape.center[1],'z=%g'%shape.center[2]],'unless':[]}
+    if isinstance(shape, Cylinder):
+        x,y,z=shape.center
+        return {'if':['r=%g'%shape.radius,'x=%g'%x,'y=%g'%(y-shape.height/2),'dy=%g'%shape.height,'z=%g'%z],'unless':[]}
     if isinstance(shape, Intersect):
         a=if_unless_clauses(shape.a); b=if_unless_clauses(shape.b)
         return {'if':(a or {}).get('if',[])+(b or {}).get('if',[]),

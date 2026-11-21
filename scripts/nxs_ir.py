@@ -302,3 +302,6 @@ class NxsRaster:
                 'origin':list(self.origin),'axes':self.axes,'material':self.material,'emit':self.emit,
                 'surface_only':self.surface_only,'max_cells':self.max_cells,
                 'cells':[list(c) for c in self.sample()]}
+
+# Common spelling alias: a Sweep is an extruded polyline tube.
+Sweep = ExtrudedCurve
