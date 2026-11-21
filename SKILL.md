@@ -93,7 +93,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | 音效/打击感/旋律 | `references/32-ui-sound-design.md` §6–§7 | `playsound` + 白名单 + 时间轴 |
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
 | FMBE/展示体 | `references/24-fmbe-model-ir.md` + `34-fmbe-compiler.md` | `scripts/fmbe_compile.py` |
-| NXS/递归几何 | `references/23-nxs.md` + `36-nxs-compiler.md` | `scripts/nxs_compile.py`（点阵 + CSG + 预算） |
+| NXS/递归几何 | `references/23-nxs.md` + `36-nxs-compiler.md` + `37-nxs-program.md` | `scripts/nxs_compile.py` / `nxs_program.py` |
 | BDX/文件 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（文件回读） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
 | 建筑组件 | `references/35-architecture-components.md` | `scripts/arch_compile.py` |
@@ -616,6 +616,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/34-fmbe-compiler.md` | FMBE IR / 校验 / pose+setup / BDX / 回读 |
 | `references/35-architecture-components.md` | 8 个建筑组件：幕墙/门楼/主堡/回廊/开间/门廊/飞扶壁/老虎窗 |
 | `references/36-nxs-compiler.md` | NxsRaster / Shape / CSG / 自适应点阵 / 预算 / 回读 |
+| `references/37-nxs-program.md` | NxsFrame / Program / Spiral / Radial / Path / Orbit / Array |
 | `references/command-syntax.json` | 命令合法格式 + 共享 token 词表（纯语法事实） |
 | `references/fmbe-mbe.md` | FMBE/MBE 显示实体：前置、8 条链、变量、MBE、SMBE 变体、例子拆解 |
 | `references/render-controller-vars.md` | 用 playanimation 改 render controller 变量：实体/变量/只读限制 |

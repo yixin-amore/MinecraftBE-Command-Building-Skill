@@ -1,0 +1,374 @@
+{
+ "name": "spiral-stair",
+ "instances": [
+  {
+   "pos": [
+    4.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    3.8516691493911974,
+    0.2608695652173913,
+    1.079187084628097
+   ],
+   "yaw": 105.65217391304348,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    3.4176776181859543,
+    0.5217391304347826,
+    2.0783358001417342
+   ],
+   "yaw": 121.30434782608695,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    2.7302125728746165,
+    0.7826086956521738,
+    2.923343857112496
+   ],
+   "yaw": 136.95652173913044,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    1.8402601509246088,
+    1.0434782608695652,
+    3.551540873609501
+   ],
+   "yaw": 152.6086956521739,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    0.8138240522105359,
+    1.3043478260869565,
+    3.916336350729291
+   ],
+   "yaw": 168.26086956521738,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -0.2729696534586835,
+    1.5652173913043477,
+    3.9906750767621566
+   ],
+   "yaw": 183.91304347826087,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -1.3395184486839447,
+    1.8260869565217392,
+    3.769043688475282
+   ],
+   "yaw": 199.56521739130437,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -2.3067212884594683,
+    2.0869565217391304,
+    3.2678795720417684
+   ],
+   "yaw": 215.2173913043478,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.1028451628176796,
+    2.347826086956522,
+    2.5243517773042106
+   ],
+   "yaw": 230.8695652173913,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.6688452060218113,
+    2.608695652173913,
+    1.5936043593849671
+   ],
+   "yaw": 246.52173913043475,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.962743784145323,
+    2.8695652173913047,
+    0.5446665963849866
+   ],
+   "yaw": 262.17391304347825,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.962743784145323,
+    3.1304347826086953,
+    -0.5446665963849856
+   ],
+   "yaw": 277.82608695652175,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.6688452060218126,
+    3.391304347826087,
+    -1.5936043593849647
+   ],
+   "yaw": 293.47826086956525,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -3.102845162817679,
+    3.6521739130434785,
+    -2.524351777304211
+   ],
+   "yaw": 309.13043478260875,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -2.3067212884594688,
+    3.9130434782608696,
+    -3.267879572041768
+   ],
+   "yaw": 324.7826086956522,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -1.3395184486839455,
+    4.173913043478261,
+    -3.7690436884752816
+   ],
+   "yaw": 340.4347826086956,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    -0.2729696534586854,
+    4.434782608695652,
+    -3.9906750767621566
+   ],
+   "yaw": 356.0869565217391,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    0.8138240522105367,
+    4.695652173913044,
+    -3.916336350729291
+   ],
+   "yaw": 371.7391304347826,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    1.8402601509246095,
+    4.956521739130435,
+    -3.5515408736095004
+   ],
+   "yaw": 387.3913043478261,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    2.7302125728746143,
+    5.217391304347826,
+    -2.9233438571124983
+   ],
+   "yaw": 403.0434782608695,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    3.4176776181859525,
+    5.478260869565217,
+    -2.0783358001417374
+   ],
+   "yaw": 418.695652173913,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    3.851669149391197,
+    5.739130434782609,
+    -1.0791870846280975
+   ],
+   "yaw": 434.3478260869565,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  },
+  {
+   "pos": [
+    4.0,
+    6.0,
+    -9.797174393178826e-16
+   ],
+   "yaw": 450.0,
+   "pitch": 0,
+   "scale": 1.0,
+   "material": "minecraft:stone_bricks",
+   "kind": "block",
+   "label": "spiral"
+  }
+ ],
+ "commands": [
+  "setblock 4.000 0.000 0.000 minecraft:stone_bricks",
+  "setblock 3.852 0.261 1.079 minecraft:stone_bricks",
+  "setblock 3.418 0.522 2.078 minecraft:stone_bricks",
+  "setblock 2.730 0.783 2.923 minecraft:stone_bricks",
+  "setblock 1.840 1.043 3.552 minecraft:stone_bricks",
+  "setblock 0.814 1.304 3.916 minecraft:stone_bricks",
+  "setblock -0.273 1.565 3.991 minecraft:stone_bricks",
+  "setblock -1.340 1.826 3.769 minecraft:stone_bricks",
+  "setblock -2.307 2.087 3.268 minecraft:stone_bricks",
+  "setblock -3.103 2.348 2.524 minecraft:stone_bricks",
+  "setblock -3.669 2.609 1.594 minecraft:stone_bricks",
+  "setblock -3.963 2.870 0.545 minecraft:stone_bricks",
+  "setblock -3.963 3.130 -0.545 minecraft:stone_bricks",
+  "setblock -3.669 3.391 -1.594 minecraft:stone_bricks",
+  "setblock -3.103 3.652 -2.524 minecraft:stone_bricks",
+  "setblock -2.307 3.913 -3.268 minecraft:stone_bricks",
+  "setblock -1.340 4.174 -3.769 minecraft:stone_bricks",
+  "setblock -0.273 4.435 -3.991 minecraft:stone_bricks",
+  "setblock 0.814 4.696 -3.916 minecraft:stone_bricks",
+  "setblock 1.840 4.957 -3.552 minecraft:stone_bricks",
+  "setblock 2.730 5.217 -2.923 minecraft:stone_bricks",
+  "setblock 3.418 5.478 -2.078 minecraft:stone_bricks",
+  "setblock 3.852 5.739 -1.079 minecraft:stone_bricks",
+  "setblock 4.000 6.000 -0.000 minecraft:stone_bricks"
+ ],
+ "templates": [
+  "execute positioned 4.000 0.000 0.000 rotated 90.000 0.000 run setblock 4.000 0.000 0.000 minecraft:stone_bricks",
+  "execute positioned 3.852 0.261 1.079 rotated 105.652 0.000 run setblock 3.852 0.261 1.079 minecraft:stone_bricks",
+  "execute positioned 3.418 0.522 2.078 rotated 121.304 0.000 run setblock 3.418 0.522 2.078 minecraft:stone_bricks",
+  "execute positioned 2.730 0.783 2.923 rotated 136.957 0.000 run setblock 2.730 0.783 2.923 minecraft:stone_bricks",
+  "execute positioned 1.840 1.043 3.552 rotated 152.609 0.000 run setblock 1.840 1.043 3.552 minecraft:stone_bricks",
+  "execute positioned 0.814 1.304 3.916 rotated 168.261 0.000 run setblock 0.814 1.304 3.916 minecraft:stone_bricks",
+  "execute positioned -0.273 1.565 3.991 rotated 183.913 0.000 run setblock -0.273 1.565 3.991 minecraft:stone_bricks",
+  "execute positioned -1.340 1.826 3.769 rotated 199.565 0.000 run setblock -1.340 1.826 3.769 minecraft:stone_bricks",
+  "execute positioned -2.307 2.087 3.268 rotated 215.217 0.000 run setblock -2.307 2.087 3.268 minecraft:stone_bricks",
+  "execute positioned -3.103 2.348 2.524 rotated 230.870 0.000 run setblock -3.103 2.348 2.524 minecraft:stone_bricks",
+  "execute positioned -3.669 2.609 1.594 rotated 246.522 0.000 run setblock -3.669 2.609 1.594 minecraft:stone_bricks",
+  "execute positioned -3.963 2.870 0.545 rotated 262.174 0.000 run setblock -3.963 2.870 0.545 minecraft:stone_bricks",
+  "execute positioned -3.963 3.130 -0.545 rotated 277.826 0.000 run setblock -3.963 3.130 -0.545 minecraft:stone_bricks",
+  "execute positioned -3.669 3.391 -1.594 rotated 293.478 0.000 run setblock -3.669 3.391 -1.594 minecraft:stone_bricks",
+  "execute positioned -3.103 3.652 -2.524 rotated 309.130 0.000 run setblock -3.103 3.652 -2.524 minecraft:stone_bricks",
+  "execute positioned -2.307 3.913 -3.268 rotated 324.783 0.000 run setblock -2.307 3.913 -3.268 minecraft:stone_bricks",
+  "execute positioned -1.340 4.174 -3.769 rotated 340.435 0.000 run setblock -1.340 4.174 -3.769 minecraft:stone_bricks",
+  "execute positioned -0.273 4.435 -3.991 rotated 356.087 0.000 run setblock -0.273 4.435 -3.991 minecraft:stone_bricks",
+  "execute positioned 0.814 4.696 -3.916 rotated 371.739 0.000 run setblock 0.814 4.696 -3.916 minecraft:stone_bricks",
+  "execute positioned 1.840 4.957 -3.552 rotated 387.391 0.000 run setblock 1.840 4.957 -3.552 minecraft:stone_bricks",
+  "execute positioned 2.730 5.217 -2.923 rotated 403.043 0.000 run setblock 2.730 5.217 -2.923 minecraft:stone_bricks",
+  "execute positioned 3.418 5.478 -2.078 rotated 418.696 0.000 run setblock 3.418 5.478 -2.078 minecraft:stone_bricks",
+  "execute positioned 3.852 5.739 -1.079 rotated 434.348 0.000 run setblock 3.852 5.739 -1.079 minecraft:stone_bricks",
+  "execute positioned 4.000 6.000 -0.000 rotated 450.000 0.000 run setblock 4.000 6.000 -0.000 minecraft:stone_bricks"
+ ],
+ "budget": {
+  "instances": 24,
+  "commands": 24,
+  "chars": 1224
+ }
+}

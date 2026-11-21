@@ -50,6 +50,12 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## NXS Program
+
+- `scripts/nxs_program.py`：Frame / Spiral / Radial / Path / Orbit / Array
+- `references/37-nxs-program.md`
+- `examples/nxs-program/`：螺旋楼梯、玫瑰窗棂、环绕激光
+
 ## NXS 编译器
 
 - `scripts/nxs_ir.py`：Shape / CSG / NxsRaster / 自适应点阵

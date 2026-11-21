@@ -1,0 +1,20 @@
+[
+ {
+  "name": "spiral-stair",
+  "instances": 24,
+  "commands": 24,
+  "chars": 1224
+ },
+ {
+  "name": "rose-tracery",
+  "instances": 112,
+  "commands": 112,
+  "chars": 5647
+ },
+ {
+  "name": "orbiting-laser",
+  "instances": 72,
+  "commands": 72,
+  "chars": 3359
+ }
+]
