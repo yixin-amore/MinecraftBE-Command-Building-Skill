@@ -1,13 +1,13 @@
 {
- "voxels": 134935,
- "bdx_blocks": 134935,
+ "voxels": 143167,
+ "bdx_blocks": 143167,
  "bounds": [
   0,
   0,
   0,
-  120,
-  103,
-  131
+  140,
+  97,
+  125
  ],
  "start": [
   700,
@@ -16,59 +16,65 @@
  ],
  "issues": [],
  "stats": {
-  "voxels": 134935,
+  "voxels": 143167,
   "types": {
-   "stone_bricks": 86141,
-   "deepslate_bricks": 18717,
-   "grass_block": 14108,
-   "polished_deepslate": 9388,
-   "deepslate_tiles": 4385,
-   "water": 952,
-   "oxidized_copper": 581,
-   "blue_stained_glass": 238,
-   "calcite": 199,
-   "dark_oak_planks": 84,
-   "gold_block": 64,
-   "iron_bars": 30,
-   "purple_stained_glass": 25,
+   "deepslate_bricks": 59328,
+   "calcite": 46048,
+   "deepslate_tiles": 12417,
+   "grass_block": 9739,
+   "polished_deepslate": 9310,
+   "stone_bricks": 2782,
+   "blue_stained_glass": 1251,
+   "water": 1041,
+   "dark_oak_leaves": 300,
+   "smooth_quartz": 296,
+   "red_wool": 252,
+   "dark_oak_log": 144,
+   "gold_block": 86,
+   "dark_oak_planks": 62,
+   "purple_stained_glass": 61,
    "blackstone": 22,
-   "lantern": 1
+   "iron_bars": 20,
+   "lantern": 8
   },
   "bounds": [
    0,
    0,
    0,
-   120,
-   103,
-   131
+   140,
+   97,
+   125
   ]
  },
  "readback": {
-  "blocks": 134935,
+  "blocks": 143167,
   "types": {
-   "stone_bricks": 86141,
-   "deepslate_bricks": 18717,
-   "grass": 14108,
-   "polished_deepslate": 9388,
-   "deepslate_tiles": 4385,
-   "water": 952,
-   "oxidized_copper": 581,
-   "blue_stained_glass": 238,
-   "calcite": 199,
-   "dark_oak_planks": 84,
-   "gold_block": 64,
-   "iron_bars": 30,
-   "purple_stained_glass": 25,
+   "deepslate_bricks": 59328,
+   "calcite": 46048,
+   "deepslate_tiles": 12417,
+   "grass": 9739,
+   "polished_deepslate": 9310,
+   "stone_bricks": 2782,
+   "blue_stained_glass": 1251,
+   "water": 1041,
+   "dark_oak_leaves": 300,
+   "smooth_quartz": 296,
+   "red_wool": 252,
+   "dark_oak_log": 144,
+   "gold_block": 86,
+   "dark_oak_planks": 62,
+   "purple_stained_glass": 61,
    "blackstone": 22,
-   "lantern": 1
+   "iron_bars": 20,
+   "lantern": 8
   },
   "bounds": [
    0,
    0,
    0,
-   120,
-   103,
-   131
+   140,
+   97,
+   125
   ]
  }
 }

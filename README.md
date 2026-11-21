@@ -59,7 +59,7 @@ curtain_wall / gatehouse / keep / cloister
 bay / portal / flying_buttress / dormer
 ```
 
-`examples/arch-castle/` 是用它们拼出的 134,935 方块测试。
+`examples/arch-castle/` 是用它们拼出的 143,167 方块测试。
 
 ## FMBE 编译器
 

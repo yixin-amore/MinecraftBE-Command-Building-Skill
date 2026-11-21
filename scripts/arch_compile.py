@@ -216,6 +216,12 @@ class ArchBuilder:
         x0=cx-width//2; x1=cx+width//2; z0=cz-depth//2; z1=cz+depth//2
         for tx in (x0+tower_radius,x1-tower_radius):
             self.tower(tx,cz,tower_radius,y0,height,height+18,role)
+            for yy in (y0+12,y0+24,y0+36):
+                self.lancet_z(z1,tx,yy,7,1)
+                self.lancet_z(z0,tx,yy,7,1)
+            for xx in range(tx-tower_radius,tx+tower_radius+1,3):
+                self.box(xx,xx,height-2,height,z0-1,z0-1,'trim')
+                self.box(xx,xx,height-2,height,z1+1,z1+1,'trim')
         # gate passage and pointed arch frame
         gl=cx-passage_width//2; gr=cx+passage_width//2
         self.carve(gl,gr,y0,y0+18,z0,z1); self.box(gl,gr,y0,y0,z0,z1,'trim')
@@ -240,6 +246,7 @@ class ArchBuilder:
         for y in (y0+12,y0+28,y0+44):
             for x in (cx-4,cx+4): self.lancet_z(z1,x,y,7,1)
         self.rose_z(z1,cx,y0+30,6)
+        self.portal_z(z1,cx,y0,5,9,2,2)
         if turrets:
             for tx,tz in ((x0,z0),(x1,z0),(x0,z1),(x1,z1)):
                 self.box(tx-3,tx+3,y0,height+6,tz-3,tz+3,'dark')

@@ -60,10 +60,10 @@ curtain_wall + gatehouse + keep + cloister
 结果：
 
 ```text
-13 个组件实例
-134,935 体素
-BDX 134,935 方块
-回读 134,935 / issues []
+20 个组件实例
+143,167 体素
+BDX 143,167 方块
+回读 143,167 / issues []
 ```
 
 预览：
