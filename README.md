@@ -52,7 +52,7 @@ python3 scripts/command_syntax.py execute --version netease-vanilla
 
 ## 建筑类型学
 
-- `references/33-architecture-typology.md`：日式/韩式/中式/古典/哥特/中世纪/庄园的类型卡
+- `references/33-architecture-typology.md`：日式/韩式/中式/古典/哥特/中世纪/庄园的类型卡 + 7 类山水园林
 - `scripts/arch_style.py`：`ARCHETYPES` + `find_typology()`
 
 ## UI + 音效

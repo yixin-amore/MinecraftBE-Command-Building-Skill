@@ -96,6 +96,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | NXS/递归几何 | `references/23-nxs.md` | `NxsRaster`（点阵 + CSG） |
 | BDX/服务器 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（本地验证） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
+| 山水/园林 | `references/33-architecture-typology.md` §8 | `Site` + `Water/Rock/Plant` 模块 |
 
 ### 三层资料
 

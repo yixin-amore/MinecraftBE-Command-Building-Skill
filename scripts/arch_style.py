@@ -143,6 +143,87 @@ ARCHETYPES = {
     },
 }
 
+GARDEN_TYPES = {
+    'japanese-garden': {
+        'keywords': ['枯山水', '池泉', '回游', '借景', '苔', '石组', '龙安寺'],
+        'site': '小尺度池泉/枯山水/借景',
+        'sequence': '曲折步道，移步换景',
+        'section': '低视点，建筑半隐',
+        'structure': '石组/白砂/自然池岸',
+        'roof': '茶亭/桥/门洞框景',
+        'water': '池泉 25–40%；枯山水不用水',
+        'plants': '松/枫/苔/蕨，低修剪',
+        'must': ['石组3/5/7', '步道≥3折', '框景/对景'],
+    },
+    'korean-garden': {
+        'keywords': ['后苑', '秘苑', '莲塘', '因山', '四季亭'],
+        'site': '背山/多山，保留原生林',
+        'sequence': '宫殿 → 后苑 → 山腰亭',
+        'section': '随等高线错落',
+        'structure': '自然汇水莲塘，自然岸线',
+        'roof': '小型亭阁，屋顶半露',
+        'water': '自然曲线，无硬质驳岸',
+        'plants': '原生树/荷/苇',
+        'must': ['保留≥60%原生植被', '四季亭', '不挖山'],
+    },
+    'chinese-garden': {
+        'keywords': ['写意', '叠山', '理水', '拙政园', '漏窗', '太湖石'],
+        'site': '宅院/城市园，墙内造山',
+        'sequence': '门 → 障景 → 院 → 主景',
+        'section': '园中有园≥3层',
+        'structure': '太湖石/黄石，峰峦洞壑',
+        'roof': '亭台楼阁榭舫',
+        'water': '池/溪/涧/瀑/泉，收放对比',
+        'plants': '松竹梅/荷/玉兰/海棠',
+        'must': ['假山可穿行', '漏窗框景', '建筑不遮主山'],
+    },
+    'english-landscape-garden': {
+        'keywords': ['自然风景园', '疏林草地', '如画', '万能布朗', '斯托海德'],
+        'site': '起伏草地/林地/湖',
+        'sequence': '弯曲步道，视线通廊',
+        'section': '微地形，视线终点有焦点',
+        'structure': '自然湖岸/溪流/瀑布',
+        'roof': '神庙/废墟/石桥/小屋',
+        'water': '自然曲线，无硬质驳岸',
+        'plants': '孤植大树/丛植/疏林草地',
+        'must': ['无几何花坛', '草坪≥40%', '焦点≤每80格一个'],
+    },
+    'gothic-monastery-garden': {
+        'keywords': ['修道院', '回廊中庭', '药草', '圣园', '伊甸园'],
+        'site': '修道院/教堂旁，山地台地',
+        'sequence': '回廊中庭 → 台地园 → 山林',
+        'section': '方形中庭 + 台地',
+        'structure': '回廊 + 水井/喷泉',
+        'roof': '小礼拜堂/回廊',
+        'water': '中庭水井/喷泉',
+        'plants': '药草/香草/玫瑰/百合/松柏',
+        'must': ['方形回廊', '中心水井', '药草分块'],
+    },
+    'medieval-defensive-landscape': {
+        'keywords': ['防御山水', '护城河', '潮汐岛', '山脊', '水门'],
+        'site': '山顶/潮汐岛/悬崖/河湾',
+        'sequence': '生产带 → 护城河 → 城墙 → 城堡',
+        'section': '天然高差 + 人工加固',
+        'structure': '护城河/水门/城墙',
+        'roof': '塔楼/水门',
+        'water': '天然水体 + 人工护城河',
+        'plants': '菜园/果园/牧场/猎林',
+        'must': ['天然险要', '护城河有水源', '城内水井'],
+    },
+    'estate-landscape': {
+        'keywords': ['庄园', '圈层', '几何花园', '自然园', '生产林地'],
+        'site': '大领地，宅邸居中',
+        'sequence': '宅邸 → 几何花园 → 自然园 → 生产林地',
+        'section': '三圈层过渡',
+        'structure': '喷泉/运河 → 自然湖/溪',
+        'roof': '宅邸/亭/神庙/农场',
+        'water': '近宅喷泉/运河，远宅自然水体',
+        'plants': '修剪绿墙 → 疏林草地 → 原生林',
+        'must': ['三圈层', '主景观轴', '生产用地景观化'],
+    },
+}
+ARCHETYPES.update(GARDEN_TYPES)
+
 def find_typology(text):
     """Rank typology cards by keyword hits."""
     out=[]
@@ -168,4 +249,5 @@ def check(style: StyleProfile, verticality: float, bay_width: int, buttress_ever
 if __name__=='__main__':
     print(check(GOTHIC_KIRK,1.27,7,6,4,0.0))
     print(find_typology('姬路城 天守 石垣 白鹭'))
+    print(find_typology('枯山水 白砂 石组 苔'))
     print(check(COURTYARD_CASTLE,0.73,8,8,6,0.30))
