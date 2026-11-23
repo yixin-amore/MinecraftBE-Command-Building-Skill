@@ -147,6 +147,61 @@ xpos / ypos / zpos
 
 写回 FMBE。
 
+## 逐条命令表
+
+| # | 原文件行 | 命令 | 作用 |
+|---:|---:|---|---|
+| 1 | 2 | `tag @e[type=fox] add fmbe` | 所有狐狸加 `fmbe` 标签，作为载体 |
+| 2 | 4 | `execute as ... tp @s ~~~~~` | 疑似自指/锚定；`~~~~~` 连写需真机确认 |
+| 3 | 6 | `effect ... invisibility 1 1 true` | 每 tick 刷新隐身 |
+| 4 | 8 | `replaceitem ... calcite` | 主手放 calcite，FMBE 渲染载体 |
+| 5 | 10 | `playanimation ... sleeping ...` | 初始化 FMBE 13 变量 + 旋转矩阵 `F.*` |
+| 6 | 12 | `playanimation ... creeper.swelling ...` | 设置 `F.s`/swelling scale |
+| 7 | 14 | `playanimation ... ender_dragon.neck_head_movement ...` | 用 `F.*` 算头部位置/旋转 |
+| 8 | 16 | `playanimation ... warden.move ...` | 用 `F.*` 算身体 X/Z 旋转 |
+| 9 | 18 | `playanimation ... attack.rotations ...` | 用 `F.*` 算攻击体 Y 旋转 |
+| 10 | 25 | `playanimation @a ... attack.positions ...` | 每玩家写 `t.*`：是否持棍、玩家位置、视线前 3 格目标 |
+| 11 | 26 | `playanimation @e[tag=fmbe] ... attack.positions ...` | 刚体物理主表达式，653 个分号语句 |
+
+### 第 5 条：FMBE 矩阵
+
+不是动画，是利用 `playanimation` 表达式写变量：
+
+```text
+xpos/ypos/zpos/xrot/yrot/zrot
+scale/extend_scale/extend_xrot/extend_yrot
+xbasepos/ybasepos/zbasepos
+F.r0..r8 / F.e0..e8 / F.p0..p8 / F.s
+```
+
+`F.*` 是欧拉角 + 扩展旋转的矩阵/中间量，供第 7–9 条计算头/身体/攻击朝向。
+
+### 第 10 条：玩家目标
+
+```text
+if_pull = 主手是否木棍
+px/py/pz = 玩家位置
+tx/ty/tz = 玩家位置 + 视线方向 × 3
+```
+
+物理侧直接读 `t.*`。多人时要注意目标覆盖；所有 fox 共用同一套 `t.*`。
+
+### 第 11 条：653 个语句的分段
+
+| 语句范围 | 内容 |
+|---:|---|
+| 0–271 | `v.* = v.* ?? 默认值`，初始化刚体/碰撞/输出状态 |
+| 272–339 | dt/scale/quaternion/重力/旋转矩阵/扩展轴/8 角点 |
+| 340–410 | 地面间隙、8 角点冲量、弹跳、角速度 |
+| 411–505 | 水平摩擦、接触面法线、静止/倾倒、角速度衰减 |
+| 506–535 | 玩家拖拽：目标点、相对速度、弹簧冲量、松手 |
+| 536–554 | 位置积分、穿透修正 |
+| 555–592 | 玩家 AABB 重叠、最小轴推出、速度钳制 |
+| 593–621 | 角速度/线速度限幅、四元数积分、归一化、输出位置 |
+| 622–651 | 四元数转欧拉角、万向锁处理、角度连续化、输出旋转 |
+
+**不是 653 行命令**，是一条 `playanimation` 表达式里的 653 个分号语句。
+
 ## 兼容性检查
 
 | 项 | 结论 |
