@@ -1,0 +1,1522 @@
+[
+ {
+  "tick": 0,
+  "vars": {
+   "xpos": 0.07500000000000001,
+   "ypos": 9.975475,
+   "zpos": -0.025,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.075; v.ypos=9.97547; v.zpos=-0.025; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 1,
+  "vars": {
+   "xpos": 0.15000000000000002,
+   "ypos": 9.926425,
+   "zpos": -0.05,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.15; v.ypos=9.92643; v.zpos=-0.05; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 2,
+  "vars": {
+   "xpos": 0.22500000000000003,
+   "ypos": 9.85285,
+   "zpos": -0.07500000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.225; v.ypos=9.85285; v.zpos=-0.075; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 3,
+  "vars": {
+   "xpos": 0.30000000000000004,
+   "ypos": 9.75475,
+   "zpos": -0.1,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.3; v.ypos=9.75475; v.zpos=-0.1; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 4,
+  "vars": {
+   "xpos": 0.37500000000000006,
+   "ypos": 9.632125,
+   "zpos": -0.125,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.375; v.ypos=9.63213; v.zpos=-0.125; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 5,
+  "vars": {
+   "xpos": 0.45000000000000007,
+   "ypos": 9.484975,
+   "zpos": -0.15,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.45; v.ypos=9.48498; v.zpos=-0.15; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 6,
+  "vars": {
+   "xpos": 0.5250000000000001,
+   "ypos": 9.3133,
+   "zpos": -0.175,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.525; v.ypos=9.3133; v.zpos=-0.175; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 7,
+  "vars": {
+   "xpos": 0.6000000000000001,
+   "ypos": 9.1171,
+   "zpos": -0.19999999999999998,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.6; v.ypos=9.1171; v.zpos=-0.2; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 8,
+  "vars": {
+   "xpos": 0.675,
+   "ypos": 8.896375,
+   "zpos": -0.22499999999999998,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.675; v.ypos=8.89638; v.zpos=-0.225; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 9,
+  "vars": {
+   "xpos": 0.75,
+   "ypos": 8.651125,
+   "zpos": -0.24999999999999997,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.75; v.ypos=8.65113; v.zpos=-0.25; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 10,
+  "vars": {
+   "xpos": 0.825,
+   "ypos": 8.381350000000001,
+   "zpos": -0.27499999999999997,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.825; v.ypos=8.38135; v.zpos=-0.275; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 11,
+  "vars": {
+   "xpos": 0.8999999999999999,
+   "ypos": 8.087050000000001,
+   "zpos": -0.3,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.9; v.ypos=8.08705; v.zpos=-0.3; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 12,
+  "vars": {
+   "xpos": 0.9749999999999999,
+   "ypos": 7.768225000000001,
+   "zpos": -0.325,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=0.975; v.ypos=7.76823; v.zpos=-0.325; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 13,
+  "vars": {
+   "xpos": 1.0499999999999998,
+   "ypos": 7.424875000000001,
+   "zpos": -0.35000000000000003,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.05; v.ypos=7.42488; v.zpos=-0.35; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 14,
+  "vars": {
+   "xpos": 1.1249999999999998,
+   "ypos": 7.057000000000001,
+   "zpos": -0.37500000000000006,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.125; v.ypos=7.057; v.zpos=-0.375; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 15,
+  "vars": {
+   "xpos": 1.1999999999999997,
+   "ypos": 6.664600000000001,
+   "zpos": -0.4000000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.2; v.ypos=6.6646; v.zpos=-0.4; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 16,
+  "vars": {
+   "xpos": 1.2749999999999997,
+   "ypos": 6.247675000000001,
+   "zpos": -0.4250000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.275; v.ypos=6.24768; v.zpos=-0.425; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 17,
+  "vars": {
+   "xpos": 1.3499999999999996,
+   "ypos": 5.806225000000001,
+   "zpos": -0.4500000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.35; v.ypos=5.80623; v.zpos=-0.45; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 18,
+  "vars": {
+   "xpos": 1.4249999999999996,
+   "ypos": 5.340250000000001,
+   "zpos": -0.47500000000000014,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.425; v.ypos=5.34025; v.zpos=-0.475; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 19,
+  "vars": {
+   "xpos": 1.4999999999999996,
+   "ypos": 4.849750000000001,
+   "zpos": -0.5000000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.5; v.ypos=4.84975; v.zpos=-0.5; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 20,
+  "vars": {
+   "xpos": 1.5749999999999995,
+   "ypos": 4.334725000000001,
+   "zpos": -0.5250000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.575; v.ypos=4.33473; v.zpos=-0.525; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 21,
+  "vars": {
+   "xpos": 1.6499999999999995,
+   "ypos": 3.7951750000000004,
+   "zpos": -0.5500000000000002,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.65; v.ypos=3.79518; v.zpos=-0.55; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 22,
+  "vars": {
+   "xpos": 1.7249999999999994,
+   "ypos": 3.2311,
+   "zpos": -0.5750000000000002,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.725; v.ypos=3.2311; v.zpos=-0.575; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 23,
+  "vars": {
+   "xpos": 1.7999999999999994,
+   "ypos": 2.6424999999999996,
+   "zpos": -0.6000000000000002,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.8; v.ypos=2.6425; v.zpos=-0.6; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 24,
+  "vars": {
+   "xpos": 1.8749999999999993,
+   "ypos": 2.029374999999999,
+   "zpos": -0.6250000000000002,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.875; v.ypos=2.02937; v.zpos=-0.625; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 25,
+  "vars": {
+   "xpos": 1.9499999999999993,
+   "ypos": 1.3917249999999988,
+   "zpos": -0.6500000000000002,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=1.95; v.ypos=1.39172; v.zpos=-0.65; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 26,
+  "vars": {
+   "xpos": 2.0249999999999995,
+   "ypos": 0.7295499999999984,
+   "zpos": -0.6750000000000003,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.025; v.ypos=0.72955; v.zpos=-0.675; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 27,
+  "vars": {
+   "xpos": 2.0999999999999996,
+   "ypos": 0.501,
+   "zpos": -0.7000000000000003,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.1; v.ypos=0.501; v.zpos=-0.7; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 28,
+  "vars": {
+   "xpos": 2.1592499999999997,
+   "ypos": 0.6824850000000001,
+   "zpos": -0.7197500000000003,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.15925; v.ypos=0.682485; v.zpos=-0.71975; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 29,
+  "vars": {
+   "xpos": 2.2184999999999997,
+   "ypos": 0.8394450000000002,
+   "zpos": -0.7395000000000004,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.2185; v.ypos=0.839445; v.zpos=-0.7395; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 30,
+  "vars": {
+   "xpos": 2.2777499999999997,
+   "ypos": 0.9718800000000003,
+   "zpos": -0.7592500000000004,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.27775; v.ypos=0.97188; v.zpos=-0.75925; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 31,
+  "vars": {
+   "xpos": 2.3369999999999997,
+   "ypos": 1.0797900000000005,
+   "zpos": -0.7790000000000005,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.337; v.ypos=1.07979; v.zpos=-0.779; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 32,
+  "vars": {
+   "xpos": 2.3962499999999998,
+   "ypos": 1.1631750000000005,
+   "zpos": -0.7987500000000005,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.39625; v.ypos=1.16318; v.zpos=-0.79875; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 33,
+  "vars": {
+   "xpos": 2.4555,
+   "ypos": 1.2220350000000006,
+   "zpos": -0.8185000000000006,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.4555; v.ypos=1.22204; v.zpos=-0.8185; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 34,
+  "vars": {
+   "xpos": 2.51475,
+   "ypos": 1.2563700000000009,
+   "zpos": -0.8382500000000006,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.51475; v.ypos=1.25637; v.zpos=-0.83825; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 35,
+  "vars": {
+   "xpos": 2.574,
+   "ypos": 1.266180000000001,
+   "zpos": -0.8580000000000007,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.574; v.ypos=1.26618; v.zpos=-0.858; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 36,
+  "vars": {
+   "xpos": 2.63325,
+   "ypos": 1.2514650000000012,
+   "zpos": -0.8777500000000007,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.63325; v.ypos=1.25147; v.zpos=-0.87775; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 37,
+  "vars": {
+   "xpos": 2.6925,
+   "ypos": 1.2122250000000012,
+   "zpos": -0.8975000000000007,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.6925; v.ypos=1.21223; v.zpos=-0.8975; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 38,
+  "vars": {
+   "xpos": 2.75175,
+   "ypos": 1.1484600000000014,
+   "zpos": -0.9172500000000008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.75175; v.ypos=1.14846; v.zpos=-0.91725; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 39,
+  "vars": {
+   "xpos": 2.811,
+   "ypos": 1.0601700000000016,
+   "zpos": -0.9370000000000008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.811; v.ypos=1.06017; v.zpos=-0.937; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 40,
+  "vars": {
+   "xpos": 2.87025,
+   "ypos": 0.9473550000000017,
+   "zpos": -0.9567500000000009,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.87025; v.ypos=0.947355; v.zpos=-0.95675; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 41,
+  "vars": {
+   "xpos": 2.9295,
+   "ypos": 0.8100150000000018,
+   "zpos": -0.9765000000000009,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.9295; v.ypos=0.810015; v.zpos=-0.9765; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 42,
+  "vars": {
+   "xpos": 2.98875,
+   "ypos": 0.648150000000002,
+   "zpos": -0.996250000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=2.98875; v.ypos=0.64815; v.zpos=-0.99625; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 43,
+  "vars": {
+   "xpos": 3.048,
+   "ypos": 0.501,
+   "zpos": -1.016000000000001,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.048; v.ypos=0.501; v.zpos=-1.016; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 44,
+  "vars": {
+   "xpos": 3.0948075,
+   "ypos": 0.532392,
+   "zpos": -1.0316025000000009,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.09481; v.ypos=0.532392; v.zpos=-1.0316; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 45,
+  "vars": {
+   "xpos": 3.141615,
+   "ypos": 0.5392589999999999,
+   "zpos": -1.0472050000000008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.14161; v.ypos=0.539259; v.zpos=-1.04721; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 46,
+  "vars": {
+   "xpos": 3.1884224999999997,
+   "ypos": 0.5216009999999999,
+   "zpos": -1.0628075000000008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.18842; v.ypos=0.521601; v.zpos=-1.06281; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 47,
+  "vars": {
+   "xpos": 3.2352299999999996,
+   "ypos": 0.501,
+   "zpos": -1.0784100000000008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.23523; v.ypos=0.501; v.zpos=-1.07841; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 48,
+  "vars": {
+   "xpos": 3.2722079249999996,
+   "ypos": 0.501,
+   "zpos": -1.0907359750000007,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.27221; v.ypos=0.501; v.zpos=-1.09074; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 49,
+  "vars": {
+   "xpos": 3.3014204857499996,
+   "ypos": 0.501,
+   "zpos": -1.1004734952500008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.30142; v.ypos=0.501; v.zpos=-1.10047; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 50,
+  "vars": {
+   "xpos": 3.3244984087424996,
+   "ypos": 0.501,
+   "zpos": -1.1081661362475008,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.3245; v.ypos=0.501; v.zpos=-1.10817; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 51,
+  "vars": {
+   "xpos": 3.3427299679065747,
+   "ypos": 0.501,
+   "zpos": -1.1142433226355257,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.34273; v.ypos=0.501; v.zpos=-1.11424; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 52,
+  "vars": {
+   "xpos": 3.357132899646194,
+   "ypos": 0.501,
+   "zpos": -1.1190442998820656,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.35713; v.ypos=0.501; v.zpos=-1.11904; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 53,
+  "vars": {
+   "xpos": 3.3685112157204933,
+   "ypos": 0.501,
+   "zpos": -1.122837071906832,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.36851; v.ypos=0.501; v.zpos=-1.12284; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 54,
+  "vars": {
+   "xpos": 3.3775000854191894,
+   "ypos": 0.501,
+   "zpos": -1.1258333618063974,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.3775; v.ypos=0.501; v.zpos=-1.12583; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 55,
+  "vars": {
+   "xpos": 3.3846012924811597,
+   "ypos": 0.501,
+   "zpos": -1.1282004308270541,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.3846; v.ypos=0.501; v.zpos=-1.1282; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 56,
+  "vars": {
+   "xpos": 3.390211246060116,
+   "ypos": 0.501,
+   "zpos": -1.130070415353373,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.39021; v.ypos=0.501; v.zpos=-1.13007; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 57,
+  "vars": {
+   "xpos": 3.394643109387492,
+   "ypos": 0.501,
+   "zpos": -1.1315477031291648,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.39464; v.ypos=0.501; v.zpos=-1.13155; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 58,
+  "vars": {
+   "xpos": 3.3981442814161187,
+   "ypos": 0.501,
+   "zpos": -1.1327147604720402,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.39814; v.ypos=0.501; v.zpos=-1.13271; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 59,
+  "vars": {
+   "xpos": 3.400910207318734,
+   "ypos": 0.501,
+   "zpos": -1.133636735772912,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40091; v.ypos=0.501; v.zpos=-1.13364; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 60,
+  "vars": {
+   "xpos": 3.4030952887818,
+   "ypos": 0.501,
+   "zpos": -1.1343650962606007,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.4031; v.ypos=0.501; v.zpos=-1.13437; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 61,
+  "vars": {
+   "xpos": 3.404821503137622,
+   "ypos": 0.501,
+   "zpos": -1.1349405010458746,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40482; v.ypos=0.501; v.zpos=-1.13494; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 62,
+  "vars": {
+   "xpos": 3.4061852124787215,
+   "ypos": 0.501,
+   "zpos": -1.135395070826241,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40619; v.ypos=0.501; v.zpos=-1.1354; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 63,
+  "vars": {
+   "xpos": 3.40726254285819,
+   "ypos": 0.501,
+   "zpos": -1.1357541809527305,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40726; v.ypos=0.501; v.zpos=-1.13575; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 64,
+  "vars": {
+   "xpos": 3.4081136338579703,
+   "ypos": 0.501,
+   "zpos": -1.1360378779526572,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40811; v.ypos=0.501; v.zpos=-1.13604; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 65,
+  "vars": {
+   "xpos": 3.4087859957477966,
+   "ypos": 0.501,
+   "zpos": -1.1362619985825992,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40879; v.ypos=0.501; v.zpos=-1.13626; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 66,
+  "vars": {
+   "xpos": 3.4093171616407596,
+   "ypos": 0.501,
+   "zpos": -1.1364390538802536,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40932; v.ypos=0.501; v.zpos=-1.13644; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 67,
+  "vars": {
+   "xpos": 3.4097367826962004,
+   "ypos": 0.501,
+   "zpos": -1.1365789275654004,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.40974; v.ypos=0.501; v.zpos=-1.13658; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 68,
+  "vars": {
+   "xpos": 3.4100682833299985,
+   "ypos": 0.501,
+   "zpos": -1.1366894277766664,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41007; v.ypos=0.501; v.zpos=-1.13669; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 69,
+  "vars": {
+   "xpos": 3.410330168830699,
+   "ypos": 0.501,
+   "zpos": -1.1367767229435666,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41033; v.ypos=0.501; v.zpos=-1.13678; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 70,
+  "vars": {
+   "xpos": 3.4105370583762524,
+   "ypos": 0.501,
+   "zpos": -1.1368456861254177,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41054; v.ypos=0.501; v.zpos=-1.13685; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 71,
+  "vars": {
+   "xpos": 3.4107005011172395,
+   "ypos": 0.501,
+   "zpos": -1.1369001670390801,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.4107; v.ypos=0.501; v.zpos=-1.1369; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 72,
+  "vars": {
+   "xpos": 3.410829620882619,
+   "ypos": 0.501,
+   "zpos": -1.1369432069608734,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41083; v.ypos=0.501; v.zpos=-1.13694; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 73,
+  "vars": {
+   "xpos": 3.4109316254972692,
+   "ypos": 0.501,
+   "zpos": -1.1369772084990901,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41093; v.ypos=0.501; v.zpos=-1.13698; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 74,
+  "vars": {
+   "xpos": 3.411012209142843,
+   "ypos": 0.501,
+   "zpos": -1.1370040697142814,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41101; v.ypos=0.501; v.zpos=-1.137; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 75,
+  "vars": {
+   "xpos": 3.411075870222846,
+   "ypos": 0.501,
+   "zpos": -1.1370252900742823,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41108; v.ypos=0.501; v.zpos=-1.13703; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 76,
+  "vars": {
+   "xpos": 3.4111261624760485,
+   "ypos": 0.501,
+   "zpos": -1.1370420541586832,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41113; v.ypos=0.501; v.zpos=-1.13704; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 77,
+  "vars": {
+   "xpos": 3.4111658933560784,
+   "ypos": 0.501,
+   "zpos": -1.1370552977853599,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41117; v.ypos=0.501; v.zpos=-1.13706; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 78,
+  "vars": {
+   "xpos": 3.4111972807513022,
+   "ypos": 0.501,
+   "zpos": -1.1370657602504344,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.4112; v.ypos=0.501; v.zpos=-1.13707; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ },
+ {
+  "tick": 79,
+  "vars": {
+   "xpos": 3.411222076793529,
+   "ypos": 0.501,
+   "zpos": -1.1370740255978433,
+   "xrot": 0.0,
+   "yrot": 44.99999799924126,
+   "zrot": 0.0,
+   "scale": 1.0,
+   "extend_scale": 1,
+   "extend_xrot": 0,
+   "extend_yrot": 0,
+   "xbasepos": 0,
+   "ybasepos": 0,
+   "zbasepos": 0
+  },
+  "command": "execute positioned ~-1.5~~-0.5 run playanimation @e[x=~,z=~,y=~,dx=1,dy=0,dz=0] animation.player.attack.positions _ 0 \"v.xpos=3.41122; v.ypos=0.501; v.zpos=-1.13707; v.xrot=0; v.yrot=45; v.zrot=0; v.scale=1; v.extend_scale=1; v.extend_xrot=0; v.extend_yrot=0; v.xbasepos=0; v.ybasepos=0; v.zbasepos=0;\" body"
+ }
+]

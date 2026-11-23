@@ -123,7 +123,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 | 商店/开箱/经济 | `corpus_search economy` | inventory/scoreboard/structure |
 | 音效/打击感/旋律 | `references/32-ui-sound-design.md` §6–§7 | `playsound` + 白名单 + 时间轴 |
 | 传送/圆规/二分 | `corpus_search teleport/math` | `positioned/rotated/facing` |
-| FMBE/展示体 | `references/24-fmbe-model-ir.md` + `34-fmbe-compiler.md` | `scripts/fmbe_compile.py` |
+| FMBE/展示体 | `references/24-fmbe-model-ir.md` + `34-fmbe-compiler.md` + `39-fmbe-physics.md` | `scripts/fmbe_compile.py` / `fmbe_physics.py` / `mcpack_audit.py` |
 | NXS/递归几何 | `references/23-nxs.md` + `36-nxs-compiler.md` + `37-nxs-program.md` | `scripts/nxs_compile.py` / `nxs_program.py` |
 | BDX/文件 | `references/25-bdx-bridge.md` | `cbjson_to_bdx.py`（文件回读） |
 | 建筑类型/风格 | `references/33-architecture-typology.md` + `29-architecture-corpus.md` | `scripts/arch_style.py` |
@@ -139,7 +139,7 @@ python3 scripts/build_pipeline.py --build-script build_x.py --outdir out --name 
 
 ### 边界
 
-- FMBE/NXS 目前有 IR/矩阵/参考，**还不是完整编译器**；不要声称已全自动。
+- FMBE 已有 IR/校验/动画/时间轴/骨骼/物理；NXS 已有 raster/program。仍不要声称“任意参考图全自动成建筑”。
 - **交付边界**：本 skill 只负责生成 `.bdx` / `.mcstructure` / `.schematic` / fill 清单；导入由使用方负责，导入失败不计入 skill 缺陷。
 - BDX 命令方块桥已文件回读 99/99；文件格式、命令文本、条件位、红石位已核对。
 - 本 skill 后半的建筑/BDX 章节保留；命令系统优先 0.0。
@@ -646,6 +646,7 @@ linter 会检查：Java 残留语法、Bedrock 不存在的命令/选择器参�
 | `references/33-architecture-typology.md` | 建筑类型卡：日/韩/中/古典/哥特/中世纪/庄园，场地/序列/剖面/结构 |
 | `references/34-fmbe-compiler.md` | FMBE IR / 校验 / pose+setup / BDX / 回读 |
 | `references/38-relative-coordinates.md` | 默认相对坐标 / `~` vs `^` / 锚点例外 / 选择器相对 |
+| `references/39-fmbe-physics.md` | FMBE 刚体物理包拆解 / 8 角点 / 四元数 / 兼容性 |
 | `references/35-architecture-components.md` | 8 个建筑组件：幕墙/门楼/主堡/回廊/开间/门廊/飞扶壁/老虎窗 |
 | `references/36-nxs-compiler.md` | NxsRaster / Shape / CSG / 自适应点阵 / 预算 / 回读 |
 | `references/37-nxs-program.md` | NxsFrame / Program / Spiral / Radial / Path / Orbit / Array |

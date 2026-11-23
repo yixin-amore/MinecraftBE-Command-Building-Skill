@@ -1,0 +1,58 @@
+{
+ "source": "phy_v2.27(1).mcpack",
+ "files": [
+  "functions/tick.json",
+  "functions/tick.mcfunction",
+  "manifest.json",
+  "pack_icon.png"
+ ],
+ "manifest": {
+  "format_version": 2,
+  "header": {
+   "description": "by BIn_LIn",
+   "name": "物理_v2.26",
+   "uuid": "c4f37a67-2159-7514-c695-01199a7a5257",
+   "version": [
+    1,
+    0,
+    0
+   ],
+   "min_engine_version": [
+    1,
+    21,
+    60
+   ],
+   "icon": "pack_icon.png"
+  },
+  "modules": [
+   {
+    "description": "A",
+    "type": "data",
+    "uuid": "1a352025-8bb7-6ff4-ed7b-b783cb0907ee",
+    "version": [
+     1,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ "functions": [
+  "functions/tick.mcfunction"
+ ],
+ "commands": 11,
+ "playanimation": 7,
+ "prefixes": {
+  "tag": 1,
+  "execute": 1,
+  "effect": 1,
+  "replaceitem": 1,
+  "playanimation": 7
+ },
+ "max_line": 17971,
+ "total_chars": 21282,
+ "issues": [
+  "suspicious tp @s ~~~~~ (missing spaces)",
+  "function command line > 10000 chars"
+ ]
+}

@@ -50,6 +50,12 @@
 python3 scripts/command_syntax.py execute --version netease-vanilla
 ```
 
+## FMBE 物理
+
+- `scripts/fmbe_physics.py`：RigidBody / PhysicsWorld / 8 角点 / 四元数 / 地面/玩家碰撞
+- `references/39-fmbe-physics.md`
+- `examples/fmbe-physics/`
+
 ## 坐标策略
 
 默认使用相对坐标（`~` / `^`）；绝对坐标只用于 `ANCHOR`。
