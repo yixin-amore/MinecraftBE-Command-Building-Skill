@@ -475,6 +475,8 @@ scoreboard players operation fb_state obj %= fb_two obj
 
 ### 4.9 生成 BDX（命令 + 建筑）
 
+**BDX 零偏移硬规则**：输出 BDX 的方块局部坐标最小值必须是 `(0,0,0)`。生成器会拒绝 `minPos != (0,0,0)` 的输入；先把所有方块平移到局部原点，命令内容使用相对坐标（`~`/`^`），不要用带世界偏移的方块坐标配绝对命令。
+
 - **BDX** = `BD@` + brotli(`BDX` + `0x00` + `0x00` + command-stream + `ID 88`)；author 保持空；不是 NBT，也不是 zip。
 - 命令方块用 `PlaceBlockWithCommandBlockData`（ID 27）；普通方块用 `PlaceBlock` / `PlaceBlockWithBlockStates`。
 - `scripts/bdxgen.py`：命令方块，或 `BuildBlock` 普通方块 + 命令方块混排。

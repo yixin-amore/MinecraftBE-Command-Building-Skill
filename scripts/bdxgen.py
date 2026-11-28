@@ -8,7 +8,7 @@ command blocks in the same BDX.
 Usage:
     from bdxgen import Block, BuildBlock, write_bdx, write_build_bdx
     write_bdx([Block(0, 0, 0, "repeat", "say hello")], "commands.bdx")
-    write_build_bdx([BuildBlock(0, 64, 0, "stone_bricks")], "build.bdx")
+    write_build_bdx([BuildBlock(0, 0, 0, "stone_bricks")], "build.bdx")
 """
 from __future__ import annotations
 
@@ -101,6 +101,19 @@ def _place(block_name_id: int, block: Block) -> bytes:
     return _cmd(ID_PLACE_COMMAND_BLOCK, bytes(payload))
 
 
+def _require_zero_origin(items: Iterable[Block | BuildBlock]) -> None:
+    items = list(items)
+    if not items:
+        return
+    mins = (min(b.x for b in items), min(b.y for b in items), min(b.z for b in items))
+    if mins != (0, 0, 0):
+        raise ValueError(
+            f"BDX origin must be (0,0,0), got minPos={mins}. "
+            "Translate all blocks to local coordinates and write commands with relative "
+            "coordinates (~ / ^); do not ship an offset BDX."
+        )
+
+
 def write_bdx(
     blocks: Iterable[Block],
     path: str,
@@ -114,6 +127,7 @@ def write_bdx(
     reader starts at (0,0,0). Sorting by (y,z,x) keeps moves small.
     """
     blocks = list(blocks)
+    _require_zero_origin(blocks)
     if sort_blocks:
         blocks.sort(key=lambda b: (b.y, b.z, b.x))
 
@@ -151,6 +165,7 @@ def write_build_bdx(items: Iterable[Block | BuildBlock], path: str, *, sort_bloc
     PlaceBlockWithCommandBlockData. No external writer is required.
     """
     items = list(items)
+    _require_zero_origin(items)
     if sort_blocks:
         items.sort(key=lambda b: (b.y, b.z, b.x))
 

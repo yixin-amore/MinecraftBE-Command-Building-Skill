@@ -36,6 +36,25 @@ mct cbc 布局
 | `last` | `last_output` |
 | `track` | `track_output` |
 
+## 零偏移硬规则
+
+`bdxgen.write_bdx` / `write_build_bdx` 会检查所有方块的局部最小坐标：
+
+```text
+minPos 必须是 (0,0,0)
+否则直接拒绝生成
+```
+
+原因：BDX 导入偏移不会重写命令文本，带偏移的 BDX + 绝对命令会让整个系统错位。
+
+正确做法：
+
+```text
+方块：平移到 (0,0,0) 起点
+命令：使用 ~ / ^ 相对坐标
+导入：由导入器指定世界起点
+```
+
 ## 本地验证
 
 mct demo：
