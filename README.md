@@ -17,7 +17,7 @@
 
 - **命令**：命令方块链、计分板状态机、FMBE 显示、菜单、技能、系统逻辑。
 - **建筑**：场地、体量、轮廓、材质、立面、屋顶、内饰、灯光；静态建筑走 ArchSpec/ArchBuilder，**不用命令方块逐块搭建**。
-- **输出**：命令系统默认 `.mcworld` / `.mcstructure`；静态建筑默认 `schematic / BDX / mcstructure / fill 批`；本 skill 只生成文件，导入由使用方负责。BDX 同时用于本地回读。
+- **输出**：默认 `.mcworld`；`.mcstructure` / schematic / fill 清单仅在用户明确要求时生成。`.bdx` 仅旧格式兼容项，不默认交付。
 - **工作模式**：Python DSL → spec → cbc 链布局 → 结构文件；不再直接让 AI 写整段命令字符串。
 
 ## 先学模型，不是背例子
@@ -111,7 +111,7 @@ corpus_search → dsl.py → spec.json → cbc.py → build_cbworld
 - `scripts/build_cbworld.py` / `mcworld_to_structure.py`：世界与结构文件
 - `references/mct-playbook.md` + `references/mct/`：DSL/链布局/UI/调试全表
 
-命令系统优先这条链；建筑、BDX、FMBE、真机回读是辅助层。
+命令系统优先这条链；建筑、FMBE、真机回读是辅助层。BDX 仅为显式兼容项。
 
 ## 快速开始
 
@@ -248,13 +248,13 @@ ls -lh /tmp/check.bdx /tmp/check-build.bdx
 
 ## 3. 在 DSH 里使用
 
-直接把需求说清楚，模型会读 `SKILL.md`，先定状态/时序/体量，再写 spec/plan 和 BDX 文件。
+直接把需求说清楚，模型会读 `SKILL.md`，先定状态/时序/体量，再写 spec/plan 和默认 `.mcworld` 文件。
 
 **好需求：**
 
-> “设计一个 3 秒倒计时 + 开局传送的命令方块链，并生成 BDX。”
+> “设计一个 3 秒倒计时 + 开局传送的命令方块链，并生成 mcworld。”
 
-> “在 `300 64 500` 建一座 20×20 的石屋，只导出 BDX。”
+> “在 `300 64 500` 建一座 20×20 的石屋，导出 mcworld。”
 
 > “这个链为什么第二个方块不执行？”
 
